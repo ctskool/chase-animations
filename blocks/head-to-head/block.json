@@ -1,0 +1,41 @@
+{
+  "name": "head-to-head",
+  "title": "Head to head",
+  "summary": "Two options face off across a slanted seam, row by row, ending on one payoff stat.",
+  "fonts": ["400 40px Anton", "500 40px 'Barlow Condensed'", "600 40px 'Barlow Condensed'", "700 40px 'Barlow Condensed'"],
+  "timing": { "keyAt": 2.9, "hold": 1.6, "exit": 0.34, "minKeyAt": 1.5 },
+  "keyMoment": "the last row's bar lands and its number kicks",
+  "overlayHeight": 856,
+  "variables": [
+    { "id": "nameA", "type": "string", "label": "Left option", "default": "Rent" },
+    { "id": "nameB", "type": "string", "label": "Right option", "default": "Buy" },
+    { "id": "subtitle", "type": "string", "label": "Line under the names", "default": "Over 10 years, same city" },
+
+    { "id": "row1Label", "type": "string", "label": "Row 1 label", "default": "Monthly cost" },
+    { "id": "row1A", "type": "string", "label": "Row 1 left value", "default": "$2,400" },
+    { "id": "row1B", "type": "string", "label": "Row 1 right value", "default": "$3,450" },
+    { "id": "row1Winner", "type": "enum", "label": "Row 1 winner", "default": "a", "options": [{ "value": "a", "label": "Left" }, { "value": "b", "label": "Right" }, { "value": "tie", "label": "Tie" }] },
+
+    { "id": "row2Label", "type": "string", "label": "Row 2 label", "default": "Upfront cash" },
+    { "id": "row2A", "type": "string", "label": "Row 2 left value", "default": "$4,800" },
+    { "id": "row2B", "type": "string", "label": "Row 2 right value", "default": "$96,000" },
+    { "id": "row2Winner", "type": "enum", "label": "Row 2 winner", "default": "a", "options": [{ "value": "a", "label": "Left" }, { "value": "b", "label": "Right" }, { "value": "tie", "label": "Tie" }] },
+
+    { "id": "row3Label", "type": "string", "label": "Row 3 label", "default": "Can move any time" },
+    { "id": "row3A", "type": "string", "label": "Row 3 left value", "default": "Yes" },
+    { "id": "row3B", "type": "string", "label": "Row 3 right value", "default": "No" },
+    { "id": "row3Winner", "type": "enum", "label": "Row 3 winner", "default": "a", "options": [{ "value": "a", "label": "Left" }, { "value": "b", "label": "Right" }, { "value": "tie", "label": "Tie" }] },
+
+    { "id": "row4Label", "type": "string", "label": "Payoff row label", "default": "Net worth after 10 years" },
+    { "id": "row4A", "type": "string", "label": "Payoff left value", "default": "$182,000" },
+    { "id": "row4B", "type": "string", "label": "Payoff right value", "default": "$412,000" },
+    { "id": "row4Winner", "type": "enum", "label": "Payoff winner", "default": "b", "options": [{ "value": "a", "label": "Left" }, { "value": "b", "label": "Right" }, { "value": "tie", "label": "Tie" }] },
+
+    { "id": "colorA", "type": "color", "label": "Left colour", "default": "#3D7BFF" },
+    { "id": "colorB", "type": "color", "label": "Right colour", "default": "#FF7A30" },
+    { "id": "ground", "type": "color", "label": "Background", "default": "#0B0D12" },
+    { "id": "ink", "type": "color", "label": "Main text", "default": "#FFFFFF" },
+    { "id": "muted", "type": "color", "label": "Small text", "default": "#8F96A5" },
+    { "id": "overlayPosition", "type": "enum", "label": "Overlay position", "default": "top", "options": [{ "value": "top", "label": "Top" }, { "value": "bottom", "label": "Bottom" }] }
+  ]
+}

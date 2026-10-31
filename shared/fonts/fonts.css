@@ -1,0 +1,11 @@
+@font-face { font-family: "Anton"; font-weight: 400; src: url("fonts/anton-400.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 500; src: url("fonts/barlow-condensed-500.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 600; src: url("fonts/barlow-condensed-600.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; src: url("fonts/barlow-condensed-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; src: url("fonts/inter-400.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("fonts/inter-500.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url("fonts/inter-600.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("fonts/inter-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 700; src: url("fonts/inter-tight-700.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 800; src: url("fonts/inter-tight-800.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 500; src: url("fonts/jetbrains-mono-500.woff2") format("woff2"); }

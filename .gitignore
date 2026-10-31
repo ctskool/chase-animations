@@ -1,0 +1,21 @@
+node_modules/
+
+# Everything the pack makes. Never commit a render or a member's footage.
+renders/
+.animate/
+dist/
+*.mp4
+*.mov
+*.webm
+*.m4a
+*.wav
+*.mp3
+*.mkv
+
+# Local test notes and secrets
+.env
+.env.*
+*.local.json
+.hyperframes/
+.DS_Store
+Thumbs.db

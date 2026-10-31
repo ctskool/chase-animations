@@ -1,0 +1,21 @@
+{
+  "name": "chase-animations",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Animation pack for Chase AI Plus members: tested HyperFrames blocks you can land on a spoken word.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "setup": "node shared/setup.mjs",
+    "animate": "node shared/animate.mjs",
+    "test": "node --test \"shared/tests/*.test.mjs\"",
+    "release": "node scripts/build-release.mjs"
+  },
+  "dependencies": {
+    "gsap": "3.14.2",
+    "hyperframes": "0.8.184",
+    "three": "0.181.2"
+  }
+}

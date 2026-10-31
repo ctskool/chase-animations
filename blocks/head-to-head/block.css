@@ -1,0 +1,81 @@
+#stage { --a: #3d7bff; --b: #ff7a30; }
+#clip { position: absolute; inset: 0; overflow: hidden; }
+[data-variant="overlay"] #stage { box-shadow: 0 26px 80px rgba(0, 0, 0, 0.5); }
+.half, .flash, #grain { position: absolute; inset: 0; }
+#grain { mix-blend-mode: overlay; opacity: 0.32; background-size: 220px 220px; }
+.flash { opacity: 0; }
+#seam { position: absolute; width: 5px; left: 50%; margin-left: -2.5px; background: rgba(255, 255, 255, 0.07); }
+
+.name {
+  position: absolute;
+  font-family: "Anton", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 1;
+}
+.rule { position: absolute; }
+#subtitle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 500;
+}
+
+.row { position: absolute; left: 0; right: 0; }
+.label-mask { position: absolute; left: 0; right: 0; overflow: hidden; text-align: center; }
+.label {
+  display: inline-block;
+  line-height: 1.2;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+}
+.val {
+  position: absolute;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  white-space: nowrap;
+}
+.val.a { transform-origin: right center; }
+.val.b { transform-origin: left center; }
+.chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chip svg { width: 62%; height: 62%; display: block; }
+.track { position: absolute; background: rgba(255, 255, 255, 0.07); }
+.bar { position: absolute; overflow: hidden; }
+.bar.a { transform-origin: right center; }
+.bar.b { transform-origin: left center; }
+.tip { position: absolute; background: #fff; opacity: 0; }
+.sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 26%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+}
+.plate { position: absolute; left: 0; right: 0; opacity: 0; }
+
+#vs { position: absolute; }
+#vs-ring { position: absolute; inset: 0; border-radius: 50%; }
+#vs-core {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  color: #0b0d12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Anton", sans-serif;
+  letter-spacing: 0.02em;
+}
