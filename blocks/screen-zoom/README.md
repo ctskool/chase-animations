@@ -31,7 +31,7 @@ An app window floats on a soft backdrop. The cursor glides to one button on a cu
 
 The window's body is a flex row, so give your outer element `flex:1`. Inter and JetBrains Mono are available. The button presses when clicked, but the label flip only happens on the built-in screen.
 
-**2. Your own screenshot.** Quick, but use one at least 1900px wide or it softens at 2x zoom. Give the target's position as a percentage of the image:
+**2. Your own screenshot.** Quick, but use one at least 2400px wide or it softens at the default zoom. Give the target's position as a percentage of the image:
 
 ```json
 { "screenImage": "shot.png", "targetX": 80, "targetY": 12 }
@@ -52,7 +52,8 @@ Run `animate vars screen-zoom` for the full list.
 | `appName`, `projectName`, `subtitle`, `side1` to `side3`, `stat1Label` and so on | Text in the built-in window |
 | `buttonLabel`, `doneLabel` | The button before and after the click |
 | `stepNumber`, `stepLabel` | The pill that pops in last |
-| `zoom` | How far the camera goes in. 2 by default |
+| `target1` to `target3` | The short list below the button. Each ticks after the click |
+| `zoom` | How far the camera goes in. 2.6 by default |
 | `accent`, `playhead`, `windowColor`, `backdropA`, `backdropB`, `backdropC` | Colours |
 | `overlayPosition` | `top` or `bottom`, for the overlay output |
 

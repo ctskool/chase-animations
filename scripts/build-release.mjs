@@ -27,7 +27,7 @@ const PRIVATE = [
 ];
 
 // Third-party files keep their own text, so private-info rules don't apply to the licence files.
-const trusted = (file) => file.startsWith("shared/fonts/licenses/") || file === "shared/vendor/motion-blur.js";
+const trusted = (file) => file.startsWith("shared/fonts/licenses/") || file === "shared/vendor/motion-blur.js" || /^blocks\/[^/]+\/assets\//.test(file);
 
 function scan(files) {
   const problems = [];

@@ -144,7 +144,7 @@ function compositionVariables(block, vars) {
 const attr = (s) => s.replace(/&/g, "&amp;").replace(/'/g, "&#39;");
 
 export function buildProject({ block, variant, vars, timing, workDir, baseDir = process.cwd(), fps = 30, alpha, height }) {
-  const sources = ["block.js", "block.css", "block.html"].map((f) => fs.readFileSync(path.join(block.dir, f), "utf8"));
+  const sources = ["block.js", "block.css", "block.html", "block.json"].map((f) => fs.readFileSync(path.join(block.dir, f), "utf8"));
   sources.push(fs.readFileSync(path.join(PACK, "shared", "runtime.js"), "utf8"));
   const hash = createHash("sha1")
     .update(JSON.stringify({ variant, vars, timing, fps, alpha, height, sources }))
@@ -154,6 +154,8 @@ export function buildProject({ block, variant, vars, timing, workDir, baseDir = 
   fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(path.join(dir, "vendor"), { recursive: true });
 
+  const blockAssets = path.join(block.dir, "assets");
+  if (fs.existsSync(blockAssets)) fs.cpSync(blockAssets, path.join(dir, "assets"), { recursive: true });
   const finalVars = copyMedia(block, vars, dir, baseDir);
   const { frame, stage, safe } = layout(block, variant, vars, { height });
   const usesAlpha = Boolean(alpha || VARIANTS[variant].alpha);

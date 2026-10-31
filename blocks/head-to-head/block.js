@@ -12,10 +12,10 @@ CA.ready(() => {
 
   // Layout, worked out once. Compact is the top half and the overlay card.
   const M = compact
-    ? { name: 104, ruleGap: 8, rule: 6, subGap: 10, sub: 30, rowsGap: 22, label: 25, labelGap: 5, val: 52, valGap: 6, bar: 14,
-        pLabel: 27, pVal: 76, pBar: 22, pPad: 14, chip: 38, pChip: 40, vs: 92, center: 26, rowsEnd: H - safe.bottom }
-    : { name: 172, ruleGap: 16, rule: 8, subGap: 24, sub: 42, rowsGap: 58, label: 37, labelGap: 12, val: 92, valGap: 12, bar: 26,
-        pLabel: 41, pVal: 122, pBar: 40, pPad: 30, chip: 62, pChip: 58, vs: 132, center: 42, rowsEnd: H - safe.bottom };
+    ? { name: 168, ruleGap: 8, rule: 6, subGap: 10, sub: 30, rowsGap: 22, label: 25, labelGap: 5, val: 52, valGap: 6, bar: 14,
+        pLabel: 27, pVal: 76, pBar: 22, pPad: 14, chip: 38, pChip: 40, vs: 84, center: 26, rowsEnd: H - safe.bottom }
+    : { name: 262, ruleGap: 14, rule: 8, subGap: 24, sub: 42, rowsGap: 58, label: 37, labelGap: 12, val: 92, valGap: 12, bar: 26,
+        pLabel: 41, pVal: 122, pBar: 40, pPad: 30, chip: 62, pChip: 58, vs: 112, center: 42, rowsEnd: H - safe.bottom };
   const side = safe.side;
   const reach = cx - side;
   const nameY = safe.top;
@@ -32,7 +32,7 @@ CA.ready(() => {
   gsap.set("#seam", { height: Math.hypot(H, lean * 2) + 40, top: -20, rotation: (Math.atan2(lean * 2, H) * 180) / Math.PI });
 
   // Names.
-  const nameMax = reach - M.vs / 2 - 14;
+  const nameMax = reach - M.vs / 2 - 8;
   const nameA = $("name-a");
   const nameB = $("name-b");
   nameA.textContent = V.nameA;
@@ -51,7 +51,7 @@ CA.ready(() => {
   const fitted = Math.min(fittedA, fittedB);
   nameA.style.fontSize = nameB.style.fontSize = fitted + "px";
 
-  const ruleY = nameY + M.name + M.ruleGap;
+  const ruleY = nameY + fitted + M.ruleGap;
   const ruleStyle = (el, color, align) => {
     el.style.cssText = `top:${ruleY}px;height:${M.rule}px;width:${reach}px;background:${color};${align}:${side}px;`;
   };
@@ -67,7 +67,7 @@ CA.ready(() => {
   subEl.style.color = V.muted;
 
   const vs = $("vs");
-  vs.style.cssText = `left:${cx - M.vs / 2}px;top:${nameY + M.name / 2 - M.vs / 2}px;width:${M.vs}px;height:${M.vs}px`;
+  vs.style.cssText = `left:${cx - M.vs / 2}px;top:${nameY + fitted / 2 - M.vs / 2}px;width:${M.vs}px;height:${M.vs}px`;
   $("vs-ring").style.background = `conic-gradient(from 180deg, ${V.colorA} 0 50%, ${V.colorB} 50% 100%)`;
   const coreInset = Math.round(M.vs * 0.075);
   $("vs-core").style.cssText = `inset:${coreInset}px;font-size:${Math.round(M.vs * 0.36)}px`;
@@ -81,7 +81,7 @@ CA.ready(() => {
   const payoffH = M.pPad + M.pLabel + M.labelGap + M.pVal + M.valGap + M.pBar + M.pPad;
   const count = raw.length;
   const free = M.rowsEnd - rowsTop - normalH * (count - 1) - payoffH;
-  const gap = Math.max(10, Math.min(free / Math.max(1, count - 1), compact ? 34 : 96));
+  const gap = Math.max(8, Math.min(free / Math.max(1, count - 1), compact ? 34 : 96));
 
   const check = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4.6 4.6L19 7.4"/></svg>`;
   const yes = /^(yes|y|true|✓)$/i;

@@ -22,13 +22,7 @@ Run `animate list`. If it says dependencies are missing, tell the member to foll
 
 ## 2. Pick the animation
 
-If they haven't said which, show this menu and ask.
-
-| Name | What it does | Suits |
-|---|---|---|
-| `head-to-head` | Two options, up to four rows, one payoff stat | A vs B, pricing, tool comparisons |
-| `isometric-flow` | 3D diorama of a three-step process | How it works, supply chains, business models |
-| `screen-zoom` | Cursor leads, camera zooms, button clicks | Tutorials, product demos, "click here" moments |
+If they haven't said which, run `animate list`, show them the options that fit what they're making, and ask.
 
 Each block's README (`{{PACK}}/blocks/<name>/README.md`) says what it suits, what it doesn't and how to feed it.
 
@@ -43,7 +37,7 @@ Run `animate vars <name>` for every editable field and its default.
 For `screen-zoom`, three choices of screen, best first:
 
 1. **Recreate their app as HTML.** Write the screen to `screen.html`, put `data-target` on the button, and pass `"screenHtml": "screen.html"`. Text stays sharp at any zoom. No real logos or other people's files.
-2. **Their own screenshot.** Pass `"screenImage": "shot.png"` plus `targetX` and `targetY` as percentages. Use at least 1900px wide or it softens at 2x zoom.
+2. **Their own screenshot.** Pass `"screenImage": "shot.png"` plus `targetX` and `targetY` as percentages. Use at least 2400px wide or it softens at the default zoom.
 3. **The built-in window.** Change the labels only.
 
 ## 4. Pick the output

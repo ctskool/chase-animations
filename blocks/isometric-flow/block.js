@@ -320,6 +320,7 @@ CA.ready(() => {
   $("grain").style.backgroundImage = CA.grainUrl(200, 1, 5);
 
   const checkSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4.6 4.6L19 7.4"/></svg>`;
+  const pillScale = variant === "full" ? 1 : 0.84;
   const pills = [1, 2, 3].map((n) => {
     const el = make("div", "pill", $("labels"));
     const chip = make("div", "pill-chip", el);
@@ -329,7 +330,10 @@ CA.ready(() => {
     const name = make("div", "pill-name", text, V[`step${n}Name`]);
     name.style.color = V.ink;
     make("div", "pill-time", text, V[`step${n}Time`]);
-    return { el, chip, num, w: el.offsetWidth, h: el.offsetHeight, name };
+    CA.fit(name, 330, 30);
+    el.style.zoom = pillScale;
+    const stem = make("div", "stem", $("labels"));
+    return { el, chip, num, stem, w: el.offsetWidth * pillScale, h: el.offsetHeight * pillScale, name };
   });
   const finalCheck = make("span", "", pills[2].chip);
   finalCheck.innerHTML = checkSvg;
@@ -404,10 +408,17 @@ CA.ready(() => {
       const b = buildings[i];
       const p = seg(t, B.buildings[i] + B.labelLag + 0.24, 0.26);
       const [x, y] = toScreen(P(b.x, b.z, b.h + 0.3));
-      const left = clamp(x - pill.w / 2, safe.side - 20, W - safe.side + 20 - pill.w);
+      const left = clamp(x - pill.w / 2, 24, W - 24 - pill.w);
       const s = p <= 0 ? 0 : backOut(p, 2);
+      // The tall middle building takes the top row, so three big labels never touch.
+      const lift = i === 1 ? pill.h * 0.92 : 0;
+      const top = y - pill.h - lift;
       pill.el.style.visibility = p <= 0 ? "hidden" : "visible";
-      pill.el.style.transform = `translate(${left.toFixed(2)}px, ${(y - pill.h).toFixed(2)}px) scale(${s.toFixed(4)})`;
+      pill.el.style.transformOrigin = "50% 100%";
+      pill.el.style.transform = `translate(${(left / pillScale).toFixed(2)}px, ${(top / pillScale).toFixed(2)}px) scale(${s.toFixed(4)})`;
+      pill.stem.style.visibility = p > 0 && lift > 0 ? "visible" : "hidden";
+      pill.stem.style.height = lift + 6 + "px";
+      pill.stem.style.transform = `translate(${(x - 2.5).toFixed(2)}px, ${(top + pill.h - 4).toFixed(2)}px) scaleY(${Math.min(1, s).toFixed(4)})`;
     });
 
     // The key moment: the last number pops into a check.

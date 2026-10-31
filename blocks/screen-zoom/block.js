@@ -14,9 +14,9 @@ CA.ready(async () => {
 
   // Wide shot.
   const shot = {
-    full: { w: 952, h: 1120, cx: W / 2, cy: 900, pillY: 1430, pillPx: 40, goal: [0.68, 0.33] },
-    top: { w: 900, h: 690, cx: W / 2, cy: 520, pillY: 800, pillPx: 34, goal: [0.7, 0.34] },
-    overlay: { w: 860, h: 660, cx: W / 2, cy: 420, pillY: 730, pillPx: 34, goal: [0.7, 0.32] },
+    full: { w: 952, h: 1120, cx: W / 2, cy: 900, pillY: 1430, pillPx: 40, goal: [0.56, 0.37] },
+    top: { w: 900, h: 690, cx: W / 2, cy: 520, pillY: 896, pillPx: 34, goal: [0.56, 0.36] },
+    overlay: { w: 860, h: 660, cx: W / 2, cy: 420, pillY: 800, pillPx: 34, goal: [0.56, 0.34] },
   }[variant];
 
   const win = $("window");
@@ -30,6 +30,14 @@ CA.ready(async () => {
   $("s2l").textContent = V.stat2Label;
   $("s2v").textContent = V.stat2Value;
   [V.side1, V.side2, V.side3].forEach((text, i) => make("div", i === 0 ? "side-item on" : "side-item", $("sidebar"), text));
+  const ticks = [V.target1, V.target2, V.target3].map((text) => {
+    const row = make("div", "target", $("targets"));
+    const tick = make("span", "tick", row);
+    const on = make("span", "tick-on", tick);
+    on.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4.6 4.6L19 7.4"/></svg>`;
+    make("span", "", row, text);
+    return on;
+  });
   $("btn-label").textContent = V.buttonLabel;
   $("btn-done").textContent = V.doneLabel;
 
@@ -50,6 +58,11 @@ CA.ready(async () => {
   win.style.height = shot.h + "px";
   win.style.left = shot.cx - shot.w / 2 + "px";
   win.style.top = shot.cy - shot.h / 2 + "px";
+  const shadow = $("shadow");
+  shadow.style.width = shot.w + "px";
+  shadow.style.height = shot.h + "px";
+  const winX = shot.cx - shot.w / 2;
+  const winY = shot.cy - shot.h / 2;
 
   // World position of the target, measured once before anything moves.
   const stageBox = stageEl.getBoundingClientRect();
@@ -140,6 +153,21 @@ CA.ready(async () => {
     0,
   );
 
+  tl.fromTo(
+    shadow,
+    { x: 0, y: 0, scaleX: 1, scaleY: 1 },
+    {
+      x: 1, y: 1, scaleX: 2, scaleY: 2, duration: T.duration, ease: "none",
+      modifiers: {
+        x: () => view(tl.time()).s * winX + view(tl.time()).x + "px",
+        y: () => view(tl.time()).s * winY + view(tl.time()).y + "px",
+        scaleX: () => view(tl.time()).s,
+        scaleY: () => view(tl.time()).s,
+      },
+    },
+    0,
+  );
+
   // The click.
   const K = T.key;
   if (button) {
@@ -147,7 +175,7 @@ CA.ready(async () => {
     tl.to(button, { scale: 0.95, duration: 0.07, ease: "power2.out" }, K);
     tl.to(button, { scale: 1, filter: "brightness(1)", duration: 0.36, ease: "back.out(3)" }, K + 0.07);
   }
-  const ringPx = 180;
+  const ringPx = 360;
   const place = (el, px) => {
     el.style.width = el.style.height = px + "px";
     gsap.set(el, { x: G.x - px / 2, y: G.y - px / 2 });
@@ -166,6 +194,10 @@ CA.ready(async () => {
     tl.set("#btn-label", { visibility: "hidden" }, K + 0.14);
     tl.set("#btn-done", { visibility: "visible" }, K + 0.14);
     if ($("progress")) tl.to("#progress", { scaleX: 1, duration: Math.max(0.6, T.hold - 0.3), ease: "power1.inOut" }, K + 0.12);
+    ticks.forEach((on, i) => {
+      gsap.set(on, { scale: 0 });
+      tl.to(on, { scale: 1, duration: 0.26, ease: "back.out(3)" }, K + 0.4 + i * Math.max(0.2, (T.hold - 0.8) / 3));
+    });
     if ($("scrub")) {
       tl.fromTo("#scrub", { x: shot.w * 0.18 }, { x: shot.w * 0.42, duration: T.duration - K, ease: "none", immediateRender: false }, K);
       gsap.set("#scrub", { x: shot.w * 0.18 });

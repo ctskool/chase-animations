@@ -25,8 +25,8 @@
   top: 0;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 20px 10px 11px;
+  gap: 18px;
+  padding: 14px 34px 14px 16px;
   background: #fff;
   border-radius: 999px;
   white-space: nowrap;
@@ -35,8 +35,8 @@
 }
 .pill-chip {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -44,9 +44,10 @@
   color: #fff;
   font-family: "Inter Tight", sans-serif;
   font-weight: 800;
-  font-size: 24px;
+  font-size: 44px;
 }
+.stem { position: absolute; left: 0; top: 0; width: 5px; background: #fff; transform-origin: 50% 0; box-shadow: 0 2px 6px rgba(43, 52, 69, 0.18); }
 .pill-chip svg { position: absolute; width: 62%; height: 62%; }
 .pill-text { display: flex; flex-direction: column; line-height: 1.12; }
-.pill-name { font-family: "Inter Tight", sans-serif; font-weight: 700; font-size: 29px; letter-spacing: -0.01em; }
-.pill-time { font-family: "Inter", sans-serif; font-weight: 500; font-size: 19px; color: #626c80; margin-top: 1px; }
+.pill-name { font-family: "Inter Tight", sans-serif; font-weight: 700; font-size: 54px; letter-spacing: -0.01em; }
+.pill-time { font-family: "Inter", sans-serif; font-weight: 500; font-size: 34px; color: #626c80; margin-top: 2px; }
