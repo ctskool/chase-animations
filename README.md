@@ -20,7 +20,7 @@ Every animation comes in three outputs:
 
 ## Start here
 
-Follow [docs/INSTALL.md](docs/INSTALL.md). It takes about ten minutes, most of it downloads.
+Follow [docs/INSTALL.md](docs/INSTALL.md). It takes a few minutes, most of it downloads.
 
 Then in Claude Code:
 
@@ -40,4 +40,4 @@ Prefer the terminal? [docs/COMMANDS.md](docs/COMMANDS.md) has everything.
 | Mac | **Untested.** It may work, but nobody has run it yet. Tell Chase how it goes |
 | Linux | Untested |
 
-Finished video is yours to use in your own content. The pack itself is for Chase AI Plus members, so please don't share it. Fonts and third-party licences are listed in [docs/CREDITS.md](docs/CREDITS.md).
+The pack is for Chase AI Plus members, so please don't share it. Fonts and third-party licences are listed in [docs/CREDITS.md](docs/CREDITS.md).
