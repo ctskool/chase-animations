@@ -11,7 +11,7 @@ const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8"))
 const NAME = `chase-animations-v${pkg.version}`;
 
 // Paths inside the repo that are for building the pack, not using it.
-const LEAVE_OUT = [/^scripts\//, /^shared\/tests\//, /^\.gitignore$/, /^CLAUDE\.md$/, /^docs\/internal\//];
+const LEAVE_OUT = [/^scripts\//, /^\.gitignore$/, /^\.gitattributes$/, /^CLAUDE\.md$/, /^docs\/internal\//];
 const BANNED_FILES = /\.(mp4|mov|webm|mkv|m4a|wav|mp3|pcm|env|pem|key)$/i;
 const TEXT = /\.(md|json|js|mjs|css|html|txt|yml|yaml)$/i;
 

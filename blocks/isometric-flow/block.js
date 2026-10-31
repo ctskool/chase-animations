@@ -338,7 +338,7 @@ CA.ready(() => {
   const stageEl = $("stage");
   const seenCenter = (centerY / H) * 100;
   const diamond = (p) => {
-    const r = 170 * p;
+    const r = 78 * p;
     return `polygon(50% ${seenCenter - r}%, ${50 + r}% ${seenCenter}%, 50% ${seenCenter + r}%, ${50 - r}% ${seenCenter}%)`;
   };
 
@@ -426,8 +426,8 @@ CA.ready(() => {
     // Enter and leave as a diamond closing on the slab. Mid-video it needs footage behind it, so it only runs with alpha.
     if (T.exit > 0 || variant === "overlay") {
       const open = variant === "overlay" ? easeOut(seg(time, 0, 0.3), 3) : 1;
-      const gone = T.exit > 0 ? seg(time, T.key + T.hold, T.exit) : 0;
-      const a = open * (1 - gone * gone * gone);
+      const gone = T.exit > 0 ? seg(time, T.key + T.hold, T.exit - 1 / CA.fps) : 0;
+      const a = open * (1 - gone * gone);
       stageEl.style.clipPath = a >= 0.999 ? "none" : diamond(a);
     }
 

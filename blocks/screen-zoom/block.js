@@ -67,7 +67,9 @@ CA.ready(async () => {
 
   const Z = V.zoom;
   const G = { x: W * shot.goal[0], y: H * shot.goal[1] };
-  const A = { x: shot.cx - shot.w * 0.14, y: shot.cy + shot.h * 0.12 };
+  // The cursor starts across the window from the target, far enough away to read as a move.
+  let A = { x: shot.cx + (shot.cx - P.x) * 0.5, y: shot.cy + (shot.cy - P.y) * 0.5 };
+  if (Math.hypot(A.x - P.x, A.y - P.y) < shot.w * 0.4) A = { x: P.x - shot.w * 0.32, y: P.y + shot.h * 0.26 };
   const dx = P.x - A.x;
   const dy = P.y - A.y;
   const bow = 0.2;
@@ -195,7 +197,7 @@ CA.ready(async () => {
     tl.fromTo(stageEl, { clipPath: `circle(0px at 50% 50%)` }, { clipPath: `circle(${Rmax}px at 50% 50%)`, duration: 0.3, ease: "power3.out" }, 0);
   }
   if (T.exit > 0) {
-    tl.fromTo(stageEl, { clipPath: `circle(${Rmax}px at ${gx}% ${gy}%)` }, { clipPath: `circle(0px at ${gx}% ${gy}%)`, duration: T.exit, ease: "power3.in", immediateRender: false }, T.key + T.hold);
+    tl.fromTo(stageEl, { clipPath: `circle(${Rmax}px at ${gx}% ${gy}%)` }, { clipPath: `circle(0px at ${gx}% ${gy}%)`, duration: T.exit - 1 / CA.fps, ease: "power3.in", immediateRender: false }, T.key + T.hold);
   }
 
   window.__timelines["block"] = tl;

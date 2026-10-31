@@ -45,4 +45,4 @@ Rows share the build-up evenly, so a shorter build-up makes them quicker.
 
 ## Outputs
 
-`full` uses the whole 9:16 frame and keeps clear of the app bars at the top and bottom. `top` and `overlay` use a tighter layout at the same text sizes where they can. The overlay is a rounded card that opens from the seam, so it reads on any footage.
+`full` uses the whole 9:16 frame and keeps clear of the app bars at the top and bottom. `top` and `overlay` use a tighter layout. The overlay is a rounded card that opens from the seam, so it reads on any footage.

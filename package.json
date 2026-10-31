@@ -10,8 +10,7 @@
   "scripts": {
     "setup": "node shared/setup.mjs",
     "animate": "node shared/animate.mjs",
-    "test": "node --test \"shared/tests/*.test.mjs\"",
-    "release": "node scripts/build-release.mjs"
+    "test": "node --test \"shared/tests/*.test.mjs\""
   },
   "dependencies": {
     "gsap": "3.14.2",

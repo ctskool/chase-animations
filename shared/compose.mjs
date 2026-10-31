@@ -63,8 +63,8 @@ export function placeOnVideo({ video, clip, out, start, duration, variant, info,
 export function contactSheet(video, out, times) {
   const info = probe(video);
   const picks = times ?? Array.from({ length: 12 }, (_, i) => ((i + 0.5) / 12) * info.duration);
-  const tmp = fs.mkdtempSync(path.join(path.dirname(out), ".sheet-"));
   fs.mkdirSync(path.dirname(out), { recursive: true });
+  const tmp = fs.mkdtempSync(path.join(path.dirname(out), ".sheet-"));
   try {
     picks.forEach((t, i) => {
       run("ffmpeg", [

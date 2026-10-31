@@ -176,7 +176,8 @@ CA.ready(() => {
   const build = gsap.timeline();
   const payoffRun = 0.85;
   const firstRow = 0.55;
-  const step = count > 1 ? (T.design - payoffRun - firstRow) / (count - 1) : 0;
+  const lag = 0.05; // bars start this long after their label, so the payoff is timed to land on T.design
+  const step = count > 1 ? (T.design - payoffRun - lag - firstRow) / (count - 1) : 0;
 
   // Frame one is already on screen, caught mid slam.
   build.fromTo(nameA, { x: -46, scale: 1.08 }, { x: 0, scale: 1, duration: 0.42, ease: "back.out(1.9)" }, 0);
@@ -213,16 +214,16 @@ CA.ready(() => {
   }
 
   rows.forEach((row, i) => {
-    const at = row.isPayoff ? T.design - payoffRun : firstRow + i * step;
+    const at = row.isPayoff ? T.design - payoffRun - lag : firstRow + i * step;
     const dur = row.isPayoff ? payoffRun : 0.42;
     const barEase = row.isPayoff ? "back.out(1.25)" : "back.out(1.5)";
     gsap.set([row.a.val, row.b.val], { opacity: 0 });
     gsap.set([row.a.chip, row.b.chip], { scale: 0 });
     build.fromTo(row.label, { yPercent: 115 }, { yPercent: 0, duration: 0.2, ease: "power3.out" }, at);
-    growSide(row.a, at + 0.05, dur, barEase);
-    growSide(row.b, at + 0.05, dur, barEase);
-    countSide(row.a, at + 0.05, dur);
-    countSide(row.b, at + 0.05, dur);
+    growSide(row.a, at + lag, dur, barEase);
+    growSide(row.b, at + lag, dur, barEase);
+    countSide(row.a, at + lag, dur);
+    countSide(row.b, at + lag, dur);
     if (!row.a.stat) build.set(row.a.val, { opacity: 1 }, at + 0.1);
     if (!row.b.stat) build.set(row.b.val, { opacity: 1 }, at + 0.1);
 
@@ -273,6 +274,6 @@ CA.ready(() => {
   const closed = `polygon(${50 + l}% -10%, ${50 + l}% -10%, ${50 - l}% 110%, ${50 - l}% 110%)`;
   const open = "polygon(-10% -10%, 110% -10%, 110% 110%, -10% 110%)";
   if (variant === "overlay") tl.fromTo(stageEl, { clipPath: closed }, { clipPath: open, duration: 0.24, ease: "power3.out" }, 0);
-  if (T.exit > 0) tl.to(stageEl, { clipPath: closed, duration: T.exit, ease: "power3.in" }, T.key + T.hold);
+  if (T.exit > 0) tl.to(stageEl, { clipPath: closed, duration: T.exit - 1 / CA.fps, ease: "power3.in" }, T.key + T.hold);
   window.__timelines["block"] = tl;
 });
