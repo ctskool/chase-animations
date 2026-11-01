@@ -1,0 +1,144 @@
+@font-face {
+  font-family: "Outfit";
+  src: url("assets/fonts/outfit-500.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+}
+
+#go-clip,
+#go-clip * {
+  box-sizing: border-box;
+}
+
+#go-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+#go-circles,
+#go-orb {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Keep supporting outlines above the halo and behind the solid orb. */
+#go-circles {
+  z-index: 1;
+}
+
+#go-orb {
+  z-index: auto;
+}
+
+.go-circle {
+  position: absolute;
+  border-style: solid;
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+  pointer-events: none;
+}
+
+#go-halo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+#go-halo-light,
+#go-halo-grain {
+  position: absolute;
+  inset: 0;
+}
+
+#go-halo-grain {
+  background-repeat: repeat;
+  background-size: 192px 192px;
+  mix-blend-mode: soft-light;
+  -webkit-mask-image: radial-gradient(
+    circle var(--go-halo-radius)
+    at var(--go-center-x) var(--go-center-y),
+    black 0%,
+    black 42%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--go-halo-radius)
+    at var(--go-center-x) var(--go-center-y),
+    black 0%,
+    black 42%,
+    transparent 100%
+  );
+}
+
+#go-core {
+  position: absolute;
+  transform-origin: 50% 50%;
+  z-index: 2;
+}
+
+#go-body {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+  filter: brightness(1);
+  z-index: 1;
+}
+
+#go-body-grain {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-repeat: repeat;
+  background-size: 192px 192px;
+  mix-blend-mode: soft-light;
+}
+
+#go-rim {
+  position: absolute;
+  inset: 0;
+  border-style: solid;
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+  z-index: 2;
+}
+
+#go-caption {
+  position: absolute;
+  left: 50%;
+  width: max-content;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+#go-line {
+  display: inline-block;
+  font-family: "Outfit", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-kerning: normal;
+  line-height: 1.08;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.go-row {
+  display: block;
+  width: max-content;
+  margin: 0 auto;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.go-word {
+  display: inline-block;
+  visibility: hidden;
+  vertical-align: baseline;
+  transform-origin: 50% 70%;
+}

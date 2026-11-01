@@ -1,0 +1,104 @@
+@font-face {
+  font-family: "Share Tech Mono";
+  src: url("assets/fonts/share-tech-mono-400.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
+
+#osc-clip,
+#osc-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+#osc-field {
+  background:
+    radial-gradient(
+      ellipse at 50% 48%,
+      var(--osc-face) 0%,
+      var(--osc-screen) 76%
+    );
+}
+
+#osc-grid,
+#osc-trace,
+#osc-grain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#osc-grid {
+  z-index: 0;
+}
+
+#osc-grain {
+  z-index: 1;
+  background-size: 180px 180px;
+  mix-blend-mode: screen;
+}
+
+#osc-trace {
+  z-index: 2;
+}
+
+#osc-readout-mask {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  text-align: center;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#osc-readout {
+  display: inline-block;
+  font-family: "Share Tech Mono", monospace;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0.035em;
+  white-space: nowrap;
+  color: var(--osc-readout);
+}
+
+/* Feather all four edges without softening the lettering. */
+[data-variant="overlay"] #osc-field {
+  -webkit-mask-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #000 5%,
+      #000 95%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 11%,
+      #000 86%,
+      transparent 100%
+    );
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #000 5%,
+      #000 95%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 11%,
+      #000 86%,
+      transparent 100%
+    );
+  mask-composite: intersect;
+}

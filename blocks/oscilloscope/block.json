@@ -1,0 +1,284 @@
+{
+  "name": "oscilloscope",
+  "title": "Oscilloscope",
+  "summary": "A green phosphor signal locks, folds into a clean 2:3 figure, contracts and rings down. Broad geometric capitals rise from the zero line left to right, landing with a white-core strike and moving beam energy through the hold.",
+  "fonts": [
+    "400 44px 'Share Tech Mono'"
+  ],
+  "fontFiles": [
+    "share-tech-mono-400.woff2"
+  ],
+  "timing": {
+    "keyAt": 3.5,
+    "hold": 1.5,
+    "exit": 0.3,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the last letter reaches its single opening overshoot as the complete phrase receives a white-core strike and soft screen exposure; the letter settles within 0.12 seconds, leaving a slightly heavier beam and fixed reading position",
+  "overlayHeight": 720,
+  "overlayCard": false,
+  "variables": [
+    {
+      "id": "words",
+      "type": "string",
+      "label": "Words drawn by the trace",
+      "default": "STAY AWAKE"
+    },
+    {
+      "id": "readout",
+      "type": "string",
+      "label": "Optional single instrument readout",
+      "default": ""
+    },
+    {
+      "id": "baseline",
+      "type": "number",
+      "label": "Full output signal zero line (px)",
+      "default": 980,
+      "min": 500,
+      "max": 1350,
+      "step": 1
+    },
+    {
+      "id": "letterHeight",
+      "type": "number",
+      "label": "Full output letter height before proportional fitting (px)",
+      "default": 216,
+      "min": 96,
+      "max": 800,
+      "step": 1
+    },
+    {
+      "id": "topLetterHeight",
+      "type": "number",
+      "label": "Top output letter height before proportional fitting (px)",
+      "default": 208,
+      "min": 96,
+      "max": 600,
+      "step": 1
+    },
+    {
+      "id": "overlayLetterHeight",
+      "type": "number",
+      "label": "Overlay letter height before proportional fitting (px)",
+      "default": 192,
+      "min": 96,
+      "max": 480,
+      "step": 1
+    },
+    {
+      "id": "letterSpacing",
+      "type": "number",
+      "label": "Space between letters, relative to glyph units",
+      "default": 0.16,
+      "min": 0.04,
+      "max": 0.3,
+      "step": 0.01
+    },
+    {
+      "id": "wordSpacing",
+      "type": "number",
+      "label": "Additional word gap, relative to glyph units",
+      "default": 1.1,
+      "min": 0.6,
+      "max": 1.8,
+      "step": 0.05
+    },
+    {
+      "id": "overshoot",
+      "type": "number",
+      "label": "Single letter opening overshoot (%)",
+      "default": 8,
+      "min": 0,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "id": "keyPunch",
+      "type": "number",
+      "label": "Key moment beam emphasis (%)",
+      "default": 12,
+      "min": 0,
+      "max": 18,
+      "step": 1
+    },
+    {
+      "id": "traceInset",
+      "type": "number",
+      "label": "Letter and figure side clearance (px at 1080 wide)",
+      "default": 40,
+      "min": 32,
+      "max": 160,
+      "step": 1
+    },
+    {
+      "id": "waveAmplitude",
+      "type": "number",
+      "label": "Full output sine amplitude before safety fitting (px)",
+      "default": 580,
+      "min": 80,
+      "max": 700,
+      "step": 1
+    },
+    {
+      "id": "waveCycles",
+      "type": "number",
+      "label": "Sine cycles across the trace",
+      "default": 2.3,
+      "min": 1,
+      "max": 4,
+      "step": 0.1
+    },
+    {
+      "id": "figureWidth",
+      "type": "number",
+      "label": "Full output Lissajous width before safety fitting (px)",
+      "default": 920,
+      "min": 360,
+      "max": 1040,
+      "step": 1
+    },
+    {
+      "id": "figureHeight",
+      "type": "number",
+      "label": "Full output Lissajous height before safety fitting (px)",
+      "default": 1160,
+      "min": 240,
+      "max": 1400,
+      "step": 1
+    },
+    {
+      "id": "persistenceFrames",
+      "type": "number",
+      "label": "Previous frames in the persistence trail",
+      "default": 3,
+      "min": 0,
+      "max": 6,
+      "step": 1
+    },
+    {
+      "id": "persistenceStrength",
+      "type": "number",
+      "label": "Persistence brightness",
+      "default": 0.18,
+      "min": 0,
+      "max": 0.35,
+      "step": 0.01
+    },
+    {
+      "id": "strokeWidth",
+      "type": "number",
+      "label": "Trace stroke width (px at 1080 wide)",
+      "default": 11,
+      "min": 2,
+      "max": 18,
+      "step": 0.1
+    },
+    {
+      "id": "glowStrength",
+      "type": "number",
+      "label": "Tight phosphor halo strength",
+      "default": 0.65,
+      "min": 0,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "id": "scanSpeed",
+      "type": "number",
+      "label": "Beam energy passes per second",
+      "default": 0.42,
+      "min": 0.1,
+      "max": 0.8,
+      "step": 0.01
+    },
+    {
+      "id": "gridSpacing",
+      "type": "number",
+      "label": "Full output square grid spacing (px)",
+      "default": 108,
+      "min": 72,
+      "max": 180,
+      "step": 1
+    },
+    {
+      "id": "readoutSize",
+      "type": "number",
+      "label": "Instrument readout size (px at 1080 wide)",
+      "default": 44,
+      "min": 40,
+      "max": 64,
+      "step": 1
+    },
+    {
+      "id": "grainOpacity",
+      "type": "number",
+      "label": "Fine screen grain",
+      "default": 0.055,
+      "min": 0,
+      "max": 0.12,
+      "step": 0.005
+    },
+    {
+      "id": "seed",
+      "type": "number",
+      "label": "Screen grain seed",
+      "default": 7,
+      "min": 1,
+      "max": 9999,
+      "step": 1
+    },
+    {
+      "id": "screen",
+      "type": "color",
+      "label": "Dark screen",
+      "default": "#030805"
+    },
+    {
+      "id": "tubeFace",
+      "type": "color",
+      "label": "Tube face lift",
+      "default": "#09150E"
+    },
+    {
+      "id": "graticule",
+      "type": "color",
+      "label": "Graticule",
+      "default": "#122E1F"
+    },
+    {
+      "id": "phosphor",
+      "type": "color",
+      "label": "Green phosphor",
+      "default": "#46FF8C"
+    },
+    {
+      "id": "beamCore",
+      "type": "color",
+      "label": "Almost white beam core",
+      "default": "#D7FFF3"
+    },
+    {
+      "id": "readoutColor",
+      "type": "color",
+      "label": "Instrument readout",
+      "default": "#82B99A"
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "name": "glow-orb",
+  "title": "Glow Orb",
+  "summary": "A large shaded pink-white orb breathes above one line of type. The pink closing phrase arrives as its rim detaches and the edge circles recoil. A shorter hold carries the released ring into a gently tipped orbit.",
+  "fonts": [
+    "500 40px Outfit"
+  ],
+  "fontFiles": [
+    "outfit-500.woff2"
+  ],
+  "timing": {
+    "keyAt": 2.5,
+    "hold": 1.15,
+    "exit": 0.3,
+    "minKeyAt": 1.3
+  },
+  "keyMoment": "the pink closing phrase finishes its arrival exactly at the breath crest, with the single rim detached and the supporting circles recoiling",
+  "overlayHeight": 900,
+  "variables": [
+    {
+      "id": "line",
+      "type": "string",
+      "label": "Short statement",
+      "default": "Make room for stillness."
+    },
+    {
+      "id": "outlineCircleCount",
+      "type": "number",
+      "label": "Outline circle count",
+      "default": 7,
+      "min": 0,
+      "max": 12,
+      "step": 1
+    },
+    {
+      "id": "orbDiameter",
+      "type": "number",
+      "label": "Requested resting orb diameter",
+      "default": 760,
+      "min": 320,
+      "max": 820,
+      "step": 10
+    },
+    {
+      "id": "typeSize",
+      "type": "number",
+      "label": "Requested full-output type size",
+      "default": 144,
+      "min": 40,
+      "max": 160,
+      "step": 1
+    },
+    {
+      "id": "tracking",
+      "type": "number",
+      "label": "Letter spacing in em",
+      "default": -0.03,
+      "min": -0.05,
+      "max": 0.02,
+      "step": 0.005
+    },
+    {
+      "id": "initialOrbScale",
+      "type": "number",
+      "label": "Opening orb size",
+      "default": 0.88,
+      "min": 0.5,
+      "max": 0.94,
+      "step": 0.01
+    },
+    {
+      "id": "wordPulse",
+      "type": "number",
+      "label": "Pulse on earlier word arrivals (%)",
+      "default": 1.6,
+      "min": 0,
+      "max": 6,
+      "step": 0.1
+    },
+    {
+      "id": "breathOvershoot",
+      "type": "number",
+      "label": "Key breath overshoot (%)",
+      "default": 10,
+      "min": 5,
+      "max": 22,
+      "step": 1
+    },
+    {
+      "id": "breathAmount",
+      "type": "number",
+      "label": "Slow breathing range (%)",
+      "default": 2.5,
+      "min": 1,
+      "max": 3,
+      "step": 0.1
+    },
+    {
+      "id": "breathPeriod",
+      "type": "number",
+      "label": "Slow breath period in seconds",
+      "default": 3,
+      "min": 2,
+      "max": 5,
+      "step": 0.1
+    },
+    {
+      "id": "wordStaggerFrames",
+      "type": "number",
+      "label": "Design frames between reveal beats",
+      "default": 22,
+      "min": 3,
+      "max": 24,
+      "step": 1
+    },
+    {
+      "id": "wordRiseDuration",
+      "type": "number",
+      "label": "Earlier-word rise in design seconds",
+      "default": 0.26,
+      "min": 0.12,
+      "max": 0.4,
+      "step": 0.01
+    },
+    {
+      "id": "keyAttackDuration",
+      "type": "number",
+      "label": "Closing-phrase arrival and rim release in design seconds",
+      "default": 0.28,
+      "min": 0.1,
+      "max": 0.4,
+      "step": 0.01
+    },
+    {
+      "id": "keyRingGap",
+      "type": "number",
+      "label": "Rim separation at the key moment (%)",
+      "default": 8,
+      "min": 3,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "id": "ringReleaseDuration",
+      "type": "number",
+      "label": "Seconds from the key crest to the wide orbit",
+      "default": 0.52,
+      "min": 0.3,
+      "max": 1.2,
+      "step": 0.01
+    },
+    {
+      "id": "orbitScale",
+      "type": "number",
+      "label": "Detached ring diameter relative to the orb",
+      "default": 1.3,
+      "min": 1.3,
+      "max": 2.2,
+      "step": 0.01
+    },
+    {
+      "id": "orbitFlattening",
+      "type": "number",
+      "label": "Orbit tipping compression (%)",
+      "default": 12,
+      "min": 0,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "id": "orbitTurn",
+      "type": "number",
+      "label": "Orbit turn in degrees",
+      "default": -14,
+      "min": -30,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "id": "haloScale",
+      "type": "number",
+      "label": "Halo size relative to the orb",
+      "default": 2.35,
+      "min": 1.8,
+      "max": 2.8,
+      "step": 0.05
+    },
+    {
+      "id": "hotspotSize",
+      "type": "number",
+      "label": "White highlight radius (%)",
+      "default": 10,
+      "min": 4,
+      "max": 18,
+      "step": 1
+    },
+    {
+      "id": "parallaxPush",
+      "type": "number",
+      "label": "Circle gathering and recoil distance (%)",
+      "default": 12,
+      "min": 4,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "id": "outlineWidth",
+      "type": "number",
+      "label": "Outline circle stroke width",
+      "default": 2.25,
+      "min": 0.75,
+      "max": 3,
+      "step": 0.25
+    },
+    {
+      "id": "rimWidth",
+      "type": "number",
+      "label": "Resting orb and orbit stroke width",
+      "default": 2,
+      "min": 1,
+      "max": 4,
+      "step": 0.25
+    },
+    {
+      "id": "keyRimWidth",
+      "type": "number",
+      "label": "Rim stroke width at the key moment",
+      "default": 8,
+      "min": 2,
+      "max": 12,
+      "step": 0.5
+    },
+    {
+      "id": "grainAmount",
+      "type": "number",
+      "label": "Fine grain inside the light",
+      "default": 0.055,
+      "min": 0.02,
+      "max": 0.1,
+      "step": 0.005
+    },
+    {
+      "id": "seed",
+      "type": "number",
+      "label": "Circle and grain seed",
+      "default": 7,
+      "min": 1,
+      "max": 9999,
+      "step": 1
+    },
+    {
+      "id": "ground",
+      "type": "color",
+      "label": "Near-black ground",
+      "default": "#070304"
+    },
+    {
+      "id": "haloRose",
+      "type": "color",
+      "label": "Deep rose halo",
+      "default": "#531829"
+    },
+    {
+      "id": "haloEdge",
+      "type": "color",
+      "label": "Outer halo falloff",
+      "default": "#13050B"
+    },
+    {
+      "id": "orbPink",
+      "type": "color",
+      "label": "Orb pink and final-word emphasis",
+      "default": "#F696DE"
+    },
+    {
+      "id": "orbWhite",
+      "type": "color",
+      "label": "Orb white",
+      "default": "#FBF6F8"
+    },
+    {
+      "id": "ink",
+      "type": "color",
+      "label": "Type and outline circles",
+      "default": "#F6EFF2"
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

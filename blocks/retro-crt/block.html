@@ -1,0 +1,51 @@
+<svg id="crt-defs" width="0" height="0" aria-hidden="true">
+  <defs>
+    <filter id="crt-warp" filterUnits="userSpaceOnUse"
+      x="0" y="0" color-interpolation-filters="sRGB">
+      <feImage id="crt-warp-map" x="0" y="0"
+        preserveAspectRatio="none" result="glass-map"></feImage>
+      <feDisplacementMap id="crt-displacement"
+        in="SourceGraphic" in2="glass-map"
+        xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+    </filter>
+  </defs>
+</svg>
+
+<div id="crt-tube">
+  <div id="crt-picture">
+    <div id="crt-raster">
+      <div id="crt-warped">
+        <div id="crt-glass" aria-hidden="true"></div>
+        <div id="crt-haze" aria-hidden="true"></div>
+        <div id="crt-lock-pulse" aria-hidden="true"></div>
+        <canvas id="crt-scanlines" aria-hidden="true"></canvas>
+        <div id="crt-hum" aria-hidden="true"></div>
+        <div id="crt-sheen" aria-hidden="true"></div>
+        <div id="crt-snow" aria-hidden="true"></div>
+        <div id="crt-dither" aria-hidden="true"></div>
+
+        <div id="crt-content">
+          <div id="crt-title">
+            <div id="crt-title-shape">
+              <div class="crt-title-row">
+                <span id="crt-title-1" class="crt-title-line"></span>
+              </div>
+              <div class="crt-title-row">
+                <span id="crt-title-2" class="crt-title-line"></span>
+              </div>
+            </div>
+          </div>
+
+          <div id="crt-system">
+            <span id="crt-dot" aria-hidden="true"></span>
+            <span id="crt-system-run"><span id="crt-typed"></span><span id="crt-cursor" aria-hidden="true"></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="crt-edge-top" class="crt-edge" aria-hidden="true"></div>
+  <div id="crt-edge-bottom" class="crt-edge" aria-hidden="true"></div>
+  <div id="crt-line" aria-hidden="true"></div>
+</div>

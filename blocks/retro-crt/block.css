@@ -1,0 +1,246 @@
+@font-face {
+  font-family: "Syncopate";
+  src: url("assets/fonts/syncopate-700.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Share Tech Mono";
+  src: url("assets/fonts/share-tech-mono-400.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
+
+#stage,
+#crt-tube,
+#crt-tube * {
+  box-sizing: border-box;
+}
+
+#stage {
+  background: var(--crt-ground);
+}
+
+#crt-defs {
+  position: absolute;
+  pointer-events: none;
+}
+
+#crt-tube,
+#crt-picture,
+#crt-raster,
+#crt-warped,
+#crt-glass,
+#crt-haze,
+#crt-lock-pulse,
+#crt-scanlines,
+#crt-dither {
+  position: absolute;
+  inset: 0;
+}
+
+#crt-tube {
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--crt-ground);
+}
+
+#crt-picture {
+  overflow: hidden;
+}
+
+#crt-raster {
+  transform-origin: 50% 50%;
+}
+
+#crt-warped {
+  isolation: isolate;
+  filter: url("#crt-warp");
+}
+
+#crt-glass,
+#crt-haze,
+#crt-lock-pulse,
+#crt-scanlines,
+#crt-hum,
+#crt-sheen,
+#crt-snow,
+#crt-dither {
+  pointer-events: none;
+}
+
+#crt-glass {
+  z-index: 0;
+}
+
+#crt-haze,
+#crt-lock-pulse,
+#crt-scanlines,
+#crt-hum,
+#crt-sheen,
+#crt-snow,
+#crt-dither {
+  z-index: 1;
+}
+
+#crt-lock-pulse {
+  opacity: 0;
+}
+
+/* Glass moves behind the words; the held words stay registered. */
+#crt-content {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  width: 100%;
+}
+
+#crt-title {
+  position: absolute;
+  top: 0;
+  transform-origin: 50% 50%;
+  visibility: hidden;
+}
+
+#crt-title-shape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  transform-origin: 50% 0%;
+}
+
+.crt-title-row {
+  width: 100%;
+  text-align: center;
+  font-size: 0;
+  line-height: 0;
+  visibility: hidden;
+  transform-origin: 50% 65%;
+}
+
+.crt-title-line {
+  display: inline-block;
+  max-width: none;
+  vertical-align: top;
+  font-family: "Syncopate", sans-serif;
+  font-weight: 700;
+  line-height: 0.9;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--crt-core);
+  letter-spacing: var(--crt-tracking);
+  text-shadow:
+    calc(var(--crt-fringe) * -1px) 0 0 var(--crt-warm-fringe),
+    calc(var(--crt-fringe) * 1px) 0 0 var(--crt-cool-fringe),
+    0 0 3px var(--crt-core-glow),
+    0 0 12px var(--crt-bloom-tight),
+    0 0 36px var(--crt-bloom-mid),
+    0 0 100px var(--crt-bloom-wide);
+}
+
+#crt-system {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-family: "Share Tech Mono", monospace;
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+  visibility: hidden;
+}
+
+#crt-dot {
+  display: block;
+  flex: none;
+  border-radius: 50%;
+  background: var(--crt-accent);
+  box-shadow:
+    0 0 7px var(--crt-accent-tight),
+    0 0 26px var(--crt-accent-wide);
+  transform-origin: 50% 50%;
+  visibility: hidden;
+}
+
+#crt-system-run {
+  display: inline-block;
+  flex: none;
+  min-width: 0;
+  line-height: 1.2;
+  white-space: pre;
+  text-align: left;
+  color: var(--crt-system-ink);
+  text-shadow:
+    0 0 3px var(--crt-bloom-tight),
+    0 0 13px var(--crt-bloom-wide);
+}
+
+#crt-typed {
+  white-space: inherit;
+}
+
+#crt-cursor {
+  display: inline-block;
+  width: 0.57em;
+  height: 0.93em;
+  margin-left: 0.12em;
+  vertical-align: -0.09em;
+  background: var(--crt-core);
+  transform-origin: 50% 50%;
+  box-shadow:
+    0 0 3px var(--crt-core-glow),
+    0 0 11px var(--crt-bloom-mid);
+}
+
+#crt-scanlines {
+  width: 100%;
+  height: 100%;
+}
+
+#crt-hum {
+  position: absolute;
+  left: -5%;
+  width: 110%;
+  mix-blend-mode: screen;
+}
+
+#crt-sheen {
+  position: absolute;
+  inset: -18%;
+  mix-blend-mode: screen;
+}
+
+#crt-snow {
+  position: absolute;
+  inset: -192px;
+  background-size: 192px 192px;
+  mix-blend-mode: soft-light;
+}
+
+#crt-dither {
+  background-size: 173px 173px;
+  mix-blend-mode: soft-light;
+  opacity: 0.035;
+}
+
+.crt-edge,
+#crt-line {
+  position: absolute;
+  z-index: 8;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--crt-core);
+  box-shadow:
+    0 0 4px var(--crt-core-glow),
+    0 0 20px var(--crt-bloom-tight),
+    0 0 66px var(--crt-bloom-mid);
+  transform-origin: 50% 50%;
+  pointer-events: none;
+}

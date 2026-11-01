@@ -1,0 +1,283 @@
+{
+  "name": "retro-crt",
+  "title": "Retro CRT",
+  "summary": "A hot beam opens into two huge phosphor title strikes. Large terminal words arrive above a reserved status line. The complete status lands with a sharp title release, a beam flare, a red indicator and a warm glass flash. Moving glass carries the reading hold into a brief tube collapse.",
+  "fonts": [
+    "700 40px Syncopate",
+    "400 40px 'Share Tech Mono'"
+  ],
+  "fontFiles": [
+    "syncopate-700.woff2",
+    "share-tech-mono-400.woff2"
+  ],
+  "timing": {
+    "keyAt": 1.8333333333333333,
+    "hold": 3.1666666666666665,
+    "exit": 0.3,
+    "minKeyAt": 1.1
+  },
+  "keyMoment": "the complete terminal status lands as the compressed title snaps into its tallest pose, a beam flares between the title lines, the red indicator strikes and warm light fills the glass",
+  "overlayHeight": 760,
+  "overlayCard": false,
+  "variables": [
+    {
+      "id": "titleLine1",
+      "type": "string",
+      "label": "Title line 1",
+      "default": "AFTER"
+    },
+    {
+      "id": "titleLine2",
+      "type": "string",
+      "label": "Title line 2",
+      "default": "HOURS"
+    },
+    {
+      "id": "systemText",
+      "type": "string",
+      "label": "System message",
+      "default": "CHANNEL 08 // LINK STABLE"
+    },
+    {
+      "id": "titleWidth",
+      "type": "number",
+      "label": "Title width (% of stage)",
+      "default": 90,
+      "min": 65,
+      "max": 94,
+      "step": 1
+    },
+    {
+      "id": "fullTitleHeight",
+      "type": "number",
+      "label": "Portrait title height multiplier",
+      "default": 3.35,
+      "min": 1,
+      "max": 3.5,
+      "step": 0.05
+    },
+    {
+      "id": "topTitleHeight",
+      "type": "number",
+      "label": "Top title height multiplier",
+      "default": 1.95,
+      "min": 1,
+      "max": 2.4,
+      "step": 0.05
+    },
+    {
+      "id": "overlayTitleHeight",
+      "type": "number",
+      "label": "Overlay title height multiplier",
+      "default": 1.75,
+      "min": 1,
+      "max": 2,
+      "step": 0.01
+    },
+    {
+      "id": "tracking",
+      "type": "number",
+      "label": "Title letter spacing (% of type size)",
+      "default": 4,
+      "min": 0,
+      "max": 10,
+      "step": 0.5
+    },
+    {
+      "id": "lineGap",
+      "type": "number",
+      "label": "Space between title lines",
+      "default": 8,
+      "min": 0,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "id": "systemSize",
+      "type": "number",
+      "label": "System type size before output adjustment",
+      "default": 80,
+      "min": 40,
+      "max": 96,
+      "step": 1
+    },
+    {
+      "id": "systemBrightness",
+      "type": "number",
+      "label": "System brightness before lock",
+      "default": 0.94,
+      "min": 0.65,
+      "max": 1,
+      "step": 0.01
+    },
+    {
+      "id": "accentSize",
+      "type": "number",
+      "label": "Red indicator diameter",
+      "default": 28,
+      "min": 8,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "id": "lockCompression",
+      "type": "number",
+      "label": "Title height before the lock",
+      "default": 0.78,
+      "min": 0.65,
+      "max": 0.96,
+      "step": 0.01
+    },
+    {
+      "id": "lockPunch",
+      "type": "number",
+      "label": "Title punch at the key moment",
+      "default": 1.16,
+      "min": 1.03,
+      "max": 1.18,
+      "step": 0.005
+    },
+    {
+      "id": "shutdownDuration",
+      "type": "number",
+      "label": "Full and top sign-off duration",
+      "default": 0.22,
+      "min": 0.12,
+      "max": 0.5,
+      "step": 0.01
+    },
+    {
+      "id": "bloomStrength",
+      "type": "number",
+      "label": "Warm phosphor bloom",
+      "default": 1,
+      "min": 0.3,
+      "max": 1.5,
+      "step": 0.05
+    },
+    {
+      "id": "curvature",
+      "type": "number",
+      "label": "Barrel curvature",
+      "default": 0.018,
+      "min": 0,
+      "max": 0.035,
+      "step": 0.001
+    },
+    {
+      "id": "scanlineOpacity",
+      "type": "number",
+      "label": "Fine scanlines",
+      "default": 0.12,
+      "min": 0.03,
+      "max": 0.22,
+      "step": 0.01
+    },
+    {
+      "id": "snowOpacity",
+      "type": "number",
+      "label": "Light snow",
+      "default": 0.045,
+      "min": 0,
+      "max": 0.1,
+      "step": 0.005
+    },
+    {
+      "id": "sheenOpacity",
+      "type": "number",
+      "label": "Diagonal glass sheen",
+      "default": 0.07,
+      "min": 0,
+      "max": 0.1,
+      "step": 0.005
+    },
+    {
+      "id": "humOpacity",
+      "type": "number",
+      "label": "Rolling hum bar",
+      "default": 0.085,
+      "min": 0.01,
+      "max": 0.12,
+      "step": 0.005
+    },
+    {
+      "id": "flickerAmount",
+      "type": "number",
+      "label": "Settled brightness flicker",
+      "default": 0.01,
+      "min": 0,
+      "max": 0.015,
+      "step": 0.001
+    },
+    {
+      "id": "fringeAmount",
+      "type": "number",
+      "label": "Settled colour fringe in pixels",
+      "default": 0.6,
+      "min": 0,
+      "max": 1.2,
+      "step": 0.1
+    },
+    {
+      "id": "seed",
+      "type": "number",
+      "label": "Texture seed",
+      "default": 8,
+      "min": 1,
+      "max": 9999,
+      "step": 1
+    },
+    {
+      "id": "ground",
+      "type": "color",
+      "label": "Tube black",
+      "default": "#07090F"
+    },
+    {
+      "id": "glass",
+      "type": "color",
+      "label": "Blue-grey glass lift",
+      "default": "#0B0E16"
+    },
+    {
+      "id": "core",
+      "type": "color",
+      "label": "Near-white phosphor core",
+      "default": "#FCFBF8"
+    },
+    {
+      "id": "bloom",
+      "type": "color",
+      "label": "Warm rose-coral haze",
+      "default": "#FF9A90"
+    },
+    {
+      "id": "accent",
+      "type": "color",
+      "label": "Red indicator",
+      "default": "#F05A4A"
+    },
+    {
+      "id": "fringeBlue",
+      "type": "color",
+      "label": "Faint cool glass fringe",
+      "default": "#82A1CA"
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    }
+  ]
+}
