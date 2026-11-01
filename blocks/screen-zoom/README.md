@@ -1,47 +1,47 @@
 # Screen zoom
 
-An app window floats on a soft backdrop. The cursor glides to one button on a curve, the camera follows and zooms in with real motion blur, and the button clicks. The label flips, a progress bar runs, and a step pill pops in.
+A compact dark app floats on a mint backdrop. The title and Publish controls read immediately. The cursor leads a short zoom, the camera settles, and the button presses. Destinations complete under Publishing; the final check reveals Published.
 
 **Key moment:** the cursor clicks the button.
 
 ## Suits
 
-- Tutorials: "click here, then here"
+- Tutorials with one important click
 - Product and SaaS demos
-- "How I did it" videos, where one click is the whole point
+- “How I did it” videos
 
 ## Doesn't suit
 
 - Several clicks in a row. Use one block per click
-- Showing a real screen recording. This shows one still screen
+- Playing a screen recording. This block presents one screen and animates the camera and click
 
 ## Three ways to show your screen
 
-**1. Recreate it as HTML (best).** Text stays sharp at any zoom. Write the inside of the window to a file, mark the button with `data-target`, and pass it in:
+**1. Recreate it as HTML (best).** The interface remains sharp through the zoom. Mark the target button with `data-target`:
 
 ```json
 { "screenHtml": "screen.html", "stepLabel": "Send it" }
 ```
 
 ```html
-<div style="flex:1;display:flex;align-items:center;justify-content:center;background:#14151a">
-  <button data-target style="position:relative;border:0;border-radius:14px;padding:20px 44px;font:600 28px Inter;color:#fff;background:#B4380F">Send invoice</button>
+<div style="flex:1;display:flex;align-items:center;justify-content:center;background:#1B1C20">
+  <button data-target style="position:relative;border:0;border-radius:14px;padding:24px 44px;font:600 40px Inter;color:#fff;background:#2563EB">Send invoice</button>
 </div>
 ```
 
-The window's body is a flex row, so give your outer element `flex:1`. Inter and JetBrains Mono are available. The button presses when clicked, but the label flip only happens on the built-in screen.
+The window body is a flex row, so give the outer element `flex:1`. Inter and JetBrains Mono are available. Custom buttons press; the automatic labels and destination checks belong to the built-in screen.
 
-**2. Your own screenshot.** Quick, but use one at least 2400px wide or it softens at the default zoom. Give the target's position as a percentage of the image:
+**2. Your own screenshot.** Use a high-resolution image and supply the target position as percentages:
 
 ```json
 { "screenImage": "shot.png", "targetX": 80, "targetY": 12 }
 ```
 
-There's no button to press, so the click shows as the cursor dip and the white ring.
+Screenshots can soften when enlarged. Use HTML for the sharpest result. Image targets receive the cursor dip and click rings.
 
-**3. The built-in window.** A generic dark video app. Change the labels and you're done.
+**3. The built-in window.** Change the sample labels. A short preview sits beside a larger publish panel. Website, Newsletter and Community remain visible together in the close shot.
 
-Leave real logos, other people's names and private files off the screen.
+Leave real logos, other people's names and private files off the screen. The sample interface illustrates an animation, not a working publishing service.
 
 ## What to change
 
@@ -49,25 +49,39 @@ Run `animate vars screen-zoom` for the full list.
 
 | Variables | What they are |
 |---|---|
-| `appName`, `projectName`, `subtitle`, `side1` to `side3`, `stat1Label` and so on | Text in the built-in window |
-| `buttonLabel`, `doneLabel` | The button before and after the click |
-| `stepNumber`, `stepLabel` | The pill that pops in last |
-| `target1` to `target3` | The short list below the button. Each ticks after the click |
-| `zoom` | How far the camera goes in. 2.6 by default |
-| `accent`, `playhead`, `windowColor`, `backdropA`, `backdropB`, `backdropC` | Colours |
-| `overlayPosition` | `top` or `bottom`, for the overlay output |
+| `appName`, `projectName`, `subtitle`, `side1` to `side3` | App and navigation text |
+| `stat1Label`, `stat1Value`, `stat2Label`, `stat2Value`, `timelineTimecode` | Supporting screen details |
+| `buttonLabel`, `pendingLabel`, `doneLabel` | Publish, Publishing and Published states |
+| `stepNumber`, `stepLabel` | Large instruction pill beneath the destinations |
+| `target1` to `target3` | Destinations that complete after the click |
+| `zoom` | Requested magnification; each output limits it to preserve breathing room |
+| `accent`, `playhead` | Action colours |
+| `windowColor`, `chromeColor`, `panelColor`, `lineColor`, `textColor`, `mutedColor`, `previewColor` | Interface palette |
+| `backdropA`, `backdropB`, `backdropC` | Mint backdrop |
+| `overlayPosition` | Overlay placement: `top` or `bottom` |
 
-White text needs a dark enough `accent`. The default passes contrast checks, but a bright colour may not.
+Keep all three button labels short and use an accent dark enough for white text.
 
 ## Timing
 
 | | |
 |---|---|
-| Build-up before the key moment | 1.75s by default, 1s at the shortest |
-| After the key moment | 2s, then it closes in a circle in 0.32s when placed in a video |
+| Build-up | 1.45s by default; minimum 1s |
+| Cursor approach | Lands around 0.75s at default timing |
+| Camera | Settles around 0.90s, before the click |
+| Hold | 2.3s |
+| Transparent exit | Circle closes in 0.32s |
+
+The click changes Publish to Publishing. Three destination checks follow; the final check reveals Published 0.8s after the click at default timing. The larger instruction pill pops in after the click ripple.
+
+The completed state remains readable for over a second. Small check halos, cursor movement, the playhead and a slow backdrop drift keep the hold alive. The camera and reading text stay still.
 
 ## Outputs
 
-`full` uses a tall window, `top` a wider one. `overlay` is a rounded card, so the zoom happens inside the card and your face stays visible.
+`full` uses a compact window with a large title, wider controls and a gentler 2.1× default zoom. `top` and `overlay` have separate window, control, row and pill sizes.
 
-The blur layer uses thin stacked copies of the window, so a soft gradient can show faint bands during the fastest frames of the zoom. Flat colours stay clean, which is why the built-in window uses them.
+The close shot reserves room for all three destinations and the instruction pill. Backdrop remains around the top-right corner. Shorter stages reduce magnification to keep the action together.
+
+Motion blur covers the brief camera move and cursor approach. Both settle before the click. The button has no progress underline; completion is shown by its label and the destination checks.
+
+Grain stays on the backdrop. The interface uses clean, flat surfaces.

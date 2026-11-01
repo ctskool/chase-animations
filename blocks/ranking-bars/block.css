@@ -1,0 +1,155 @@
+#ranking-clip,
+#ranking-clip * {
+  box-sizing: border-box;
+}
+#ranking-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700;
+}
+#ranking-background,
+#ranking-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+#ranking-noise {
+  background-size: 180px 180px;
+  opacity: 0.025;
+}
+#ranking-header,
+#ranking-grid,
+#ranking-axis,
+#ranking-rows,
+#ranking-caption,
+#ranking-year,
+.ranking-result {
+  position: absolute;
+}
+#ranking-title {
+  position: relative;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+.ranking-title-line {
+  display: block;
+  line-height: 1.02;
+}
+.ranking-title-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+#ranking-subtitle {
+  position: relative;
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+}
+.ranking-gridline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+.ranking-axis-label,
+.ranking-unit {
+  position: absolute;
+  display: inline-block;
+  white-space: nowrap;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+#ranking-rows {
+  left: 0;
+  right: 0;
+  top: 0;
+}
+.ranking-row {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.ranking-name,
+.ranking-value {
+  position: absolute;
+  display: inline-block;
+  line-height: 1.12;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.025em;
+}
+.ranking-bar {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  transform-origin: left center;
+  border-radius: 0 8px 8px 0;
+}
+.ranking-sweep {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+.ranking-chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  line-height: 1;
+  font-weight: 800;
+  transform-origin: center center;
+}
+.ranking-chip-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+#ranking-caption,
+.ranking-result-label {
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.ranking-caption-line,
+.ranking-result-label-line {
+  display: block;
+  line-height: 1.2;
+}
+.ranking-caption-text,
+.ranking-result-label-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+.ranking-result-number-line {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 8px;
+  white-space: nowrap;
+}
+.ranking-result-number {
+  display: inline-block;
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  font-variant-numeric: tabular-nums;
+}
+.ranking-result-unit {
+  display: inline-block;
+  line-height: 1.15;
+}
+#ranking-year {
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.055em;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.ranking-year-text {
+  display: inline-block;
+  white-space: nowrap;
+  transform-origin: center bottom;
+}

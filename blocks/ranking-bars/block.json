@@ -1,0 +1,233 @@
+{
+  "name": "ranking-bars",
+  "title": "Ranking bars",
+  "summary": "Six categories race through changing years. Follow one orange hero through live overtakes, then land on its oversized final result.",
+  "fonts": [
+    "700 40px 'Inter Tight'",
+    "800 40px 'Inter Tight'"
+  ],
+  "timing": {
+    "keyAt": 4,
+    "hold": 1,
+    "exit": 0.32,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "The final year and all six values become exact as the running caption cuts to Redhaven's oversized 130 TWh result. Its bar and first-place chip punch immediately afterwards.",
+  "overlayHeight": 960,
+  "variables": [
+    {
+      "id": "title",
+      "type": "string",
+      "label": "Title",
+      "default": "The clean power race"
+    },
+    {
+      "id": "subtitle",
+      "type": "string",
+      "label": "Subtitle",
+      "default": "Annual clean generation in six fictional regions · TWh"
+    },
+    {
+      "id": "category1",
+      "type": "string",
+      "label": "Category 1",
+      "default": "Redhaven"
+    },
+    {
+      "id": "category2",
+      "type": "string",
+      "label": "Category 2",
+      "default": "Mossvale"
+    },
+    {
+      "id": "category3",
+      "type": "string",
+      "label": "Category 3",
+      "default": "Stoneford"
+    },
+    {
+      "id": "category4",
+      "type": "string",
+      "label": "Category 4",
+      "default": "Bluefen"
+    },
+    {
+      "id": "category5",
+      "type": "string",
+      "label": "Category 5",
+      "default": "Ashwick"
+    },
+    {
+      "id": "category6",
+      "type": "string",
+      "label": "Category 6",
+      "default": "Westmere"
+    },
+    {
+      "id": "heroCategory",
+      "type": "string",
+      "label": "Hero category — match a category name",
+      "default": "Redhaven"
+    },
+    {
+      "id": "firstPlaceChip",
+      "type": "string",
+      "label": "First-place chip",
+      "default": "1st"
+    },
+    {
+      "id": "units",
+      "type": "string",
+      "label": "Axis and final-result units",
+      "default": "TWh"
+    },
+    {
+      "id": "yearlyValues",
+      "type": "string",
+      "label": "CSV: year followed by the six category values, in category order",
+      "default": "Year,Redhaven,Mossvale,Stoneford,Bluefen,Ashwick,Westmere\n2020,34,78,66,53,42,28\n2021,43,82,71,61,49,35\n2022,58,88,77,69,57,42\n2023,73,93,82,78,63,50\n2024,91,99,88,87,70,59\n2025,111,106,94,96,76,68\n2026,130,113,101,105,83,78"
+    },
+    {
+      "id": "openingCaption",
+      "type": "string",
+      "label": "Opening caption",
+      "default": "All regions and figures are fictional."
+    },
+    {
+      "id": "passingTemplate",
+      "type": "string",
+      "label": "Overtake caption; {name} is the region being passed",
+      "default": "passes {name}"
+    },
+    {
+      "id": "leadingCaption",
+      "type": "string",
+      "label": "Caption when the hero reaches first",
+      "default": "takes first place"
+    },
+    {
+      "id": "finalCaption",
+      "type": "string",
+      "label": "Short label above the hero's final result",
+      "default": "Redhaven leads"
+    },
+    {
+      "id": "axisMax",
+      "type": "number",
+      "label": "Axis maximum — expands if the data needs more room",
+      "default": 140,
+      "min": 1,
+      "max": 1000000000,
+      "step": 1
+    },
+    {
+      "id": "valueDecimals",
+      "type": "number",
+      "label": "Decimal places",
+      "default": 0,
+      "min": 0,
+      "max": 2,
+      "step": 1
+    },
+    {
+      "id": "color1",
+      "type": "color",
+      "label": "Redhaven colour",
+      "default": "#F04B32"
+    },
+    {
+      "id": "color2",
+      "type": "color",
+      "label": "Mossvale colour",
+      "default": "#B8C3A5"
+    },
+    {
+      "id": "color3",
+      "type": "color",
+      "label": "Stoneford colour",
+      "default": "#A9B9BF"
+    },
+    {
+      "id": "color4",
+      "type": "color",
+      "label": "Bluefen colour",
+      "default": "#A7B9D0"
+    },
+    {
+      "id": "color5",
+      "type": "color",
+      "label": "Ashwick colour",
+      "default": "#C4B4CB"
+    },
+    {
+      "id": "color6",
+      "type": "color",
+      "label": "Westmere colour",
+      "default": "#CDBFA9"
+    },
+    {
+      "id": "backgroundTop",
+      "type": "color",
+      "label": "Background top",
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "backgroundBottom",
+      "type": "color",
+      "label": "Background bottom",
+      "default": "#F4F6F9"
+    },
+    {
+      "id": "ink",
+      "type": "color",
+      "label": "Title, hero text, final result and winner chip text",
+      "default": "#111418"
+    },
+    {
+      "id": "nameInk",
+      "type": "color",
+      "label": "Other category names and values",
+      "default": "#46505E"
+    },
+    {
+      "id": "muted",
+      "type": "color",
+      "label": "Subtitle, captions, units and axis",
+      "default": "#596574"
+    },
+    {
+      "id": "gridColor",
+      "type": "color",
+      "label": "Gridlines",
+      "default": "#E6E9EE"
+    },
+    {
+      "id": "yearColor",
+      "type": "color",
+      "label": "Year before the final result",
+      "default": "#65717F"
+    },
+    {
+      "id": "chipGround",
+      "type": "color",
+      "label": "Winner chip background and moving bar highlight",
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    }
+  ]
+}

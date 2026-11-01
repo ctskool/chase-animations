@@ -1,0 +1,92 @@
+{
+  "name": "globe-arcs",
+  "title": "Globe arcs",
+  "summary": "Orange routes cross a real dotted globe, landing one by one as an oversized figure steps to its final value.",
+  "fonts": [
+    "700 40px 'Inter Tight'",
+    "500 40px Inter",
+    "500 40px 'JetBrains Mono'"
+  ],
+  "three": true,
+  "motionBlur": true,
+  "dataFiles": ["land-110m.json"],
+  "overlayHeight": 1000,
+  "timing": {
+    "keyAt": 3.6,
+    "hold": 1.4,
+    "exit": 0.34,
+    "minKeyAt": 2
+  },
+  "keyMoment": "the last orange route touches down, its pin lands and the figure reaches exactly 128",
+  "variables": [
+    { "id": "label", "type": "string", "label": "Headline label", "default": "DAILY TRANSFER VOLUME" },
+    { "id": "finalNumber", "type": "number", "label": "Final number", "default": 128 },
+    { "id": "unit", "type": "string", "label": "Number unit", "default": "TB" },
+    { "id": "startingNumber", "type": "number", "label": "Starting number", "default": 0 },
+    { "id": "numberDecimals", "type": "number", "label": "Decimal places", "default": 0 },
+
+    { "id": "originCity", "type": "string", "label": "Origin city", "default": "Alderport" },
+    { "id": "originLatitude", "type": "number", "label": "Origin latitude", "default": 47.606 },
+    { "id": "originLongitude", "type": "number", "label": "Origin longitude", "default": -122.332 },
+
+    { "id": "destination1City", "type": "string", "label": "Destination 1", "default": "Cedar Bay" },
+    { "id": "destination1Latitude", "type": "number", "label": "Destination 1 latitude", "default": 37.775 },
+    { "id": "destination1Longitude", "type": "number", "label": "Destination 1 longitude", "default": -122.419 },
+    { "id": "destination1Transfer", "type": "string", "label": "Destination 1 transfer", "default": "24 TB" },
+    { "id": "destination1Cumulative", "type": "number", "label": "Number after landing 1", "default": 24 },
+    { "id": "destination1DepartureFrame", "type": "number", "label": "Departure 1 frame", "default": 8 },
+    { "id": "destination1LandingFrame", "type": "number", "label": "Landing 1 frame", "default": 28 },
+
+    { "id": "destination2City", "type": "string", "label": "Destination 2", "default": "Red Mesa" },
+    { "id": "destination2Latitude", "type": "number", "label": "Destination 2 latitude", "default": 33.448 },
+    { "id": "destination2Longitude", "type": "number", "label": "Destination 2 longitude", "default": -112.074 },
+    { "id": "destination2Transfer", "type": "string", "label": "Destination 2 transfer", "default": "32 TB" },
+    { "id": "destination2Cumulative", "type": "number", "label": "Number after landing 2", "default": 56 },
+    { "id": "destination2DepartureFrame", "type": "number", "label": "Departure 2 frame", "default": 31 },
+    { "id": "destination2LandingFrame", "type": "number", "label": "Landing 2 frame", "default": 53 },
+
+    { "id": "destination3City", "type": "string", "label": "Destination 3", "default": "Lakehaven" },
+    { "id": "destination3Latitude", "type": "number", "label": "Destination 3 latitude", "default": 41.878 },
+    { "id": "destination3Longitude", "type": "number", "label": "Destination 3 longitude", "default": -87.63 },
+    { "id": "destination3Transfer", "type": "string", "label": "Destination 3 transfer", "default": "32 TB" },
+    { "id": "destination3Cumulative", "type": "number", "label": "Number after landing 3", "default": 88 },
+    { "id": "destination3DepartureFrame", "type": "number", "label": "Departure 3 frame", "default": 56 },
+    { "id": "destination3LandingFrame", "type": "number", "label": "Landing 3 frame", "default": 80 },
+
+    { "id": "destination4City", "type": "string", "label": "Destination 4", "default": "Eastmere" },
+    { "id": "destination4Latitude", "type": "number", "label": "Destination 4 latitude", "default": 40.713 },
+    { "id": "destination4Longitude", "type": "number", "label": "Destination 4 longitude", "default": -74.006 },
+    { "id": "destination4Transfer", "type": "string", "label": "Destination 4 transfer", "default": "40 TB" },
+    { "id": "destination4Cumulative", "type": "number", "label": "Number after landing 4", "default": 128 },
+    { "id": "destination4DepartureFrame", "type": "number", "label": "Departure 4 frame", "default": 83 },
+    { "id": "destination4LandingFrame", "type": "number", "label": "Landing 4 frame", "default": 108 },
+
+    { "id": "sourceFps", "type": "number", "label": "Timing reference frame rate", "default": 30 },
+    { "id": "rotationDegrees", "type": "number", "label": "Eastward globe rotation", "default": 40 },
+    { "id": "motionStopFrame", "type": "number", "label": "Main rotation settle frame", "default": 120 },
+    { "id": "viewLongitude", "type": "number", "label": "Starting view longitude", "default": -115 },
+    { "id": "viewLatitude", "type": "number", "label": "View latitude", "default": 26 },
+    { "id": "holdDriftDegrees", "type": "number", "label": "Gentle hold drift, degrees per second", "default": 0.6 },
+    { "id": "arcLift", "type": "number", "label": "Route height multiplier", "default": 1 },
+    { "id": "routeWidth", "type": "number", "label": "Route width", "default": 6 },
+    { "id": "landDotSize", "type": "number", "label": "Land dot radius", "default": 1.65 },
+    { "id": "landSamples", "type": "number", "label": "Land sampling density", "default": 78000 },
+    { "id": "seed", "type": "number", "label": "Dot and grain seed", "default": 19 },
+
+    { "id": "bgCentre", "type": "color", "label": "Background centre", "default": "#0E1830" },
+    { "id": "bgEdge", "type": "color", "label": "Background edges", "default": "#05070C" },
+    { "id": "ocean", "type": "color", "label": "Ocean", "default": "#0A1426" },
+    { "id": "land", "type": "color", "label": "Land dots", "default": "#C9D6EE" },
+    { "id": "rim", "type": "color", "label": "Thin globe rim", "default": "#637FA9" },
+    { "id": "route", "type": "color", "label": "Routes", "default": "#FF8A3D" },
+    { "id": "routeTip", "type": "color", "label": "Drawing tip", "default": "#FFE2C8" },
+    { "id": "ink", "type": "color", "label": "Figure and pins", "default": "#FFFFFF" },
+    { "id": "muted", "type": "color", "label": "Unit and city labels", "default": "#9AAFCF" },
+    { "id": "labelColor", "type": "color", "label": "Mono headline", "default": "#7E96BC" },
+    { "id": "pinRing", "type": "color", "label": "Dark pin outlines", "default": "#05070C" },
+    { "id": "overlayPosition", "type": "enum", "label": "Overlay position", "default": "top", "options": [
+      { "value": "top", "label": "Top" },
+      { "value": "bottom", "label": "Bottom" }
+    ] }
+  ]
+}

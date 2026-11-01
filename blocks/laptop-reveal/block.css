@@ -1,0 +1,112 @@
+#lr-background,
+#lr-vignette,
+#lr-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#lr-background {
+  z-index: 0;
+}
+
+#lr-vignette,
+#lr-grain {
+  z-index: 1;
+}
+
+#lr-grain {
+  background-size: 192px 192px;
+  mix-blend-mode: multiply;
+  opacity: 0.055;
+}
+
+#lr-gl {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  display: block;
+  pointer-events: none;
+}
+
+#lr-heading-mask,
+#lr-name-mask,
+#lr-line-mask {
+  position: absolute;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+  text-align: center;
+}
+
+#lr-heading-first,
+#lr-heading-second {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+#lr-heading-second {
+  display: none;
+}
+
+#lr-name-mask,
+#lr-line-mask {
+  left: 0;
+  right: 0;
+}
+
+#lr-name,
+#lr-line {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0;
+  white-space: pre-line;
+  transform-origin: 50% 50%;
+  visibility: hidden;
+}
+
+#lr-name {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1.12;
+}
+
+#lr-line {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+#lr-accent {
+  position: absolute;
+  z-index: 3;
+  height: 6px;
+  border-radius: 6px;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+  transform-origin: 0 50%;
+}
+
+#lr-accent-light {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -30%;
+  width: 30%;
+  border-radius: inherit;
+}

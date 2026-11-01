@@ -1,0 +1,314 @@
+{
+  "name": "laptop-reveal",
+  "title": "Laptop reveal",
+  "summary": "A silver laptop springs open, reveals a large illustrated product page, and scrolls into a click timed to the oversized product-name reveal.",
+  "fonts": [
+    "700 144px 'Inter Tight'",
+    "700 184px 'Inter Tight'",
+    "500 84px Inter"
+  ],
+  "three": true,
+  "motionBlur": true,
+  "overlayHeight": 1000,
+  "timing": {
+    "keyAt": 4,
+    "hold": 1,
+    "exit": 0.34,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the product name and short line land as the page button releases, with a spreading click outline and blue underline",
+  "variables": [
+    {
+      "id": "product",
+      "type": "string",
+      "label": "Product on the screen",
+      "default": "Nooklane"
+    },
+    {
+      "id": "productDescription",
+      "type": "string",
+      "label": "Accessible product description",
+      "default": "A workspace for projects, notes, and next steps."
+    },
+    {
+      "id": "headline",
+      "type": "string",
+      "label": "Opening headline",
+      "default": "Good work starts with\na clear desk."
+    },
+    {
+      "id": "projectTitle",
+      "type": "string",
+      "label": "Product preview title",
+      "default": "Website refresh"
+    },
+    {
+      "id": "projectDescription",
+      "type": "string",
+      "label": "Product preview description",
+      "default": "A thoughtful place to begin."
+    },
+    {
+      "id": "sectionHeadline",
+      "type": "string",
+      "label": "Headline revealed by the scroll",
+      "default": "From scattered to settled."
+    },
+    {
+      "id": "sectionDescription",
+      "type": "string",
+      "label": "Description revealed by the scroll",
+      "default": "Projects, notes, and next steps.\nTogether."
+    },
+    {
+      "id": "button",
+      "type": "string",
+      "label": "Button",
+      "default": "Create your workspace"
+    },
+    {
+      "id": "productName",
+      "type": "string",
+      "label": "Name underneath the laptop",
+      "default": "Nooklane"
+    },
+    {
+      "id": "shortLine",
+      "type": "string",
+      "label": "Short line",
+      "default": "A little more space to think."
+    },
+    {
+      "id": "bgTop",
+      "type": "color",
+      "label": "Studio top",
+      "default": "#F5F5F7"
+    },
+    {
+      "id": "bgBottom",
+      "type": "color",
+      "label": "Studio floor",
+      "default": "#E4E6EA"
+    },
+    {
+      "id": "silver",
+      "type": "color",
+      "label": "Aluminium",
+      "default": "#C7CBD1"
+    },
+    {
+      "id": "bezel",
+      "type": "color",
+      "label": "Black glass bezel",
+      "default": "#101114"
+    },
+    {
+      "id": "keys",
+      "type": "color",
+      "label": "Keys",
+      "default": "#23252A"
+    },
+    {
+      "id": "pageBackground",
+      "type": "color",
+      "label": "Page background",
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "pageInk",
+      "type": "color",
+      "label": "Page and portrait headline text",
+      "default": "#0F1115"
+    },
+    {
+      "id": "buttonColor",
+      "type": "color",
+      "label": "Button and underline",
+      "default": "#2F6BFF"
+    },
+    {
+      "id": "buttonPressedColor",
+      "type": "color",
+      "label": "Pressed button",
+      "default": "#2452C7"
+    },
+    {
+      "id": "buttonInk",
+      "type": "color",
+      "label": "Button text and studio lights",
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "nameInk",
+      "type": "color",
+      "label": "Product name",
+      "default": "#1D1D1F"
+    },
+    {
+      "id": "muted",
+      "type": "color",
+      "label": "Secondary text",
+      "default": "#565B65"
+    },
+    {
+      "id": "workspaceSurface",
+      "type": "color",
+      "label": "Product preview panel",
+      "default": "#F1F3F7"
+    },
+    {
+      "id": "headlineSize",
+      "type": "number",
+      "label": "Portrait headline size",
+      "default": 128
+    },
+    {
+      "id": "nameSize",
+      "type": "number",
+      "label": "Portrait product-name size",
+      "default": 184
+    },
+    {
+      "id": "taglineSize",
+      "type": "number",
+      "label": "Portrait short-line size",
+      "default": 56
+    },
+    {
+      "id": "screenTitleSize",
+      "type": "number",
+      "label": "Screen headline size in texture pixels",
+      "default": 144
+    },
+    {
+      "id": "screenTextSize",
+      "type": "number",
+      "label": "Screen description size in texture pixels",
+      "default": 84
+    },
+    {
+      "id": "screenButtonSize",
+      "type": "number",
+      "label": "Screen button size in texture pixels",
+      "default": 84
+    },
+    {
+      "id": "initialLidAngle",
+      "type": "number",
+      "label": "Initial lid angle in degrees",
+      "default": 26
+    },
+    {
+      "id": "finalLidAngle",
+      "type": "number",
+      "label": "Final lid angle in degrees",
+      "default": 100
+    },
+    {
+      "id": "cameraOrbit",
+      "type": "number",
+      "label": "Initial camera orbit in degrees",
+      "default": 30
+    },
+    {
+      "id": "cameraElevation",
+      "type": "number",
+      "label": "Final camera elevation in degrees",
+      "default": 21
+    },
+    {
+      "id": "orbitEndFrame",
+      "type": "number",
+      "label": "Camera and lid landing frame",
+      "default": 32
+    },
+    {
+      "id": "wakeStartFrame",
+      "type": "number",
+      "label": "Screen wake starts",
+      "default": 5
+    },
+    {
+      "id": "wakeEndFrame",
+      "type": "number",
+      "label": "Screen becomes sharp",
+      "default": 28
+    },
+    {
+      "id": "screenBlur",
+      "type": "number",
+      "label": "Initial screen blur in texture pixels",
+      "default": 14
+    },
+    {
+      "id": "scrollStartFrame",
+      "type": "number",
+      "label": "Page scroll starts",
+      "default": 40
+    },
+    {
+      "id": "scrollEndFrame",
+      "type": "number",
+      "label": "Page scroll ends",
+      "default": 74
+    },
+    {
+      "id": "scrollPixels",
+      "type": "number",
+      "label": "Page travel in texture pixels, 900–1500",
+      "default": 940
+    },
+    {
+      "id": "cursorStartFrame",
+      "type": "number",
+      "label": "Cursor movement starts",
+      "default": 82
+    },
+    {
+      "id": "cursorEndFrame",
+      "type": "number",
+      "label": "Cursor reaches button",
+      "default": 104
+    },
+    {
+      "id": "pressStartFrame",
+      "type": "number",
+      "label": "Button press starts",
+      "default": 110
+    },
+    {
+      "id": "pressEndFrame",
+      "type": "number",
+      "label": "Button release and check start",
+      "default": 120
+    },
+    {
+      "id": "nameStartFrame",
+      "type": "number",
+      "label": "Product name starts rising",
+      "default": 94
+    },
+    {
+      "id": "lineStartFrame",
+      "type": "number",
+      "label": "Short line starts rising",
+      "default": 103
+    },
+    {
+      "id": "keyFrame",
+      "type": "number",
+      "label": "Reference frame for the key moment",
+      "default": 120
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

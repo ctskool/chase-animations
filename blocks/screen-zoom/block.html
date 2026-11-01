@@ -2,7 +2,7 @@
   <div id="backdrop"></div>
   <div id="grain"></div>
   <div id="shadow"></div>
-  <div id="cam" data-hf-motion-blur='{"shutterAngle": 200, "shutterPhase": -100, "samplesPerFrame": 14, "sharp": 0}'>
+  <div id="cam" data-hf-motion-blur='{"shutterAngle": 110, "shutterPhase": -55, "samplesPerFrame": 14, "sharp": 0}'>
     <div id="window">
       <div class="titlebar">
         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
@@ -17,25 +17,39 @@
               <div class="project" id="project"></div>
               <div class="subtitle" id="subtitle"></div>
             </div>
-            <button class="primary" id="target" data-target>
-              <span class="btn-label" id="btn-label"></span>
-              <span class="btn-label btn-done" id="btn-done"></span>
-              <i class="btn-fill" id="progress"></i>
-            </button>
           </header>
           <div class="content">
-            <div class="preview"><div class="play"></div></div>
-            <div class="targets" id="targets"></div>
-          </div>
-          <div class="stats">
-            <div class="stat"><div class="stat-label" id="s1l"></div><div class="stat-value" id="s1v"></div></div>
-            <div class="stat"><div class="stat-label" id="s2l"></div><div class="stat-value" id="s2v"></div></div>
-          </div>
-          <div class="timeline">
-            <div class="timecode">00:00:18:12</div>
-            <div class="track"><i style="width: 34%"></i><i style="width: 22%"></i><i style="width: 30%"></i></div>
-            <div class="track alt"><i style="width: 18%"></i><i style="width: 46%"></i></div>
-            <div class="scrub" id="scrub"></div>
+            <div class="workspace">
+              <div class="preview"><div class="play"></div></div>
+              <div class="stats">
+                <div class="stat">
+                  <div class="stat-label" id="s1l"></div>
+                  <div class="stat-value" id="s1v"></div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label" id="s2l"></div>
+                  <div class="stat-value" id="s2v"></div>
+                </div>
+              </div>
+              <div class="timeline">
+                <div class="timecode" id="timecode"></div>
+                <div class="track">
+                  <i style="width:34%"></i><i style="width:22%"></i><i style="width:30%"></i>
+                </div>
+                <div class="track alt">
+                  <i style="width:18%"></i><i style="width:46%"></i>
+                </div>
+                <div class="scrub" id="scrub"></div>
+              </div>
+            </div>
+            <section class="publish-panel" id="publish-panel">
+              <button class="primary" id="target" data-target>
+                <span class="btn-label" id="btn-label"></span>
+                <span class="btn-label btn-pending" id="btn-pending"></span>
+                <span class="btn-label btn-done" id="btn-done"></span>
+              </button>
+              <div class="targets" id="targets"></div>
+            </section>
           </div>
         </main>
       </div>
@@ -43,7 +57,7 @@
   </div>
   <div id="ring"></div>
   <div id="ripple"></div>
-  <div id="cursor" data-hf-motion-blur='{"shutterAngle": 200, "shutterPhase": -100, "samplesPerFrame": 14}'>
+  <div id="cursor" data-hf-motion-blur='{"shutterAngle": 150, "shutterPhase": -75, "samplesPerFrame": 14}'>
     <svg viewBox="0 0 28 34" width="46" height="56" fill="none">
       <path d="M4 2.5v24.2l6.3-6.1 4 9.9 5.1-2.1-4.1-9.7 8.8-.4L4 2.5z" fill="#0d0e11" stroke="#fff" stroke-width="2.2" stroke-linejoin="round" />
     </svg>
