@@ -1,0 +1,60 @@
+<canvas id="map-gl"></canvas>
+
+<svg id="route-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path id="route-casing" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path id="route-impact" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path id="route-stroke" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path id="route-flow" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+
+<div id="place-labels"></div>
+
+<div id="route-head" aria-hidden="true">
+  <div id="route-head-halo"></div>
+  <div id="route-head-core"></div>
+</div>
+
+<div id="source-dot" aria-hidden="true">
+  <div class="source-pulse"></div>
+  <div class="source-pulse"></div>
+  <div id="source-core"></div>
+</div>
+
+<div id="destination-shadow" aria-hidden="true"></div>
+
+<div id="arrival-rings" aria-hidden="true">
+  <div class="arrival-ring"></div>
+  <div class="arrival-ring"></div>
+</div>
+
+<div id="destination" aria-hidden="true">
+  <svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg">
+    <path id="pin-shape" d="M50 137C43 125 10 87 10 53A40 40 0 0 1 90 53C90 87 57 125 50 137Z" stroke-width="5" stroke-linejoin="round"></path>
+    <circle id="pin-hole" cx="50" cy="52" r="15"></circle>
+  </svg>
+</div>
+
+<div id="destination-label"></div>
+
+<div id="trip-card">
+  <div id="trip-wash"></div>
+  <div id="trip-edge"></div>
+  <div id="trip-accent"></div>
+  <div id="trip-copy">
+    <div id="trip-time"></div>
+    <div id="trip-distance"></div>
+    <div id="trip-fastest">
+      <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2.5"></circle>
+        <path d="M8.5 14l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span id="fastest-text"></span>
+    </div>
+  </div>
+  <div id="go-button">
+    <span id="go-text"></span>
+    <svg id="go-arrow" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M6 16h19M17 8l8 8-8 8" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </div>
+</div>

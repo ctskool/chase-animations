@@ -1,0 +1,206 @@
+{
+  "name": "day-card",
+  "title": "Day card",
+  "summary": "A huge red DAY counter stamps through a calendar, then finishes with a handwritten hero circle and a solid red final-date stamp.",
+  "fonts": [
+    "400 40px Anton",
+    "700 40px Inter"
+  ],
+  "timing": {
+    "keyAt": 4,
+    "hold": 1,
+    "exit": 0.3,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the exact final number is circled, its completed calendar date becomes a solid red stamp, and the last check is fully drawn",
+  "overlayHeight": 960,
+  "variables": [
+    {
+      "id": "label",
+      "type": "string",
+      "label": "Label above the counter",
+      "default": "THE DAILY PRACTICE"
+    },
+    {
+      "id": "headingWord",
+      "type": "string",
+      "label": "Counter heading",
+      "default": "DAY"
+    },
+    {
+      "id": "startingDay",
+      "type": "number",
+      "label": "Starting day",
+      "default": 1,
+      "min": 1,
+      "max": 31,
+      "step": 1
+    },
+    {
+      "id": "finalDay",
+      "type": "number",
+      "label": "Final day",
+      "default": 30,
+      "min": 1,
+      "max": 31,
+      "step": 1
+    },
+    {
+      "id": "month",
+      "type": "string",
+      "label": "Month name",
+      "default": "APRIL"
+    },
+    {
+      "id": "calendarDays",
+      "type": "number",
+      "label": "Number of dates in the month",
+      "default": 30,
+      "min": 1,
+      "max": 31,
+      "step": 1
+    },
+    {
+      "id": "firstWeekday",
+      "type": "enum",
+      "label": "Weekday of the first date",
+      "default": "mon",
+      "options": [
+        { "value": "mon", "label": "Monday" },
+        { "value": "tue", "label": "Tuesday" },
+        { "value": "wed", "label": "Wednesday" },
+        { "value": "thu", "label": "Thursday" },
+        { "value": "fri", "label": "Friday" },
+        { "value": "sat", "label": "Saturday" },
+        { "value": "sun", "label": "Sunday" }
+      ]
+    },
+    {
+      "id": "weekday1",
+      "type": "string",
+      "label": "Monday label",
+      "default": "MON"
+    },
+    {
+      "id": "weekday2",
+      "type": "string",
+      "label": "Tuesday label",
+      "default": "TUE"
+    },
+    {
+      "id": "weekday3",
+      "type": "string",
+      "label": "Wednesday label",
+      "default": "WED"
+    },
+    {
+      "id": "weekday4",
+      "type": "string",
+      "label": "Thursday label",
+      "default": "THU"
+    },
+    {
+      "id": "weekday5",
+      "type": "string",
+      "label": "Friday label",
+      "default": "FRI"
+    },
+    {
+      "id": "weekday6",
+      "type": "string",
+      "label": "Saturday label",
+      "default": "SAT"
+    },
+    {
+      "id": "weekday7",
+      "type": "string",
+      "label": "Sunday label",
+      "default": "SUN"
+    },
+    {
+      "id": "red",
+      "type": "color",
+      "label": "DAY, checks, focus, final stamp and marker circle",
+      "default": "#E5383B"
+    },
+    {
+      "id": "ink",
+      "type": "color",
+      "label": "Counter, month, active date and binder pegs",
+      "default": "#191919"
+    },
+    {
+      "id": "labelColor",
+      "type": "color",
+      "label": "Small label and hairlines",
+      "default": "#6F6F69"
+    },
+    {
+      "id": "dateColor",
+      "type": "color",
+      "label": "Dates and weekday labels",
+      "default": "#5C5C56"
+    },
+    {
+      "id": "backgroundTop",
+      "type": "color",
+      "label": "Background top",
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "backgroundBottom",
+      "type": "color",
+      "label": "Background bottom",
+      "default": "#F3F3F1"
+    },
+    {
+      "id": "paperColor",
+      "type": "color",
+      "label": "Calendar paper and final stamp lettering",
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "cellColor",
+      "type": "color",
+      "label": "Unchecked date squares",
+      "default": "#F3F3F1"
+    },
+    {
+      "id": "markerWidth",
+      "type": "number",
+      "label": "Marker stroke weight",
+      "default": 7,
+      "min": 4,
+      "max": 12,
+      "step": 0.5
+    },
+    {
+      "id": "grainOpacity",
+      "type": "number",
+      "label": "Fine paper grain",
+      "default": 0.045,
+      "min": 0,
+      "max": 0.12,
+      "step": 0.005
+    },
+    {
+      "id": "seed",
+      "type": "number",
+      "label": "Marker and grain seed",
+      "default": 11,
+      "min": 1,
+      "max": 9999,
+      "step": 1
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "name": "evidence-desk",
+  "title": "Evidence desk",
+  "summary": "Weighted paper landings on a textured cutting mat, a taped cut-out label, handwritten red annotations and two deliberate highlighter strokes.",
+  "fonts": [
+    "700 40px 'Inter Tight'",
+    "800 40px 'Inter Tight'",
+    "400 40px 'Libre Caslon Text'",
+    "700 40px 'Libre Caslon Text'",
+    "500 40px 'IBM Plex Mono'",
+    "400 40px 'Permanent Marker'"
+  ],
+  "fontFiles": [
+    "libre-caslon-text-400.woff2",
+    "libre-caslon-text-700.woff2",
+    "ibm-plex-mono-500.woff2",
+    "permanent-marker-400.woff2"
+  ],
+  "motionBlur": true,
+  "overlayHeight": 960,
+  "timing": {
+    "keyAt": 4,
+    "hold": 1,
+    "exit": 0.3,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the red circle closes around the exact selected figure as the arrowhead and handwritten underline finish",
+  "variables": [
+    { "id": "chartTitle", "type": "string", "label": "Chart title", "default": "WHO USES THE WATER?" },
+    { "id": "chartSubtitle", "type": "string", "label": "Chart subtitle", "default": "Bellwether County · Dry-season water use, 2025" },
+    { "id": "metric", "type": "string", "label": "Chart metric", "default": "SHARE OF TOTAL WATER USE" },
+    { "id": "row1Label", "type": "string", "label": "Category 1", "default": "Farms" },
+    { "id": "row1Value", "type": "string", "label": "Category 1 value", "default": "68%" },
+    { "id": "row2Label", "type": "string", "label": "Category 2", "default": "Homes" },
+    { "id": "row2Value", "type": "string", "label": "Category 2 value", "default": "21%" },
+    { "id": "row3Label", "type": "string", "label": "Category 3", "default": "Other" },
+    { "id": "row3Value", "type": "string", "label": "Category 3 value", "default": "11%" },
+    {
+      "id": "keyRow",
+      "type": "enum",
+      "label": "Category to circle and feature",
+      "default": "1",
+      "options": [
+        { "value": "1", "label": "Category 1" },
+        { "value": "2", "label": "Category 2" },
+        { "value": "3", "label": "Category 3" }
+      ]
+    },
+    { "id": "axisMax", "type": "number", "label": "Chart scale maximum", "default": 100, "min": 1, "max": 1000000, "step": 1 },
+    { "id": "axis0", "type": "string", "label": "Axis label at 0%", "default": "0%" },
+    { "id": "axis25", "type": "string", "label": "Axis label at 25%", "default": "25%" },
+    { "id": "axis50", "type": "string", "label": "Axis label at 50%", "default": "50%" },
+    { "id": "axis75", "type": "string", "label": "Axis label at 75%", "default": "75%" },
+    { "id": "axis100", "type": "string", "label": "Axis label at 100%", "default": "100%" },
+    { "id": "source", "type": "string", "label": "Chart source", "default": "Bellwether Water Office, 2025 allocation review." },
+    { "id": "quoteHeader", "type": "string", "label": "Quote sheet header", "default": "FIELD INTERVIEW" },
+    { "id": "quoteDate", "type": "string", "label": "Quote date", "default": "18 JUN 2025" },
+    { "id": "quoteLine1", "type": "string", "label": "Quote, first printed line", "default": "“Households cut their use." },
+    { "id": "quoteLine2", "type": "string", "label": "Quote, second printed line", "default": "The biggest users did not.”" },
+    { "id": "quoteAttribution", "type": "string", "label": "Quote attribution", "default": "Mara Venn · County water analyst" },
+    { "id": "quoteFooter", "type": "string", "label": "Quote footer", "default": "Interview transcript · Bellwether County" },
+    { "id": "label", "type": "string", "label": "Taped cut-out label", "default": "THE WATER GAP" },
+    { "id": "note", "type": "string", "label": "Handwritten note", "default": "WHO GETS IT?" },
+    { "id": "mat", "type": "color", "label": "Cutting mat", "default": "#2D684C" },
+    { "id": "matCenter", "type": "color", "label": "Mat centre light", "default": "#327354" },
+    { "id": "matEdge", "type": "color", "label": "Mat edges", "default": "#245A40" },
+    { "id": "grid", "type": "color", "label": "Mat grid", "default": "#ECE8B4" },
+    { "id": "paper", "type": "color", "label": "Printed paper", "default": "#F4F2EC" },
+    { "id": "labelCard", "type": "color", "label": "Cut-out label card", "default": "#FFFFFF" },
+    { "id": "ink", "type": "color", "label": "Print and shadows", "default": "#151515" },
+    { "id": "muted", "type": "color", "label": "Printed secondary text", "default": "#55524B" },
+    { "id": "marker", "type": "color", "label": "Red marker", "default": "#B52B28" },
+    { "id": "highlighter", "type": "color", "label": "Yellow highlighter", "default": "#F3D934" },
+    { "id": "tape", "type": "color", "label": "Masking tape", "default": "#E6D9B4" },
+    { "id": "cameraPush", "type": "number", "label": "Camera push (%)", "default": 7, "min": 0, "max": 9, "step": 0.5 },
+    { "id": "paperTilt", "type": "number", "label": "Opposing paper angles (degrees)", "default": 3, "min": 1, "max": 3, "step": 0.25 },
+    { "id": "textureAmount", "type": "number", "label": "Paper texture strength", "default": 0.42, "min": 0.1, "max": 0.8, "step": 0.01 },
+    { "id": "grainOpacity", "type": "number", "label": "Film grain strength", "default": 0.065, "min": 0.01, "max": 0.15, "step": 0.005 },
+    { "id": "seed", "type": "number", "label": "Surface texture seed", "default": 2025, "min": 1, "max": 999999, "step": 1 },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

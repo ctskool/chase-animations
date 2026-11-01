@@ -1,0 +1,247 @@
+#stage {
+  isolation: isolate;
+}
+
+[data-variant="overlay"] #stage {
+  box-shadow: 0 24px 72px rgba(18, 20, 23, 0.2);
+}
+
+#map-gl,
+#route-svg,
+#place-labels {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#map-gl {
+  display: block;
+  z-index: 0;
+}
+
+#route-svg {
+  z-index: 1;
+  overflow: visible;
+  pointer-events: none;
+}
+
+#place-labels {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.map-label,
+#destination-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-block;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  line-height: 1.16;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  text-align: center;
+  transform-origin: 50% 50%;
+  visibility: hidden;
+}
+
+.map-label {
+  letter-spacing: -0.025em;
+}
+
+#source-dot,
+#route-head {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  transform-origin: 50% 50%;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.source-pulse,
+#source-core,
+#route-head-halo,
+#route-head-core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.source-pulse,
+#route-head-halo {
+  pointer-events: none;
+}
+
+#destination-shadow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  border-radius: 50%;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#arrival-rings {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.arrival-ring {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+
+#destination {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  visibility: hidden;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+#destination svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+#destination-label {
+  z-index: 5;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+#trip-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 6;
+  box-sizing: border-box;
+  overflow: hidden;
+  transform-origin: 50% 50%;
+  visibility: hidden;
+}
+
+#trip-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#trip-edge {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#trip-accent {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  border-radius: 0 0 5px 5px;
+  transform-origin: 0 50%;
+}
+
+#trip-copy {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  visibility: hidden;
+}
+
+#trip-time,
+#trip-distance,
+#fastest-text,
+#go-text {
+  display: inline-block;
+  font-family: "Inter", sans-serif;
+  white-space: nowrap;
+}
+
+#trip-time {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.065em;
+  line-height: 1.02;
+  transform-origin: 0 50%;
+}
+
+#trip-distance {
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+#trip-fastest {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  line-height: 1.12;
+  transform-origin: 0 50%;
+  visibility: hidden;
+}
+
+#trip-fastest svg {
+  display: block;
+  flex: 0 0 auto;
+}
+
+#fastest-text {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+#go-button {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 999px;
+  transform-origin: 50% 50%;
+  visibility: hidden;
+}
+
+#go-text {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+#go-arrow {
+  display: block;
+  flex: 0 0 auto;
+}

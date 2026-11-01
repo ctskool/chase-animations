@@ -1,0 +1,56 @@
+{
+  "name": "route-map",
+  "title": "Route map",
+  "summary": "A huge blue location mark opens a pale 3D city. Route turns trigger whole-number trip updates. The final street completes exactly as a red pin lands, the final time punches forward and a green recommendation stamps onto the card.",
+  "fonts": [
+    "500 40px Inter",
+    "600 40px Inter",
+    "700 40px Inter"
+  ],
+  "three": true,
+  "overlayHeight": 1000,
+  "timing": {
+    "keyAt": 3.2,
+    "hold": 1.5,
+    "exit": 0.36,
+    "minKeyAt": 1.8
+  },
+  "keyMoment": "the last street completes, the red pin lands and the exact final time punches forward together; a green route flash, destination rings and recommendation answer on that same frame",
+  "variables": [
+    { "id": "destination", "type": "string", "label": "Destination", "default": "Linden House" },
+    { "id": "finalMinutes", "type": "number", "label": "Final minutes", "default": 8 },
+    { "id": "tripTime", "type": "string", "label": "Displayed trip time", "default": "8 min" },
+    { "id": "distance", "type": "string", "label": "Distance", "default": "2.4 km" },
+    { "id": "button", "type": "string", "label": "Button", "default": "Go" },
+    { "id": "place1", "type": "string", "label": "Place label 1", "default": "Willow Green" },
+    { "id": "place2", "type": "string", "label": "Place label 2", "default": "Glassford Square" },
+    { "id": "place3", "type": "string", "label": "Place label 3", "default": "Eastbank Walk" },
+    { "id": "countdown", "type": "string", "label": "Minutes countdown", "default": "12, 11, 10, 9, 8" },
+    { "id": "fastestLabel", "type": "string", "label": "Route recommendation", "default": "Fastest route" },
+    { "id": "building", "type": "color", "label": "Low buildings", "default": "#F7F7F5" },
+    { "id": "buildingTall", "type": "color", "label": "Taller buildings", "default": "#EEF0F3" },
+    { "id": "land", "type": "color", "label": "Land", "default": "#ECEAE4" },
+    { "id": "streets", "type": "color", "label": "Streets", "default": "#FBFBFA" },
+    { "id": "haze", "type": "color", "label": "Sky and distance haze", "default": "#E4E9EE" },
+    { "id": "water", "type": "color", "label": "River", "default": "#8EC6EE" },
+    { "id": "park", "type": "color", "label": "Parks", "default": "#C9E5BD" },
+    { "id": "tree", "type": "color", "label": "Trees", "default": "#9FCF8E" },
+    { "id": "mainRoad", "type": "color", "label": "Main road", "default": "#FFE3A3" },
+    { "id": "route", "type": "color", "label": "Route and button", "default": "#1A73E8" },
+    { "id": "pin", "type": "color", "label": "Destination pin", "default": "#EA4335" },
+    { "id": "surface", "type": "color", "label": "Card, casing and rims", "default": "#FFFFFF" },
+    { "id": "ink", "type": "color", "label": "Trip time", "default": "#121417" },
+    { "id": "muted", "type": "color", "label": "Place labels and details", "default": "#56616C" },
+    { "id": "fastest", "type": "color", "label": "Fastest route", "default": "#14733F" },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}
