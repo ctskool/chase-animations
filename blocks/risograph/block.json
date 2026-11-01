@@ -1,0 +1,225 @@
+{
+  "name": "risograph",
+  "title": "Risograph",
+  "summary": "A physical two-ink poster: opposing ink passes bring separated circles together, a paper-knockout word stamps onto their violet overlap, and one brief registration snap finishes the print.",
+  "fonts": [
+    "800 40px 'Bricolage Grotesque'",
+    "600 40px 'Barlow Condensed'"
+  ],
+  "fontFiles": [
+    "bricolage-grotesque-800.woff2"
+  ],
+  "motionBlur": false,
+  "timing": {
+    "keyAt": 3.2,
+    "hold": 1.5,
+    "exit": 0.3,
+    "minKeyAt": 2.9
+  },
+  "keyMoment": "after one registration slip lasting two or three frames with at most 18px total ink separation, the plates snap into their fixed reading register exactly at the key time; the complete poster punches to 1.03 scale and the dot ramp permanently prints one step denser",
+  "overlayHeight": 1040,
+  "variables": [
+    {
+      "id": "headlineLine1",
+      "type": "string",
+      "label": "Top headline",
+      "default": "NIGHT"
+    },
+    {
+      "id": "headlineLine2",
+      "type": "string",
+      "label": "Headline knocked out of the stripe band",
+      "default": "SHIFT"
+    },
+    {
+      "id": "topLine",
+      "type": "string",
+      "label": "Top line",
+      "default": "MICA PRINT CLUB / 018"
+    },
+    {
+      "id": "footerLine1",
+      "type": "string",
+      "label": "Footer line 1",
+      "default": "AFTER-HOURS PRINT FAIR"
+    },
+    {
+      "id": "footerLine2",
+      "type": "string",
+      "label": "Practical details, automatically arranged on up to two lines",
+      "default": "18 JUN 2027 / 19:00 / MICA HALL, NORTH YARD"
+    },
+    {
+      "id": "paper",
+      "type": "color",
+      "label": "Cool paper",
+      "default": "#EDEFEE"
+    },
+    {
+      "id": "pink",
+      "type": "color",
+      "label": "Pink ink",
+      "default": "#FF48B0"
+    },
+    {
+      "id": "blue",
+      "type": "color",
+      "label": "Blue ink",
+      "default": "#3255A4"
+    },
+    {
+      "id": "tracking",
+      "type": "number",
+      "label": "Headline letter spacing",
+      "default": 0.05,
+      "min": 0,
+      "max": 0.1,
+      "step": 0.01
+    },
+    {
+      "id": "registration",
+      "type": "number",
+      "label": "Normal ink separation in pixels",
+      "default": 3,
+      "min": 0,
+      "max": 7,
+      "step": 0.5
+    },
+    {
+      "id": "slipDistance",
+      "type": "number",
+      "label": "Maximum total separation between inks during the snap",
+      "default": 16,
+      "min": 8,
+      "max": 18,
+      "step": 1
+    },
+    {
+      "id": "slipFrames",
+      "type": "number",
+      "label": "Frames of misregistration immediately before the key moment",
+      "default": 3,
+      "min": 2,
+      "max": 3,
+      "step": 1
+    },
+    {
+      "id": "impactShove",
+      "type": "number",
+      "label": "Headline and circle shove from the knockout stamp in pixels",
+      "default": 10,
+      "min": 8,
+      "max": 12,
+      "step": 1
+    },
+    {
+      "id": "finishOvershoot",
+      "type": "number",
+      "label": "Completed poster scale on the registration snap",
+      "default": 1.03,
+      "min": 1.015,
+      "max": 1.03,
+      "step": 0.005
+    },
+    {
+      "id": "holdPush",
+      "type": "number",
+      "label": "Slow poster push during the settled hold, in percent",
+      "default": 1,
+      "min": 0.5,
+      "max": 1,
+      "step": 0.1
+    },
+    {
+      "id": "knockoutClearance",
+      "type": "number",
+      "label": "Quiet ink contour around knockout letters in pixels",
+      "default": 8,
+      "min": 4,
+      "max": 14,
+      "step": 1
+    },
+    {
+      "id": "grainAmount",
+      "type": "number",
+      "label": "Ink grain and paper-white pinholes",
+      "default": 0.7,
+      "min": 0.2,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "id": "paperTexture",
+      "type": "number",
+      "label": "Paper cloud and fibre strength",
+      "default": 0.65,
+      "min": 0.1,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "id": "edgeRoughness",
+      "type": "number",
+      "label": "Ragged ink edges in pixels",
+      "default": 1.4,
+      "min": 0.6,
+      "max": 3,
+      "step": 0.2
+    },
+    {
+      "id": "halftoneCell",
+      "type": "number",
+      "label": "Halftone cell in pixels",
+      "default": 12,
+      "min": 8,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "id": "dotCount",
+      "type": "number",
+      "label": "Dots in the growing ramp",
+      "default": 11,
+      "min": 7,
+      "max": 17,
+      "step": 1
+    },
+    {
+      "id": "stripeWidth",
+      "type": "number",
+      "label": "Diagonal stripe width in pixels",
+      "default": 22,
+      "min": 10,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "id": "stripeCrawl",
+      "type": "number",
+      "label": "Stripe travel in pixels per second",
+      "default": 18,
+      "min": 4,
+      "max": 36,
+      "step": 1
+    },
+    {
+      "id": "seed",
+      "type": "number",
+      "label": "Print texture seed",
+      "default": 18,
+      "min": 1,
+      "max": 9999,
+      "step": 1
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}
