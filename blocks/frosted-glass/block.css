@@ -1,0 +1,271 @@
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("assets/fonts/plus-jakarta-sans-500.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("assets/fonts/plus-jakarta-sans-600.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: block;
+}
+
+#fg-clip,
+#fg-clip * {
+  box-sizing: border-box;
+}
+
+#fg-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: var(--fg-text);
+}
+
+#fg-photo,
+#fg-photo canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.fg-glass {
+  position: absolute;
+  background: transparent;
+  border: 2px solid var(--fg-rim-low);
+  border-top-color: var(--fg-rim-top);
+  border-left-color: var(--fg-rim-left);
+  box-shadow:
+    0 28px 66px var(--fg-shadow),
+    0 7px 18px var(--fg-shadow-soft),
+    inset 0 1px 0 var(--fg-rim-inner);
+}
+
+.fg-glass::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border: 1px solid var(--fg-rim-faint);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+#fg-bar {
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: var(--fg-query-gap);
+  padding: 0 var(--fg-bar-pad);
+  overflow: hidden;
+  visibility: hidden;
+  transform-origin: 50% 50%;
+}
+
+#fg-search-icon {
+  display: block;
+  flex: none;
+  width: var(--fg-search-size);
+  height: var(--fg-search-size);
+  color: var(--fg-text);
+  transform-origin: 50% 50%;
+}
+
+#fg-query-line {
+  position: relative;
+  flex: none;
+  min-width: 0;
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  text-shadow: 0 2px 8px var(--fg-text-shadow);
+}
+
+#fg-query-copy {
+  display: inline-block;
+  white-space: pre;
+  vertical-align: top;
+  transform-origin: 0% 0%;
+}
+
+#fg-caret {
+  position: absolute;
+  display: block;
+  width: 4px;
+  height: 0.88em;
+  margin: 0;
+  border-radius: 2px;
+  background: var(--fg-caret);
+  pointer-events: none;
+}
+
+/* Only the painted reflection moves. Both elements stay inside their glass. */
+#fg-bar-sheen,
+#fg-highlight-sheen {
+  position: absolute;
+  inset: 3px;
+  border-radius: inherit;
+  background-image: linear-gradient(
+    112deg,
+    transparent 39%,
+    var(--fg-sheen) 46%,
+    var(--fg-sheen) 49%,
+    transparent 56%
+  );
+  background-size: 300% 100%;
+  background-position: 150% 0%;
+  background-repeat: no-repeat;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#fg-panel {
+  z-index: 2;
+  overflow: hidden;
+  visibility: hidden;
+  transform-origin: 50% 0%;
+}
+
+#fg-rows {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.fg-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--fg-row-gap);
+  padding: 0 var(--fg-row-pad);
+  visibility: hidden;
+  transform-origin: 50% 50%;
+}
+
+.fg-icon-tile {
+  flex: none;
+  width: var(--fg-tile-size);
+  height: var(--fg-tile-size);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--fg-tile-rim);
+  border-top-color: var(--fg-rim-left);
+  border-radius: 18px;
+  background: var(--fg-tile-fill);
+  color: var(--fg-text);
+  box-shadow: inset 0 1px 0 var(--fg-rim-faint);
+  transform-origin: 50% 50%;
+}
+
+.fg-icon-tile svg {
+  width: 65%;
+  height: 65%;
+  display: block;
+}
+
+.fg-row-copy {
+  flex: none;
+  min-width: 0;
+}
+
+.fg-row-title {
+  display: inline-block;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  white-space: pre;
+  vertical-align: top;
+  text-shadow: 0 2px 8px var(--fg-text-shadow);
+}
+
+.fg-row-label {
+  display: inline-block;
+  margin-top: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--fg-label);
+  white-space: pre;
+  vertical-align: top;
+  text-shadow: 0 2px 8px var(--fg-text-shadow);
+}
+
+.fg-label-line {
+  display: block;
+}
+
+#fg-highlight {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  overflow: hidden;
+  border: 2px solid var(--fg-highlight-rim);
+  background: var(--fg-highlight-fill);
+  visibility: hidden;
+  transform-origin: 50% 0%;
+}
+
+#fg-selection-mark {
+  position: absolute;
+  top: 14%;
+  bottom: 14%;
+  left: 0;
+  width: 7px;
+  border-radius: 0 5px 5px 0;
+  background: var(--fg-deep);
+  visibility: hidden;
+  transform-origin: 50% 50%;
+}
+
+.fg-return {
+  position: absolute;
+  right: var(--fg-row-pad);
+  width: var(--fg-key-size);
+  height: var(--fg-key-size);
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--fg-key-rim);
+  border-bottom-width: 4px;
+  border-radius: 16px;
+  color: var(--fg-text);
+  background: var(--fg-key-fill);
+  box-shadow: 0 4px 9px var(--fg-shadow-soft);
+  visibility: hidden;
+  transform-origin: 50% 50%;
+}
+
+.fg-return svg {
+  position: absolute;
+  left: 17%;
+  top: 17%;
+  width: 66%;
+  height: 66%;
+  display: block;
+}
+
+.fg-return-check {
+  visibility: hidden;
+}
+
+#fg-edge {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--fg-rim);
+  visibility: hidden;
+  pointer-events: none;
+}

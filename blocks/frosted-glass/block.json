@@ -1,0 +1,206 @@
+{
+  "name": "frosted-glass",
+  "title": "Frosted glass",
+  "summary": "A huge glass search builds in complete words, docks above three results and gives the chosen result a larger coral payoff with a snapping checkmark.",
+  "fonts": [
+    "500 132px 'Plus Jakarta Sans'",
+    "600 104px 'Plus Jakarta Sans'",
+    "600 132px 'Plus Jakarta Sans'"
+  ],
+  "fontFiles": [
+    "plus-jakarta-sans-500.woff2",
+    "plus-jakarta-sans-600.woff2"
+  ],
+  "three": true,
+  "overlayHeight": 920,
+  "timing": {
+    "keyAt": 3.1,
+    "hold": 1.6,
+    "exit": 0.3,
+    "minKeyAt": 1.7
+  },
+  "keyMoment": "the stretching highlight seats on the enlarged chosen row, turns bright coral and punches outward as the title jumps to its larger layout, the lettering reverses to dark and the return arrow becomes a checkmark",
+  "variables": [
+    {
+      "id": "query",
+      "type": "string",
+      "label": "Search query",
+      "default": "quiet stays in Bellhaven"
+    },
+    {
+      "id": "row1Title",
+      "type": "string",
+      "label": "First result",
+      "default": "Morrow Quay House"
+    },
+    {
+      "id": "row1Label",
+      "type": "string",
+      "label": "Optional first result label",
+      "default": ""
+    },
+    {
+      "id": "row2Title",
+      "type": "string",
+      "label": "Second result",
+      "default": "Fernlight Guest Rooms"
+    },
+    {
+      "id": "row2Label",
+      "type": "string",
+      "label": "Optional second result label",
+      "default": ""
+    },
+    {
+      "id": "row3Title",
+      "type": "string",
+      "label": "Third result",
+      "default": "Stillwater Courtyard"
+    },
+    {
+      "id": "row3Label",
+      "type": "string",
+      "label": "Optional third result label",
+      "default": ""
+    },
+    {
+      "id": "selectedRow",
+      "type": "number",
+      "label": "Selected result",
+      "default": 2,
+      "min": 1,
+      "max": 3,
+      "step": 1
+    },
+    {
+      "id": "textScale",
+      "type": "number",
+      "label": "Query and result text scale",
+      "default": 1,
+      "min": 0.9,
+      "max": 1.1,
+      "step": 0.05
+    },
+    {
+      "id": "teal",
+      "type": "color",
+      "label": "Dusk teal",
+      "default": "#1F5A6E"
+    },
+    {
+      "id": "deepSky",
+      "type": "color",
+      "label": "Deep sky, confirmed lettering and dark tiles",
+      "default": "#0E2A3D"
+    },
+    {
+      "id": "coral",
+      "type": "color",
+      "label": "Horizon glow and confirmed result",
+      "default": "#FF8A5C"
+    },
+    {
+      "id": "rose",
+      "type": "color",
+      "label": "Rose colour field",
+      "default": "#E3558A"
+    },
+    {
+      "id": "textColor",
+      "type": "color",
+      "label": "Query, result titles and icons",
+      "default": "#F8F9FB"
+    },
+    {
+      "id": "labelColor",
+      "type": "color",
+      "label": "Optional labels and unselected titles after confirmation",
+      "default": "#C6D3D9"
+    },
+    {
+      "id": "caretColor",
+      "type": "color",
+      "label": "Text caret",
+      "default": "#9FD8FF"
+    },
+    {
+      "id": "glassTint",
+      "type": "color",
+      "label": "Smoked glass tint",
+      "default": "#102A37"
+    },
+    {
+      "id": "rimColor",
+      "type": "color",
+      "label": "Glass rim and moving edge light",
+      "default": "#F8F9FB"
+    },
+    {
+      "id": "shadowColor",
+      "type": "color",
+      "label": "Glass and text shadows",
+      "default": "#06121D"
+    },
+    {
+      "id": "glassSmoke",
+      "type": "number",
+      "label": "Glass smoke strength",
+      "default": 0.78,
+      "min": 0.65,
+      "max": 0.92,
+      "step": 0.01
+    },
+    {
+      "id": "glassBlur",
+      "type": "number",
+      "label": "Glass blur radius",
+      "default": 76,
+      "min": 40,
+      "max": 140,
+      "step": 2
+    },
+    {
+      "id": "grainAmount",
+      "type": "number",
+      "label": "Fine background grain",
+      "default": 0.012,
+      "min": 0,
+      "max": 0.035,
+      "step": 0.001
+    },
+    {
+      "id": "backgroundDrift",
+      "type": "number",
+      "label": "Background drift in pixels per second",
+      "default": 8,
+      "min": 1,
+      "max": 18,
+      "step": 0.5
+    },
+    {
+      "id": "seed",
+      "type": "number",
+      "label": "Background and typing seed",
+      "default": 17,
+      "min": 1,
+      "max": 9999,
+      "step": 1
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    }
+  ]
+}
