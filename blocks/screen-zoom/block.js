@@ -1,16 +1,20 @@
-// Camera and pointer positions remain correct during event-suppressed
-// motion-blur sampling. All interface text stays live DOM.
 CA.ready(async () => {
-  const { vars: V, stage: S, safe, time: T, variant, grainUrl, make } = CA;
+  const { vars: V, stage: S, safe, time: T, variant, make, grainUrl } = CA;
   const $ = (id) => document.getElementById(id);
   const W = S.w;
   const H = S.h;
+  const full = variant === "full";
   const stageEl = $("stage");
-  const isFull = variant === "full";
-  const clamp = (v, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, v));
+  const clamp = (n, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, n));
+  const lerp = (a, b, p) => a + (b - a) * p;
+  const smooth = (p) => p * p * p * (p * (p * 6 - 15) + 10);
 
   Object.entries({
     "--accent": V.accent,
+    "--success": V.successColor,
+    "--bright": V.buttonTextColor,
+    "--step-bg": V.stepBackground,
+    "--step-ink": V.stepInk,
     "--playhead": V.playhead,
     "--window": V.windowColor,
     "--chrome": V.chromeColor,
@@ -22,102 +26,133 @@ CA.ready(async () => {
   }).forEach(([name, value]) => stageEl.style.setProperty(name, value));
 
   $("backdrop").style.background =
-    `radial-gradient(90% 60% at 18% 12%, ${V.backdropA}, transparent 70%), ` +
-    `linear-gradient(160deg, ${V.backdropB}, ${V.backdropC})`;
+    `radial-gradient(90% 65% at 16% 10%, ${V.backdropA}, transparent 72%), ` +
+    `linear-gradient(155deg, ${V.backdropB}, ${V.backdropC})`;
   $("grain").style.backgroundImage = grainUrl(200, 0.9, 3);
+  $("grain").style.opacity = V.grainOpacity;
 
-  // The opening is a compact editing window, not a tall empty preview.
-  // Larger publish controls are visible before the camera starts.
-  const shot = {
+  // These are separate compositions, not a scaled portrait layout.
+  const layouts = {
     full: {
-      w: 1000, h: 780, cy: H * 0.49,
-      bar: 60, side: 112, pad: 24, head: 128, gap: 20,
-      contentGap: 20, workspaceGap: 18, previewH: 260,
-      panel: 420, panelPad: 28,
-      buttonH: 104, buttonPx: 48, titlePx: 54, subtitlePx: 40,
-      rowH: 76, rowPx: 40, tickPx: 34, targetsGap: 20,
-      statPx: 36, statLabelPx: 28, trackH: 30,
-      zoomFactor: 1, goalY: 0.44,
-      pillPx: 58, pillGap: 32,
-      cornerTop: 40, cornerRight: 64,
-      bottom: Math.max(300, safe.bottom),
-      ringPx: 220,
+      bar: 76, nav: 84, pad: 40, head: 170, gap: 26,
+      contentGap: 24, workspaceGap: 20,
+      panel: 610, panelPad: 32, buttonH: 138, buttonPx: 64,
+      rowH: 148, rowPx: 48, tickPx: 44, targetsGap: 26,
+      appPx: 40, navPx: 40, titlePx: 64, subtitlePx: 42,
+      statPx: 44, statLabelPx: 40, statPad: 12, statGap: 12,
+      timecodePx: 40, timelineHead: 50, trackH: 30,
+      pillPx: 60, pillPad: 16, pillGap: 46, focusPad: 20,
+      edge: 48, ringPx: 270, clickRingPx: 138,
     },
     top: {
-      w: 1000, h: Math.min(720, H - 88), cy: H * 0.5,
-      bar: 52, side: 112, pad: 22, head: 112, gap: 18,
-      contentGap: 18, workspaceGap: 16, previewH: 230,
-      panel: 420, panelPad: 24,
-      buttonH: 94, buttonPx: 44, titlePx: 48, subtitlePx: 34,
-      rowH: 70, rowPx: 36, tickPx: 32, targetsGap: 18,
-      statPx: 34, statLabelPx: 26, trackH: 26,
-      zoomFactor: 0.79, goalY: 0.43,
-      pillPx: 50, pillGap: 26,
-      cornerTop: 24, cornerRight: 64, bottom: 28,
-      ringPx: 190,
+      bar: 60, nav: 64, pad: 24, head: 112, gap: 18,
+      contentGap: 18, workspaceGap: 14,
+      panel: 600, panelPad: 24, buttonH: 106, buttonPx: 52,
+      rowH: 86, rowPx: 40, tickPx: 36, targetsGap: 18,
+      appPx: 34, navPx: 34, titlePx: 48, subtitlePx: 34,
+      statPx: 38, statLabelPx: 32, statPad: 8, statGap: 8,
+      timecodePx: 32, timelineHead: 40, trackH: 20,
+      pillPx: 50, pillPad: 14, pillGap: 32, focusPad: 14,
+      edge: 36, ringPx: 220, clickRingPx: 112,
     },
     overlay: {
-      w: 1000, h: Math.min(672, H - 72), cy: H * 0.5,
-      bar: 48, side: 112, pad: 20, head: 100, gap: 16,
-      contentGap: 16, workspaceGap: 14, previewH: 210,
-      panel: 410, panelPad: 22,
-      buttonH: 88, buttonPx: 42, titlePx: 46, subtitlePx: 32,
-      rowH: 64, rowPx: 34, tickPx: 30, targetsGap: 18,
-      statPx: 32, statLabelPx: 26, trackH: 24,
-      zoomFactor: 0.74, goalY: 0.42,
-      pillPx: 48, pillGap: 24,
-      cornerTop: 20, cornerRight: 60, bottom: 28,
-      ringPx: 180,
+      bar: 52, nav: 56, pad: 20, head: 104, gap: 16,
+      contentGap: 16, workspaceGap: 12,
+      panel: 610, panelPad: 22, buttonH: 98, buttonPx: 50,
+      rowH: 76, rowPx: 38, tickPx: 34, targetsGap: 16,
+      appPx: 32, navPx: 32, titlePx: 46, subtitlePx: 32,
+      statPx: 36, statLabelPx: 32, statPad: 6, statGap: 8,
+      timecodePx: 32, timelineHead: 38, trackH: 18,
+      pillPx: 48, pillPad: 12, pillGap: 28, focusPad: 12,
+      edge: 36, ringPx: 200, clickRingPx: 104,
     },
-  }[variant];
+  };
+  const shot = { ...(layouts[variant] || layouts.full) };
+  const winW = W - 32;
 
-  // Preserve a complete opening on unusually short compact stages.
-  shot.w = Math.min(shot.w, W - 64);
-  shot.h = Math.max(240, shot.h);
-  if (!isFull && H < 720) {
-    shot.bar = 40;
-    shot.pad = 14;
-    shot.head = 80;
-    shot.gap = 12;
-    shot.buttonH = 76;
-    shot.panelPad = 16;
-    shot.rowH = 48;
-    shot.targetsGap = 12;
-    shot.pillPx = 40;
-    shot.pillGap = 18;
-    shot.cornerTop = 16;
-    shot.bottom = 20;
+  const topSafe = full
+    ? Math.max(230, safe.top)
+    : Math.max(20, Math.min(36, safe.top));
+  const bottomSafe = full
+    ? Math.max(300, safe.bottom)
+    : Math.max(20, Math.min(36, safe.bottom));
+  const availableH = H - topSafe - bottomSafe;
+
+  if (!full && H < 760) {
+    Object.assign(shot, {
+      bar: 44, nav: 50, pad: 16, head: 86, gap: 12,
+      contentGap: 14, workspaceGap: 10,
+      panel: 610, panelPad: 18, buttonH: 84, buttonPx: 46,
+      rowH: 66, rowPx: 34, tickPx: 32, targetsGap: 14,
+      appPx: 32, navPx: 32, titlePx: 44, subtitlePx: 32,
+      statPx: 34, statLabelPx: 32, statPad: 4, statGap: 6,
+      timecodePx: 32, timelineHead: 36, trackH: 14,
+      pillPx: 44, pillPad: 12, pillGap: 24, focusPad: 12,
+      edge: 32, ringPx: 180, clickRingPx: 96,
+    });
   }
+
+  const panelHeight = () =>
+    shot.panelPad * 2 + shot.buttonH +
+    shot.targetsGap + shot.rowH * 3 + 4;
+  const windowHeight = () =>
+    shot.bar + shot.nav + shot.pad * 2 +
+    shot.head + shot.gap + panelHeight();
+
+  let hideWorkspace = false;
+  if (!full && windowHeight() > availableH) {
+    shot.head = 0;
+    shot.gap = 0;
+  }
+  if (!full && windowHeight() > availableH) {
+    shot.nav = 0;
+    hideWorkspace = true;
+    shot.panel = winW - shot.pad * 2;
+    shot.rowH = Math.max(48, Math.min(
+      shot.rowH,
+      Math.floor((
+        availableH - shot.bar - shot.pad * 2 -
+        shot.panelPad * 2 - shot.buttonH - shot.targetsGap - 4
+      ) / 3),
+    ));
+  }
+
+  const panelH = panelHeight();
 
   Object.entries({
     "--bar-h": shot.bar,
-    "--side-w": shot.side,
+    "--nav-h": shot.nav,
     "--main-pad": shot.pad,
     "--head-h": shot.head,
     "--main-gap": shot.gap,
     "--content-gap": shot.contentGap,
     "--workspace-gap": shot.workspaceGap,
-    "--preview-h": shot.previewH,
     "--panel-w": shot.panel,
+    "--panel-h": panelH,
     "--panel-pad": shot.panelPad,
     "--button-h": shot.buttonH,
     "--button-px": shot.buttonPx,
-    "--title-px": shot.titlePx,
-    "--subtitle-px": shot.subtitlePx,
     "--row-h": shot.rowH,
     "--row-px": shot.rowPx,
     "--tick-px": shot.tickPx,
     "--targets-gap": shot.targetsGap,
+    "--app-px": shot.appPx,
+    "--nav-px": shot.navPx,
+    "--title-px": shot.titlePx,
+    "--subtitle-px": shot.subtitlePx,
     "--stat-px": shot.statPx,
     "--stat-label-px": shot.statLabelPx,
+    "--stat-pad": shot.statPad,
+    "--stat-gap": shot.statGap,
+    "--timecode-px": shot.timecodePx,
+    "--timeline-head": shot.timelineHead,
     "--track-h": shot.trackH,
-  }).forEach(([name, value]) => stageEl.style.setProperty(name, value + "px"));
+  }).forEach(([name, value]) =>
+    stageEl.style.setProperty(name, value + "px"),
+  );
 
-  const win = $("window");
-  win.style.background = V.windowColor;
   [
     ["app-name", V.appName],
-    ["file-size", V.stat2Value],
     ["project", V.projectName],
     ["subtitle", V.subtitle],
     ["s1l", V.stat1Label],
@@ -130,8 +165,9 @@ CA.ready(async () => {
     ["btn-done", V.doneLabel],
   ].forEach(([id, text]) => { $(id).textContent = text; });
 
-  [V.side1, V.side2, V.side3].forEach((text, i) => {
-    make("div", i === 0 ? "side-item on" : "side-item", $("sidebar"), text);
+  const navLabels = [V.side1, V.side2, V.side3].map((text, i) => {
+    const item = make("div", i === 0 ? "side-item on" : "side-item", $("sidebar"));
+    return make("span", "side-label", item, text);
   });
 
   const ticks = [V.target1, V.target2, V.target3].map((text) => {
@@ -140,40 +176,54 @@ CA.ready(async () => {
     const halo = make("span", "tick-halo", tick);
     const on = make("span", "tick-on", tick);
     on.innerHTML =
-      `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" ` +
-      `stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">` +
-      `<path d="M5 13l4.6 4.6L19 7.4"/></svg>`;
-    make("span", "target-label", row, text);
-    return { on, halo };
+      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ` +
+      `stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" ` +
+      `aria-hidden="true"><path d="M5 13l4.6 4.6L19 7.4"/></svg>`;
+    const label = make("span", "target-label", row, text);
+    return { row, tick, on, halo, label };
   });
+
+  if (!shot.head) {
+    $("head").style.display = "none";
+    $("head").style.visibility = "hidden";
+  }
+  if (!shot.nav) {
+    $("sidebar").style.display = "none";
+    $("sidebar").style.visibility = "hidden";
+  }
+  if (hideWorkspace) {
+    $("workspace").style.display = "none";
+    $("workspace").style.visibility = "hidden";
+  }
 
   const screen = $("screen");
   const builtIn = !V.screenImage && !V.screenHtml;
+  const win = $("window");
   let image = null;
+  let winH = windowHeight();
+
   if (V.screenImage) {
     image = new Image();
+    image.alt = "";
     image.src = V.screenImage;
     await image.decode();
     screen.replaceChildren(image);
-    shot.h = Math.min(
-      shot.h,
-      Math.round(shot.w * image.naturalHeight / image.naturalWidth) + shot.bar,
+    winH = Math.min(
+      availableH,
+      shot.bar + winW * image.naturalHeight / image.naturalWidth,
     );
   } else if (V.screenHtml) {
     screen.innerHTML = V.screenHtml;
   }
 
-  const winX = (W - shot.w) / 2;
-  const winY = shot.cy - shot.h / 2;
+  const winX = (W - winW) / 2;
+  const winY = topSafe + Math.max(0, availableH - winH) * 0.46;
   Object.assign(win.style, {
-    width: shot.w + "px",
-    height: shot.h + "px",
     left: winX + "px",
     top: winY + "px",
+    width: winW + "px",
+    height: winH + "px",
   });
-  const shadow = $("shadow");
-  shadow.style.width = shot.w + "px";
-  shadow.style.height = shot.h + "px";
 
   const stageBox = stageEl.getBoundingClientRect();
   const rect = (el) => {
@@ -186,24 +236,110 @@ CA.ready(async () => {
     };
   };
 
+  const fitText = (el, width, minPx) => {
+    if (!el || !el.textContent || width <= 0) return;
+    el.style.display = "inline-block";
+    CA.fit(el, width, minPx);
+  };
+  const minText = full ? 40 : 32;
+  fitText($("app-name"), winW - 156, minText);
+
+  if (builtIn) {
+    const mainWidth = winW - shot.pad * 2;
+    fitText($("project"), mainWidth, minText);
+    fitText($("subtitle"), mainWidth, minText);
+
+    if (shot.nav) {
+      navLabels.forEach((el) =>
+        fitText(el, rect(el.parentElement).w - 24, minText),
+      );
+    }
+    if (!hideWorkspace) {
+      ["s1l", "s1v", "s2l", "s2v"].forEach((id) => {
+        const el = $(id);
+        fitText(el, rect(el.parentElement).w - 28, minText);
+      });
+      fitText($("timecode"), rect($("workspace")).w, minText);
+    }
+
+    const buttonWidth = rect($("target")).w - 28;
+    ["btn-label", "btn-pending", "btn-done"].forEach((id) =>
+      fitText($(id), buttonWidth, minText),
+    );
+    ticks.forEach(({ row, label }) =>
+      fitText(label, rect(row).w - shot.tickPx - 18, minText),
+    );
+
+    const outline = $("panel-outline");
+    outline.setAttribute("viewBox", `0 0 ${shot.panel} ${panelH}`);
+    const energy = $("energy-line");
+    energy.setAttribute("x", "1.5");
+    energy.setAttribute("y", "1.5");
+    energy.setAttribute("width", String(shot.panel - 3));
+    energy.setAttribute("height", String(panelH - 3));
+    energy.setAttribute("rx", "20");
+  }
+
   const button = image ? null : screen.querySelector("[data-target]");
+  if (!image && !button) {
+    throw new Error("screenHtml needs data-target on its button");
+  }
+
   let targetRect;
   let P;
   if (button) {
     targetRect = rect(button);
+    // Click the clear end of the control, leaving its label readable.
     P = {
-      x: targetRect.x + targetRect.w * 0.56,
-      y: targetRect.y + targetRect.h * 0.56,
+      x: targetRect.x + targetRect.w * 0.87,
+      y: targetRect.y + targetRect.h * 0.58,
     };
-  } else if (image) {
+  } else {
     const b = rect(image);
     P = {
       x: b.x + b.w * V.targetX / 100,
       y: b.y + b.h * V.targetY / 100,
     };
     targetRect = { x: P.x - 60, y: P.y - 25, w: 120, h: 50 };
+  }
+
+  let focusEl;
+  if (builtIn) {
+    focusEl = $("publish-panel");
+  } else if (image) {
+    focusEl = image;
   } else {
-    throw new Error("screenHtml needs an element with data-target on the button");
+    focusEl = button.closest("[data-focus]") || button.parentElement || button;
+    if (!screen.contains(focusEl)) focusEl = button;
+  }
+
+  const focus = rect(focusEl);
+  const focusLeft = Math.max(winX, focus.x - shot.focusPad);
+  const focusTop = Math.max(winY, focus.y - shot.focusPad);
+  const focusRight = Math.min(winX + winW, focus.x + focus.w + shot.focusPad);
+  const focusBottom = Math.min(winY + winH, focus.y + focus.h + shot.focusPad);
+  const F = {
+    x: focusLeft,
+    y: focusTop,
+    w: Math.max(1, focusRight - focusLeft),
+    h: Math.max(1, focusBottom - focusTop),
+  };
+
+  const contexts = Array.from(win.querySelectorAll("[data-context]"))
+    .filter((el) => el.getClientRects().length > 0);
+
+  // Custom HTML can mark a complete panel with data-focus.
+  // Retire siblings of that panel before any camera crop can reach them.
+  if (!builtIn && !image) {
+    let node = focusEl;
+    while (node && node !== screen) {
+      const parent = node.parentElement;
+      if (!parent) break;
+      Array.from(parent.children).forEach((sibling) => {
+        if (sibling !== node && !contexts.includes(sibling)) contexts.push(sibling);
+      });
+      node = parent;
+    }
   }
 
   const stepEl = $("step");
@@ -212,149 +348,252 @@ CA.ready(async () => {
   stepText.textContent = V.stepLabel;
   numEl.textContent = V.stepNumber;
   stepEl.style.fontSize = shot.pillPx + "px";
-  const dot = Math.round(shot.pillPx * 1.3);
+  stepEl.style.padding =
+    `${shot.pillPad}px ${shot.pillPad + 14}px ${shot.pillPad}px ${shot.pillPad}px`;
+
+  const dot = Math.round(shot.pillPx * 1.33);
   Object.assign(numEl.style, {
     width: dot + "px",
     height: dot + "px",
     fontSize: Math.round(shot.pillPx * 0.8) + "px",
   });
-  const maxStepText = W - 96 - dot - 16 - 44;
-  stepText.style.maxWidth = maxStepText + "px";
-  CA.fit(stepText, maxStepText, isFull ? 40 : 32);
+
+  const stepMax = W - shot.edge * 2;
+  const textMax = stepMax - dot - 16 - shot.pillPad * 2 - 14;
+  fitText(stepText, textMax, minText);
+  if (stepText.scrollWidth > textMax + 1) {
+    stepText.style.maxWidth = textMax + "px";
+    stepText.style.whiteSpace = "normal";
+    stepEl.style.whiteSpace = "normal";
+  }
   const stepBox = rect(stepEl);
 
-  let Z = Math.max(1, V.zoom * shot.zoomFactor);
-  let focusBottom = targetRect.y + targetRect.h;
-  const maxBottom = H - shot.bottom;
-  let panelRect = null;
-  if (builtIn) {
-    panelRect = rect($("publish-panel"));
-    const destinations = rect($("targets"));
-    focusBottom = destinations.y + destinations.h;
-    const available =
-      maxBottom - stepBox.h - shot.pillGap - shot.cornerTop;
-    const heightLimit = available / Math.max(1, focusBottom - winY);
-    const widthLimit =
-      (W - shot.cornerRight - 72) / Math.max(1, panelRect.w);
-    // Breathing room belongs to the entire destination panel.
-    // Very short stages may need a close scale below 1 to retain every row.
-    Z = Math.min(Z, heightLimit, widthLimit);
-    Z = Math.max(0.4, Z);
-  }
+  const widthLimit = (W - shot.edge * 2) / F.w;
+  const heightLimit = Math.max(
+    1,
+    availableH - stepBox.h - shot.pillGap,
+  ) / F.h;
+  let Z = Math.max(0.1, Math.min(V.zoom, widthLimit, heightLimit));
+  // A supplied bitmap is kept whole rather than enlarged and cropped.
+  if (image) Z = Math.min(1, Z);
 
+  const groupH = F.h * Z + shot.pillGap + stepBox.h;
+  const finalLeft = (W - F.w * Z) / 2;
+  const finalTop = topSafe + Math.max(0, availableH - groupH) * 0.45;
   const G = {
-    x: W - shot.cornerRight - Z * (winX + shot.w - P.x),
-    y: H * shot.goalY,
+    x: finalLeft + (P.x - F.x) * Z,
+    y: finalTop + (P.y - F.y) * Z,
   };
-  if (builtIn) {
-    const minY = shot.cornerTop + Z * (P.y - winY);
-    const maxY =
-      maxBottom - stepBox.h - shot.pillGap - Z * (focusBottom - P.y);
-    G.y = clamp(G.y, minY, Math.max(minY, maxY));
-  } else {
-    const leftExtent = Z * (P.x - targetRect.x);
-    const rightExtent = Z * (targetRect.x + targetRect.w - P.x);
-    G.x = clamp(
-      G.x, 48 + leftExtent,
-      Math.max(48 + leftExtent, W - 48 - rightExtent),
-    );
-    const topExtent = Z * (P.y - targetRect.y);
-    const bottomExtent = Z * (focusBottom - P.y);
-    const minY = (isFull ? Math.max(230, safe.top) : 32) + topExtent;
-    const maxY = maxBottom - stepBox.h - shot.pillGap - bottomExtent;
-    G.y = clamp(G.y, minY, Math.max(minY, maxY));
-  }
 
-  const finalFocusBottom = G.y + Z * (focusBottom - P.y);
-  const subjectCenterX = panelRect
-    ? G.x + Z * (panelRect.x + panelRect.w / 2 - P.x)
-    : G.x + Z * (targetRect.x + targetRect.w / 2 - P.x);
-  const stepCenterX = clamp(
-    subjectCenterX, 48 + stepBox.w / 2,
-    W - 48 - stepBox.w / 2,
-  );
-  // Keep the instruction close to the action, rather than stranding it
-  // in a separate empty band at a fixed percentage of the frame.
-  const stepTop = Math.min(
-    maxBottom - stepBox.h,
-    finalFocusBottom + shot.pillGap,
-  );
-  stepEl.style.left = stepCenterX - stepBox.w / 2 + "px";
-  stepEl.style.top = stepTop + "px";
+  // Separation is measured from the entire framed panel, not its last row.
+  stepEl.style.left = (W - stepBox.w) / 2 + "px";
+  stepEl.style.top = finalTop + F.h * Z + shot.pillGap + "px";
 
-  let A = builtIn
-    ? { x: winX + shot.w * 0.36, y: winY + shot.h * 0.5 }
-    : { x: P.x - shot.w * 0.35, y: P.y + shot.h * 0.28 };
-  A = {
-    x: clamp(A.x, winX + 40, winX + shot.w - 40),
-    y: clamp(A.y, winY + shot.bar + 30, winY + shot.h - 40),
-  };
+  const A = builtIn && !hideWorkspace
+    ? {
+        x: rect($("workspace")).x + rect($("workspace")).w * 0.38,
+        y: rect($("workspace")).y + panelH * 0.25,
+      }
+    : {
+        x: clamp(P.x - winW * 0.38, winX + 36, winX + winW - 36),
+        y: clamp(P.y + winH * 0.18, winY + shot.bar + 24, winY + winH - 32),
+      };
   const dx = P.x - A.x;
   const dy = P.y - A.y;
   const C = {
-    x: (A.x + P.x) / 2 + dy * 0.24,
-    y: (A.y + P.y) / 2 - dx * 0.24,
+    x: (A.x + P.x) / 2 + dy * 0.23,
+    y: (A.y + P.y) / 2 - dx * 0.23,
   };
 
-  // At default timing: cursor lands at 0.75s, camera settles at 0.90s,
-  // and the click arrives at 1.45s. No blur remains during the press.
+  const D = T.design;
+  const K = T.key;
+  const q = Math.min(1, Math.max(0.02, T.hold / 1.6));
+  const clickD = builtIn ? D * 0.84 : D;
+  const pressD = builtIn ? D * 0.79 : D * 0.95;
   const B = {
-    cursorGo: T.design * 0.06,
-    cursorRun: T.design * 0.46,
-    camGo: T.design * 0.2,
-    camRun: T.design * 0.42,
+    cursorGo: D * 0.04,
+    cursorRun: D * 0.5,
+    camGo: D * 0.26,
+    camRun: D * 0.44,
   };
-  const design = (t) =>
-    t <= T.key ? t / T.scale : T.design + t - T.key;
-  const glide = (p) =>
-    p < 0.5 ? 4 * p ** 3 : 1 - (-2 * p + 2) ** 3 / 2;
+
+  const designTime = (t) => t <= K ? t / T.scale : D + t - K;
   const spring = (p) => {
-    const w = 7.4;
-    const f = (x) => 1 - (1 + w * x) * Math.exp(-w * x);
-    // Critical damping without overshoot; zero velocity at both ends.
-    return f(glide(p)) / f(1);
+    const f = (x) => 1 - (1 + 8 * x) * Math.exp(-8 * x);
+    return f(smooth(p)) / f(1);
   };
   const view = (t) => {
-    const d = design(t);
+    const d = designTime(t);
     const z = spring(clamp((d - B.camGo) / B.camRun));
     const s = Math.exp(Math.log(Z) * z);
     return {
-      s,
-      x: P.x + (G.x - P.x) * z - s * P.x,
-      y: P.y + (G.y - P.y) * z - s * P.y,
       z,
+      s,
+      x: P.x + (G.x - P.x) * z - P.x * s,
+      y: P.y + (G.y - P.y) * z - P.y * s,
     };
   };
+
   const pointer = (t) => {
-    const d = design(t);
-    const p = glide(clamp((d - B.cursorGo) / B.cursorRun));
+    const d = designTime(t);
+    const p = smooth(clamp((d - B.cursorGo) / B.cursorRun));
     const a = (1 - p) ** 2;
     const b = 2 * p * (1 - p);
     const c = p ** 2;
     const v = view(t);
-    const holdTime = Math.max(0, t - T.key - 0.4);
-    const dip = Math.sin(clamp((t - T.key + 0.07) / 0.2) * Math.PI);
+
+    let press = smooth(clamp((d - pressD) / (clickD - pressD)));
+    if (d > clickD) {
+      press = 1 - smooth(clamp((d - clickD) / (D * 0.1)));
+    }
+    const rest = smooth(clamp((t - K - 0.38 * q) / (0.28 * q)));
     return {
-      x: v.s * (a * A.x + b * C.x + c * P.x) + v.x - 6
-        + Math.sin(holdTime * 1.3) * 2,
-      y: v.s * (a * A.y + b * C.y + c * P.y) + v.y - 4
-        + Math.sin(holdTime * 1.8) * 3,
-      scale: (1 + 0.24 * v.z) * (1 - 0.12 * dip),
+      x: v.s * (a * A.x + b * C.x + c * P.x) + v.x - 46 * 4 / 28
+        + rest * 16 + Math.sin(rest * Math.PI) * 14,
+      y: v.s * (a * A.y + b * C.y + c * P.y) + v.y - 56 * 2.5 / 34
+        + rest * (full ? 70 : 50),
+      scale: (1 + 0.14 * v.z) * (1 - press * 0.13),
+    };
+  };
+
+  const shadowFrame = (t) => {
+    const v = view(t);
+    return {
+      x: v.x + v.s * lerp(winX, F.x, v.z),
+      y: v.y + v.s * lerp(winY, F.y, v.z),
+      w: lerp(winW, F.w, v.z),
+      h: lerp(winH, F.h, v.z),
+      s: v.s,
     };
   };
 
   const tl = gsap.timeline({ paused: true });
   const build = gsap.timeline();
+  const shadow = $("shadow");
+  const initialPointer = pointer(0);
+
+  gsap.set(shadow, { x: winX, y: winY, width: winW, height: winH });
+  gsap.set("#cursor", {
+    x: initialPointer.x,
+    y: initialPointer.y,
+    scaleX: initialPointer.scale,
+    scaleY: initialPointer.scale,
+  });
+
+  // Whole context elements disappear before the first changing crop.
+  // No partial title, neighboring label or navigation sliver survives.
+  if (contexts.length) {
+    build.fromTo(contexts,
+      { autoAlpha: 1 },
+      {
+        autoAlpha: 0,
+        duration: D * 0.06,
+        ease: "power2.in",
+        immediateRender: false,
+      }, D * 0.16);
+  }
+
+  const insetTop = F.y - winY;
+  const insetRight = winX + winW - F.x - F.w;
+  const insetBottom = winY + winH - F.y - F.h;
+  const insetLeft = F.x - winX;
+
+  build.fromTo(win,
+    { clipPath: "inset(0px 0px 0px 0px round 24px)" },
+    {
+      clipPath:
+        `inset(${insetTop}px ${insetRight}px ${insetBottom}px ${insetLeft}px round 24px)`,
+      duration: B.camRun,
+      ease: spring,
+      immediateRender: false,
+    }, B.camGo);
+
   if (button) {
     build.to(button, {
-      filter: "brightness(0.88)",
-      duration: T.design * 0.08,
-      ease: "power1.out",
-    }, T.design * 0.56);
+      filter: "brightness(0.87)",
+      duration: D * 0.08,
+      ease: "power2.out",
+    }, D * 0.54);
+
+    build.to(button, {
+      scaleX: 0.95,
+      scaleY: 0.95,
+      duration: clickD - pressD,
+      ease: "power2.in",
+    }, pressD);
+
+    if (builtIn) {
+      build.to(button, {
+        scaleX: 1.01,
+        scaleY: 1.01,
+        duration: D * 0.1,
+        ease: "power3.out",
+      }, clickD);
+      build.to(button, {
+        scaleX: 1.065,
+        scaleY: 1.065,
+        duration: D * 0.06,
+        ease: "power3.out",
+      }, D * 0.94);
+    }
   }
+
+  const placeRing = (id, size) => {
+    const el = $(id);
+    el.style.width = size + "px";
+    el.style.height = size + "px";
+    gsap.set(el, { x: G.x - size / 2, y: G.y - size / 2 });
+  };
+  placeRing("click-ring", shot.clickRingPx);
+  placeRing("ring", shot.ringPx);
+  placeRing("ripple", shot.ringPx * 1.6);
+
+  if (builtIn) {
+    gsap.set(["#btn-pending", "#btn-done"], { autoAlpha: 0 });
+    gsap.set(ticks.map(({ on }) => on), { autoAlpha: 0 });
+    gsap.set("#step-num", { autoAlpha: 0 });
+
+    build.set("#btn-label", { autoAlpha: 0 }, clickD);
+    build.set("#btn-pending", { autoAlpha: 1 }, clickD);
+
+    build.fromTo("#click-ring",
+      { opacity: 0.8, scaleX: 0.12, scaleY: 0.12 },
+      {
+        opacity: 0,
+        scaleX: 1,
+        scaleY: 1,
+        duration: D * 0.16,
+        ease: "power3.out",
+        immediateRender: false,
+      }, clickD);
+
+    ticks.slice(0, 2).forEach(({ on, halo }, i) => {
+      const at = D * (0.88 + i * 0.06);
+      const run = D - at;
+      build.set(on, { autoAlpha: 1, scaleX: 1.18, scaleY: 1.18 }, at);
+      build.to(on, {
+        scaleX: 1,
+        scaleY: 1,
+        duration: run,
+        ease: "power3.out",
+      }, at);
+      build.fromTo(halo,
+        { opacity: 0.55, scaleX: 0.85, scaleY: 0.85 },
+        {
+          opacity: 0,
+          scaleX: 1.7,
+          scaleY: 1.7,
+          duration: run,
+          ease: "power2.out",
+          immediateRender: false,
+        }, at);
+    });
+  }
+
   build.timeScale(1 / T.scale);
   tl.add(build, 0);
 
+  // Modifier-driven transforms survive event-suppressed blur sampling.
   tl.fromTo("#cam",
     { x: 0, y: 0, scaleX: 1, scaleY: 1 },
     {
@@ -370,9 +609,13 @@ CA.ready(async () => {
     }, 0);
 
   tl.fromTo("#cursor",
-    { x: 0, y: 0, scaleX: 1, scaleY: 1 },
     {
-      x: 1, y: 1, scaleX: 2, scaleY: 2,
+      x: initialPointer.x, y: initialPointer.y,
+      scaleX: initialPointer.scale, scaleY: initialPointer.scale,
+    },
+    {
+      x: initialPointer.x + 1, y: initialPointer.y + 1,
+      scaleX: 2, scaleY: 2,
       duration: T.duration,
       ease: "none",
       modifiers: {
@@ -384,168 +627,155 @@ CA.ready(async () => {
     }, 0);
 
   tl.fromTo(shadow,
-    { x: winX, y: winY, scaleX: 1, scaleY: 1 },
+    { x: winX, y: winY, width: winW, height: winH, scaleX: 1, scaleY: 1 },
     {
-      x: 1, y: 1, scaleX: 2, scaleY: 2,
+      x: winX + 1, y: winY + 1,
+      width: winW + 1, height: winH + 1,
+      scaleX: 2, scaleY: 2,
       duration: T.duration,
       ease: "none",
       modifiers: {
-        x: () => {
-          const v = view(tl.time());
-          return v.s * winX + v.x + "px";
-        },
-        y: () => {
-          const v = view(tl.time());
-          return v.s * winY + v.y + "px";
-        },
-        scaleX: () => view(tl.time()).s,
-        scaleY: () => view(tl.time()).s,
+        x: () => shadowFrame(tl.time()).x + "px",
+        y: () => shadowFrame(tl.time()).y + "px",
+        width: () => shadowFrame(tl.time()).w + "px",
+        height: () => shadowFrame(tl.time()).h + "px",
+        scaleX: () => shadowFrame(tl.time()).s,
+        scaleY: () => shadowFrame(tl.time()).s,
       },
     }, 0);
 
-  const K = T.key;
-  const q = Math.min(1, Math.max(0.01, T.hold / 2.3));
   if (button) {
-    tl.to(button, {
-      scaleX: 0.95,
-      scaleY: 0.95,
-      duration: 0.07,
-      ease: "power2.out",
-    }, K - 0.07);
     tl.to(button, {
       scaleX: 1,
       scaleY: 1,
       filter: "brightness(1)",
       duration: 0.28 * q,
-      ease: "back.out(1.6)",
+      ease: "back.out(1.35)",
     }, K);
   }
 
-  const placeRing = (el, px) => {
-    el.style.width = el.style.height = px + "px";
-    gsap.set(el, { x: G.x - px / 2, y: G.y - px / 2 });
-  };
-  placeRing($("ring"), shot.ringPx);
-  placeRing($("ripple"), shot.ringPx * 1.65);
+  if (builtIn) {
+    // The exact key frame contains Published, success green and all checks.
+    tl.set("#btn-pending", { autoAlpha: 0 }, K);
+    tl.set("#btn-done", { autoAlpha: 1 }, K);
+    tl.set(button, { backgroundColor: V.successColor }, K);
+    tl.set("#publish-panel", { borderColor: V.successColor }, K);
+    tl.set(ticks.map(({ on }) => on), { backgroundColor: V.successColor }, K);
+    tl.set(ticks.map(({ tick }) => tick), { borderColor: V.successColor }, K);
 
-  tl.set("#ring", { opacity: 0.85 }, K);
-  tl.fromTo("#ring",
-    { scaleX: 0.16, scaleY: 0.16 },
-    {
-      scaleX: 1, scaleY: 1,
+    const last = ticks[2];
+    tl.set(last.on, { autoAlpha: 1, scaleX: 1.18, scaleY: 1.18 }, K);
+    tl.to(last.on, {
+      scaleX: 1,
+      scaleY: 1,
+      duration: 0.2 * q,
+      ease: "power3.out",
+    }, K);
+    tl.fromTo(last.halo,
+      { opacity: 0.65, scaleX: 0.85, scaleY: 0.85 },
+      {
+        opacity: 0,
+        scaleX: 1.8,
+        scaleY: 1.8,
+        duration: 0.3 * q,
+        ease: "power2.out",
+        immediateRender: false,
+      }, K);
+
+    tl.set("#panel-wash", { opacity: 0.16 }, K);
+    tl.to("#panel-wash", {
+      opacity: 0.045,
       duration: 0.3 * q,
+      ease: "power2.out",
+    }, K);
+
+    tl.set("#panel-outline", { autoAlpha: 0.65 }, K);
+    tl.fromTo("#energy-line",
+      { strokeDashoffset: 0 },
+      {
+        strokeDashoffset: -360,
+        duration: Math.max(0.01, T.hold),
+        ease: "sine.inOut",
+        immediateRender: false,
+      }, K);
+    tl.to("#panel-outline", {
+      opacity: 0.3,
+      duration: 0.35 * q,
+      ease: "power2.out",
+    }, K);
+  }
+
+  tl.fromTo("#ring",
+    { opacity: 0.95, scaleX: 0.1, scaleY: 0.1 },
+    {
+      opacity: 0,
+      scaleX: 1,
+      scaleY: 1,
+      duration: 0.32 * q,
       ease: "power3.out",
       immediateRender: false,
     }, K);
-  tl.to("#ring", {
-    opacity: 0, duration: 0.2 * q, ease: "power1.in",
-  }, K + 0.1 * q);
-  tl.set("#ripple", { opacity: 0.35 }, K + 0.035 * q);
   tl.fromTo("#ripple",
-    { scaleX: 0.24, scaleY: 0.24 },
+    { opacity: 0.4, scaleX: 0.2, scaleY: 0.2 },
     {
-      scaleX: 1, scaleY: 1,
-      duration: 0.4 * q,
+      opacity: 0,
+      scaleX: 1,
+      scaleY: 1,
+      duration: 0.42 * q,
       ease: "power2.out",
       immediateRender: false,
-    }, K + 0.035 * q);
-  tl.to("#ripple", {
-    opacity: 0, duration: 0.25 * q, ease: "power1.in",
-  }, K + 0.16 * q);
+    }, K + 0.025 * q);
 
-  if (builtIn) {
-    tl.set("#btn-label", { visibility: "hidden" }, K + 0.06 * q);
-    tl.set("#btn-pending", { visibility: "visible" }, K + 0.06 * q);
-
-    ticks.forEach(({ on }, i) => {
-      gsap.set(on, { scaleX: 0, scaleY: 0 });
-      tl.to(on, {
-        scaleX: 1,
-        scaleY: 1,
-        duration: 0.24 * q,
-        ease: "back.out(2)",
-      }, K + (0.24 + i * 0.28) * q);
-    });
-
-    // Published appears with the final destination check, never before it.
-    const completeAt = K + 0.8 * q;
-    tl.set("#btn-pending", { visibility: "hidden" }, completeAt);
-    tl.set("#btn-done", { visibility: "visible" }, completeAt);
-
-    // A small completion halo and the playhead keep the held shot alive.
-    // Reading text, the panel and the camera remain stationary.
-    const haloAt = completeAt + 0.24 * q;
-    const haloRun = Math.max(0.01, K + T.hold - haloAt);
-    ticks.forEach(({ halo }, i) => {
-      tl.fromTo(halo,
-        { scaleX: 0.9, scaleY: 0.9, opacity: 0.24 },
-        {
-          scaleX: 1.45,
-          scaleY: 1.45,
-          opacity: 0,
-          duration: haloRun / 3,
-          repeat: 2,
-          ease: "sine.out",
-          immediateRender: false,
-        }, haloAt + i * 0.015 * q);
-    });
-
-    const timelineWidth = rect($("scrub").parentElement).w;
-    gsap.set("#scrub", { x: timelineWidth * 0.18 });
-    tl.fromTo("#scrub",
-      { x: timelineWidth * 0.18 },
-      {
-        x: timelineWidth * 0.72,
-        duration: Math.max(0.01, T.hold),
-        ease: "none",
-        immediateRender: false,
-      }, K);
-  }
-
-  tl.set(stepEl, { visibility: "visible" }, K + 0.36 * q);
+  tl.set(stepEl, { autoAlpha: 1 }, K + 0.12 * q);
   tl.fromTo(stepEl,
-    { scaleX: 0.72, scaleY: 0.72 },
+    { scaleX: 0.78, scaleY: 0.78 },
     {
       scaleX: 1,
       scaleY: 1,
-      duration: 0.3 * q,
-      ease: "back.out(1.7)",
+      duration: 0.28 * q,
+      ease: "back.out(1.45)",
       immediateRender: false,
-    }, K + 0.36 * q);
+    }, K + 0.12 * q);
+  tl.set(numEl, { autoAlpha: 1 }, K + 0.18 * q);
   tl.fromTo(numEl,
-    { scaleX: 0, scaleY: 0 },
+    { scaleX: 0.55, scaleY: 0.55 },
     {
       scaleX: 1,
       scaleY: 1,
       duration: 0.24 * q,
-      ease: "back.out(2.2)",
+      ease: "back.out(1.8)",
       immediateRender: false,
-    }, K + 0.43 * q);
+    }, K + 0.18 * q);
 
   tl.fromTo("#backdrop",
-    { scaleX: 1.04, scaleY: 1.04, x: -8, y: 6 },
+    { scaleX: 1.035, scaleY: 1.035, x: -7, y: 5 },
     {
-      scaleX: 1.07, scaleY: 1.07, x: 8, y: -6,
+      scaleX: 1.065,
+      scaleY: 1.065,
+      x: 7,
+      y: -5,
       duration: Math.max(0.01, T.hold),
       ease: "sine.inOut",
       immediateRender: false,
     }, K);
 
-  const Rmax = Math.hypot(W, H);
+  const radius = Math.hypot(W, H);
   const gx = G.x / W * 100;
   const gy = G.y / H * 100;
+
   if (variant === "overlay") {
     tl.fromTo(stageEl,
       { clipPath: "circle(0px at 50% 50%)" },
       {
-        clipPath: `circle(${Rmax}px at 50% 50%)`,
-        duration: Math.min(0.24, T.key * 0.24),
+        clipPath: `circle(${radius}px at 50% 50%)`,
+        duration: Math.min(0.22, K * 0.2),
         ease: "power3.out",
       }, 0);
   }
+
   if (T.exit > 0) {
     tl.fromTo(stageEl,
-      { clipPath: `circle(${Rmax}px at ${gx}% ${gy}%)` },
+      { clipPath: `circle(${radius}px at ${gx}% ${gy}%)` },
       {
         clipPath: `circle(0px at ${gx}% ${gy}%)`,
         duration: Math.max(0, T.exit - 1 / CA.fps),
