@@ -1,0 +1,252 @@
+{
+  "name": "ink-wash",
+  "title": "Ink Wash",
+  "summary": "Large upright lettering and a mottled red sun open on rice paper. Mountain washes bend beneath clear title silhouettes. A rower crosses into open water, draws a trailing wake and completes an oar stroke as the pine finishes. A small, eroded red seal stamps last.",
+  "fonts": [
+    "600 40px 'Cormorant SC'",
+    "italic 400 40px 'Cormorant Garamond'"
+  ],
+  "fontFiles": [
+    "cormorant-sc-600.woff2",
+    "cormorant-garamond-400-italic.woff2"
+  ],
+  "timing": {
+    "keyAt": 3.9666666667,
+    "hold": 1.0333333333,
+    "exit": 0.3,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the boat reaches open water and finishes its driving oar stroke; a darker water stroke completes beneath its hull, ripples open at the blade, and a small textured seal stamps at 112% before settling",
+  "overlayHeight": 960,
+  "variables": [
+    {
+      "id": "title",
+      "type": "string",
+      "label": "Vertical title: one or two short words",
+      "default": "STILL WATER"
+    },
+    {
+      "id": "subtitle",
+      "type": "string",
+      "label": "Quiet italic line",
+      "default": "a quiet crossing"
+    },
+    {
+      "id": "sealInitials",
+      "type": "string",
+      "label": "Seal initials: one or two letters",
+      "default": "SW"
+    },
+    {
+      "id": "chapter",
+      "type": "string",
+      "label": "Optional short chapter line",
+      "default": ""
+    },
+    {
+      "id": "paper",
+      "type": "color",
+      "label": "Rice paper",
+      "default": "#EEEAE0"
+    },
+    {
+      "id": "ink",
+      "type": "color",
+      "label": "Black ink, including pale washes",
+      "default": "#1B1A18"
+    },
+    {
+      "id": "red",
+      "type": "color",
+      "label": "Red sun, seal and subtitle square",
+      "default": "#B8352A"
+    },
+    {
+      "id": "sunX",
+      "type": "number",
+      "label": "Sun centre X: painting reference",
+      "default": 394,
+      "min": 300,
+      "max": 500,
+      "step": 1
+    },
+    {
+      "id": "sunY",
+      "type": "number",
+      "label": "Sun centre Y: painting reference",
+      "default": 734,
+      "min": 680,
+      "max": 810,
+      "step": 1
+    },
+    {
+      "id": "sunDiameter",
+      "type": "number",
+      "label": "Sun core diameter",
+      "default": 224,
+      "min": 140,
+      "max": 260,
+      "step": 1
+    },
+    {
+      "id": "titleX",
+      "type": "number",
+      "label": "Title column anchor X: portrait reference",
+      "default": 862,
+      "min": 780,
+      "max": 900,
+      "step": 1
+    },
+    {
+      "id": "titleY",
+      "type": "number",
+      "label": "Title start Y: portrait reference",
+      "default": 270,
+      "min": 250,
+      "max": 350,
+      "step": 1
+    },
+    {
+      "id": "titleSize",
+      "type": "number",
+      "label": "Maximum title letter size",
+      "default": 176,
+      "min": 72,
+      "max": 200,
+      "step": 1
+    },
+    {
+      "id": "subtitleX",
+      "type": "number",
+      "label": "Horizontal italic line left X: portrait reference",
+      "default": 84,
+      "min": 54,
+      "max": 240,
+      "step": 1
+    },
+    {
+      "id": "subtitleSize",
+      "type": "number",
+      "label": "Italic letter size",
+      "default": 80,
+      "min": 56,
+      "max": 96,
+      "step": 1
+    },
+    {
+      "id": "sealX",
+      "type": "number",
+      "label": "Seal left X: portrait reference, kept inside paper",
+      "default": 812,
+      "min": 720,
+      "max": 880,
+      "step": 1
+    },
+    {
+      "id": "sealY",
+      "type": "number",
+      "label": "Seal top Y: portrait reference",
+      "default": 1320,
+      "min": 1180,
+      "max": 1460,
+      "step": 1
+    },
+    {
+      "id": "sealSize",
+      "type": "number",
+      "label": "Small landscape seal width and height",
+      "default": 108,
+      "min": 92,
+      "max": 140,
+      "step": 1
+    },
+    {
+      "id": "landscapeTop",
+      "type": "number",
+      "label": "Landscape upper reference",
+      "default": 552,
+      "min": 500,
+      "max": 680,
+      "step": 1
+    },
+    {
+      "id": "landscapeBottom",
+      "type": "number",
+      "label": "Landscape lower reference",
+      "default": 1450,
+      "min": 1340,
+      "max": 1540,
+      "step": 1
+    },
+    {
+      "id": "cliffScale",
+      "type": "number",
+      "label": "Cliff and pine size",
+      "default": 1.12,
+      "min": 0.85,
+      "max": 1.25,
+      "step": 0.01
+    },
+    {
+      "id": "boatScale",
+      "type": "number",
+      "label": "Boat and rower size",
+      "default": 2.05,
+      "min": 1,
+      "max": 2.6,
+      "step": 0.05
+    },
+    {
+      "id": "boatDrift",
+      "type": "number",
+      "label": "Boat drift after arrival: reference pixels per second",
+      "default": 12,
+      "min": 0,
+      "max": 24,
+      "step": 1
+    },
+    {
+      "id": "washStrength",
+      "type": "number",
+      "label": "Mountain pigment strength",
+      "default": 1.3,
+      "min": 0.5,
+      "max": 1.6,
+      "step": 0.05
+    },
+    {
+      "id": "paperTexture",
+      "type": "number",
+      "label": "Paper fibre strength",
+      "default": 1,
+      "min": 0,
+      "max": 2,
+      "step": 0.1
+    },
+    {
+      "id": "seed",
+      "type": "number",
+      "label": "Painting variation",
+      "default": 7,
+      "min": 1,
+      "max": 9999,
+      "step": 1
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    }
+  ]
+}

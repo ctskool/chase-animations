@@ -1,0 +1,110 @@
+{
+  "name": "exploded-teardown",
+  "title": "Exploded teardown",
+  "summary": "A large speaker opens in five spring releases with one oversized callout at a time. Clear gaps reveal every layer. The payoff stamps all five rims orange and locks the model beside its final annotations.",
+  "fonts": [
+    "600 68px 'IBM Plex Sans'",
+    "700 100px 'IBM Plex Sans'",
+    "500 44px 'IBM Plex Mono'"
+  ],
+  "fontFiles": [
+    "ibm-plex-sans-600.woff2",
+    "ibm-plex-sans-700.woff2",
+    "ibm-plex-mono-500.woff2"
+  ],
+  "three": true,
+  "motionBlur": true,
+  "overlayHeight": 1000,
+  "timing": {
+    "keyAt": 4.4,
+    "hold": 0.9,
+    "exit": 0.34,
+    "minKeyAt": 2.6
+  },
+  "keyMoment": "All five separated layers lock beside their annotations. Five orange rims and expanding corner marks stamp the complete teardown. The closing headline flashes orange, the rule reaches full width and the model punches forward. A lasting orange shell rim remains during the moving hold.",
+  "variables": [
+    { "id": "productName", "type": "string", "label": "Product description", "default": "Neruq P1 portable speaker" },
+    { "id": "brand", "type": "string", "label": "Fictional brand", "default": "Neruq" },
+    { "id": "productDiameter", "type": "number", "label": "Product diameter in mm", "default": 92 },
+    { "id": "productHeight", "type": "number", "label": "Product height in mm", "default": 55 },
+    { "id": "dimensionUnit", "type": "string", "label": "Displayed dimension unit", "default": "mm" },
+    { "id": "grilleThickness", "type": "number", "label": "Grille thickness in mm", "default": 0.8 },
+    { "id": "driverDiameter", "type": "number", "label": "Driver diameter in mm", "default": 45 },
+
+    { "id": "titleLine1", "type": "string", "label": "Product heading", "default": "NERUQ P1" },
+    { "id": "titleLine2", "type": "string", "label": "Closing headline", "default": "INSIDE THE SOUND" },
+
+    { "id": "layer1Number", "type": "string", "label": "Top layer number", "default": "01" },
+    { "id": "layer1Name", "type": "string", "label": "Top layer name", "default": "Perforated grille" },
+    { "id": "layer1Spec", "type": "string", "label": "Top layer spec", "default": "0.8 mm / anodized Al" },
+    { "id": "layer2Number", "type": "string", "label": "Driver number", "default": "02" },
+    { "id": "layer2Name", "type": "string", "label": "Driver name", "default": "Full-range driver" },
+    { "id": "layer2Spec", "type": "string", "label": "Driver spec", "default": "45 mm / 4 ohm" },
+    { "id": "layer3Number", "type": "string", "label": "Board number", "default": "03" },
+    { "id": "layer3Name", "type": "string", "label": "Board name", "default": "Amplifier board" },
+    { "id": "layer3Spec", "type": "string", "label": "Board spec", "default": "Class D / 5 W" },
+    { "id": "layer4Number", "type": "string", "label": "Battery number", "default": "04" },
+    { "id": "layer4Name", "type": "string", "label": "Battery name", "default": "Battery module" },
+    { "id": "layer4Spec", "type": "string", "label": "Battery spec", "default": "3.7 V / 2200 mAh" },
+    { "id": "layer5Number", "type": "string", "label": "Base number", "default": "05" },
+    { "id": "layer5Name", "type": "string", "label": "Base name", "default": "Base shell" },
+    { "id": "layer5Spec", "type": "string", "label": "Base spec", "default": "CNC aluminum / 92 mm" },
+
+    { "id": "accent", "type": "color", "label": "Orange accent", "default": "#EF7C43" },
+    { "id": "ink", "type": "color", "label": "Names, title and dots", "default": "#ECEEF1" },
+    { "id": "muted", "type": "color", "label": "Specifications", "default": "#A3A8B0" },
+    { "id": "leader", "type": "color", "label": "Leader lines", "default": "#737983" },
+    { "id": "bgCenter", "type": "color", "label": "Graphite centre", "default": "#2A2D33" },
+    { "id": "bgEdge", "type": "color", "label": "Graphite edges", "default": "#0A0A0C" },
+
+    { "id": "grilleColor", "type": "color", "label": "Anodized grille", "default": "#363A40" },
+    { "id": "darkMetal", "type": "color", "label": "Driver basket", "default": "#30343B" },
+    { "id": "coneColor", "type": "color", "label": "Paper cone", "default": "#34373B" },
+    { "id": "rubberColor", "type": "color", "label": "Surround and foot", "default": "#101214" },
+    { "id": "boardColor", "type": "color", "label": "Circuit board", "default": "#28744E" },
+    { "id": "copperColor", "type": "color", "label": "Copper traces", "default": "#B6793D" },
+    { "id": "silverColor", "type": "color", "label": "Battery pouches", "default": "#BEC4CA" },
+    { "id": "shellColor", "type": "color", "label": "Satin aluminum shell", "default": "#969DA5" },
+    { "id": "polymerColor", "type": "color", "label": "Holder and components", "default": "#22252B" },
+    { "id": "brassColor", "type": "color", "label": "Brass mounting posts", "default": "#BA9655" },
+
+    { "id": "referenceFps", "type": "number", "label": "Reference frames per second", "default": 30 },
+    { "id": "firstLiftFrame", "type": "number", "label": "First release starts at frame", "default": 10 },
+    { "id": "liftIntervalFrames", "type": "number", "label": "Frames between releases", "default": 20 },
+    { "id": "leaderDelayFrames", "type": "number", "label": "Callout delay after release", "default": 4 },
+    { "id": "springMass", "type": "number", "label": "Spring mass", "default": 1 },
+    { "id": "springStiffness", "type": "number", "label": "Spring stiffness", "default": 600 },
+    { "id": "springDamping", "type": "number", "label": "Spring damping", "default": 29 },
+    { "id": "layerGapMm", "type": "number", "label": "Minimum full output physical gap in mm", "default": 20 },
+    { "id": "compactGapMm", "type": "number", "label": "Minimum compact output physical gap in mm", "default": 10 },
+    { "id": "projectionClearanceMm", "type": "number", "label": "Visible space between layer silhouettes in mm", "default": 3 },
+    { "id": "baseLiftMm", "type": "number", "label": "Base release lift in mm", "default": 3.2 },
+    { "id": "fullElevation", "type": "number", "label": "Full output final camera elevation", "default": 14 },
+    { "id": "compactElevation", "type": "number", "label": "Compact output final camera elevation", "default": 10 },
+    { "id": "cameraPullFrames", "type": "number", "label": "Closing composition move in frames", "default": 30 },
+    { "id": "cameraOrbit", "type": "number", "label": "Build camera orbit in degrees", "default": 10 },
+    { "id": "holdOrbit", "type": "number", "label": "Product turn during the hold in degrees", "default": 8 },
+    { "id": "impactScale", "type": "number", "label": "Product scale punch at the key moment", "default": 1.055 },
+    { "id": "shutterAngle", "type": "number", "label": "Motion blur shutter angle", "default": 120 },
+    { "id": "temporalSamples", "type": "number", "label": "Fast-motion temporal samples", "default": 8 },
+
+    { "id": "titleBarFrame", "type": "number", "label": "Progress rule starts at frame", "default": 0 },
+    { "id": "titleBarFrames", "type": "number", "label": "Delayed rule entrance in frames", "default": 8 },
+    { "id": "titleLine1Frame", "type": "number", "label": "Product heading starts at frame", "default": 0 },
+    { "id": "titleLine2Frame", "type": "number", "label": "Closing headline starts at frame", "default": 126 },
+    { "id": "titleSpecFrame", "type": "number", "label": "Dimensions start at frame", "default": 128 },
+    { "id": "textRiseFrames", "type": "number", "label": "Whole title line settle in frames", "default": 6 },
+    { "id": "grainAmount", "type": "number", "label": "Background grain strength", "default": 0.045 },
+    { "id": "grainSeed", "type": "number", "label": "Background grain seed", "default": 17 },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

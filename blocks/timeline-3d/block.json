@@ -1,0 +1,71 @@
+{
+  "name": "timeline-3d",
+  "title": "Timeline 3D",
+  "summary": "A moving perspective rail triggers oversized illustrated cards. Short readable hinges overlap the outgoing milestone; the final blue sweep lands with one whole-card scale accent and a deliberate settle.",
+  "fonts": [
+    "800 40px 'Schibsted Grotesk'",
+    "700 40px 'Schibsted Grotesk'",
+    "500 40px 'Schibsted Grotesk'",
+    "500 40px 'JetBrains Mono'"
+  ],
+  "fontFiles": [
+    "schibsted-grotesk-800.woff2",
+    "schibsted-grotesk-700.woff2",
+    "schibsted-grotesk-500.woff2"
+  ],
+  "three": true,
+  "motionBlur": true,
+  "overlayCard": false,
+  "overlayHeight": 1000,
+  "timing": {
+    "keyAt": 4.0,
+    "hold": 1.0,
+    "exit": 0.34,
+    "minKeyAt": 1.9
+  },
+  "keyMoment": "the blue sweep finishes as the playhead stops just past the final milestone and the complete final card reaches one shared scale peak; it settles to a slightly larger footprint and the NOW badge snaps on a beat later",
+  "variables": [
+    { "id": "headline", "type": "string", "label": "Headline", "default": "From sketches to spaces." },
+    { "id": "highlight", "type": "string", "label": "Blue phrase in headline", "default": "spaces." },
+    { "id": "name", "type": "string", "label": "Story name", "default": "Mara Vale" },
+    { "id": "startYear", "type": "number", "label": "Start year", "default": 2019 },
+    { "id": "nowYear", "type": "number", "label": "Now year", "default": 2026 },
+    { "id": "kicker", "type": "string", "label": "Kicker; leave empty to use name and year range", "default": "MARA VALE · 2019 TO NOW" },
+
+    { "id": "milestone1Year", "type": "number", "label": "Milestone 1 year", "default": 2019 },
+    { "id": "milestone1Title", "type": "string", "label": "Milestone 1 title", "default": "First sketches" },
+    { "id": "milestone1Detail", "type": "string", "label": "Milestone 1 detail", "default": "I drew rooms after my day job." },
+
+    { "id": "milestone2Year", "type": "number", "label": "Milestone 2 year", "default": 2021 },
+    { "id": "milestone2Title", "type": "string", "label": "Milestone 2 title", "default": "First commission" },
+    { "id": "milestone2Detail", "type": "string", "label": "Milestone 2 detail", "default": "A reading nook became paid work." },
+
+    { "id": "milestone3Year", "type": "number", "label": "Milestone 3 year", "default": 2024 },
+    { "id": "milestone3Title", "type": "string", "label": "Milestone 3 title", "default": "My own studio" },
+    { "id": "milestone3Detail", "type": "string", "label": "Milestone 3 detail", "default": "I opened an interior design studio." },
+
+    { "id": "milestone4Year", "type": "number", "label": "NOW milestone year", "default": 2026 },
+    { "id": "milestone4Title", "type": "string", "label": "NOW milestone title", "default": "Made for living" },
+    { "id": "milestone4Detail", "type": "string", "label": "NOW milestone detail", "default": "Calmer homes for everyday life." },
+    { "id": "nowPill", "type": "string", "label": "NOW corner pill", "default": "NOW" },
+
+    { "id": "accent", "type": "color", "label": "Only accent colour", "default": "#2442F5" },
+    { "id": "ink", "type": "color", "label": "Headline, titles and hero years", "default": "#0E1116" },
+    { "id": "muted", "type": "color", "label": "Details and kicker", "default": "#6A717C" },
+    { "id": "future", "type": "color", "label": "Unfilled rail and future stops", "default": "#B7BEC8" },
+    { "id": "card", "type": "color", "label": "Milestone cards and reversed text", "default": "#FFFFFF" },
+    { "id": "floorTop", "type": "color", "label": "Far floor", "default": "#F5F6F8" },
+    { "id": "floorBottom", "type": "color", "label": "Near floor", "default": "#E3E6EB" },
+    { "id": "grid", "type": "color", "label": "Inset floor strip", "default": "#B7BEC8" },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

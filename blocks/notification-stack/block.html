@@ -1,59 +1,68 @@
 <div id="ns-clip">
-  <div id="ns-wallpaper"></div>
-  <div id="ns-light"></div>
+  <div id="ns-phone">
+    <div id="ns-screen">
+      <div id="ns-wallpaper"></div>
+      <div id="ns-light"></div>
 
-  <div id="ns-chrome" aria-hidden="true">
-    <div id="ns-island"></div>
-    <svg id="ns-status" viewBox="0 0 152 32" fill="none">
-      <path d="M5 27v-5h7v5zm12 0V16h7v11zm12 0V10h7v17zm12 0V4h7v23z" fill="currentColor"/>
-      <path d="M65 12c12-10 25-10 37 0M72 19c7-6 16-6 23 0" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-      <circle cx="83.5" cy="26" r="3" fill="currentColor"/>
-      <rect x="115" y="6" width="29" height="20" rx="5" stroke="currentColor" stroke-width="2.5"/>
-      <rect x="119" y="10" width="21" height="12" rx="2" fill="currentColor"/>
-      <path d="M148 12v8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-    </svg>
-    <svg id="ns-lock" viewBox="0 0 32 40" fill="none">
-      <path d="M8 17V11a8 8 0 0 1 16 0v6" stroke="currentColor" stroke-width="3.5"/>
-      <rect x="3" y="16" width="26" height="22" rx="6" fill="currentColor"/>
-      <circle cx="16" cy="26" r="2.5" fill="var(--ns-ground)"/>
-    </svg>
-  </div>
-
-  <div id="ns-date"><span id="ns-date-text"></span></div>
-  <div id="ns-time"><span id="ns-time-text"></span></div>
-
-  <div id="ns-summary">
-    <div id="ns-summary-icon" class="ns-app-icon"></div>
-    <div id="ns-summary-copy">
-      <span id="ns-summary-label"></span>
-      <div id="ns-count-line">
-        <div id="ns-count" class="ns-number"></div>
-        <span id="ns-count-label"></span>
+      <div id="ns-chrome" aria-hidden="true">
+        <div id="ns-island"></div>
+        <svg id="ns-status" viewBox="0 0 152 32" fill="none">
+          <path d="M5 27v-5h7v5zm12 0V16h7v11zm12 0V10h7v17zm12 0V4h7v23z" fill="currentColor"/>
+          <path d="M65 12c12-10 25-10 37 0M72 19c7-6 16-6 23 0" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="83.5" cy="26" r="3" fill="currentColor"/>
+          <rect x="115" y="6" width="29" height="20" rx="5" stroke="currentColor" stroke-width="2.5"/>
+          <rect x="119" y="10" width="21" height="12" rx="2" fill="currentColor"/>
+          <path d="M148 12v8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <svg id="ns-lock" viewBox="0 0 32 40" fill="none">
+          <path d="M8 17V11a8 8 0 0 1 16 0v6" stroke="currentColor" stroke-width="3.5"/>
+          <rect x="3" y="16" width="26" height="22" rx="6" fill="currentColor"/>
+          <circle cx="16" cy="26" r="2.5" fill="var(--ns-ground)"/>
+        </svg>
       </div>
-    </div>
-    <div id="ns-total" class="ns-number"></div>
-  </div>
 
-  <div id="ns-stack-shadow"></div>
-  <div id="ns-stack-window">
-    <div id="ns-cards"></div>
-  </div>
-  <div id="ns-pill"><span id="ns-pill-text"></span></div>
+      <div id="ns-date"><span id="ns-date-text"></span></div>
+      <div id="ns-time"><span id="ns-time-text"></span></div>
 
-  <div id="ns-bottom" aria-hidden="true">
-    <div class="ns-control">
-      <svg viewBox="0 0 40 40" fill="none">
-        <path d="M13 5h14M12 10h16l-5 10v12h-6V20z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-        <path d="M16 25h8" stroke="currentColor" stroke-width="3"/>
-      </svg>
-    </div>
-    <div class="ns-control">
-      <svg viewBox="0 0 40 40" fill="none">
-        <path d="M5 13h8l3-5h9l3 5h7v20H5z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-        <circle cx="20" cy="23" r="7" stroke="currentColor" stroke-width="3"/>
-      </svg>
+      <div id="ns-summary-shadow" aria-hidden="true"></div>
+      <div id="ns-summary">
+        <div id="ns-summary-face">
+          <div id="ns-summary-flash" aria-hidden="true"></div>
+          <div id="ns-summary-icon" class="ns-app-icon"></div>
+          <div id="ns-summary-copy">
+            <span id="ns-summary-label"></span>
+            <div id="ns-count-line">
+              <span id="ns-count" class="ns-number"></span>
+              <span id="ns-count-label"></span>
+            </div>
+          </div>
+          <span id="ns-total" class="ns-number"></span>
+          <div id="ns-summary-rim" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div id="ns-stack-shadow" aria-hidden="true"></div>
+      <div id="ns-stack-window">
+        <div id="ns-cards"></div>
+      </div>
+      <div id="ns-pill"><span id="ns-pill-text"></span></div>
+
+      <div id="ns-bottom" aria-hidden="true">
+        <div class="ns-control">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M13 5h14M12 10h16l-5 10v12h-6V20z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M16 25h8" stroke="currentColor" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="ns-control">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M5 13h8l3-5h9l3 5h7v20H5z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="20" cy="23" r="7" stroke="currentColor" stroke-width="3"/>
+          </svg>
+        </div>
+      </div>
+      <div id="ns-home" aria-hidden="true"></div>
     </div>
   </div>
-  <div id="ns-home" aria-hidden="true"></div>
   <div id="ns-grain"></div>
 </div>

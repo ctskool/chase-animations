@@ -1,8 +1,8 @@
 # Before and after
 
-A large browser transforms a dated blue bakery website into a spacious modern redesign. One smooth wipe reveals the complete new page and leaves it on screen.
+A large browser holds on a dated blue bakery website, then a pressed handle drives a fast makeover wipe. The modern heading lands, three broad product cards spring into place, and an accent marks the finished page.
 
-**Key moment:** the redesign is fully visible, all three product cards have landed, and their prices give a brief confirming pop.
+**Key moment:** the last product card lands as the complete browser gets a brief tomato outline. A matching header rule remains, and the bread and steam keep moving.
 
 ## Suits
 
@@ -24,7 +24,7 @@ Run `animate vars before-after` for the full list.
 | Variables | What they are |
 |---|---|
 | `headline1`, `headline2` | Main headline; full stops use the accent colour |
-| `address`, `beforeLabel`, `afterLabel` | Browser address and horizontal corner labels |
+| `address`, `beforeLabel`, `afterLabel` | Browser address and comparison labels |
 | `oldName`, `oldHeading1`, `oldHeading2`, `oldButton` | Old page’s main copy |
 | `sidebarLine1` | Old-page subtitle |
 | `oldItem1`, `oldPrice1` and so on | Three old menu names and prices |
@@ -34,16 +34,26 @@ Run `animate vars before-after` for the full list.
 | `businessType`, `changeDescription` | Accessible description |
 | Colour variables | Backdrop, pages, type, browser and drawn bread |
 | `startSplit` | Opening divider position measured from the left |
-| `overshoot` | Small divider recovery beyond the browser’s left edge |
+| `beforeHold` | Time to read the old page before the drag, measured at default timing |
+| `handlePress` | Strength of the handle’s initial press and directional squash |
+| `overshoot` | Divider overshoot beyond the browser’s left edge |
 | `cardLift` | Product cards’ spring travel |
+| `productNameSize` | Full-output product name size |
+| `compactProductNameSize` | Top and overlay product name size |
+| `payoffPulse` | Brief illustration pulse at the key moment |
 | `push` | Slow, proportional enlargement of the modern loaf |
+| `steamTravel` | Steam rise over the shot |
 | `overlayPosition` | Top or bottom overlay placement |
 
-Keep replacement copy close to the sample lengths. Use two short heading lines, short prices and menu names of about three words.
+Keep replacement copy close to the sample lengths. Use two short heading lines and short prices.
 
-Both websites occupy the complete browser throughout the shot. The wipe clips the modern page without resizing either layout. Bread keeps its proportions, and product names keep their original line breaks during the reveal.
+The product cards run across the browser in three stacked rows. Their names have room to stay on one line: 46px by default in full, 38px in compact layouts and up to 36px in short sections.
 
-The modern page adds generous space around its headline, a separate navigation link, a large tomato arch and three distinct product cards.
+Keep the business name, main illustration and corresponding products recognizable across both versions. The sample preserves the same bakery, loaf shape, bread scoring, menu names and prices. The modern cards add distinct croissant, bun and sourdough drawings.
+
+Both websites retain fixed, complete layouts throughout the wipe. Text appears only after the divider and handle clear the whole text run.
+
+The AFTER badge leaves when the reveal finishes. The modern navigation then takes its place, without leaving a blank label row.
 
 The old page uses Libre Caslon Text. The new page uses Manrope and Inter Tight. All artwork is drawn with SVG.
 
@@ -53,28 +63,33 @@ The sample business, address, menu and prices are illustrative.
 
 | | |
 |---|---|
-| Build-up | 1.9s by default; 1.3s minimum |
-| Hold | 3.1s by default |
+| Build-up | 2.6s by default; 2.0s minimum |
+| Opening read pause | 0.78s at default timing |
+| Hold | 1.6s by default |
 | Transparent exit | Centre wipe in 0.32s |
 
-The opening briefly establishes the old page. The divider then makes one eased sweep from right to left.
+Frame one shows almost the entire blue page. The handle presses before the divider starts moving.
 
-Its small overshoot and recovery happen beyond the browser’s left edge. The new page stays completely revealed throughout that recovery.
+The drag accelerates sharply, crosses the browser quickly, then brakes deliberately. A small overshoot and return happen beyond the left edge, keeping the complete redesign exposed.
 
-Three product cards spring into place in sequence before the key moment. Their prices react immediately after it.
+The revealed illustration reacts first. The modern heading and button land next, followed by three product cards in a quick stagger. Each card’s picture, price and border react on its arrival beat.
 
-The divider does not return to a halfway comparison. The complete redesign remains on screen for the longer hold.
+The final card lands at the key moment. A brief browser outline and illustration pulse distinguish that frame from the preceding beats. A tomato rule remains under the header.
 
-Only the illustration, steam and fine dither continue moving. Reading text stays fixed after the brief price reaction.
+The divider finishes offscreen. The complete redesign stays visible through the shorter hold.
 
-The divider uses seven temporal motion-blur samples. Its movement and the clipping edge use matching direct timeline tweens.
+Only the illustration, steam and fine dither continue moving through the hold. Reading text stays fixed once the cards land. The steam rises and gently sways throughout the shot.
+
+The divider uses seven temporal motion-blur samples. The wipe, handle and text visibility are driven directly by the timeline so event-free sampling follows the same motion.
 
 ## Outputs
 
-`full` uses a two-line headline and a tall browser within the portrait safe area. The website hero pairs large copy with a large bread illustration.
+`full` uses a two-line headline, a larger browser close beneath it, a tall bread arch and three broad product cards. Essential content stays inside the portrait safe area.
 
-`top` uses a single headline row, its own spacing and three product cards across the browser. Shorter sections use tighter layout numbers.
+`top` uses a single headline row, a shallower browser bar and its own header, hero and product-card dimensions.
 
-`overlay` uses a 960px-high card with the compact layout and a centre wipe for entry and exit. The exit closes one frame before the end.
+`overlay` uses a 960px-high card with separate spacing, type and browser dimensions. It enters and leaves through a centre wipe. The exit closes one frame before the end.
 
-Essential type is at least 40px in `full` and 32px in compact outputs. Both complete page layouts remain fixed in every output.
+Short compact sections use tighter spacing and smaller artwork while keeping essential type at least 32px. Essential full-output type is at least 40px.
+
+The opening pause, handle press, staggered reveal, badge removal and moving hold apply to all three outputs.

@@ -1,16 +1,16 @@
 {
   "name": "notification-stack",
   "title": "Notification stack",
-  "summary": "Orders pour onto a dark lock screen, pushing older cards into a tucked stack while fixed-width totals roll upward.",
+  "summary": "Orders accelerate onto a frosted lock screen. Whole-text totals count with each landing, then the final result slams into a lasting accent finish.",
   "fonts": ["500 40px Inter", "600 40px Inter"],
   "motionBlur": true,
   "timing": {
-    "keyAt": 3.6666666667,
-    "hold": 1.3333333333,
+    "keyAt": 3.5,
+    "hold": 1.5,
     "exit": 0.32,
     "minKeyAt": 2.0
   },
-  "keyMoment": "the final order settles, the total reads $2,560.00, and the more pill pops into place",
+  "keyMoment": "the final order settles, the total reads $2,560.00 in the accent colour, the summary slams to 1.08 scale, and the more pill pops below the stack",
   "overlayHeight": 960,
   "variables": [
     { "id": "appName", "type": "string", "label": "App or shop name", "default": "Wrenlo" },
@@ -71,7 +71,7 @@
     { "id": "ground", "type": "color", "label": "Near-black wallpaper", "default": "#070A12" },
     { "id": "blue", "type": "color", "label": "Soft blue wallpaper", "default": "#0E2A5A" },
     { "id": "teal", "type": "color", "label": "Soft teal wallpaper", "default": "#0F4C5C" },
-    { "id": "accent", "type": "color", "label": "Teal app icon", "default": "#24B89A" },
+    { "id": "accent", "type": "color", "label": "Teal app icon and final total", "default": "#24B89A" },
     { "id": "iconInk", "type": "color", "label": "Shopping bag and check", "default": "#073C35" },
     { "id": "ink", "type": "color", "label": "White text and edges", "default": "#FFFFFF" },
     { "id": "overlayPosition", "type": "enum", "label": "Overlay position", "default": "top", "options": [{ "value": "top", "label": "Top" }, { "value": "bottom", "label": "Bottom" }] }

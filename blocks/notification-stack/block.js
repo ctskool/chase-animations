@@ -1,36 +1,45 @@
 CA.ready(() => {
   const { vars: V, stage: S, safe, time: T, variant, make, fit, rgba } = CA;
   const $ = (id) => document.getElementById(id);
+  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+  const finite = (value, fallback) =>
+    Number.isFinite(Number(value)) ? Number(value) : fallback;
+  const out3 = (p) => 1 - Math.pow(1 - clamp(p, 0, 1), 3);
+  const smooth = (p) => {
+    const q = clamp(p, 0, 1);
+    return q * q * (3 - 2 * q);
+  };
+  const overlaps = (a, b) =>
+    a.left < b.right &&
+    a.right > b.left &&
+    a.top < b.bottom &&
+    a.bottom > b.top;
+
   const stageEl = $("stage");
+  const clip = $("ns-clip");
+  const phone = $("ns-phone");
+  const screen = $("ns-screen");
+  const summary = $("ns-summary");
+  const summaryFace = $("ns-summary-face");
+  const rim = $("ns-summary-rim");
+  const flash = $("ns-summary-flash");
+  const totalEl = $("ns-total");
+  const countEl = $("ns-count");
+  const stackWindow = $("ns-stack-window");
+  const stackShadow = $("ns-stack-shadow");
+  const pill = $("ns-pill");
+
   const W = S.w;
   const H = S.h;
   const full = variant === "full";
-  const compact = !full && H < 880;
   const tiny = !full && H < 620;
   const minimum = full ? 40 : 32;
-  const finite = (value, fallback) =>
-    Number.isFinite(Number(value)) ? Number(value) : fallback;
+  const flashAccent = gsap.utils.interpolate(V.accent, V.ink, 0.35);
 
   stageEl.style.setProperty("--ns-ground", V.ground);
   stageEl.style.setProperty("--ns-ink", V.ink);
   stageEl.style.setProperty("--ns-accent", V.accent);
   stageEl.style.setProperty("--ns-icon-ink", V.iconInk);
-
-  function mix(a, b, p) {
-    const rgb = (value) => {
-      let hex = String(value).replace("#", "");
-      if (hex.length === 3) {
-        hex = hex.split("").map((c) => c + c).join("");
-      }
-      const n = parseInt(hex, 16);
-      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-    };
-    const A = rgb(a);
-    const B = rgb(b);
-    return "rgb(" + A.map((v, i) =>
-      Math.round(v + (B[i] - v) * p)
-    ).join(",") + ")";
-  }
 
   $("ns-wallpaper").style.background =
     `radial-gradient(ellipse 85% 62% at 12% 22%, ${V.blue}, transparent 78%),` +
@@ -41,89 +50,129 @@ CA.ready(() => {
 
   const M = full
     ? {
-        date: 42, clock: 128, bar: 348, card: 180, minCard: 172,
-        gap: 14, title: 48, body: 50, stamp: 40, icon: 82,
-        titleY: 16, bodyY: 96,
-        total: 196, totalY: 84, count: 44, label: 44, pill: 60
+        date: 40, clock: 150, bar: 264,
+        card: 164, minCard: 152, gap: 14,
+        title: 44, body: 44, stamp: 40, icon: 76,
+        titleY: 16, bodyY: 84,
+        total: 174, totalY: 62, count: 40, label: 40,
+        pill: 76, pillFont: 46, tail: 26
       }
     : variant === "top"
       ? {
-          date: 32, clock: 64, bar: 216, card: 112, minCard: 104,
-          gap: 10, title: 34, body: 36, stamp: 32, icon: 56,
-          titleY: 8, bodyY: 56,
-          total: 112, totalY: 60, count: 34, label: 34, pill: 48
+          date: 32, clock: 72, bar: 208,
+          card: 118, minCard: 104, gap: 10,
+          title: 34, body: 36, stamp: 32, icon: 56,
+          titleY: 8, bodyY: 54,
+          total: 128, totalY: 54, count: 34, label: 34,
+          pill: 64, pillFont: 36, tail: 20
         }
       : {
-          date: 32, clock: 56, bar: 232, card: 116, minCard: 108,
-          gap: 10, title: 36, body: 38, stamp: 32, icon: 60,
-          titleY: 8, bodyY: 56,
-          total: 128, totalY: 56, count: 34, label: 34, pill: 48
+          date: 32, clock: 80, bar: 204,
+          card: 116, minCard: 104, gap: 10,
+          title: 36, body: 38, stamp: 32, icon: 58,
+          titleY: 8, bodyY: 54,
+          total: 124, totalY: 52, count: 34, label: 34,
+          pill: 68, pillFont: 38, tail: 20
         };
 
-  if (compact) {
-    Object.assign(M, {
-      date: 32, clock: 56, bar: 210, card: 112, minCard: 104,
-      gap: 8, title: 34, body: 36, stamp: 32, icon: 56,
-      titleY: 8, bodyY: 56,
-      total: 110, totalY: 54, count: 32, label: 32, pill: 44
-    });
-  }
   if (tiny) {
     Object.assign(M, {
-      bar: 196, total: 100, totalY: 52,
-      card: 112, minCard: 104
+      bar: 176, total: 108, totalY: 48,
+      card: 112, minCard: 104,
+      title: 34, body: 36, stamp: 32, icon: 56,
+      count: 32, label: 32, pill: 60, pillFont: 34
     });
   }
 
-  const side = Math.max(safe.side, full ? 56 : 48);
-  const width = W - 2 * side;
-  const bottomLimit = H - Math.max(safe.bottom, full ? 300 : 28);
-  const headerTop = Math.max(safe.top, full ? 230 : 30);
-  const horizontalHeader = !full && (variant === "top" || compact);
+  const side = Math.max(
+    finite(safe.side, 0),
+    full ? 64 : variant === "overlay" ? 56 : 48
+  );
+  const width = W - side * 2;
+  const headerTop =
+    Math.max(finite(safe.top, 0), full ? 230 : 32) +
+    (full ? 20 : 8);
+  const bottomLimit =
+    H - Math.max(finite(safe.bottom, 0), full ? 300 : 24) -
+    (full ? 20 : 12);
+  const pillGap = 32;
 
   let dateY;
   let timeY;
   let barY;
 
-  if (horizontalHeader) {
-    timeY = headerTop;
-    dateY = headerTop + (M.clock * 1.08 - M.date * 1.2) / 2;
-    barY = headerTop + M.clock * 1.08 + 8;
-  } else {
+  if (full) {
     dateY = headerTop;
     timeY = dateY + M.date * 1.2 + 4;
-    barY = timeY + M.clock * 1.08 + (full ? 18 : 10);
+    barY = timeY + M.clock * 1.04 + 20;
+  } else {
+    timeY = headerTop;
+    dateY = headerTop + (M.clock * 1.04 - M.date * 1.2) / 2;
+    barY = timeY + M.clock * 1.04 + 12;
   }
 
-  if (tiny) {
-    barY = Math.max(20, safe.top);
-  }
+  if (tiny) barY = Math.max(16, finite(safe.top, 0));
 
-  const stackY = barY + M.bar + (full ? 20 : 12);
-  const pillGap = 12;
-  const availableStack = bottomLimit - stackY - pillGap - M.pill;
-  const visibleSlots = Math.max(
+  const stackY = barY + M.bar + (full ? 20 : 14);
+  const availableStack =
+    bottomLimit - stackY - M.tail - pillGap - M.pill;
+  const visibleSlots = clamp(
+    Math.floor((availableStack + M.gap) / (M.minCard + M.gap)),
     1,
-    Math.min(
-      4,
-      Math.floor((availableStack + M.gap) / (M.minCard + M.gap))
-    )
+    4
   );
 
   M.card = Math.min(
     M.card,
     Math.max(
       M.minCard,
-      (availableStack - M.gap * (visibleSlots - 1)) / visibleSlots
+      (availableStack - (visibleSlots - 1) * M.gap) / visibleSlots
     )
   );
 
   const step = M.card + M.gap;
   const stackH = visibleSlots * M.card + (visibleSlots - 1) * M.gap;
-  const pillY = stackY + stackH + pillGap;
+  const windowH = stackH + M.tail;
+  const lastSlotY = (visibleSlots - 1) * step;
+  const tuckStep = M.tail / 2;
+  const pillY = stackY + windowH + pillGap;
+
+  function fitLine(el, maxWidth, label) {
+    fit(el, maxWidth, minimum);
+    if (el.getBoundingClientRect().width > maxWidth + 1) {
+      throw new Error(
+        `notification-stack: shorten ${label} to fit at the minimum readable size.`
+      );
+    }
+  }
+
+  function fitValues(host, values, px, maxWidth, reserveContentWidth) {
+    host.style.fontSize = px + "px";
+    let widest = values[0];
+    let measured = -1;
+
+    values.forEach((value) => {
+      host.textContent = value;
+      const w = host.getBoundingClientRect().width;
+      if (w > measured) {
+        measured = w;
+        widest = value;
+      }
+    });
+
+    host.textContent = widest;
+    fitLine(host, maxWidth, host === totalEl ? "the total" : "the order count");
+    const fittedWidth = Math.ceil(host.getBoundingClientRect().width);
+    const fittedSize = parseFloat(getComputedStyle(host).fontSize);
+    host.style.width =
+      (reserveContentWidth ? fittedWidth : maxWidth) + "px";
+    host.style.height = Math.ceil(fittedSize * 1.1 + 2) + "px";
+    host.textContent = values[0];
+  }
 
   $("ns-island").style.cssText =
-    `top:${full ? 50 : 10}px;width:${full ? 178 : 112}px;height:${full ? 42 : 14}px`;
+    `top:${full ? 50 : 10}px;width:${full ? 178 : 112}px;` +
+    `height:${full ? 42 : 14}px`;
   $("ns-status").style.cssText =
     `right:${side}px;top:${full ? 60 : 12}px;` +
     `width:${full ? 152 : 112}px;height:${full ? 32 : 24}px;` +
@@ -135,23 +184,23 @@ CA.ready(() => {
   $("ns-date-text").textContent = V.date;
   $("ns-time-text").textContent = V.clock;
   $("ns-date").style.cssText =
-    `top:${dateY}px;font-size:${M.date}px;color:${rgba(V.ink, 0.86)}`;
+    `top:${dateY}px;font-size:${M.date}px;color:${rgba(V.ink, 0.75)}`;
   $("ns-time").style.cssText =
     `top:${timeY}px;font-size:${M.clock}px`;
 
-  if (horizontalHeader) {
-    const clockWidth = Math.min(260, width * 0.3);
+  if (!full) {
+    const clockWidth = Math.min(280, width * 0.3);
     $("ns-date").style.left = side + "px";
     $("ns-date").style.right = "auto";
     $("ns-date").style.textAlign = "left";
     $("ns-time").style.left = "auto";
     $("ns-time").style.right = side + "px";
     $("ns-time").style.textAlign = "right";
-    fit($("ns-date-text"), width - clockWidth - 28, minimum);
-    fit($("ns-time-text"), clockWidth, minimum);
+    fitLine($("ns-date-text"), width - clockWidth - 28, "the date");
+    fitLine($("ns-time-text"), clockWidth, "the time");
   } else {
-    fit($("ns-date-text"), width, minimum);
-    fit($("ns-time-text"), width, minimum);
+    fitLine($("ns-date-text"), width, "the date");
+    fitLine($("ns-time-text"), width, "the time");
   }
 
   if (tiny) {
@@ -167,41 +216,34 @@ CA.ready(() => {
     `<path d="m23 39 6 6 13-14" stroke="${V.accent}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>` +
     `</svg>`;
 
-  const cardBase = mix(V.ground, V.blue, 0.22);
-  const face = (depth) => mix(cardBase, V.ink, 0.17 - depth * 0.012);
-  const summary = $("ns-summary");
-  const summaryRadius = full ? 34 : 26;
-
-  summary.style.cssText =
+  const radius = full ? 34 : 26;
+  const summaryBox =
     `left:${side}px;top:${barY}px;width:${width}px;height:${M.bar}px;` +
-    `background:${mix(cardBase, V.ink, 0.16)};` +
-    `border-color:${rgba(V.ink, 0.30)};border-radius:${summaryRadius}px`;
-
-  // One complete perimeter is the entire finish reaction.
-  // It lives outside the summary so its expansion cannot be clipped.
-  const impact = make("div", "ns-impact", $("ns-clip"));
-  impact.setAttribute("aria-hidden", "true");
-  impact.style.cssText =
-    `left:${side}px;top:${barY}px;width:${width}px;height:${M.bar}px;` +
-    `border-radius:${summaryRadius}px`;
+    `border-radius:${radius}px`;
+  summary.style.cssText = summaryBox;
+  $("ns-summary-shadow").style.cssText = summaryBox;
+  summaryFace.style.backgroundColor = rgba(V.ink, 0.155);
+  summaryFace.style.borderColor = rgba(V.ink, 0.32);
+  flash.style.backgroundColor = rgba(V.accent, 0.26);
 
   const summaryIcon = $("ns-summary-icon");
-  const summaryIconPx = full ? 62 : 42;
+  const summaryIconPx = full ? 56 : 40;
   summaryIcon.innerHTML = bag;
   summaryIcon.style.cssText =
-    `left:24px;top:${full ? 22 : 14}px;` +
+    `left:${full ? 24 : 20}px;top:${full ? 16 : 12}px;` +
     `width:${summaryIconPx}px;height:${summaryIconPx}px`;
 
-  const copyX = full ? 104 : 82;
+  const copyX = full ? 98 : 76;
+  const copyRight = full ? 32 : 24;
   $("ns-summary-copy").style.cssText =
-    `left:${copyX}px;right:${full ? 40 : 32}px;` +
-    `top:${full ? 26 : 14}px;height:${M.label * 1.2}px`;
+    `left:${copyX}px;right:${copyRight}px;top:${full ? 20 : 12}px;` +
+    `height:${M.label * 1.2}px`;
   $("ns-summary-label").textContent = V.summaryLabel;
   $("ns-summary-label").style.fontSize = M.label + "px";
   $("ns-count-label").textContent = V.countLabel;
   $("ns-count-line").style.cssText =
-    `font-size:${M.count}px;color:${rgba(V.ink, 0.90)}`;
-  fit($("ns-count-label"), 190, minimum);
+    `font-size:${M.count}px;color:${rgba(V.ink, 0.9)}`;
+  fitLine($("ns-count-label"), width * 0.25, "the count label");
 
   let money;
   try {
@@ -212,443 +254,159 @@ CA.ready(() => {
       maximumFractionDigits: 2
     });
   } catch (_) {
-    throw new Error("notification-stack: currency must be a valid three-letter currency code.");
+    throw new Error(
+      "notification-stack: currency must be a valid three-letter currency code."
+    );
   }
 
-  const frames = [
-    0, 9, 18, 27, 36, 40, 44, 48, 52, 56, 60,
-    64, 68, 72, 76, 80, 84, 88, 92, 96, 100
+  // These are design-frame positions. The child timeline scales the
+  // complete sequence to T.key, including the final whole-number count.
+  const KEY_FRAME = 113;
+  const landFrames = [
+    0, 15, 27, 36, 43, 48, 52,
+    56, 59, 63, 66, 70, 74, 77,
+    81, 84, 88, 92, 95, 99, 106
   ];
-  const orders = frames.map((frame, i) => ({
-    frame,
-    cents: Math.round(Math.max(0, finite(V[`order${i + 1}Amount`], 0)) * 100),
-    items: Math.max(1, Math.round(finite(V[`order${i + 1}Items`], 1)))
-  }));
+  const COUNT_FRAMES = 4;
+  const initialCount = Math.max(
+    1,
+    Math.round(finite(V.startingCount, 1))
+  );
+  let runningCents = Math.round(
+    Math.max(0, finite(V.startingTotal, 0)) * 100
+  );
 
-  let cents = Math.round(Math.max(0, finite(V.startingTotal, 0)) * 100);
-  const initialCount = Math.max(1, Math.round(finite(V.startingCount, 1)));
-  const states = orders.map((order, i) => {
-    if (i > 0) cents += order.cents;
+  const orders = landFrames.map((land, i) => {
+    const cents = Math.round(
+      Math.max(0, finite(V[`order${i + 1}Amount`], 0)) * 100
+    );
+    const items = Math.max(
+      1,
+      Math.round(finite(V[`order${i + 1}Items`], 1))
+    );
+    if (i > 0) runningCents += cents;
+    const gap = i ? land - landFrames[i - 1] : 0;
     return {
-      total: money.format(cents / 100),
-      count: String(initialCount + i)
+      land,
+      enter: i ? land - Math.min(6, gap * 0.82) : 0,
+      cents,
+      items,
+      total: runningCents,
+      count: initialCount + i
     };
   });
 
-  const tl = gsap.timeline({ paused: true });
-  const build = gsap.timeline();
-  const designFrame = (frame) => frame / 110 * T.design;
-  const arrivalDuration = (i) => i === orders.length - 1
-    ? T.design - designFrame(frames[i])
-    : Math.min(
-        designFrame(8),
-        designFrame(frames[i + 1] - frames[i]) * 0.88
+  // Fast arrivals interrupt and retarget the same complete text value.
+  // No character columns, duplicated numerals or competing count tweens.
+  const countSegments = [];
+  for (let i = 1; i < orders.length; i++) {
+    let from = orders[0].total;
+    const previous = countSegments[countSegments.length - 1];
+    if (previous) {
+      const p = out3(
+        (orders[i].land - previous.start) / COUNT_FRAMES
       );
-
-  function makeNumber(host, values, px, availableWidth, shrinkToContent) {
-    const raw = values.map((value) => Array.from(value));
-    const columnCount = Math.max(...raw.map((chars) => chars.length));
-    const rows = raw.map((chars) =>
-      Array(columnCount - chars.length).fill("\u00a0").concat(chars)
-    );
-    const probe = make("span", "ns-number-measure", host);
-    probe.setAttribute("aria-hidden", "true");
-
-    function measureAt(size) {
-      host.style.fontSize = size + "px";
-      const cache = new Map();
-      const measure = (char) => {
-        if (!cache.has(char)) {
-          probe.textContent = char;
-          cache.set(char, probe.getBoundingClientRect().width);
-        }
-        return cache.get(char);
-      };
-      const digitWidth = Math.max(
-        ...Array.from("0123456789").map(measure)
-      );
-      const gutter = Math.max(1, size * 0.008);
-      const widths = Array.from({ length: columnCount }, (_, column) => {
-        const glyphWidth = Math.max(...rows.map((row) => {
-          const char = row[column];
-          return /^[0-9]$/.test(char) ? digitWidth : measure(char);
-        }));
-        return Math.ceil(glyphWidth + gutter * 2);
-      });
-      return {
-        widths,
-        width: widths.reduce((sum, item) => sum + item, 0)
-      };
+      from = previous.from + (previous.to - previous.from) * p;
     }
-
-    // Reserve the complete glyph widths before building the masks.
-    // Every state shares these positions, widths and one fitted font size.
-    let size = px;
-    let metrics = measureAt(size);
-    for (let pass = 0; pass < 4 && metrics.width > availableWidth; pass++) {
-      const next = Math.max(
-        minimum,
-        Math.floor(size * (availableWidth - columnCount) / metrics.width)
-      );
-      if (next >= size) break;
-      size = next;
-      metrics = measureAt(size);
-    }
-    probe.remove();
-
-    const rowHeight = Math.ceil(size * 1.2);
-    host.style.height = rowHeight + "px";
-    host.style.width =
-      (shrinkToContent ? metrics.width : availableWidth) + "px";
-
-    const tracks = [];
-    let left = 0;
-
-    for (let column = 0; column < columnCount; column++) {
-      const mask = make("span", "ns-digit-column", host);
-      mask.setAttribute("aria-hidden", "true");
-      mask.style.cssText =
-        `left:${left}px;width:${metrics.widths[column]}px;height:${rowHeight}px`;
-      left += metrics.widths[column];
-
-      const track = make("span", "ns-digit-track", mask);
-      const sequence = [rows[0][column]];
-      const changes = [];
-      let previous = rows[0][column];
-
-      // Unchanged columns never move. A changed column advances exactly
-      // one row, regardless of the numerical distance between its digits.
-      for (let i = 1; i < rows.length; i++) {
-        const next = rows[i][column];
-        if (next === previous) continue;
-        sequence.push(next);
-        changes.push({
-          state: i,
-          from: sequence.length - 2,
-          to: sequence.length - 1
-        });
-        previous = next;
-      }
-
-      const cells = sequence.map((char, index) => {
-        const cell = make("span", "ns-digit-cell", track, char);
-        cell.style.cssText =
-          `top:${index * rowHeight}px;height:${rowHeight}px;` +
-          `visibility:${index === 0 ? "visible" : "hidden"}`;
-        return cell;
-      });
-
-      // Hide rows that are wholly outside their mask. Drive this from
-      // the transform modifier so it also runs during event-suppressed seeks.
-      const syncVisibility = (value) => {
-        const y = parseFloat(value);
-        cells.forEach((cell, index) => {
-          const top = index * rowHeight + y;
-          cell.style.visibility =
-            top < rowHeight - 0.000001 && top + rowHeight > 0.000001
-              ? "visible"
-              : "hidden";
-        });
-        return value;
-      };
-
-      track.style.height = sequence.length * rowHeight + "px";
-      gsap.set(track, {
-        y: 0,
-        modifiers: { y: syncVisibility }
-      });
-
-      changes.forEach((change) => {
-        const i = change.state;
-        const duration = i === orders.length - 1
-          ? arrivalDuration(i)
-          : Math.min(arrivalDuration(i) * 0.82, designFrame(5));
-
-        build.fromTo(track,
-          { y: -change.from * rowHeight },
-          {
-            y: -change.to * rowHeight,
-            duration,
-            ease: "power2.inOut",
-            immediateRender: false,
-            modifiers: { y: syncVisibility }
-          },
-          designFrame(frames[i])
-        );
-      });
-
-      tracks.push({
-        element: track,
-        finalY: -(sequence.length - 1) * rowHeight,
-        syncVisibility
-      });
-    }
-
-    return tracks;
+    countSegments.push({
+      start: orders[i].land,
+      from,
+      to: orders[i].total
+    });
   }
 
-  const countTracks = makeNumber(
-    $("ns-count"),
-    states.map((state) => state.count),
+  fitValues(
+    countEl,
+    orders.map((order) => String(order.count)),
     M.count,
-    Math.max(112, width * 0.16),
+    width * 0.2,
     true
   );
-
-  fit(
+  fitLine(
     $("ns-summary-label"),
-    Math.max(
-      minimum * 2,
-      width - copyX - (full ? 40 : 32) -
-        $("ns-count-line").offsetWidth - 24
-    ),
-    minimum
+    width - copyX - copyRight -
+      $("ns-count-line").getBoundingClientRect().width - 24,
+    "the summary label"
   );
 
-  // The total has explicit inner padding on both sides in every output.
-  // Its masks are fitted inside that region, never against the card edge.
-  const totalLeft = full ? 36 : 28;
-  const totalRight = full ? 48 : 36;
-  const totalTracks = makeNumber(
-    $("ns-total"),
-    states.map((state) => state.total),
+  const totalLeft = full ? 32 : 24;
+  const totalRight = full ? 38 : 28;
+  const totalWidth = width - totalLeft - totalRight;
+  const totalFont = Math.min(
     M.total,
-    width - totalLeft - totalRight,
+    (M.bar - M.totalY - 14) / 1.1
+  );
+
+  fitValues(
+    totalEl,
+    orders.map((order) => money.format(order.total / 100)),
+    totalFont,
+    totalWidth,
     false
   );
-  $("ns-total").style.left = totalLeft + "px";
-  $("ns-total").style.top = M.totalY + "px";
+  totalEl.style.left = totalLeft + "px";
+  totalEl.style.top = M.totalY + "px";
 
-  $("ns-stack-window").style.cssText =
-    `left:${side}px;top:${stackY}px;width:${width}px;height:${stackH}px`;
-  $("ns-stack-shadow").style.cssText =
+  stackWindow.style.cssText =
+    `left:${side}px;top:${stackY}px;width:${width}px;height:${windowH}px`;
+  stackShadow.style.cssText =
     `left:${side + 18}px;top:${stackY + 10}px;` +
     `width:${width - 36}px;height:${M.card - 10}px`;
 
-  function makeCard(parent, order, depth) {
-    const shell = make("div", "ns-drop", parent);
-    shell.style.top = depth * step + "px";
+  function makeCard(order, index) {
+    const shell = make("div", "ns-drop", $("ns-cards"));
     shell.style.height = M.card + "px";
-    shell.style.zIndex = String(visibleSlots + 2 - depth);
+    shell.style.zIndex = String(100 + index);
 
     const surface = make("div", "ns-card", shell);
-    surface.style.cssText =
-      `background:${face(depth)};border-color:${rgba(V.ink, 0.28 - depth * 0.025)};` +
-      `border-radius:${full ? 30 : 23}px`;
+    surface.style.borderRadius = (full ? 30 : 23) + "px";
+    const shade = make("div", "ns-card-shade", surface);
+    shade.setAttribute("aria-hidden", "true");
+    const content = make("div", "ns-content", surface);
 
-    const icon = make("div", "ns-app-icon", surface);
+    const icon = make("div", "ns-app-icon", content);
     icon.innerHTML = bag;
     icon.style.cssText =
       `left:${full ? 24 : 18}px;top:${(M.card - M.icon) / 2}px;` +
       `width:${M.icon}px;height:${M.icon}px`;
 
-    const textX = full ? 132 : 96;
+    const textX = full ? 124 : 94;
     const right = full ? 26 : 20;
-
-    const stamp = make("span", "ns-stamp", surface, V.timestamp);
+    const stamp = make("span", "ns-stamp", content, V.timestamp);
     stamp.style.cssText =
       `right:${right}px;top:${M.titleY + 2}px;font-size:${M.stamp}px;` +
-      `color:${rgba(V.ink, 0.80)}`;
-    fit(stamp, width * 0.20, minimum);
+      `color:${rgba(V.ink, 0.68)}`;
+    fitLine(stamp, width * 0.2, "the timestamp");
 
-    const title = make("span", "ns-title", surface, V.appName);
+    const title = make("span", "ns-title", content, V.appName);
     title.style.cssText =
       `left:${textX}px;top:${M.titleY}px;font-size:${M.title}px`;
-    fit(title, width - textX - stamp.offsetWidth - right - 24, minimum);
+    fitLine(
+      title,
+      width - textX - stamp.getBoundingClientRect().width - right - 24,
+      "the app name"
+    );
 
     const bodyText = String(V.cardFormat)
       .split("[AMOUNT]").join(money.format(order.cents / 100))
       .split("[N]").join(String(order.items));
-    const body = make("span", "ns-body", surface, bodyText);
+    const body = make("span", "ns-body", content, bodyText);
     body.style.cssText =
       `left:${textX}px;top:${M.bodyY}px;font-size:${M.body}px;` +
       `color:${rgba(V.ink, 0.96)}`;
-    fit(body, width - textX - right, minimum);
+    fitLine(body, width - textX - right, "the notification body");
 
-    return { shell, surface };
+    return { shell, surface, shade, content, title, stamp, body };
   }
 
-  const poses = orders.map((order, i) => {
-    const group = make("div", "ns-state", $("ns-cards"));
-    const cards = [];
-    const count = Math.min(visibleSlots + 1, i + 1);
+  const cards = orders.map(makeCard);
 
-    for (let depth = 0; depth < count; depth++) {
-      const card = makeCard(group, orders[i - depth], depth);
-      if (depth === visibleSlots) {
-        card.shell.style.display = "none";
-      }
-      cards.push(card);
-    }
-    return { group, cards };
-  });
-
-  gsap.set(poses[0].group, { visibility: "visible" });
-
-  for (let i = 1; i < orders.length; i++) {
-    const at = designFrame(frames[i]);
-    const duration = arrivalDuration(i);
-    const pose = poses[i];
-    const incoming = pose.cards[0].shell;
-    const trailing = pose.cards[visibleSlots];
-    const dropDuration = duration * 0.72;
-    const settleDuration = duration - dropDuration;
-    const overshoot = Math.min(full ? 6 : 4, M.gap * 0.4);
-
-    build.set(poses[i - 1].group, { visibility: "hidden" }, at);
-    build.set(pose.group, { visibility: "visible" }, at);
-
-    if (trailing) {
-      build.set(trailing.shell, { display: "block" }, at);
-    }
-
-    // Existing cards begin at their previous positions and push together.
-    // Their movement finishes before the arriving card completes its settle.
-    pose.cards.slice(1).forEach((card) => {
-      build.fromTo(card.shell,
-        { y: -step, scaleX: 1, scaleY: 1 },
-        {
-          y: 0,
-          duration: dropDuration,
-          ease: "power2.out",
-          immediateRender: false
-        },
-        at
-      );
-    });
-
-    // The new card has its own drop and a bounded, explicit rebound.
-    // The overshoot is smaller than the gap, so it cannot hit the next card.
-    build.fromTo(incoming,
-      { y: -step, scaleX: 0.975, scaleY: 0.975 },
-      {
-        y: overshoot,
-        scaleX: 1,
-        scaleY: 1,
-        duration: dropDuration,
-        ease: "power2.out",
-        immediateRender: false
-      },
-      at
-    );
-    build.fromTo(incoming,
-      { y: overshoot, scaleX: 1, scaleY: 1 },
-      {
-        y: 0,
-        scaleX: 1,
-        scaleY: 1,
-        duration: settleDuration,
-        ease: "power2.inOut",
-        immediateRender: false
-      },
-      at + dropDuration
-    );
-
-    if (trailing) {
-      build.set(trailing.shell, { display: "none" }, at + dropDuration);
-    }
-
-    const occupied = Math.min(visibleSlots, i + 1);
-    build.to($("ns-stack-shadow"), {
-      height: occupied * M.card + (occupied - 1) * M.gap - 10,
-      duration: dropDuration,
-      ease: "power2.out"
-    }, at);
-
-    build.fromTo(summaryIcon,
-      { scaleX: 1.08, scaleY: 1.08 },
-      {
-        scaleX: 1,
-        scaleY: 1,
-        duration,
-        ease: "power2.out",
-        immediateRender: false
-      },
-      at
-    );
-  }
-
-  const pill = $("ns-pill");
   $("ns-pill-text").textContent = V.pillText;
   pill.style.cssText =
-    `top:${pillY}px;height:${M.pill}px;font-size:${full ? 42 : 34}px;` +
-    `color:${rgba(V.ink, 0.96)};background:${mix(cardBase, V.ink, 0.14)};` +
-    `border-color:${rgba(V.ink, 0.28)}`;
-  fit($("ns-pill-text"), width - 100, minimum);
-  gsap.set(pill, { xPercent: -50 });
-
-  const finalArrival = designFrame(frames[frames.length - 1]);
-  build.set(pill, { visibility: "visible" }, finalArrival);
-  build.fromTo(pill,
-    { scaleX: 0.78, scaleY: 0.78, y: 12 },
-    {
-      scaleX: 1,
-      scaleY: 1,
-      y: 0,
-      duration: T.design - finalArrival,
-      ease: "power3.out",
-      immediateRender: false
-    },
-    finalArrival
-  );
-
-  build.timeScale(1 / T.scale);
-  tl.add(build, 0);
-
-  const finalPose = poses[poses.length - 1];
-
-  // Explicit final transforms keep every digit and card exact at the key.
-  [...countTracks, ...totalTracks].forEach((track) => {
-    tl.set(track.element, {
-      y: track.finalY,
-      modifiers: { y: track.syncVisibility }
-    }, T.key);
-  });
-  tl.set(
-    poses.slice(0, -1).map((pose) => pose.group),
-    { visibility: "hidden" },
-    T.key
-  );
-  tl.set(finalPose.group, { visibility: "visible" }, T.key);
-  tl.set(finalPose.cards.map((card) => card.shell), {
-    y: 0, scaleX: 1, scaleY: 1
-  }, T.key);
-  if (finalPose.cards[visibleSlots]) {
-    tl.set(finalPose.cards[visibleSlots].shell, { display: "none" }, T.key);
-  }
-  tl.set(summaryIcon, { scaleX: 1, scaleY: 1 }, T.key);
-  tl.set(pill, {
-    visibility: "visible", scaleX: 1, scaleY: 1, y: 0
-  }, T.key);
-
-  const pulseDuration = Math.min(0.44, Math.max(0, T.hold));
-  if (pulseDuration > 0) {
-    tl.set(impact, { visibility: "visible" }, T.key);
-    tl.fromTo(impact,
-      { scaleX: 1, scaleY: 1, opacity: 0.95 },
-      {
-        scaleX: full ? 1.035 : 1.025,
-        scaleY: 1.075,
-        opacity: 0,
-        duration: pulseDuration,
-        ease: "power2.out",
-        immediateRender: false
-      },
-      T.key
-    );
-    tl.set(impact, { visibility: "hidden" }, T.key + pulseDuration);
-  }
-
-  // Only the wallpaper moves through the hold. Readable content stays fixed.
-  tl.fromTo($("ns-light"),
-    { backgroundPosition: "0% 100%" },
-    {
-      backgroundPosition: "100% 0%",
-      duration: T.duration,
-      ease: "sine.inOut"
-    },
-    0
-  );
+    `top:${pillY}px;height:${M.pill}px;font-size:${M.pillFont}px;` +
+    `color:${rgba(V.ink, 0.98)};background:${rgba(V.ink, 0.18)};` +
+    `border-color:${rgba(V.ink, 0.36)};transform:translateX(-50%)`;
+  fitLine($("ns-pill-text"), width - 100, "the more pill");
 
   if (full) {
     $("ns-bottom").style.cssText =
@@ -662,19 +420,412 @@ CA.ready(() => {
       "bottom:10px;width:190px;height:5px;opacity:0.4";
     if (tiny) $("ns-home").style.display = "none";
   }
+  document.querySelectorAll("#ns-bottom .ns-control").forEach((control) => {
+    control.style.backgroundColor = rgba(V.ink, 0.09);
+  });
+
+  const textEntries = [
+    { el: $("ns-date-text"), clips: [] },
+    { el: $("ns-time-text"), clips: [] },
+    { el: $("ns-summary-label"), clips: [summaryFace] },
+    { el: countEl, clips: [summaryFace] },
+    { el: $("ns-count-label"), clips: [summaryFace] },
+    { el: totalEl, clips: [summaryFace] },
+    { el: $("ns-pill-text"), clips: [pill] },
+    ...cards.flatMap((card) =>
+      [card.title, card.stamp, card.body].map((el) => ({
+        el,
+        clips: [stackWindow, card.surface]
+      }))
+    )
+  ];
+
+  function syncTextVisibility(seconds) {
+    const stageRect = stageEl.getBoundingClientRect();
+    const clipRect = clip.getBoundingClientRect();
+    let inset = 0;
+
+    // Match the wipe analytically so reverse seeks and modifier sampling
+    // do not depend on whether GSAP has rendered the clip-path tween yet.
+    if (variant === "overlay") {
+      const duration = Math.min(0.24, T.key * 0.2);
+      const p = clamp(seconds / duration, 0, 1);
+      inset = 0.5 * Math.pow(1 - p, 4);
+    }
+
+    if (T.exit > 0 && seconds >= T.key + T.hold) {
+      const duration = Math.max(0, T.exit - 1 / CA.fps);
+      const p = duration > 0
+        ? clamp((seconds - T.key - T.hold) / duration, 0, 1)
+        : 1;
+      inset = Math.max(inset, 0.5 * Math.pow(p, 4));
+    }
+
+    const bounds = {
+      left: Math.max(stageRect.left, clipRect.left),
+      right: Math.min(stageRect.right, clipRect.right),
+      top: Math.max(
+        stageRect.top + stageRect.height * inset,
+        clipRect.top
+      ),
+      bottom: Math.min(
+        stageRect.bottom - stageRect.height * inset,
+        clipRect.bottom
+      )
+    };
+    const inside = (rect, limit) =>
+      rect.width > 0 &&
+      rect.height > 0 &&
+      limit.bottom > limit.top &&
+      rect.left >= limit.left - 0.1 &&
+      rect.right <= limit.right + 0.1 &&
+      rect.top >= limit.top - 0.1 &&
+      rect.bottom <= limit.bottom + 0.1;
+    const clipRects = new Map();
+
+    textEntries.forEach(({ el }) => {
+      el.style.visibility = "";
+    });
+
+    textEntries.forEach(({ el, clips }) => {
+      // Preserve the intentional visibility of the pill and card content.
+      if (getComputedStyle(el).visibility !== "visible") return;
+
+      const rect = el.getBoundingClientRect();
+      const contained = inside(rect, bounds) && clips.every((parent) => {
+        if (!clipRects.has(parent)) {
+          clipRects.set(parent, parent.getBoundingClientRect());
+        }
+        return inside(rect, clipRects.get(parent));
+      });
+
+      if (!contained) el.style.visibility = "hidden";
+    });
+  }
+
+  function arrivalRebound(age) {
+    if (age <= 0 || age >= 5) return 0;
+    return Math.sin(Math.PI * age / 5) *
+      Math.exp(-0.22 * age) * (full ? 8 : 5);
+  }
+
+  let lastRenderedFrame = 0;
+
+  function renderBuild(inputFrame) {
+    const frame = clamp(inputFrame, 0, KEY_FRAME);
+    lastRenderedFrame = frame;
+    const exactFinal = frame >= KEY_FRAME - 0.000001;
+
+    let landed = 0;
+    let entered = 0;
+    for (let i = 1; i < orders.length; i++) {
+      if (frame >= orders[i].land) landed = i;
+      if (frame >= orders[i].enter) entered = i;
+    }
+
+    let value = orders[0].total;
+    if (landed > 0) {
+      const segment = countSegments[landed - 1];
+      value = segment.from + (segment.to - segment.from) *
+        out3((frame - segment.start) / COUNT_FRAMES);
+      // The landing frame already changes the value, even at an exact seek.
+      if (segment.to > segment.from) {
+        value = Math.max(Math.floor(segment.from) + 1, value);
+      }
+    }
+    if (exactFinal) value = orders[orders.length - 1].total;
+
+    totalEl.textContent = money.format(Math.round(value) / 100);
+    countEl.textContent = String(orders[landed].count);
+    totalEl.style.color = V.ink;
+    summaryFace.style.borderColor = rgba(V.ink, 0.32);
+    flash.style.visibility = "hidden";
+    pill.style.visibility = "hidden";
+    screen.style.transform = "translate3d(0,0,0)";
+    phone.style.transform =
+      `scale(${1 + 0.006 * frame / KEY_FRAME})`;
+
+    let punch = 0;
+    let rimStrength = 0;
+    if (landed > 0) {
+      const age = frame - orders[landed].land;
+      if (age < 9) {
+        punch = 0.03 * Math.exp(-age / 2.5) * Math.cos(age * 0.65);
+        rimStrength = 0.88 * Math.exp(-age / 2);
+      }
+      const endpointAge = age - COUNT_FRAMES;
+      if (endpointAge >= 0 && endpointAge < 5) {
+        rimStrength = Math.max(
+          rimStrength,
+          0.38 * Math.exp(-endpointAge / 1.6)
+        );
+      }
+    }
+    summary.style.transform = `scale(${1 + punch})`;
+    rim.style.opacity = String(rimStrength);
+
+    const rebound = landed && !exactFinal
+      ? arrivalRebound(frame - orders[landed].land)
+      : 0;
+
+    const poses = orders.map((order, j) => {
+      const live =
+        frame >= order.enter &&
+        entered - j <= visibleSlots + 1;
+      if (!live) {
+        cards[j].shell.style.visibility = "hidden";
+        cards[j].content.style.visibility = "hidden";
+        return { live: false };
+      }
+
+      // The column moves as one rigid piece, starting when a card enters,
+      // so a landing card never lands on top of the one below it.
+      let rawY = 0;
+      let squash = 0;
+      let incomingScale = 1;
+      let pop = 1;
+
+      // A new card pops into the gap the column opens for it, so it never
+      // crosses another card and no blank slab shows on the way in.
+      for (let k = Math.max(j, 1); k <= entered; k++) {
+        const p = out3(
+          (frame - orders[k].enter) / (orders[k].land - orders[k].enter)
+        );
+        if (k === j) {
+          pop = clamp((p - 0.8) / 0.15, 0, 1);
+          incomingScale = 0.9 + 0.1 * pop;
+        } else {
+          rawY += step * p;
+        }
+      }
+
+      if (frame >= order.land) {
+        const ownAge = frame - order.land;
+        if (j && ownAge < 7) {
+          squash += 0.026 * Math.exp(-ownAge / 2.1);
+        }
+        for (let k = j + 1; k <= landed; k++) {
+          const age = frame - orders[k].land;
+          if (age >= 0 && age < 7) {
+            squash += 0.024 * Math.exp(-age / 2);
+          }
+        }
+      }
+
+      if (exactFinal) {
+        rawY = (orders.length - 1 - j) * step;
+        squash = 0;
+        incomingScale = 1;
+        pop = 1;
+      }
+
+      // Past the last slot a card keeps moving with the column and fades out,
+      // so the bottom of the stack never shows an empty slab.
+      const depth = Math.max(0, rawY / step);
+      const over = Math.max(0, (rawY - lastSlotY) / step);
+      pop *= clamp(1 - over / 0.6, 0, 1);
+      const y = rebound + rawY;
+      squash = Math.min(squash, 0.045);
+
+      const sx = incomingScale * (1 + squash * 0.38);
+      const sy = incomingScale * (1 - squash);
+      const card = cards[j];
+
+      card.shell.style.visibility = "visible";
+      card.shell.style.opacity = String(pop);
+      card.shell.style.transform =
+        `translate3d(0,${y.toFixed(3)}px,0) scale(${sx},${sy})`;
+      card.surface.style.backgroundColor =
+        rgba(V.ink, 0.18 - Math.min(depth, 5) * 0.012);
+      card.surface.style.borderColor =
+        rgba(V.ink, Math.max(0.12, 0.31 - depth * 0.028));
+      card.shade.style.opacity =
+        String(Math.min(0.3, depth * 0.025));
+
+      return {
+        live: true,
+        y,
+        sy,
+        pop,
+        // Keep the surface animation, but expose its text only once even
+        // the muted timestamp has sufficient opacity to be read.
+        readable: pop >= 0.8 && y >= -0.1
+      };
+    });
+
+    // A tucked or temporarily covered card never exposes sliced words.
+    // Its frosted surface remains, creating the physical backing layers.
+    poses.forEach((pose, j) => {
+      let readable = pose.live && pose.readable;
+      if (readable) {
+        const textTop = pose.y + M.titleY * pose.sy;
+        const textBottom =
+          pose.y + (M.bodyY + M.body * 1.2) * pose.sy;
+        for (let k = j + 1; k < poses.length; k++) {
+          const front = poses[k];
+          if (
+            front.live &&
+            front.pop > 0 &&
+            front.y < textBottom &&
+            front.y + M.card * front.sy > textTop - 2
+          ) {
+            readable = false;
+            break;
+          }
+        }
+      }
+      cards[j].content.style.visibility = readable ? "visible" : "hidden";
+    });
+
+    const occupied = Math.min(visibleSlots, landed + 1);
+    const shadowHeight =
+      occupied * M.card + (occupied - 1) * M.gap +
+      (landed + 1 > visibleSlots ? M.tail : 0);
+    stackShadow.style.height = Math.max(M.card - 10, shadowHeight - 10) + "px";
+
+    syncTextVisibility(frame / KEY_FRAME * T.key);
+  }
+
+  function renderFinish(seconds) {
+    if (seconds <= 0 && lastRenderedFrame < KEY_FRAME - 0.000001) return;
+
+    renderBuild(KEY_FRAME);
+    totalEl.textContent = money.format(orders[orders.length - 1].total / 100);
+    countEl.textContent = String(orders[orders.length - 1].count);
+    totalEl.style.color = V.accent;
+    summaryFace.style.borderColor = rgba(V.accent, 0.65);
+
+    const age = Math.max(0, seconds);
+    const payoffScale = age < 0.5
+      ? 1.008 + 0.072 * Math.exp(-11 * age) * Math.cos(17 * age)
+      : 1.008;
+    summary.style.transform = `scale(${payoffScale})`;
+    rim.style.opacity = String(0.16 + 0.79 * Math.exp(-age * 9));
+
+    const sweep = clamp(age / 0.38, 0, 1);
+    flash.style.visibility = age < 0.38 ? "visible" : "hidden";
+    flash.style.transform =
+      `translateX(${-width * 0.3 + width * 1.6 * smooth(sweep)}px) skewX(-16deg)`;
+
+    // Exactly three output frames of buzz; the text moves as one screen.
+    const buzzFrame = Math.floor((age + 0.000001) * CA.fps);
+    const buzz = [[-5, 1], [5, -1], [-3, 0]];
+    const buzzScale = full ? 1 : 0.75;
+    if (buzzFrame < buzz.length) {
+      screen.style.transform =
+        `translate3d(${buzz[buzzFrame][0] * buzzScale}px,` +
+        `${buzz[buzzFrame][1] * buzzScale}px,0)`;
+    }
+
+    // A clean read through the entire hold, with a continuing global push.
+    const holdProgress = clamp(age / Math.max(T.hold, 1 / CA.fps), 0, 1);
+    phone.style.transform =
+      `scale(${1.006 + 0.014 * holdProgress})`;
+
+    const p = clamp(age / 0.3, 0, 1);
+    const c1 = 1.70158;
+    const back = 1 + (c1 + 1) * Math.pow(p - 1, 3) +
+      c1 * Math.pow(p - 1, 2);
+    const pillScale = 0.78 + 0.22 * back;
+    pill.style.visibility = "visible";
+    pill.style.transform =
+      `translateX(-50%) translateY(${16 * (1 - out3(p))}px) ` +
+      `scale(${pillScale})`;
+
+    // The teal sweep raises the backdrop luminance. Lift only the total's
+    // foreground during that overlap, then retain the original accent.
+    if (
+      age < 0.38 &&
+      overlaps(totalEl.getBoundingClientRect(), flash.getBoundingClientRect())
+    ) {
+      totalEl.style.color = flashAccent;
+    }
+
+    syncTextVisibility(T.key + age);
+  }
+
+  const buildDriver = make("div", "ns-driver", clip);
+  const finishDriver = make("div", "ns-driver", clip);
+  buildDriver.setAttribute("aria-hidden", "true");
+  finishDriver.setAttribute("aria-hidden", "true");
+
+  const tl = gsap.timeline({ paused: true });
+  const build = gsap.timeline();
+
+  // Modifiers run during event-suppressed motion-blur sampling.
+  // All poses and complete-number text are deterministic at arbitrary seeks.
+  build.fromTo(
+    buildDriver,
+    { x: 0 },
+    {
+      x: KEY_FRAME,
+      duration: T.design,
+      ease: "none",
+      immediateRender: false,
+      modifiers: {
+        x(value) {
+          const frame = parseFloat(value);
+          renderBuild(frame);
+          return frame + "px";
+        }
+      }
+    },
+    0
+  );
+  build.timeScale(1 / T.scale);
+  tl.add(build, 0);
+
+  const finishDuration = Math.max(T.hold + T.exit, 1 / CA.fps);
+  tl.fromTo(
+    finishDriver,
+    { x: 0 },
+    {
+      x: finishDuration * 1000,
+      duration: finishDuration,
+      ease: "none",
+      immediateRender: false,
+      modifiers: {
+        x(value) {
+          const milliseconds = parseFloat(value);
+          renderFinish(milliseconds / 1000);
+          return milliseconds + "px";
+        }
+      }
+    },
+    T.key
+  );
+
+  tl.fromTo(
+    $("ns-light"),
+    { backgroundPosition: "0% 100%" },
+    {
+      backgroundPosition: "100% 0%",
+      duration: T.duration,
+      ease: "sine.inOut",
+      immediateRender: false
+    },
+    0
+  );
 
   const open = "inset(0% 0% 0% 0% round 0px)";
   const closed = "inset(50% 0% 50% 0% round 0px)";
 
   if (variant === "overlay") {
-    tl.fromTo(stageEl,
+    tl.fromTo(
+      stageEl,
       { clipPath: closed },
-      { clipPath: open, duration: 0.24, ease: "power3.out" },
+      {
+        clipPath: open,
+        duration: Math.min(0.24, T.key * 0.2),
+        ease: "power3.out"
+      },
       0
     );
   }
+
   if (T.exit > 0) {
-    tl.fromTo(stageEl,
+    tl.fromTo(
+      stageEl,
       { clipPath: open },
       {
         clipPath: closed,
@@ -686,5 +837,6 @@ CA.ready(() => {
     );
   }
 
+  renderBuild(0);
   window.__timelines["block"] = tl;
 });

@@ -1,0 +1,156 @@
+@font-face {
+  font-family: "Cormorant SC";
+  src: url("assets/fonts/cormorant-sc-600.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("assets/fonts/cormorant-garamond-400-italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 400;
+  font-display: block;
+}
+
+#iw-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+#iw-clip,
+#iw-clip * {
+  box-sizing: border-box;
+}
+
+#iw-scene,
+#iw-fibre,
+#iw-type {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#iw-scene {
+  z-index: 0;
+}
+
+#iw-type {
+  z-index: 2;
+}
+
+#iw-fibre {
+  z-index: 1;
+}
+
+#iw-title {
+  position: absolute;
+  inset: 0;
+}
+
+.iw-column {
+  position: absolute;
+  text-align: center;
+  font-family: "Cormorant SC", serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1;
+  visibility: hidden;
+  transform-origin: 50% 0;
+}
+
+.iw-glyph {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.iw-word-space {
+  display: block;
+  width: 100%;
+}
+
+#iw-subtitle {
+  position: absolute;
+  display: flex;
+  align-items: baseline;
+  width: max-content;
+  max-width: 100%;
+  gap: 0.28em;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.16;
+  visibility: hidden;
+}
+
+#iw-subcopy {
+  display: inline-block;
+  white-space: nowrap;
+  text-wrap: balance;
+}
+
+#iw-sub-square {
+  display: inline-block;
+  flex: 0 0 auto;
+}
+
+#iw-chapter {
+  position: absolute;
+  display: inline-block;
+  width: max-content;
+  white-space: nowrap;
+  transform: rotate(90deg);
+  transform-origin: 0 0;
+  font-family: "Cormorant SC", serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.12;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  visibility: hidden;
+}
+
+#iw-chapter-copy {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+#iw-seal {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  transform-origin: 50% 50%;
+  isolation: isolate;
+}
+
+#iw-seal-mark {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+#iw-seal-word {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-family: "Cormorant SC", serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+  transform: translateY(-0.025em);
+}
