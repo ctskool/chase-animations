@@ -146,6 +146,7 @@ const attr = (s) => s.replace(/&/g, "&amp;").replace(/'/g, "&#39;");
 export function buildProject({ block, variant, vars, timing, workDir, baseDir = process.cwd(), fps = 30, alpha, height }) {
   const sources = ["block.js", "block.css", "block.html", "block.json"].map((f) => fs.readFileSync(path.join(block.dir, f), "utf8"));
   sources.push(fs.readFileSync(path.join(PACK, "shared", "runtime.js"), "utf8"));
+  if (block.claudeKit) sources.push(fs.readFileSync(path.join(PACK, "shared", "claude-kit.js"), "utf8"));
   const hash = createHash("sha1")
     .update(JSON.stringify({ variant, vars, timing, fps, alpha, height, sources }))
     .digest("hex")
@@ -228,6 +229,7 @@ ${fs.readFileSync(path.join(block.dir, "block.html"), "utf8")}
 <script>
 ${fs.readFileSync(path.join(PACK, "shared", "runtime.js"), "utf8")}
 </script>
+${block.claudeKit ? `<script>\n${fs.readFileSync(path.join(PACK, "shared", "claude-kit.js"), "utf8")}\n</script>` : ""}
 ${block.motionBlur ? `<script src="vendor/motion-blur.js"></script>` : ""}
 <script${block.three ? ` type="module"` : ""}>
 ${fs.readFileSync(path.join(block.dir, "block.js"), "utf8")}

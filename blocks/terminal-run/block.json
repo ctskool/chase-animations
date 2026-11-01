@@ -1,0 +1,64 @@
+{
+  "name": "terminal-run",
+  "title": "Terminal run",
+  "summary": "A Claude Code session types a prompt, stacks up tool calls while the mascot works and the counters climb, then a green result slab slams in under it.",
+  "claudeKit": true,
+  "fonts": [
+    "500 40px 'JetBrains Mono'",
+    "800 40px 'Inter Tight'",
+    "700 40px 'Inter Tight'"
+  ],
+  "timing": {
+    "keyAt": 4.6,
+    "hold": 1.9,
+    "exit": 0.34,
+    "minKeyAt": 2.6
+  },
+  "keyMoment": "the mascot lands on the result slab as the done word and the exact file count and time hit, with the slab at its scale punch",
+  "overlayHeight": 960,
+  "variables": [
+    { "id": "project", "type": "string", "label": "Folder shown in the header", "default": "~/my-saas" },
+    { "id": "prompt", "type": "string", "label": "The prompt that gets typed", "default": "Build the billing page and ship it" },
+    { "id": "spinnerWord", "type": "string", "label": "Spinner word", "default": "Tinkering" },
+
+    { "id": "step1Tool", "type": "string", "label": "Step 1 tool (leave empty to remove the step)", "default": "Read" },
+    { "id": "step1Target", "type": "string", "label": "Step 1 file or command", "default": "schema.sql" },
+    { "id": "step1Result", "type": "string", "label": "Step 1 result", "default": "Read 84 lines" },
+    { "id": "step2Tool", "type": "string", "label": "Step 2 tool", "default": "Write" },
+    { "id": "step2Target", "type": "string", "label": "Step 2 file or command", "default": "billing/page.tsx" },
+    { "id": "step2Result", "type": "string", "label": "Step 2 result", "default": "Wrote 212 lines" },
+    { "id": "step3Tool", "type": "string", "label": "Step 3 tool", "default": "Update" },
+    { "id": "step3Target", "type": "string", "label": "Step 3 file or command", "default": "api/stripe.ts" },
+    { "id": "step3Result", "type": "string", "label": "Step 3 result", "default": "Added 38 lines" },
+    { "id": "step4Tool", "type": "string", "label": "Step 4 tool", "default": "Bash" },
+    { "id": "step4Target", "type": "string", "label": "Step 4 file or command", "default": "npm test" },
+    { "id": "step4Result", "type": "string", "label": "Step 4 result", "default": "214 tests passed" },
+    { "id": "step5Tool", "type": "string", "label": "Step 5 tool", "default": "Bash" },
+    { "id": "step5Target", "type": "string", "label": "Step 5 file or command", "default": "git push" },
+    { "id": "step5Result", "type": "string", "label": "Step 5 result", "default": "Pushed to main" },
+    { "id": "step6Tool", "type": "string", "label": "Step 6 tool", "default": "" },
+    { "id": "step6Target", "type": "string", "label": "Step 6 file or command", "default": "" },
+    { "id": "step6Result", "type": "string", "label": "Step 6 result", "default": "" },
+
+    { "id": "doneWord", "type": "string", "label": "The payoff word", "default": "Shipped" },
+    { "id": "filesStat", "type": "string", "label": "Final count, counts up as steps land", "default": "47 files" },
+    { "id": "timeStat", "type": "string", "label": "Final time, as 4m 12s or 58s", "default": "4m 12s" },
+
+    { "id": "doneColor", "type": "color", "label": "Result slab colour", "default": "#4EBA65" },
+    { "id": "doneInk", "type": "color", "label": "Text on the result slab", "default": "#06140A" },
+    { "id": "accent", "type": "color", "label": "Claude colour", "default": "#D77757" },
+    { "id": "ground", "type": "color", "label": "Terminal background", "default": "#0C0C0D" },
+    { "id": "showMascot", "type": "boolean", "label": "Show the mascot", "default": true },
+    { "id": "showLogo", "type": "boolean", "label": "Show the Claude logo", "default": true },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

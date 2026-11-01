@@ -11,3 +11,7 @@
 | GSAP | [GSAP standard licence](https://gsap.com/standard-license) | Installed by `npm install` |
 | Three.js | MIT | Installed by `npm install` |
 | Parakeet TDT speech model | Downloaded by HyperFrames when you run `npm run setup -- --speech` | Stored in your HyperFrames cache |
+
+## Claude brand
+
+Claude, Claude Code, the Claude logo and the Claude Code mascot are Anthropic's. The pack isn't affiliated with or endorsed by Anthropic. The logo outline comes from [Simple Icons](https://simpleicons.org) (CC0), which covers the drawing, not the trademark. The mascot, colours and spinner words match Claude Code's own interface.
