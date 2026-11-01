@@ -1,0 +1,397 @@
+{
+  "name": "magazine-layout",
+  "title": "Magazine layout",
+  "summary": "A painted dusk sea bleeds to the left edge beneath a confident serif headline. A fixed, complete excerpt stays readable while red handwriting and a looped arrow identify one bright reflection.",
+  "fonts": [
+    "400 40px 'Bodoni Moda'",
+    "italic 400 40px 'Bodoni Moda'",
+    "400 40px Newsreader",
+    "italic 400 40px Newsreader"
+  ],
+  "fontFiles": [
+    "bodoni-moda-400.woff2",
+    "bodoni-moda-400-italic.woff2",
+    "newsreader-400.woff2",
+    "newsreader-400-italic.woff2"
+  ],
+  "timing": {
+    "keyAt": 2.9,
+    "hold": 1,
+    "exit": 0.3,
+    "minKeyAt": 2.3
+  },
+  "keyMoment": "the handwritten underline and a short reinforcing arc on the tight reflection circle finish on the same frame; the circled silver glint punches, then settles with a slightly heavier lasting pen mark",
+  "overlayHeight": 960,
+  "variables": [
+    {
+      "id": "headlineLine1",
+      "type": "string",
+      "label": "Headline, first phrase",
+      "default": "The sea keeps"
+    },
+    {
+      "id": "headlineLine2",
+      "type": "string",
+      "label": "Headline, italic phrase",
+      "default": "a little light"
+    },
+    {
+      "id": "bodyText",
+      "type": "string",
+      "label": "Source passage; only its first complete sentences are shown",
+      "default": "At dusk, the village\nof Orlen closes its\nshutters. Beyond the\nlast stone steps, the\nwater keeps a narrow\nribbon of brightness.\n\nWe walked the shore\nuntil the windows\nabove us turned gold.\nNo boats arrived.\nNo one called us in.\n\nFor a few minutes,\nthe horizon seemed\nclose enough to fold\ninto a pocket and\ncarry home."
+    },
+    {
+      "id": "excerptSentences",
+      "type": "number",
+      "label": "Full-output maximum complete sentences",
+      "default": 2,
+      "min": 1,
+      "max": 6,
+      "step": 1
+    },
+    {
+      "id": "compactExcerptSentences",
+      "type": "number",
+      "label": "Top-output maximum complete sentences",
+      "default": 1,
+      "min": 1,
+      "max": 6,
+      "step": 1
+    },
+    {
+      "id": "overlayExcerptSentences",
+      "type": "number",
+      "label": "Overlay maximum complete sentences",
+      "default": 1,
+      "min": 1,
+      "max": 6,
+      "step": 1
+    },
+    {
+      "id": "caption",
+      "type": "string",
+      "label": "Optional short italic caption",
+      "default": ""
+    },
+    {
+      "id": "note",
+      "type": "string",
+      "label": "Handwritten note; two or three short words",
+      "default": "stay here"
+    },
+    {
+      "id": "imageDescription",
+      "type": "string",
+      "label": "Painting description for accessibility",
+      "default": "A painted dusk sea at the fictional village of Orlen. Muted rose sky, a pale sun partly below the horizon, deep blue water and broken reflections."
+    },
+    {
+      "id": "headlineFontSize",
+      "type": "number",
+      "label": "Full-output headline maximum size",
+      "default": 174,
+      "min": 80,
+      "max": 200,
+      "step": 1
+    },
+    {
+      "id": "compactHeadlineFontSize",
+      "type": "number",
+      "label": "Top-output headline maximum size",
+      "default": 116,
+      "min": 64,
+      "max": 160,
+      "step": 1
+    },
+    {
+      "id": "overlayHeadlineFontSize",
+      "type": "number",
+      "label": "Overlay headline maximum size",
+      "default": 110,
+      "min": 64,
+      "max": 160,
+      "step": 1
+    },
+    {
+      "id": "headlineIndent",
+      "type": "number",
+      "label": "Italic headline indent at full size",
+      "default": 91,
+      "min": 0,
+      "max": 180,
+      "step": 1
+    },
+    {
+      "id": "bodyFontSize",
+      "type": "number",
+      "label": "Full-output body size",
+      "default": 52,
+      "min": 40,
+      "max": 64,
+      "step": 1
+    },
+    {
+      "id": "compactBodyFontSize",
+      "type": "number",
+      "label": "Top-output body size",
+      "default": 44,
+      "min": 32,
+      "max": 56,
+      "step": 1
+    },
+    {
+      "id": "overlayBodyFontSize",
+      "type": "number",
+      "label": "Overlay body size",
+      "default": 42,
+      "min": 32,
+      "max": 56,
+      "step": 1
+    },
+    {
+      "id": "bodyLineSpacing",
+      "type": "number",
+      "label": "Body baseline spacing at the full-output size",
+      "default": 64,
+      "min": 48,
+      "max": 88,
+      "step": 1
+    },
+    {
+      "id": "paragraphSpacing",
+      "type": "number",
+      "label": "Space between included paragraphs",
+      "default": 16,
+      "min": 0,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "id": "photoWidthPercent",
+      "type": "number",
+      "label": "Full-output painting width as percentage of stage",
+      "default": 60,
+      "min": 50,
+      "max": 68,
+      "step": 1
+    },
+    {
+      "id": "compactPhotoWidthPercent",
+      "type": "number",
+      "label": "Top-output painting width as percentage of stage",
+      "default": 60,
+      "min": 50,
+      "max": 68,
+      "step": 1
+    },
+    {
+      "id": "overlayPhotoWidthPercent",
+      "type": "number",
+      "label": "Overlay painting width as percentage of stage",
+      "default": 63,
+      "min": 50,
+      "max": 68,
+      "step": 1
+    },
+    {
+      "id": "columnGutter",
+      "type": "number",
+      "label": "Full-output gap between painting and reading column",
+      "default": 60,
+      "min": 40,
+      "max": 90,
+      "step": 1
+    },
+    {
+      "id": "noteFontSize",
+      "type": "number",
+      "label": "Full-output handwriting maximum size",
+      "default": 240,
+      "min": 112,
+      "max": 300,
+      "step": 1
+    },
+    {
+      "id": "compactNoteFontSize",
+      "type": "number",
+      "label": "Top-output handwriting maximum size",
+      "default": 208,
+      "min": 96,
+      "max": 260,
+      "step": 1
+    },
+    {
+      "id": "overlayNoteFontSize",
+      "type": "number",
+      "label": "Overlay handwriting maximum size",
+      "default": 200,
+      "min": 96,
+      "max": 260,
+      "step": 1
+    },
+    {
+      "id": "noteTilt",
+      "type": "number",
+      "label": "Handwriting angle in degrees",
+      "default": -7,
+      "min": -10,
+      "max": 0,
+      "step": 0.5
+    },
+    {
+      "id": "handwritingSpeed",
+      "type": "number",
+      "label": "Handwriting letters per second at default timing",
+      "default": 8,
+      "min": 6,
+      "max": 14,
+      "step": 0.5
+    },
+    {
+      "id": "ruleThickness",
+      "type": "number",
+      "label": "Top rule thickness",
+      "default": 2,
+      "min": 1,
+      "max": 5,
+      "step": 0.25
+    },
+    {
+      "id": "penWidth",
+      "type": "number",
+      "label": "Ballpoint stroke width",
+      "default": 5.8,
+      "min": 1.5,
+      "max": 10,
+      "step": 0.1
+    },
+    {
+      "id": "reflectionX",
+      "type": "number",
+      "label": "Target reflection horizontal position in painting, percent",
+      "default": 61,
+      "min": 42,
+      "max": 76,
+      "step": 1
+    },
+    {
+      "id": "reflectionY",
+      "type": "number",
+      "label": "Target reflection vertical position in painting, percent",
+      "default": 73,
+      "min": 58,
+      "max": 85,
+      "step": 1
+    },
+    {
+      "id": "focusRadius",
+      "type": "number",
+      "label": "Tight reflection circle horizontal radius at full size",
+      "default": 56,
+      "min": 36,
+      "max": 80,
+      "step": 1
+    },
+    {
+      "id": "photoPush",
+      "type": "number",
+      "label": "Opening image enlargement",
+      "default": 1.065,
+      "min": 1.02,
+      "max": 1.2,
+      "step": 0.005
+    },
+    {
+      "id": "photoOffset",
+      "type": "number",
+      "label": "Opening image downward offset",
+      "default": 6,
+      "min": 0,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "id": "payoffPunch",
+      "type": "number",
+      "label": "Circled reflection enlargement on the key beat",
+      "default": 1.48,
+      "min": 1.1,
+      "max": 1.8,
+      "step": 0.01
+    },
+    {
+      "id": "holdDrift",
+      "type": "number",
+      "label": "Slow water and reflected-light movement",
+      "default": 20,
+      "min": 4,
+      "max": 40,
+      "step": 1
+    },
+    {
+      "id": "grainStrength",
+      "type": "number",
+      "label": "Paper and film grain strength",
+      "default": 0.09,
+      "min": 0,
+      "max": 0.25,
+      "step": 0.01
+    },
+    {
+      "id": "seed",
+      "type": "number",
+      "label": "Painting and paper seed",
+      "default": 17,
+      "min": 1,
+      "max": 9999,
+      "step": 1
+    },
+    {
+      "id": "paperColor",
+      "type": "color",
+      "label": "Cool paper",
+      "default": "#EAEDED"
+    },
+    {
+      "id": "inkColor",
+      "type": "color",
+      "label": "Printed text",
+      "default": "#1B1E25"
+    },
+    {
+      "id": "penColor",
+      "type": "color",
+      "label": "Red ballpoint",
+      "default": "#C42E26"
+    },
+    {
+      "id": "seaDark",
+      "type": "color",
+      "label": "Slate navy ink",
+      "default": "#242E46"
+    },
+    {
+      "id": "seaLight",
+      "type": "color",
+      "label": "Pale grey-blue ink",
+      "default": "#E2E7EC"
+    },
+    {
+      "id": "skyColor",
+      "type": "color",
+      "label": "Muted rose sky",
+      "default": "#B3A5AF"
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

@@ -7,7 +7,7 @@ CA.ready(() => {
   const W = S.w;
   const H = S.h;
   const K = T.design;
-  const R2 = Math.SQRT2;
+  const DEG = Math.PI / 180;
 
   const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
   const seg = (t, at, duration) => clamp((t - at) / duration);
@@ -28,29 +28,29 @@ CA.ready(() => {
   const P = (x, z, y = 0) => new THREE.Vector3(x, y, z);
   const color = (hex) => new THREE.Color(hex);
 
-  // Each output has its own framing and physical pill dimensions.
-  // The pill shells retain their previous sizes; the time text uses the
-  // available height more efficiently so it remains readable on a phone.
+  // Frame the complete platform from the opening. Larger buildings retain
+  // the first stop's presence without relying on a cropped camera view.
+  // Physical pill dimensions are unchanged in every output.
   const layouts = {
     full: {
       titleSize: 98,
       titleMin: 54,
       titleTop: Math.max(230, safe.top) + 150,
       titleGap: 46,
-      centerY: 1150,
-      openingY: 1040,
-      widthInset: 44,
-      openingZoom: 1.8,
-      openingX: -2.45,
-      openingZ: 1.35,
-      labelGap: 24,
+      edge: 12,
+      openingZoom: 1.012,
+      openingLift: 44,
+      cameraSettle: 0.78,
+      elevation: 40,
+      minElevation: 40,
+      labelGap: 26,
       middleLift: 144,
       labelEdge: 24,
       labelSeparation: 20,
       payoffScale: 1.34,
       payoffRest: 1.1,
-      payoffDrop: 20,
-      bottomMargin: Math.max(300, safe.bottom, H * 0.2),
+      payoffDrop: 24,
+      bottomMargin: Math.max(300, safe.bottom),
       pill: {
         height: 128.56, chip: 80, gap: 18,
         padY: 14, padRight: 34, padLeft: 16,
@@ -62,20 +62,20 @@ CA.ready(() => {
       titleSize: 62,
       titleMin: 40,
       titleTop: Math.max(18, safe.top - 8),
-      titleGap: 30,
-      centerY: H * 0.615,
-      openingY: H * 0.63,
-      widthInset: 48,
-      openingZoom: 1.4,
-      openingX: -2.35,
-      openingZ: 1.25,
-      labelGap: 16,
-      middleLift: 99,
+      titleGap: 20,
+      edge: 12,
+      openingZoom: 1.012,
+      openingLift: 18,
+      cameraSettle: 0.74,
+      elevation: 36,
+      minElevation: 32,
+      labelGap: 26,
+      middleLift: 108,
       labelEdge: 22,
       labelSeparation: 16,
       payoffScale: 1.32,
       payoffRest: 1.1,
-      payoffDrop: 16,
+      payoffDrop: 28,
       bottomMargin: 20,
       pill: {
         height: 108, chip: 67.2, gap: 15.12,
@@ -88,20 +88,20 @@ CA.ready(() => {
       titleSize: 62,
       titleMin: 40,
       titleTop: 12,
-      titleGap: 32,
-      centerY: H * 0.62,
-      openingY: H * 0.59,
-      widthInset: 60,
-      openingZoom: 1.44,
-      openingX: -2.4,
-      openingZ: 1.3,
-      labelGap: 18,
-      middleLift: 104,
+      titleGap: 24,
+      edge: 16,
+      openingZoom: 1.014,
+      openingLift: 20,
+      cameraSettle: 0.74,
+      elevation: 36,
+      minElevation: 32,
+      labelGap: 28,
+      middleLift: 108,
       labelEdge: 28,
       labelSeparation: 18,
       payoffScale: 1.34,
       payoffRest: 1.1,
-      payoffDrop: 18,
+      payoffDrop: 28,
       bottomMargin: 18,
       pill: {
         height: 108, chip: 67.2, gap: 15.12,
@@ -114,12 +114,13 @@ CA.ready(() => {
   const L = layouts[variant] || layouts.full;
 
   const B = {
-    rise: [0, 0.32, 0.64],
-    vanGo: 1.02,
-    sortAt: 1.92,
-    sortGo: 2.1,
+    rise: [0, 0.32, 0.76],
+    riseDuration: 0.34,
+    vanGo: 1.12,
+    sortAt: 1.96,
+    sortGo: 2.16,
     arrive: K,
-    dashEnd: 1.12
+    dashEnd: 1.08
   };
 
   const rawParcelCount = Number(V.parcelCount);
@@ -182,7 +183,6 @@ CA.ready(() => {
     return mesh;
   };
 
-  // Procedural contact shadows, with no external images.
   const blobTexture = (() => {
     const canvas = document.createElement("canvas");
     canvas.width = canvas.height = 128;
@@ -326,9 +326,9 @@ CA.ready(() => {
   function building(hex, x, z, kind) {
     const group = new THREE.Group();
     const dimensions = [
-      { w: 2.05, d: 1.8, h: 1.55 },
-      { w: 1.65, d: 1.65, h: 2.4 },
-      { w: 2.05, d: 1.65, h: 1.5 }
+      { w: 2.35, d: 2.05, h: 1.72 },
+      { w: 1.86, d: 1.84, h: 2.72 },
+      { w: 2.3, d: 1.9, h: 1.65 }
     ][kind];
     const { w, d, h } = dimensions;
 
@@ -362,7 +362,7 @@ CA.ready(() => {
         const windowMesh = box(0.05, 0.32, 0.35, V.ink, 0.02);
         windowMesh.position.set(
           w / 2 + 0.005,
-          kind === 1 ? 0.66 + row * 0.62 : 0.88,
+          kind === 1 ? 0.72 + row * 0.7 : 0.94,
           (column - 0.5) * 0.74
         );
         group.add(windowMesh);
@@ -372,7 +372,7 @@ CA.ready(() => {
     if (kind === 1) {
       for (let row = 1; row < 3; row++) {
         const windowMesh = box(0.9, 0.32, 0.05, V.ink, 0.02);
-        windowMesh.position.set(0, 0.66 + row * 0.62, d / 2 + 0.005);
+        windowMesh.position.set(0, 0.72 + row * 0.7, d / 2 + 0.005);
         group.add(windowMesh);
       }
     }
@@ -388,7 +388,10 @@ CA.ready(() => {
     shade.position.x = x;
     shade.position.z = z;
     scene.add(shade, group);
-    return { group, shade, door, x, z, h, totalHeight: h + 0.42 };
+    return {
+      group, shade, door, x, z, w, d, h,
+      totalHeight: h + (kind === 0 ? 0.42 : 0.16)
+    };
   }
 
   const buildings = [
@@ -397,50 +400,20 @@ CA.ready(() => {
     building(V.color3, 3.4, -3.25, 2)
   ];
 
-  // Only two small trees, both behind the route.
-  const trees = [];
-  function tree(x, z, scale) {
-    const group = new THREE.Group();
-    const trunk = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.06, 0.07, 0.3, 10),
-      mat(V.ink)
-    );
-    trunk.position.y = 0.15;
-    trunk.castShadow = true;
-
-    const foliage = new THREE.Group();
-    foliage.position.y = 0.25;
-    const crownMaterial = new THREE.MeshStandardMaterial({
-      color: color(V.color1).lerp(color(V.white), 0.18),
-      roughness: 0.85
-    });
-    const lower = new THREE.Mesh(
-      new THREE.SphereGeometry(0.34, 20, 16),
-      crownMaterial
-    );
-    lower.position.y = 0.25;
-    lower.scale.y = 0.92;
-    lower.castShadow = true;
-    const upper = lower.clone();
-    upper.position.set(0.08, 0.51, 0.03);
-    upper.scale.setScalar(0.66);
-    foliage.add(lower, upper);
-    group.add(trunk, foliage);
-    group.position.copy(P(x, z));
-    group.scale.setScalar(scale);
-
-    const shade = blob(1.2 * scale, 1.2 * scale);
-    shade.position.x = x;
-    shade.position.z = z;
-    scene.add(shade, group);
-    trees.push(foliage);
-  }
-  tree(-3.8, -2.8, 0.76);
-  tree(-1.85, -3.65, 0.7);
-
-  const beltStart = P(-3.1, 2.66);
-  const beltEnd = P(-3.1, 3.05);
-  const belt = box(0.46, 0.09, 0.52, V.ink, 0.03);
+  // No peripheral props: the three buildings and their handoff are the scene.
+  const warehouse = buildings[0];
+  const beltStart = P(
+    warehouse.x - 0.1,
+    warehouse.z + warehouse.d / 2 + 0.035
+  );
+  const beltEnd = P(warehouse.x - 0.1, 3.05);
+  const belt = box(
+    0.46,
+    0.09,
+    beltStart.distanceTo(beltEnd) + 0.13,
+    V.ink,
+    0.03
+  );
   belt.position.copy(beltStart.clone().lerp(beltEnd, 0.5));
   belt.position.y = 0.09;
   scene.add(belt);
@@ -501,7 +474,6 @@ CA.ready(() => {
   const sortU = nearestOnRoad(P(0.55, 0.6));
   const toU = nearestOnRoad(P(4.1, -1.6));
 
-  // Two journeys with a real stop at Sort. Labels use these same beat times.
   function vanU(t) {
     if (t <= B.vanGo) return fromU;
     if (t < B.sortAt) {
@@ -529,19 +501,30 @@ CA.ready(() => {
   });
 
   const destination = buildings[2];
-  const destinationPad = box(2.33, 0.12, 1.94, V.check, 0.07);
+  const destinationPad = box(
+    destination.w + 0.28,
+    0.12,
+    destination.d + 0.29,
+    V.check,
+    0.07
+  );
   destinationPad.position.set(destination.x, 0.055, destination.z);
   destinationPad.visible = false;
   scene.add(destinationPad);
 
   const bay = new THREE.Mesh(
-    ribbon(0.39, Math.max(fromU, toU - 0.04), Math.min(1, toU + 0.045), 0.034, 18),
+    ribbon(
+      0.39,
+      Math.max(fromU, toU - 0.04),
+      Math.min(1, toU + 0.045),
+      0.034,
+      18
+    ),
     new THREE.MeshBasicMaterial({ color: V.check })
   );
   bay.visible = false;
   scene.add(bay);
 
-  // A broad, solid-colour pulse on the road, rather than a glow.
   const reversePulse = [];
   const pulseCount = 60;
   const pulseMaterial = new THREE.MeshBasicMaterial({ color: V.check });
@@ -557,32 +540,71 @@ CA.ready(() => {
     });
   }
 
-  let ppu = (W - L.widthInset) / (10 * R2 + 0.5);
-  let finalCenterY = L.centerY;
-  let openingCenterY = L.openingY;
+  // Measure the rounded silhouette itself. An axis-aligned bounding box
+  // includes missing corners and unnecessarily shrinks the final diagram.
+  scene.updateMatrixWorld(true);
+  const slabVertices = slabGeometry.getAttribute("position");
+  const slabPoints = [];
+  for (let i = 0; i < slabVertices.count; i++) {
+    slabPoints.push(
+      new THREE.Vector3()
+        .fromBufferAttribute(slabVertices, i)
+        .applyMatrix4(slab.matrixWorld)
+    );
+  }
+
+  function slabProjection(azimuth, elevation) {
+    const sinA = Math.sin(azimuth);
+    const cosA = Math.cos(azimuth);
+    const sinE = Math.sin(elevation);
+    const cosE = Math.cos(elevation);
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minUp = Infinity;
+
+    slabPoints.forEach((point) => {
+      const x = point.x * cosA - point.z * sinA;
+      const up = point.y * cosE
+        - (point.x * sinA + point.z * cosA) * sinE;
+      minX = Math.min(minX, x);
+      maxX = Math.max(maxX, x);
+      minUp = Math.min(minUp, up);
+    });
+
+    return { minX, maxX, minUp };
+  }
+
+  const FINAL_AZIMUTH = 42 * DEG;
+  let elevation = L.elevation * DEG;
+  const initialProjection = slabProjection(FINAL_AZIMUTH, elevation);
+  let ppu = (W - L.edge * 2)
+    / (initialProjection.maxX - initialProjection.minX);
+  let finalCenterY = 0;
+  let openingCenterY = 0;
+
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 80);
-  const ELEVATION = 40 * Math.PI / 180;
 
   function aim(t) {
-    const progress = inOut(seg(t, 0.16, K * 0.76));
-    const azimuth = lerp(48, 42, progress) * Math.PI / 180;
-    const target = P(
-      L.openingX * (1 - progress),
-      L.openingZ * (1 - progress)
-    );
+    // The slight initial drift is already underway on frame one.
+    // All camera motion ends before the van starts its first journey.
+    const progress = inOut(seg(t, -0.06, L.cameraSettle + 0.06));
+    const azimuth = lerp(48, 42, progress) * DEG;
     const centerY = lerp(openingCenterY, finalCenterY, progress);
+    const pixelsPerUnit = ppu * lerp(L.openingZoom, 1, progress);
 
-    camera.left = -W / (2 * ppu);
-    camera.right = W / (2 * ppu);
-    camera.top = centerY / ppu;
-    camera.bottom = -(H - centerY) / ppu;
-    camera.zoom = lerp(L.openingZoom, 1, progress);
+    // Apply the scale directly to the frustum so centerY remains an exact
+    // screen-space anchor throughout the small opening pull-back.
+    camera.zoom = 1;
+    camera.left = -W / (2 * pixelsPerUnit);
+    camera.right = W / (2 * pixelsPerUnit);
+    camera.top = centerY / pixelsPerUnit;
+    camera.bottom = -(H - centerY) / pixelsPerUnit;
     camera.position.set(
-      target.x + Math.sin(azimuth) * Math.cos(ELEVATION) * 30,
-      Math.sin(ELEVATION) * 30,
-      target.z + Math.cos(azimuth) * Math.cos(ELEVATION) * 30
+      Math.sin(azimuth) * Math.cos(elevation) * 30,
+      Math.sin(elevation) * 30,
+      Math.cos(azimuth) * Math.cos(elevation) * 30
     );
-    camera.lookAt(target);
+    camera.lookAt(0, 0, 0);
     camera.updateProjectionMatrix();
     camera.updateMatrixWorld();
   }
@@ -658,17 +680,21 @@ CA.ready(() => {
   const finalCheck = make("span", "pill-check", pills[2].chip);
   finalCheck.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4.6 4.6L19 7.4"/></svg>`;
 
-  // Reserve the entire delivery punch in advance. Its arrival never pushes
-  // another readable label out of the way.
   function pillPositions() {
     const reserveScales = [1.08, 1.17, L.payoffScale];
+    const reserveDrops = [0, 10, L.payoffDrop];
     const positions = pills.map((pill, i) => {
       const building = buildings[i];
       const roof = toScreen(P(building.x, building.z, building.h + 0.2));
       const scale = reserveScales[i];
       const halfWidth = pill.w * scale / 2;
-      const centerX = clamp(roof[0], L.labelEdge + halfWidth, W - L.labelEdge - halfWidth);
-      const top = roof[1] - L.labelGap - pill.h - (i === 1 ? L.middleLift : 0);
+      const centerX = clamp(
+        roof[0],
+        L.labelEdge + halfWidth,
+        W - L.labelEdge - halfWidth
+      );
+      const top = roof[1] - L.labelGap - pill.h
+        - (i === 1 ? L.middleLift : 0);
       return { centerX, top, roof, scale };
     });
 
@@ -678,8 +704,9 @@ CA.ready(() => {
       return {
         left: position.centerX - pill.w * position.scale / 2,
         right: position.centerX + pill.w * position.scale / 2,
-        top: position.top + pill.h - pill.h * position.scale - (i === 2 ? L.payoffDrop : 10),
-        bottom: position.top + pill.h + 5
+        top: position.top + pill.h
+          - pill.h * position.scale - reserveDrops[i],
+        bottom: position.top + pill.h + 8
       };
     };
     const overlaps = (a, b) => {
@@ -689,55 +716,62 @@ CA.ready(() => {
     };
 
     if (overlaps(bounds(0), bounds(2))) {
-      positions[0].centerX = L.labelEdge + pills[0].w * positions[0].scale / 2;
-      positions[2].centerX = W - L.labelEdge - pills[2].w * positions[2].scale / 2;
+      positions[0].centerX =
+        L.labelEdge + pills[0].w * positions[0].scale / 2;
+      positions[2].centerX =
+        W - L.labelEdge - pills[2].w * positions[2].scale / 2;
       if (overlaps(bounds(0), bounds(2))) {
-        positions[2].top -= bounds(2).bottom - bounds(0).top + L.labelSeparation;
+        positions[2].top -=
+          bounds(2).bottom - bounds(0).top + L.labelSeparation;
       }
     }
 
     for (const other of [0, 2]) {
       if (overlaps(bounds(1), bounds(other))) {
-        positions[1].top -= bounds(1).bottom - bounds(other).top + L.labelSeparation;
+        positions[1].top -=
+          bounds(1).bottom - bounds(other).top + L.labelSeparation;
       }
     }
-    return positions.map((position, i) => ({ ...position, bounds: bounds(i) }));
-  }
 
-  // Fit the final composition vertically without shrinking the labels.
-  // This also accommodates a top output with a shorter stage.
-  scene.updateMatrixWorld(true);
-  const slabBounds = new THREE.Box3().setFromObject(slab);
-  const slabCorners = [];
-  for (const x of [slabBounds.min.x, slabBounds.max.x]) {
-    for (const y of [slabBounds.min.y, slabBounds.max.y]) {
-      for (const z of [slabBounds.min.z, slabBounds.max.z]) {
-        slabCorners.push(new THREE.Vector3(x, y, z));
-      }
-    }
+    return positions.map((position, i) => ({
+      ...position,
+      bounds: bounds(i)
+    }));
   }
 
   const contentTop = L.titleTop + title.offsetHeight + L.titleGap;
   const contentBottom = H - L.bottomMargin;
-  const availableHeight = Math.max(1, contentBottom - contentTop);
 
-  for (let pass = 0; pass < 10; pass++) {
+  function anchorFrame() {
+    const projection = slabProjection(FINAL_AZIMUTH, elevation);
+
+    // The slab meets the lower safe edge. Do not re-center it upward and
+    // reintroduce an empty band below the final diagram.
+    finalCenterY = contentBottom + ppu * projection.minUp;
+    openingCenterY = finalCenterY - L.openingLift;
     aim(K);
+  }
+
+  // Compact outputs first use their own viewing angle to keep the platform
+  // wide and the pills unchanged. Only unusually short stages or long copy
+  // require reducing the physical scene after that room has been used.
+  for (let pass = 0; pass < 32; pass++) {
+    anchorFrame();
     const positions = pillPositions();
     const top = Math.min(...positions.map((position) => position.bounds.top));
-    const bottom = Math.max(...slabCorners.map((point) => toScreen(point)[1]));
-    const height = bottom - top;
+    if (top >= contentTop - 0.5) break;
 
-    if (height > availableHeight + 0.5) {
-      ppu *= clamp((availableHeight / height) * 0.98, 0.65, 0.98);
+    const minimumElevation = L.minElevation * DEG;
+    if (elevation > minimumElevation + 0.000001) {
+      elevation = Math.max(minimumElevation, elevation - DEG);
       continue;
     }
 
-    const shift = (contentTop + contentBottom - top - bottom) / 2;
-    finalCenterY += shift;
-    openingCenterY += shift * 0.5;
-    break;
+    const availableHeight = Math.max(1, contentBottom - contentTop);
+    const occupiedHeight = Math.max(1, contentBottom - top);
+    ppu *= clamp((availableHeight / occupiedHeight) * 0.995, 0.82, 0.985);
   }
+  anchorFrame();
 
   const whiteColor = color(V.white);
   const inkColor = color(V.ink);
@@ -768,15 +802,17 @@ CA.ready(() => {
           sx -= 0.01 * reaction;
         });
       } else {
-        const p = seg(t, B.rise[i], 0.36);
+        // Separate rise, crest and landing poses. The next entrance begins
+        // after this building has landed, so the reveals read individually.
+        const p = seg(t, B.rise[i], B.riseDuration);
         contact = seg(t, B.rise[i] + 0.08, 0.16);
-        if (p < 0.56) {
+        if (p < 0.52) {
           y = -building.totalHeight
-            + (building.totalHeight + 0.2) * out(p / 0.56, 4);
-        } else if (p < 0.78) {
-          y = 0.2 * (1 - Math.pow((p - 0.56) / 0.22, 2));
+            + (building.totalHeight + 0.2) * out(p / 0.52, 4);
+        } else if (p < 0.76) {
+          y = 0.2 * (1 - Math.pow((p - 0.52) / 0.24, 2));
         } else {
-          sy = 1 - 0.09 * Math.sin(((p - 0.78) / 0.22) * Math.PI);
+          sy = 1 - 0.09 * Math.sin(((p - 0.76) / 0.24) * Math.PI);
           sx = 1 + (1 - sy) * 0.7;
         }
       }
@@ -812,11 +848,8 @@ CA.ready(() => {
 
     destinationPad.visible = complete;
     bay.visible = complete;
-    destinationPad.scale.set(
-      1 + 0.05 * Math.max(0, kick(arrivalAge, 0, 10, 24)),
-      1,
-      1 + 0.05 * Math.max(0, kick(arrivalAge, 0, 10, 24))
-    );
+    const padPunch = 0.05 * Math.max(0, kick(arrivalAge, 0, 10, 24));
+    destinationPad.scale.set(1 + padPunch, 1, 1 + padPunch);
 
     const drawn = out(seg(t, 0, B.dashEnd), 2);
     dashes.forEach((dash, i) => {
@@ -846,21 +879,31 @@ CA.ready(() => {
     vanShade.position.z = point.z;
 
     const sampleStep = 0.035;
-    const acceleration = vanU(t + sampleStep) - 2 * vanU(t) + vanU(t - sampleStep);
+    const acceleration = vanU(t + sampleStep)
+      - 2 * vanU(t) + vanU(t - sampleStep);
     let loadingDip = 0;
     parcelHits.forEach((at) => {
       loadingDip += kick(t, at, 12, 28) * 0.045;
     });
     const sortBrake = kick(t, B.sortAt, 12, 25);
     const deliveryBrake = complete ? kick(arrivalAge, 0, 10, 24) : 0;
+    const idleEnvelope = complete ? 1 - Math.exp(-arrivalAge * 7) : 0;
     const idle = complete
-      ? Math.sin(arrivalAge * 4.2) * 0.012 * (1 - Math.exp(-arrivalAge * 7))
+      ? Math.sin(arrivalAge * 4.2) * 0.024 * idleEnvelope
       : 0;
-    vanBody.position.y = idle - loadingDip - 0.035 * sortBrake - 0.085 * deliveryBrake;
+    const idleRock = complete
+      ? Math.sin(arrivalAge * 3.2) * 0.006 * idleEnvelope
+      : 0;
+
+    // The parked van keeps a quiet engine idle through the hold.
+    // Readable text, the camera and the route stay fixed.
+    vanBody.position.y =
+      idle - loadingDip - 0.035 * sortBrake - 0.085 * deliveryBrake;
     vanBody.rotation.z = -acceleration * 24
       - 0.075 * sortBrake
       - 0.17 * deliveryBrake
-      + (complete ? ring(arrivalAge, 0.08, 10, 27) * 0.035 : 0);
+      + (complete ? ring(arrivalAge, 0.08, 10, 27) * 0.035 : 0)
+      + idleRock;
     wheels.forEach((wheel) => {
       wheel.rotation.z = -((u - fromU) * ROAD_LENGTH) / (0.135 * 1.22);
     });
@@ -892,11 +935,6 @@ CA.ready(() => {
       }
     });
 
-    trees.forEach((foliage, i) => {
-      foliage.rotation.z = Math.sin(time * 1.35 + i * 1.8) * 0.035;
-      foliage.rotation.x = Math.sin(time * 1.05 + i * 2.1) * 0.025;
-    });
-
     const positions = pillPositions();
     pills.forEach((pill, i) => {
       const shown = i === 0 || (i === 1 ? t >= B.sortAt : complete);
@@ -925,8 +963,6 @@ CA.ready(() => {
         ? `${basePillShadow}, inset 0 -6px 0 ${V.check}`
         : basePillShadow;
 
-      // Explicit child visibility prevents an unrevealed number appearing
-      // through a parent whose visibility is hidden.
       pill.number.style.visibility = shown && !(i === 2 && complete)
         ? "visible"
         : "hidden";
@@ -948,12 +984,11 @@ CA.ready(() => {
 
     finalCheck.style.visibility = complete ? "visible" : "hidden";
 
-    // Frame one already contains the complete headline and first stop.
-    // The overlay begins inside a broad opening wipe, with enough clear
-    // width for the whole headline and first pill.
     if (T.exit > 0 || variant === "overlay") {
+      // Keep the broad opening wipe outside the complete platform and words.
+      // The previous narrow opening re-cropped the overlay's route.
       const entry = variant === "overlay"
-        ? 0.84 + 0.16 * out(seg(time, 0, 0.18), 3)
+        ? 1 - (8 / W) * (1 - out(seg(time, 0, 0.16), 3))
         : 1;
       const exitDuration = Math.max(0.001, T.exit - 1 / CA.fps);
       const exit = T.exit > 0

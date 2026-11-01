@@ -1,6 +1,6 @@
 # Isometric flow
 
-A miniature three-step process on a white slab. The headline, first building and first label are visible immediately. Parcels hop into a van, which stops at each remaining building and triggers its label on arrival.
+A miniature three-step process on a white slab. The complete platform, headline, first building and first label are visible immediately. Parcels hop into a van, which stops at each remaining building and triggers its label on arrival.
 
 Delivery gets the biggest beat: the van brakes, the building lifts, its enlarged pill checks off, and a green pulse runs back along the road. A green base, door and arrival bay remain after the impact.
 
@@ -29,7 +29,7 @@ Run `animate vars isometric-flow` for the full list.
 | `step1Time`, `step2Time`, `step3Time` | A short time or supporting detail |
 | `step1Number`, `step2Number`, `step3Number` | The numbers inside the chips |
 | `parcelCount` | One to five parcels, each with its own loading beat |
-| `color1`, `color2`, `color3` | The three building colours. Trees and parcels follow `color1` |
+| `color1`, `color2`, `color3` | The three building colours. Parcels follow `color1` |
 | `chip`, `check` | Number chips and the completed destination |
 | `white`, `muted` | Roofs, labels, road dashes and supporting text |
 | `slab`, `road`, `ink`, `bgTop`, `bgBottom` | The remaining main colours |
@@ -47,16 +47,18 @@ The sample shipping times are illustrative copy. Replace them with your own.
 | After the key moment | 0.85s for the impact, return pulse and settle |
 | Transparent exit | A centre wipe lasting 0.36s |
 
-The first stop is reached on frame one. The second pill appears when the van brakes at the middle building. Delivery lands exactly at the key moment.
+The first stop is reached on frame one. The other buildings rise and land in separate beats. The camera settles in the first quarter of the build-up, before the van leaves, so its journey follows a stable route.
 
-The camera settles before delivery. Labels stay anchored through the payoff, while the road pulse, van suspension and small tree movements keep the ending alive.
+The second pill appears when the van brakes at the middle building. Delivery lands exactly at the key moment.
+
+Labels stay anchored through the payoff. The road pulse and the van's suspension carry the reaction, followed by a gentle engine idle through the hold.
 
 ## Outputs
 
-`full` opens close on the first stop, then reveals the whole slab while keeping the bottom fifth clear.
+`full` shows the whole platform from the opening, with a large first building. The final slab fills the available width and reaches the lower safe edge.
 
-`top` has its own camera framing, spacing and pill dimensions. Shorter stages adjust the miniature while keeping the labels readable.
+`top` has its own framing, spacing and pill dimensions. Its compact view gives the diagram more room without shrinking readable labels.
 
-`overlay` floats over your footage with a white headline pill and its own framing. The opening wipe already exposes the headline and first stop.
+`overlay` floats over your footage with a white headline pill and its own framing. Its broad opening wipe keeps the headline, first stop and route visible.
 
-All three use an orthographic camera, solid object colours and physical rises and punches. Buildings and labels never fade on.
+Shorter stages adjust the miniature while keeping the labels readable. All three outputs omit peripheral trees and use an orthographic camera, solid object colours and physical rises and punches. Buildings and labels never fade on.

@@ -1,0 +1,133 @@
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("assets/fonts/schibsted-grotesk-900.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: block;
+}
+
+#be-cover {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--be-background);
+}
+
+#be-cover,
+#be-cover * {
+  box-sizing: border-box;
+}
+
+.be-type {
+  position: absolute;
+  visibility: hidden;
+  overflow: visible;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.be-type > svg {
+  display: block;
+  overflow: visible;
+}
+
+.be-serif,
+.be-sans {
+  fill: var(--be-ink);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-variant-ligatures: normal;
+  letter-spacing: 0;
+}
+
+.be-serif {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-weight: 400;
+}
+
+.be-sans {
+  font-family: "Schibsted Grotesk";
+  font-style: normal;
+  font-weight: 900;
+}
+
+#be-kicker,
+#be-room {
+  z-index: 3;
+}
+
+#be-room > svg {
+  overflow: hidden;
+}
+
+#be-for-pocket {
+  position: absolute;
+  left: 0;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#be-wonder {
+  z-index: 4;
+  transform-origin: 50% 50%;
+}
+
+#be-opening {
+  z-index: 8;
+}
+
+.be-rule {
+  position: absolute;
+  z-index: 1;
+  background: var(--be-rule);
+  opacity: var(--be-rule-opacity);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+#be-rule-short {
+  transform-origin: right center;
+}
+
+#be-lock {
+  position: absolute;
+  z-index: 5;
+  background: var(--be-ink);
+  visibility: hidden;
+  transform-origin: right center;
+  pointer-events: none;
+}
+
+.be-run-window {
+  position: absolute;
+  z-index: 6;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.be-runner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--be-ink);
+}
+
+.be-wipe-edge {
+  stroke: var(--be-ink);
+  fill: none;
+  visibility: hidden;
+  pointer-events: none;
+}

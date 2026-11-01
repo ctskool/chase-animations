@@ -1,0 +1,135 @@
+{
+  "name": "blue-editorial",
+  "title": "Blue editorial",
+  "summary": "An ultramarine editorial cover with frame-filling italic words, a kicker snap, a slanted reveal and four strips striking into an oversized final word.",
+  "fonts": [
+    "italic 400 400px 'Instrument Serif'",
+    "900 124px 'Schibsted Grotesk'"
+  ],
+  "fontFiles": [
+    "instrument-serif-400-italic.woff2",
+    "schibsted-grotesk-900.woff2"
+  ],
+  "timing": {
+    "keyAt": 2.8,
+    "hold": 1.5,
+    "exit": 0.3,
+    "minKeyAt": 2.2
+  },
+  "keyMoment": "the complete final word reaches maximum scale as a thick full-width white underline strikes; the word settles and the underline contracts into a lasting right-aligned accent",
+  "overlayHeight": 960,
+  "variables": [
+    {
+      "id": "part1",
+      "type": "string",
+      "label": "Opening word, then small kicker",
+      "default": "make"
+    },
+    {
+      "id": "part2",
+      "type": "string",
+      "label": "Huge word revealed by the slanted wipe",
+      "default": "room"
+    },
+    {
+      "id": "part3",
+      "type": "string",
+      "label": "Small word sliding out from underneath",
+      "default": "for"
+    },
+    {
+      "id": "part4",
+      "type": "string",
+      "label": "Huge final word arriving in four slices",
+      "default": "wonder"
+    },
+    {
+      "id": "background",
+      "type": "color",
+      "label": "Flat blue background",
+      "default": "#2433F0"
+    },
+    {
+      "id": "ink",
+      "type": "color",
+      "label": "Type and moving rule accents",
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "ruleColor",
+      "type": "color",
+      "label": "Rules",
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "ruleOpacity",
+      "type": "number",
+      "label": "Rule opacity",
+      "default": 0.55,
+      "min": 0.2,
+      "max": 1,
+      "step": 0.05
+    },
+    {
+      "id": "ruleThickness",
+      "type": "number",
+      "label": "Rule thickness in pixels",
+      "default": 3,
+      "min": 1,
+      "max": 6,
+      "step": 0.5
+    },
+    {
+      "id": "smallTypeSize",
+      "type": "number",
+      "label": "Small type size in full output",
+      "default": 124,
+      "min": 80,
+      "max": 144,
+      "step": 1
+    },
+    {
+      "id": "compactSmallTypeSize",
+      "type": "number",
+      "label": "Small type size in top and overlay outputs",
+      "default": 96,
+      "min": 48,
+      "max": 120,
+      "step": 1
+    },
+    {
+      "id": "impactScale",
+      "type": "number",
+      "label": "Final word scale punch",
+      "default": 1.1,
+      "min": 1.03,
+      "max": 1.16,
+      "step": 0.01
+    },
+    {
+      "id": "emptyBottomPercent",
+      "type": "number",
+      "label": "Clear footer in full output (%)",
+      "default": 16,
+      "min": 16,
+      "max": 28,
+      "step": 1
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    }
+  ]
+}

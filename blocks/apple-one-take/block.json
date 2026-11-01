@@ -1,0 +1,46 @@
+{
+  "name": "apple-one-take",
+  "title": "One-Take Product Morph",
+  "summary": "A large dot becomes a button, planner and phone. The phone contracts into a closing word; the original dot lands and flips the palette.",
+  "fonts": [
+    "700 40px 'Inter Tight'"
+  ],
+  "motionBlur": true,
+  "overlayHeight": 960,
+  "timing": {
+    "keyAt": 4,
+    "hold": 1,
+    "exit": 0.34,
+    "minKeyAt": 3
+  },
+  "keyMoment": "the red full stop lands, the complete promise punches forward, and the existing palette flips to light type on ink",
+  "variables": [
+    { "id": "buttonWord", "type": "string", "label": "Button word", "default": "Start" },
+    { "id": "productName", "type": "string", "label": "Product name", "default": "Tavvi" },
+    { "id": "productPurpose", "type": "string", "label": "Accessible product description", "default": "A daily project planner." },
+    { "id": "focusLine", "type": "string", "label": "Card headline", "default": "Today, in focus." },
+    { "id": "dateLabel", "type": "string", "label": "Date", "default": "Friday, 9 May" },
+    { "id": "prioritySummary", "type": "string", "label": "Priority summary", "default": "3 priorities" },
+    { "id": "priority1", "type": "string", "label": "First priority", "default": "Plan the launch — 09:00" },
+    { "id": "priority2", "type": "string", "label": "Second priority", "default": "Review the prototype — 11:30" },
+    { "id": "priority3", "type": "string", "label": "Third priority", "default": "Send the recap — 15:00" },
+    { "id": "nav1", "type": "string", "label": "First navigation item", "default": "Today" },
+    { "id": "nav2", "type": "string", "label": "Second navigation item", "default": "Projects" },
+    { "id": "nav3", "type": "string", "label": "Third navigation item", "default": "Profile" },
+    { "id": "closingLine", "type": "string", "label": "Closing line containing an O", "default": "DO MORE." },
+    { "id": "ground", "type": "color", "label": "Opening ground", "default": "#EEEEEC" },
+    { "id": "ink", "type": "color", "label": "Ink, bezel and payoff ground", "default": "#151515" },
+    { "id": "paper", "type": "color", "label": "Screen and payoff type", "default": "#FFFFFF" },
+    { "id": "accent", "type": "color", "label": "The single hero dot", "default": "#E23B32" },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

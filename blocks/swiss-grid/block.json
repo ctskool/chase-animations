@@ -1,0 +1,103 @@
+{
+  "name": "swiss-grid",
+  "title": "Swiss grid",
+  "summary": "A frame-filling black circle contracts into crisp grid steps and unfolds a red field. Three huge phrases land whole; the final phrase triggers a much larger circle, a paper cut and a heavy ink rule.",
+  "fonts": [
+    "500 40px 'Public Sans'",
+    "800 40px 'Public Sans'"
+  ],
+  "fontFiles": [
+    "public-sans-500.woff2",
+    "public-sans-600.woff2",
+    "public-sans-700.woff2",
+    "public-sans-800.woff2"
+  ],
+  "motionBlur": true,
+  "overlayHeight": 960,
+  "overlayCard": false,
+  "timing": {
+    "keyAt": 3,
+    "hold": 2,
+    "exit": 0.32,
+    "minKeyAt": 1.65
+  },
+  "keyMoment": "the larger third phrase and its caption settle, the paper cut returns to red, the circle reaches its final grid size, and a heavy ink rule finishes drawing",
+  "variables": [
+    { "id": "line1", "type": "string", "label": "Headline row 1", "default": "MAKE ROOM" },
+    { "id": "line2", "type": "string", "label": "Headline row 2", "default": "FOR WHAT" },
+    { "id": "line3", "type": "string", "label": "Headline row 3", "default": "COMES NEXT" },
+
+    { "id": "caption1Number", "type": "string", "label": "Caption 1 number", "default": "01" },
+    { "id": "caption1Text", "type": "string", "label": "Caption 1 words", "default": "A NEW PERSPECTIVE" },
+    { "id": "caption2Number", "type": "string", "label": "Caption 2 number", "default": "02" },
+    { "id": "caption2Text", "type": "string", "label": "Caption 2 words", "default": "IDEAS IN MOTION" },
+    { "id": "caption3Number", "type": "string", "label": "Caption 3 number", "default": "03" },
+    { "id": "caption3Text", "type": "string", "label": "Caption 3 words", "default": "A CLEAR DIRECTION" },
+    { "id": "captionSeparator", "type": "string", "label": "Caption separator", "default": "/" },
+
+    { "id": "mainFontSize", "type": "number", "label": "Headline size before output fitting", "default": 164, "min": 40, "max": 240, "step": 1 },
+    { "id": "mainWeight", "type": "number", "label": "Headline weight", "default": 800, "min": 500, "max": 800, "step": 100 },
+    { "id": "mainTracking", "type": "number", "label": "Headline tracking in pixels", "default": -4, "min": -10, "max": 4, "step": 0.5 },
+    { "id": "captionFontSize", "type": "number", "label": "Caption size before output fitting", "default": 44, "min": 32, "max": 64, "step": 1 },
+    { "id": "captionWeight", "type": "number", "label": "Caption weight", "default": 500, "min": 500, "max": 800, "step": 100 },
+    { "id": "captionOpacity", "type": "number", "label": "Caption word opacity", "default": 0.84, "min": 0.65, "max": 1, "step": 0.01 },
+
+    { "id": "paper", "type": "color", "label": "Paper", "default": "#F0F0E8" },
+    { "id": "ink", "type": "color", "label": "Ink", "default": "#101010" },
+    { "id": "signalRed", "type": "color", "label": "Signal red", "default": "#F03820" },
+
+    { "id": "referenceWidth", "type": "number", "label": "Source composition width", "default": 1080, "min": 720, "max": 2160, "step": 1 },
+    { "id": "referenceHeight", "type": "number", "label": "Source composition height", "default": 1920, "min": 960, "max": 3840, "step": 1 },
+    { "id": "gridColumns", "type": "number", "label": "Portrait grid columns", "default": 4, "min": 3, "max": 6, "step": 1 },
+    { "id": "compactExtraColumns", "type": "number", "label": "Additional columns for top and overlay", "default": 3, "min": 0, "max": 4, "step": 1 },
+    { "id": "gridLeft", "type": "number", "label": "Source grid left", "default": 64, "min": 0, "max": 400, "step": 1 },
+    { "id": "gridRight", "type": "number", "label": "Source grid right", "default": 1016, "min": 680, "max": 1080, "step": 1 },
+    { "id": "gridTop", "type": "number", "label": "Source grid top", "default": 230, "min": 0, "max": 500, "step": 1 },
+    { "id": "gridRowPitch", "type": "number", "label": "Source horizontal grid spacing", "default": 200, "min": 120, "max": 300, "step": 1 },
+    { "id": "gridLineWidth", "type": "number", "label": "Grid line width", "default": 2, "min": 1, "max": 4, "step": 0.5 },
+    { "id": "gridOpacity", "type": "number", "label": "Grid ink opacity", "default": 0.16, "min": 0.1, "max": 0.5, "step": 0.01 },
+
+    { "id": "mainLeft", "type": "number", "label": "Source headline left inset guide", "default": 128, "min": 0, "max": 540, "step": 1 },
+    { "id": "mainBaseline1", "type": "number", "label": "Source headline baseline guide 1", "default": 630, "min": 230, "max": 1230, "step": 1 },
+    { "id": "mainBaseline2", "type": "number", "label": "Source headline baseline guide 2", "default": 830, "min": 430, "max": 1430, "step": 1 },
+    { "id": "mainBaseline3", "type": "number", "label": "Source headline baseline guide 3", "default": 1030, "min": 630, "max": 1630, "step": 1 },
+    { "id": "captionBaseline1", "type": "number", "label": "Source caption spacing guide 1", "default": 668, "min": 250, "max": 1300, "step": 1 },
+    { "id": "captionBaseline2", "type": "number", "label": "Source caption spacing guide 2", "default": 868, "min": 450, "max": 1500, "step": 1 },
+    { "id": "captionBaseline3", "type": "number", "label": "Source caption spacing guide 3", "default": 1068, "min": 650, "max": 1700, "step": 1 },
+
+    { "id": "circleRadius", "type": "number", "label": "Travel circle radius guide", "default": 44, "min": 20, "max": 300, "step": 1 },
+    { "id": "circle1X", "type": "number", "label": "Source circle stop 1 X", "default": 217.5, "min": 0, "max": 1080, "step": 0.5 },
+    { "id": "circle1Y", "type": "number", "label": "Source circle stop 1 Y", "default": 330, "min": 0, "max": 1920, "step": 0.5 },
+    { "id": "circle2X", "type": "number", "label": "Source circle stop 2 X", "default": 432.5, "min": 0, "max": 1080, "step": 0.5 },
+    { "id": "circle2Y", "type": "number", "label": "Source circle stop 2 Y", "default": 530, "min": 0, "max": 1920, "step": 0.5 },
+    { "id": "circle3X", "type": "number", "label": "Source circle stop 3 X", "default": 647.5, "min": 0, "max": 1080, "step": 0.5 },
+    { "id": "circle3Y", "type": "number", "label": "Source circle stop 3 Y", "default": 730, "min": 0, "max": 1920, "step": 0.5 },
+    { "id": "circle4X", "type": "number", "label": "Source circle stop 4 X", "default": 862.5, "min": 0, "max": 1080, "step": 0.5 },
+    { "id": "circle4Y", "type": "number", "label": "Source circle stop 4 Y", "default": 930, "min": 0, "max": 1920, "step": 0.5 },
+    { "id": "circle5X", "type": "number", "label": "Source circle stop 5 X", "default": 862.5, "min": 0, "max": 1080, "step": 0.5 },
+    { "id": "circle5Y", "type": "number", "label": "Source circle stop 5 Y", "default": 1130, "min": 0, "max": 1920, "step": 0.5 },
+    { "id": "finalCircleModules", "type": "number", "label": "Final circle diameter in modules", "default": 2, "min": 1, "max": 2, "step": 1 },
+
+    { "id": "fieldLeft", "type": "number", "label": "Source red field left", "default": 110, "min": 0, "max": 540, "step": 1 },
+    { "id": "fieldTop", "type": "number", "label": "Source red field top guide", "default": 430, "min": 0, "max": 830, "step": 1 },
+    { "id": "fieldRight", "type": "number", "label": "Source red field right", "default": 970, "min": 540, "max": 1080, "step": 1 },
+    { "id": "fieldBottom", "type": "number", "label": "Source red field bottom guide", "default": 1430, "min": 1030, "max": 1830, "step": 1 },
+
+    { "id": "gridStaggerFrames", "type": "number", "label": "Frames between grid strokes", "default": 2, "min": 1, "max": 4, "step": 1 },
+    { "id": "lineStaggerFrames", "type": "number", "label": "Minimum frames between headline entrances", "default": 6, "min": 3, "max": 9, "step": 1 },
+    { "id": "stepOvershoot", "type": "number", "label": "Circle and field overshoot percent", "default": 9, "min": 0, "max": 14, "step": 1 },
+    { "id": "typeOvershoot", "type": "number", "label": "Headline punch and final emphasis percent", "default": 8, "min": 0, "max": 12, "step": 1 },
+    { "id": "circleWindBack", "type": "number", "label": "Circle wind-back percent", "default": 10, "min": 0, "max": 20, "step": 1 },
+
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

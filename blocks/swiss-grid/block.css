@@ -1,0 +1,177 @@
+@font-face {
+  font-family: "Public Sans";
+  src: url("assets/fonts/public-sans-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("assets/fonts/public-sans-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("assets/fonts/public-sans-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("assets/fonts/public-sans-800.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: block;
+}
+
+#sg-clip,
+#sg-clip * {
+  box-sizing: border-box;
+}
+
+#sg-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--sg-ink);
+}
+
+#sg-field {
+  position: absolute;
+  z-index: 1;
+  visibility: hidden;
+  transform-origin: 50% 50%;
+}
+
+#sg-grid {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sg-grid-line {
+  position: absolute;
+  pointer-events: none;
+}
+
+.sg-grid-line.vertical {
+  top: 0;
+  height: 100%;
+  transform-origin: 50% 0%;
+}
+
+.sg-grid-line.horizontal {
+  left: 0;
+  width: 100%;
+  transform-origin: 0% 50%;
+}
+
+#sg-circle {
+  position: absolute;
+  z-index: 3;
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+  pointer-events: none;
+}
+
+#sg-type {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sg-payoff {
+  position: absolute;
+  z-index: 0;
+  visibility: hidden;
+  transform-origin: 50% 50%;
+  pointer-events: none;
+}
+
+.sg-line-window,
+.sg-caption-window {
+  position: absolute;
+  overflow: visible;
+}
+
+.sg-line-window {
+  z-index: 1;
+}
+
+.sg-caption-window {
+  z-index: 2;
+}
+
+.sg-line,
+.sg-caption {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  transform-origin: 0% 50%;
+}
+
+.sg-headline,
+.sg-caption {
+  font-family: "Public Sans", sans-serif;
+  font-kerning: normal;
+  text-rendering: geometricPrecision;
+}
+
+.sg-headline {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.sg-headline-row {
+  display: block;
+  white-space: pre;
+  line-height: 1;
+}
+
+.sg-caption {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.12;
+}
+
+.sg-caption-row {
+  display: block;
+  white-space: pre;
+  line-height: 1.12;
+}
+
+.sg-caption-number {
+  color: var(--sg-ink);
+}
+
+.sg-anchor {
+  position: absolute;
+  z-index: 3;
+  visibility: hidden;
+  transform-origin: 0% 50%;
+  pointer-events: none;
+}
+
+#sg-track {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+#sg-energy {
+  visibility: hidden;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}

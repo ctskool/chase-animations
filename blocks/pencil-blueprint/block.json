@@ -1,0 +1,168 @@
+{
+  "name": "pencil-blueprint",
+  "title": "Pencil to blueprint",
+  "summary": "A large graphite lamp becomes a white-on-blue technical drawing, then locks its measurements into bold white specification plates.",
+  "fonts": [
+    "500 104px 'Barlow Semi Condensed'",
+    "600 120px 'Barlow Semi Condensed'"
+  ],
+  "fontFiles": [
+    "barlow-semi-condensed-500.woff2",
+    "barlow-semi-condensed-600.woff2"
+  ],
+  "timing": {
+    "keyAt": 3.2,
+    "hold": 1.5,
+    "exit": 0.3,
+    "minKeyAt": 1.8
+  },
+  "keyMoment": "both measurements reach their exact values; white specification plates stamp behind the numbers, arrowheads and heavy endpoint ticks lock, and an ink flash sends a reaction around the elbow",
+  "overlayHeight": 960,
+  "variables": [
+    {
+      "id": "objectDescription",
+      "type": "string",
+      "label": "Drawing description for accessibility",
+      "default": "Adjustable field lamp, shown in side view."
+    },
+    {
+      "id": "label",
+      "type": "string",
+      "label": "Drawing title",
+      "default": "ADJUSTABLE FIELD LAMP"
+    },
+    {
+      "id": "heightValue",
+      "type": "number",
+      "label": "Overall height",
+      "default": 560,
+      "min": 1,
+      "max": 10000,
+      "step": 1
+    },
+    {
+      "id": "widthValue",
+      "type": "number",
+      "label": "Base width",
+      "default": 360,
+      "min": 1,
+      "max": 10000,
+      "step": 1
+    },
+    {
+      "id": "heightStart",
+      "type": "number",
+      "label": "Height count starts at",
+      "default": 0,
+      "min": 0,
+      "max": 10000,
+      "step": 1
+    },
+    {
+      "id": "widthStart",
+      "type": "number",
+      "label": "Width count starts at",
+      "default": 0,
+      "min": 0,
+      "max": 10000,
+      "step": 1
+    },
+    {
+      "id": "unit",
+      "type": "string",
+      "label": "Measurement unit",
+      "default": "mm"
+    },
+    {
+      "id": "measurementDecimals",
+      "type": "number",
+      "label": "Measurement decimal places",
+      "default": 0,
+      "min": 0,
+      "max": 2,
+      "step": 1
+    },
+    {
+      "id": "paper",
+      "type": "color",
+      "label": "Graph paper",
+      "default": "#ECECE6"
+    },
+    {
+      "id": "grid",
+      "type": "color",
+      "label": "Paper grid",
+      "default": "#7FA3C4"
+    },
+    {
+      "id": "graphite",
+      "type": "color",
+      "label": "Pencil strokes",
+      "default": "#25262B"
+    },
+    {
+      "id": "blueprint",
+      "type": "color",
+      "label": "Blueprint blue",
+      "default": "#1C4C8F"
+    },
+    {
+      "id": "tideLine",
+      "type": "color",
+      "label": "Wet ink edge",
+      "default": "#143C76"
+    },
+    {
+      "id": "ink",
+      "type": "color",
+      "label": "Blueprint lines and type",
+      "default": "#EEF4FB"
+    },
+    {
+      "id": "gridOpacity",
+      "type": "number",
+      "label": "Paper grid strength",
+      "default": 0.19,
+      "min": 0.05,
+      "max": 0.35,
+      "step": 0.01
+    },
+    {
+      "id": "grainOpacity",
+      "type": "number",
+      "label": "Paper grain strength",
+      "default": 0.09,
+      "min": 0,
+      "max": 0.2,
+      "step": 0.01
+    },
+    {
+      "id": "sketchRoughness",
+      "type": "number",
+      "label": "Graphite wobble",
+      "default": 1.25,
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.05
+    },
+    {
+      "id": "seed",
+      "type": "number",
+      "label": "Paper and pencil seed",
+      "default": 17,
+      "min": 1,
+      "max": 9999,
+      "step": 1
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

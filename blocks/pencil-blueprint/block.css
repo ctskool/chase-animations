@@ -1,0 +1,122 @@
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("assets/fonts/barlow-semi-condensed-500.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("assets/fonts/barlow-semi-condensed-600.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: block;
+}
+
+#pb-clip,
+#pb-content,
+#pb-grain {
+  position: absolute;
+  inset: 0;
+}
+
+#pb-clip {
+  overflow: hidden;
+}
+
+#pb-clip,
+#pb-clip * {
+  box-sizing: border-box;
+}
+
+#pb-content {
+  transform-origin: 50% 52%;
+}
+
+#pb-drawing {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#pb-grain {
+  pointer-events: none;
+  background-size: 192px 192px;
+  mix-blend-mode: soft-light;
+}
+
+#pb-rule {
+  position: absolute;
+  height: 3px;
+  visibility: hidden;
+  transform-origin: left center;
+}
+
+#pb-title-window {
+  position: absolute;
+  overflow: visible;
+}
+
+#pb-title {
+  display: inline-block;
+  font-family: "Barlow Semi Condensed", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 120px;
+  line-height: 1.02;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  white-space: normal;
+  visibility: hidden;
+  transform-origin: left top;
+}
+
+.pb-title-line {
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.pb-measure {
+  --pb-lock: 0;
+  position: absolute;
+  z-index: 1;
+  isolation: isolate;
+  display: inline-block;
+  font-family: "Barlow Semi Condensed", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 104px;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  white-space: nowrap;
+  visibility: hidden;
+  transform-origin: center center;
+}
+
+.pb-measure::before {
+  position: absolute;
+  z-index: -1;
+  inset: -3px -10px;
+  background: var(--pb-ink);
+  content: "";
+  transform: scaleX(var(--pb-lock));
+  transform-origin: left center;
+}
+
+.pb-measure::after {
+  position: absolute;
+  right: 0;
+  bottom: -13px;
+  left: 0;
+  height: 4px;
+  background: var(--pb-ink);
+  content: "";
+  transform: scaleX(var(--pb-lock));
+  transform-origin: center center;
+}
