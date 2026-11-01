@@ -1,0 +1,60 @@
+{
+  "name": "benchmark-takeover",
+  "title": "Benchmark takeover",
+  "summary": "An orange challenger falls into a tall grey leaderboard with a panicking mascot aboard. Separate collisions flip the ranks, eject the last entry and lead into a flattened impact, rebound and first-place stamp.",
+  "claudeKit": true,
+  "motionBlur": true,
+  "fonts": [
+    "800 40px 'Inter Tight'",
+    "700 40px 'Inter Tight'",
+    "500 40px 'JetBrains Mono'"
+  ],
+  "timing": {
+    "keyAt": 3.6,
+    "hold": 2.0,
+    "exit": 0.34,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the huge rank word stamps oversized on its own beat; the orange row has already rebounded, seated and locked its exact score, and the upright mascot celebrates just after",
+  "overlayHeight": 960,
+  "variables": [
+    { "id": "boardTitle", "type": "string", "label": "Leaderboard title", "default": "Coding benchmark" },
+    { "id": "row1Name", "type": "string", "label": "First existing model; empty removes the row", "default": "Model A" },
+    { "id": "row1Score", "type": "string", "label": "First existing score", "default": "91.2" },
+    { "id": "row2Name", "type": "string", "label": "Second existing model; empty removes the row", "default": "Model B" },
+    { "id": "row2Score", "type": "string", "label": "Second existing score", "default": "89.7" },
+    { "id": "row3Name", "type": "string", "label": "Third existing model; empty removes the row", "default": "Model C" },
+    { "id": "row3Score", "type": "string", "label": "Third existing score", "default": "88.4" },
+    { "id": "row4Name", "type": "string", "label": "Fourth existing model; empty removes the row", "default": "Model D" },
+    { "id": "row4Score", "type": "string", "label": "Fourth existing score", "default": "84.1" },
+    { "id": "row5Name", "type": "string", "label": "Fifth existing model; empty removes the row", "default": "Model E" },
+    { "id": "row5Score", "type": "string", "label": "Fifth existing score", "default": "79.3" },
+    { "id": "newName", "type": "string", "label": "The new first-place model", "default": "Claude" },
+    { "id": "newScore", "type": "string", "label": "The exact first-place score", "default": "94.6" },
+    { "id": "rankWord", "type": "string", "label": "Large rank stamp", "default": "#1" },
+    { "id": "rankStart", "type": "number", "label": "Starting rank of the existing leaderboard", "default": 1 },
+    { "id": "scoreMax", "type": "number", "label": "Common score-bar maximum", "default": 100 },
+    { "id": "ground", "type": "color", "label": "Background", "default": "#0C0C0D" },
+    { "id": "rowGround", "type": "color", "label": "Existing row background", "default": "#242426" },
+    { "id": "trackColor", "type": "color", "label": "Existing score tracks", "default": "#3C3C40" },
+    { "id": "barColor", "type": "color", "label": "Existing score bars", "default": "#8A8A90" },
+    { "id": "ink", "type": "color", "label": "Main text and neutral row impacts", "default": "#F2F2F0" },
+    { "id": "muted", "type": "color", "label": "Existing rank numbers", "default": "#B8B8BD" },
+    { "id": "rule", "type": "color", "label": "Rules and row outlines", "default": "#505050" },
+    { "id": "accent", "type": "color", "label": "Claude orange and winning row", "default": "#D77757" },
+    { "id": "accentInk", "type": "color", "label": "Text and bar on the winning row", "default": "#171717" },
+    { "id": "warmHighlight", "type": "color", "label": "Narrow warm bar sweep and winning impact light", "default": "#FFC39C" },
+    { "id": "showMascot", "type": "boolean", "label": "Show the mascot riding the winning row", "default": true },
+    { "id": "showLogo", "type": "boolean", "label": "Show the Claude logo on the winning row", "default": true },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "name": "hours-collapse",
+  "title": "Hours collapse",
+  "summary": "Equal calendar hours land from the bottom up. The mascot gulps, crouches and stomps each labelled hour into a sliver as a clock rewinds. The final time slams above a bright terracotta block.",
+  "claudeKit": true,
+  "motionBlur": true,
+  "fonts": [
+    "800 40px 'Inter Tight'",
+    "700 40px 'Inter Tight'",
+    "500 40px 'JetBrains Mono'"
+  ],
+  "timing": {
+    "keyAt": 3.8,
+    "hold": 2.0,
+    "exit": 0.34,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the exact after word lands oversized as the last labelled hour snaps into a sliver, the clock kicks and stops, and debris bursts around the mascot's bright terracotta block",
+  "overlayHeight": 960,
+  "variables": [
+    { "id": "heading", "type": "string", "label": "Small heading", "default": "Hours collapse" },
+    { "id": "hours", "type": "number", "label": "Hour slots to use, from 1 to 8", "default": 6 },
+    { "id": "beforeLabel", "type": "string", "label": "Original total", "default": "6 hours" },
+    { "id": "startTime", "type": "string", "label": "First calendar time, such as 9am or 9:30am", "default": "9am" },
+
+    { "id": "task1", "type": "string", "label": "First hour task; leave empty to remove", "default": "Set up the repo" },
+    { "id": "task2", "type": "string", "label": "Second hour task", "default": "Write the API" },
+    { "id": "task3", "type": "string", "label": "Third hour task", "default": "Build the page" },
+    { "id": "task4", "type": "string", "label": "Fourth hour task", "default": "Fix the tests" },
+    { "id": "task5", "type": "string", "label": "Fifth hour task", "default": "Wire up payments" },
+    { "id": "task6", "type": "string", "label": "Sixth hour task", "default": "Deploy it" },
+    { "id": "task7", "type": "string", "label": "Seventh hour task", "default": "" },
+    { "id": "task8", "type": "string", "label": "Eighth hour task", "default": "" },
+
+    { "id": "afterWord", "type": "string", "label": "Exact final time; a number in minutes also sets the clock", "default": "11 minutes" },
+    { "id": "afterLabel", "type": "string", "label": "Line under the final time", "default": "with Claude Code" },
+
+    { "id": "accent", "type": "color", "label": "Claude colour, mascot and final time", "default": "#D77757" },
+    { "id": "finalBlockColor", "type": "color", "label": "Bright terracotta final block and lasting underline", "default": "#ED805B" },
+    { "id": "ground", "type": "color", "label": "Dark background", "default": "#0C0C0D" },
+    { "id": "ink", "type": "color", "label": "Heading, original total and impact flash", "default": "#F5EFE7" },
+    { "id": "muted", "type": "color", "label": "Supporting text and ledge", "default": "#B4AAA2" },
+    { "id": "calendarInk", "type": "color", "label": "Text on the calendar hours", "default": "#34271F" },
+    { "id": "calendarA", "type": "color", "label": "Calendar peach", "default": "#E8C5A7" },
+    { "id": "calendarB", "type": "color", "label": "Calendar amber", "default": "#D6AA78" },
+    { "id": "calendarC", "type": "color", "label": "Calendar rose", "default": "#DDA58F" },
+    { "id": "calendarD", "type": "color", "label": "Calendar cream", "default": "#E9D6B5" },
+    { "id": "pixelColor", "type": "color", "label": "Clock sweep, highlights and warm dust pixels", "default": "#EB9F7F" },
+
+    { "id": "showMascot", "type": "boolean", "label": "Show the mascot", "default": true },
+    { "id": "showLogo", "type": "boolean", "label": "Show the Claude logo", "default": true },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

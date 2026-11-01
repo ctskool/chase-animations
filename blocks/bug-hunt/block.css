@@ -1,0 +1,327 @@
+#bh-ground,
+#bh-glow,
+#bh-grain,
+#bh-pixels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+#bh-ground { z-index: 0; }
+#bh-glow { z-index: 1; }
+#bh-grain {
+  z-index: 2;
+  background-size: 220px 220px;
+  mix-blend-mode: overlay;
+  opacity: 0.09;
+}
+#bh-header {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+}
+#bh-brand { flex: none; }
+#bh-file,
+.bh-code-row,
+#bh-line-label,
+.bh-lens-code {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+  font-kerning: none;
+}
+#bh-file {
+  display: inline-block;
+  min-width: 0;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+#bh-viewport {
+  position: absolute;
+  z-index: 4;
+  overflow: hidden;
+}
+#bh-gutter {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-right: 2px solid;
+}
+#bh-code-rows { position: absolute; inset: 0; }
+.bh-code-row {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  line-height: 1.15;
+  visibility: hidden;
+  will-change: transform;
+}
+.bh-row-number {
+  display: inline-block;
+  flex: none;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.bh-source-code {
+  display: inline-block;
+  flex: none;
+  white-space: pre;
+}
+.bh-token-keyword { color: var(--bh-keyword); }
+.bh-token-number { color: var(--bh-number); }
+.bh-token-string { color: var(--bh-string); }
+.bh-token-comment { color: var(--bh-comment); }
+#bh-source-focus {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-left: 6px solid;
+  visibility: hidden;
+}
+#bh-beam {
+  position: absolute;
+  left: 0;
+  z-index: 6;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+}
+#bh-beam-halo,
+#bh-beam-rail,
+#bh-beam-core,
+#bh-beam-tip { position: absolute; }
+#bh-beam-halo { inset: 0; }
+#bh-underplate,
+#bh-lens {
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 24px;
+  visibility: hidden;
+}
+#bh-underplate {
+  z-index: 9;
+  border: 2px solid;
+}
+#bh-lens {
+  z-index: 10;
+  overflow: hidden;
+  border: 3px solid;
+}
+#bh-lens-head { position: absolute; }
+#bh-stamp {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+#bh-line-label {
+  display: inline-block;
+  flex: none;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+#bh-line-number {
+  display: inline-block;
+  flex: none;
+  width: max-content;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.86;
+  font-variant-numeric: tabular-nums;
+  transform-origin: 0% 70%;
+  white-space: nowrap;
+}
+#bh-discovery {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+#bh-found-label {
+  display: inline-block;
+  flex: none;
+  min-width: 0;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  white-space: nowrap;
+}
+#bh-target { position: relative; flex: none; }
+#bh-target i {
+  position: absolute;
+  width: 28%;
+  height: 28%;
+  box-sizing: border-box;
+  border-color: currentColor;
+  border-style: solid;
+  border-width: 0;
+}
+#bh-target i:nth-child(1) {
+  left: 0; top: 0;
+  border-left-width: 4px;
+  border-top-width: 4px;
+}
+#bh-target i:nth-child(2) {
+  right: 0; top: 0;
+  border-right-width: 4px;
+  border-top-width: 4px;
+}
+#bh-target i:nth-child(3) {
+  left: 0; bottom: 0;
+  border-left-width: 4px;
+  border-bottom-width: 4px;
+}
+#bh-target i:nth-child(4) {
+  right: 0; bottom: 0;
+  border-right-width: 4px;
+  border-bottom-width: 4px;
+}
+#bh-target b {
+  position: absolute;
+  left: 40%;
+  top: 40%;
+  width: 20%;
+  height: 20%;
+  background: currentColor;
+}
+.bh-diff-panel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1px solid;
+  border-left-width: 5px;
+  border-radius: 9px;
+  transform-origin: 50% 50%;
+}
+.bh-diff-mark { position: relative; flex: none; }
+.bh-diff-mark::before,
+.bh-plus::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+.bh-diff-mark::before {
+  left: 0;
+  top: calc(50% - 2px);
+  width: 100%;
+  height: 4px;
+}
+.bh-plus::after {
+  left: calc(50% - 2px);
+  top: 0;
+  width: 4px;
+  height: 100%;
+}
+#bh-bug-holder {
+  position: relative;
+  display: inline-block;
+  flex: none;
+}
+.bh-lens-code {
+  display: inline-block;
+  flex: none;
+  line-height: 1.18;
+  white-space: pre;
+  vertical-align: top;
+  transform-origin: 0% 50%;
+}
+.bh-code-line {
+  display: block;
+  width: max-content;
+  white-space: pre;
+}
+.bh-code-piece {
+  position: relative;
+  display: inline-block;
+  white-space: pre;
+}
+.bh-edit {
+  position: relative;
+  display: inline-block;
+  border: 0;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.bh-edit-removed { color: var(--bh-bug); }
+.bh-edit-added { color: var(--bh-fix); }
+.bh-edit > span { color: inherit; }
+.bh-strike {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 52%;
+  opacity: 0.72;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: 0% 50%;
+}
+#bh-fix-panel { visibility: hidden; }
+#bh-edge-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 7px;
+  overflow: hidden;
+  pointer-events: none;
+}
+#bh-edge-light {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+#bh-pixels { z-index: 12; }
+.bh-pixel { position: absolute; left: 0; top: 0; }
+#bh-pal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 14;
+  transform-origin: 50% 100%;
+}
+#bh-pal-body { position: absolute; inset: 0; }
+#bh-gaze {
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bh-eye {
+  position: absolute;
+  display: block;
+  transform-origin: 50% 50%;
+}
+#bh-surfboard {
+  position: absolute;
+  z-index: 3;
+  box-sizing: border-box;
+  border-top: 3px solid;
+  border-radius: 70% 20% 55% 35%;
+  transform-origin: 50% 50%;
+  pointer-events: none;
+}
+#bh-flash {
+  position: absolute;
+  z-index: 13;
+  box-sizing: border-box;
+  border: 5px solid;
+  border-radius: 28px;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+}

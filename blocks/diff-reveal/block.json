@@ -1,0 +1,74 @@
+{
+  "name": "diff-reveal",
+  "title": "Diff reveal",
+  "summary": "An already-hungry mascot eats a large Claude Code diff. Recognizable row fragments accelerate into its mouth, each swallow ticks the minus counter, and a much larger final meal hoists the mascot into a hard gulp.",
+  "claudeKit": true,
+  "motionBlur": true,
+  "fonts": [
+    "500 40px 'JetBrains Mono'",
+    "800 40px 'Inter Tight'",
+    "700 40px 'Inter Tight'"
+  ],
+  "timing": {
+    "keyAt": 4.2,
+    "hold": 1.9,
+    "exit": 0.34,
+    "minKeyAt": 2.6
+  },
+  "keyMoment": "the last fragments enter the mouth, the mascot compresses hard, and the exact minus total hits at maximum overshoot with a local red counter flash; the number settles before the summary lands",
+  "overlayHeight": 960,
+  "variables": [
+    { "id": "tool", "type": "string", "label": "Tool in the header", "default": "Update" },
+    { "id": "file", "type": "string", "label": "File in the header", "default": "billing.ts" },
+    { "id": "removedStartLine", "type": "number", "label": "First removed line number", "default": 181 },
+    { "id": "addedStartLine", "type": "number", "label": "First added line number", "default": 181 },
+
+    { "id": "removed1", "type": "string", "label": "Removed row 1; empty removes the row", "default": "legacyCharge(user, cart)" },
+    { "id": "removed1Word", "type": "string", "label": "Highlighted part of removed row 1", "default": "legacyCharge" },
+    { "id": "removed2", "type": "string", "label": "Removed row 2", "default": "retryOldGateway(order)" },
+    { "id": "removed2Word", "type": "string", "label": "Highlighted part of removed row 2", "default": "retryOldGateway" },
+    { "id": "removed3", "type": "string", "label": "Removed row 3", "default": "if (legacyFlag) patch()" },
+    { "id": "removed3Word", "type": "string", "label": "Highlighted part of removed row 3", "default": "legacyFlag" },
+    { "id": "removed4", "type": "string", "label": "Removed row 4", "default": "formatCentsTheOldWay()" },
+    { "id": "removed4Word", "type": "string", "label": "Highlighted part of removed row 4", "default": "TheOldWay" },
+    { "id": "removed5", "type": "string", "label": "Removed row 5", "default": "// TODO: remove this" },
+    { "id": "removed5Word", "type": "string", "label": "Highlighted part of removed row 5", "default": "TODO: remove this" },
+
+    { "id": "added1", "type": "string", "label": "Added row 1; empty removes the row", "default": "charge(user, cart)" },
+    { "id": "added1Word", "type": "string", "label": "Highlighted part of added row 1", "default": "charge" },
+    { "id": "added2", "type": "string", "label": "Added row 2", "default": "format(cents)" },
+    { "id": "added2Word", "type": "string", "label": "Highlighted part of added row 2", "default": "format" },
+
+    { "id": "removedStat", "type": "string", "label": "Exact final minus counter", "default": "-1,204" },
+    { "id": "addedStat", "type": "string", "label": "Exact final plus counter", "default": "+38" },
+    { "id": "removedLabel", "type": "string", "label": "Label above the minus counter", "default": "LINES REMOVED" },
+    { "id": "addedLabel", "type": "string", "label": "Label beside the plus counter", "default": "added" },
+    { "id": "summary", "type": "string", "label": "Payoff summary", "default": "Everything still works" },
+
+    { "id": "ground", "type": "color", "label": "Stage background", "default": "#0C0C0D" },
+    { "id": "panelGround", "type": "color", "label": "Diff panel background", "default": "#141415" },
+    { "id": "counterGround", "type": "color", "label": "Minus counter band", "default": "#1D1115" },
+    { "id": "ink", "type": "color", "label": "Main text", "default": "#FFFFFF" },
+    { "id": "muted", "type": "color", "label": "Line numbers and secondary text", "default": "#999999" },
+    { "id": "accent", "type": "color", "label": "Claude logo and mascot", "default": "#D77757" },
+    { "id": "removedBackground", "type": "color", "label": "Removed row background", "default": "#7A2936" },
+    { "id": "addedBackground", "type": "color", "label": "Added row background", "default": "#225C2B" },
+    { "id": "removedWordColor", "type": "color", "label": "Removed word highlight", "default": "#B3596B" },
+    { "id": "addedWordColor", "type": "color", "label": "Added word highlight", "default": "#38A660" },
+    { "id": "removedColor", "type": "color", "label": "Hero minus counter and impact", "default": "#FF6B80" },
+    { "id": "addedColor", "type": "color", "label": "Plus counter and tool bullet", "default": "#4EBA65" },
+
+    { "id": "showMascot", "type": "boolean", "label": "Show the mascot", "default": true },
+    { "id": "showLogo", "type": "boolean", "label": "Show the Claude logo", "default": true },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

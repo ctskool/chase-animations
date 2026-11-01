@@ -1,0 +1,206 @@
+{
+  "name": "bug-hunt",
+  "title": "Bug hunt",
+  "summary": "A mascot surfs a scan beam through varied code, overshoots the bug and locks on. A lens punches out of the caught line, then the corrected operator triggers a victory hop.",
+  "claudeKit": true,
+  "motionBlur": true,
+  "fonts": [
+    "500 40px 'JetBrains Mono'",
+    "800 40px 'Inter Tight'",
+    "700 40px 'Inter Tight'"
+  ],
+  "timing": {
+    "keyAt": 3.6,
+    "hold": 2.2,
+    "exit": 0.34,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the lens punches outward from the caught line with the exact line number stamped huge",
+  "overlayHeight": 960,
+  "variables": [
+    {
+      "id": "fileName",
+      "type": "string",
+      "label": "File name",
+      "default": "billing/charge.ts"
+    },
+    {
+      "id": "foundLine",
+      "type": "number",
+      "label": "Line number where the bug was found",
+      "default": 212
+    },
+    {
+      "id": "lineLabel",
+      "type": "string",
+      "label": "Label above the line number",
+      "default": "line"
+    },
+    {
+      "id": "foundLabel",
+      "type": "string",
+      "label": "Discovery label",
+      "default": "Found it"
+    },
+    {
+      "id": "bugLine",
+      "type": "string",
+      "label": "The code with the bug",
+      "default": "if (total = 0) return;"
+    },
+    {
+      "id": "fixLine",
+      "type": "string",
+      "label": "The corrected code",
+      "default": "if (total === 0) return;"
+    },
+    {
+      "id": "scanCode",
+      "type": "string",
+      "label": "Earlier search code, one line per line; empty uses context",
+      "default": "const draft = loadDraft(id);\nconst rows = draft.items;\nlet subtotal = 0;\nconst rates = loadRates();\nconst zone = account.zone;\nconst rate = rates[zone];\nconst qty = item.quantity;\nconst unit = item.unitPrice;\nconst cost = qty * unit;\nsubtotal += cost;\nconst coupon = draft.code;\nconst valid = check(coupon);\nif (!valid) return;\nconst credit = getCredit();\nlet balance = subtotal;\nbalance -= credit;\nconst tax = rate * balance;\nconst gross = balance + tax;\nconst cap = account.limit;\nif (gross > cap) return;\nconst note = draft.note;\nconst memo = note.trim();\nconst meta = buildMeta(id);\nconst key = makeKey(meta);\nconst cached = lookup(key);\nif (cached) return cached;\nconst retry = draft.retry;\nconst limit = getLimit();\nif (retry > limit) return;\nconst token = getToken();\nconst mode = account.mode;\nconst live = mode === \"live\";\nconst route = pickRoute();\nconst body = pack(draft);\nconst hash = digest(body);\nconst match = verify(hash);\nif (!match) return;\nconst stamp = draft.stamp;\nconst old = readStamp(id);\nif (stamp < old) return;\nconst ledger = openLedger();\nconst entry = ledger[id];\nconst pending = entry.due;\nconst settled = entry.paid;\nconst net = pending - settled;\nconst amount = round(net);\nconst plan = account.plan;\nconst currency = draft.unit;\nconst unitOk = checkUnit();\nif (!unitOk) return;\nconst ready = canCharge();\nif (!ready) return;\nconst audit = makeAudit(id);\nawait saveAudit(audit);"
+    },
+    {
+      "id": "filler1",
+      "type": "string",
+      "label": "Context line 1; leave empty to remove",
+      "default": "const fee = getFee(plan);"
+    },
+    {
+      "id": "filler2",
+      "type": "string",
+      "label": "Context line 2",
+      "default": "const total = amount + fee;"
+    },
+    {
+      "id": "filler3",
+      "type": "string",
+      "label": "Context line 3",
+      "default": "if (!account) return;"
+    },
+    {
+      "id": "filler4",
+      "type": "string",
+      "label": "Context line 4",
+      "default": "const due = round(total);"
+    },
+    {
+      "id": "filler5",
+      "type": "string",
+      "label": "Context line 5",
+      "default": "const paid = charge(due);"
+    },
+    {
+      "id": "filler6",
+      "type": "string",
+      "label": "Context line 6",
+      "default": "await savePayment(paid);"
+    },
+    {
+      "id": "filler7",
+      "type": "string",
+      "label": "Context line 7",
+      "default": "return receipt(paid);"
+    },
+    {
+      "id": "filler8",
+      "type": "string",
+      "label": "Context line 8",
+      "default": "}"
+    },
+    {
+      "id": "accent",
+      "type": "color",
+      "label": "Claude colour and scan beam",
+      "default": "#D77757"
+    },
+    {
+      "id": "ground",
+      "type": "color",
+      "label": "Code background",
+      "default": "#0C0C0D"
+    },
+    {
+      "id": "ink",
+      "type": "color",
+      "label": "Main text",
+      "default": "#F4F1EC"
+    },
+    {
+      "id": "muted",
+      "type": "color",
+      "label": "Line numbers and secondary text",
+      "default": "#999999"
+    },
+    {
+      "id": "keywordColor",
+      "type": "color",
+      "label": "Syntax keywords",
+      "default": "#B1B9F9"
+    },
+    {
+      "id": "numberColor",
+      "type": "color",
+      "label": "Syntax numbers",
+      "default": "#EB9F7F"
+    },
+    {
+      "id": "stringColor",
+      "type": "color",
+      "label": "Syntax strings",
+      "default": "#4EBA65"
+    },
+    {
+      "id": "commentColor",
+      "type": "color",
+      "label": "Syntax comments",
+      "default": "#999999"
+    },
+    {
+      "id": "bugColor",
+      "type": "color",
+      "label": "Bug operator, marker and strike-through",
+      "default": "#FF6B80"
+    },
+    {
+      "id": "fixColor",
+      "type": "color",
+      "label": "Fixed operator, marker and final outline",
+      "default": "#4EBA65"
+    },
+    {
+      "id": "removedGround",
+      "type": "color",
+      "label": "Removed code tint",
+      "default": "#7A2936"
+    },
+    {
+      "id": "addedGround",
+      "type": "color",
+      "label": "Added code tint",
+      "default": "#225C2B"
+    },
+    {
+      "id": "showMascot",
+      "type": "boolean",
+      "label": "Show the mascot",
+      "default": true
+    },
+    {
+      "id": "showLogo",
+      "type": "boolean",
+      "label": "Show the Claude logo",
+      "default": true
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

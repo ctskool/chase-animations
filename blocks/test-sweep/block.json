@@ -1,0 +1,51 @@
+{
+  "name": "test-sweep",
+  "title": "Test sweep",
+  "summary": "A dense failing wall slams into place immediately. A tight diagonal band of hinged tests accelerates behind a running pixel mascot. The last test snaps fully open on the exact total, followed by an oversized victory jump and a larger success-word landing.",
+  "claudeKit": true,
+  "motionBlur": true,
+  "fonts": [
+    "500 40px 'JetBrains Mono'",
+    "700 40px 'Inter Tight'",
+    "800 40px 'Inter Tight'"
+  ],
+  "timing": {
+    "keyAt": 4.0,
+    "hold": 1.8,
+    "exit": 0.34,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the final exposed test snaps fully open as every tile reaches its finished green pose, the counter punches to the exact total, the wall flashes bright and the mascot springs from a deep crouch with raised arms; the larger All passing line lands a beat later inside a dark-backed green plate",
+  "overlayHeight": 960,
+  "variables": [
+    { "id": "suiteName", "type": "string", "label": "Test suite or command", "default": "npm test" },
+    { "id": "total", "type": "number", "label": "Total tests, a positive whole number", "default": 214 },
+    { "id": "countSeparator", "type": "string", "label": "Separator between passed and total", "default": " / " },
+    { "id": "countLabel", "type": "string", "label": "What the counter measures", "default": "tests passed" },
+    { "id": "failWord", "type": "string", "label": "State while tests remain", "default": "failing" },
+    { "id": "passWord", "type": "string", "label": "Final payoff", "default": "All passing" },
+    { "id": "failColor", "type": "color", "label": "Failing tiles", "default": "#FF6B80" },
+    { "id": "failInk", "type": "color", "label": "Crosses on failing tiles", "default": "#3A101B" },
+    { "id": "passColor", "type": "color", "label": "Passing tiles and final plate", "default": "#4EBA65" },
+    { "id": "passInk", "type": "color", "label": "Ticks and final plate text", "default": "#071E0E" },
+    { "id": "plateColor", "type": "color", "label": "Counter plate before completion", "default": "#0C0C0D" },
+    { "id": "ground", "type": "color", "label": "Background, tile gaps and plate backing", "default": "#0C0C0D" },
+    { "id": "ink", "type": "color", "label": "Counter and suite text", "default": "#F5F2EE" },
+    { "id": "muted", "type": "color", "label": "Counter caption", "default": "#B8B7B4" },
+    { "id": "borderColor", "type": "color", "label": "Counter plate border", "default": "#505050" },
+    { "id": "accent", "type": "color", "label": "Claude logo and mascot", "default": "#D77757" },
+    { "id": "highlightColor", "type": "color", "label": "Impact light, pixels and brightness shimmer", "default": "#FFFFFF" },
+    { "id": "showMascot", "type": "boolean", "label": "Show the mascot", "default": true },
+    { "id": "showLogo", "type": "boolean", "label": "Show the Claude logo", "default": true },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

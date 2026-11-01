@@ -1,0 +1,358 @@
+[data-variant="overlay"] #stage {
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.5);
+}
+
+#hc-ground,
+#hc-glow,
+#hc-grain,
+#hc-assembly,
+#hc-hours,
+#hc-dust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#hc-ground {
+  z-index: 0;
+}
+
+#hc-glow {
+  z-index: 1;
+}
+
+#hc-grain {
+  z-index: 12;
+  background-size: 128px 128px;
+  mix-blend-mode: overlay;
+  opacity: 0.065;
+}
+
+#hc-assembly {
+  z-index: 4;
+}
+
+#hc-clock,
+#hc-strike {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+}
+
+#hc-clock-face,
+#hc-clock-orbit,
+#hc-clock-trails,
+#hc-rewind-arc {
+  position: absolute;
+  inset: 0;
+}
+
+#hc-clock-face svg,
+#hc-clock-orbit svg,
+#hc-rewind-arc svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#hc-clock-orbit,
+#hc-rewind-arc {
+  transform-origin: 50% 50%;
+}
+
+#hc-hour-hand,
+#hc-minute-hand,
+.hc-trail-hand {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: 50% 50%;
+}
+
+#hc-hour-hand::before,
+#hc-minute-hand::before,
+.hc-trail-hand::before {
+  content: "";
+  position: absolute;
+  left: calc(50% - var(--hand-width) / 2);
+  bottom: 50%;
+  width: var(--hand-width);
+  height: var(--hand-length);
+  border-radius: 20px;
+  background: var(--hand-color);
+}
+
+#hc-clock-hub {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+}
+
+#hc-strike {
+  box-sizing: border-box;
+  border-style: solid;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+#hc-header {
+  position: absolute;
+  z-index: 7;
+  display: flex;
+  align-items: center;
+}
+
+#hc-brand {
+  flex: none;
+}
+
+#hc-heading {
+  display: inline-block;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+#hc-totals {
+  position: absolute;
+  z-index: 8;
+}
+
+#hc-before,
+#hc-after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-block;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  line-height: 0.96;
+  white-space: nowrap;
+}
+
+#hc-before {
+  letter-spacing: -0.04em;
+  transform-origin: 0% 0%;
+}
+
+#hc-after {
+  visibility: hidden;
+  letter-spacing: -0.035em;
+  word-spacing: 0.045em;
+  transform-origin: 50% 50%;
+}
+
+#hc-caption {
+  position: absolute;
+  z-index: 8;
+  display: inline-block;
+  visibility: hidden;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  line-height: 1.16;
+  white-space: nowrap;
+}
+
+#hc-underline {
+  position: absolute;
+  z-index: 8;
+  visibility: hidden;
+  border-radius: 20px;
+  transform-origin: 0% 50%;
+}
+
+#hc-hours {
+  z-index: 4;
+}
+
+.hc-hour {
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  visibility: hidden;
+  transform-origin: 50% 100%;
+}
+
+.hc-hour::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: var(--hc-edge, 2px) solid var(--hc-edge-color, rgba(0, 0, 0, 0.12));
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.hc-hour-fold {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  opacity: 0;
+  clip-path: polygon(0% 5%, 100% 0%, 100% 95%, 0% 100%);
+  pointer-events: none;
+}
+
+.hc-hour-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  transform-origin: 50% 50%;
+}
+
+.hc-hour-time-slot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.hc-hour-time {
+  flex: none;
+  display: inline-block;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.hc-hour-divider {
+  flex: none;
+  align-self: stretch;
+}
+
+.hc-hour-task {
+  flex: 1;
+  min-width: 0;
+  display: block;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+
+#hc-floor,
+#hc-ledge,
+#hc-cap,
+#hc-pal {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#hc-floor {
+  z-index: 3;
+  border-radius: 20px;
+}
+
+#hc-ledge {
+  z-index: 5;
+  box-sizing: border-box;
+  border-top-style: solid;
+  border-radius: 3px;
+  transform-origin: 100% 50%;
+}
+
+#hc-cap {
+  z-index: 6;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-top: 3px solid;
+  transform-origin: 50% 100%;
+}
+
+#hc-cap-shine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12%;
+  height: 100%;
+}
+
+#hc-pal {
+  z-index: 7;
+  transform-origin: 50% 100%;
+}
+
+.hc-face {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hc-eye,
+.hc-brow {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+}
+
+.hc-gulp,
+.hc-throat,
+.hc-sweat,
+.hc-smile {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.hc-gulp {
+  transform-origin: 50% 50%;
+  clip-path: polygon(
+    20% 0%, 80% 0%, 100% 20%, 100% 80%,
+    80% 100%, 20% 100%, 0% 80%, 0% 20%
+  );
+}
+
+.hc-throat {
+  transform-origin: 50% 50%;
+}
+
+.hc-sweat {
+  clip-path: polygon(
+    50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%
+  );
+}
+
+.hc-smile {
+  clip-path: polygon(
+    0% 0%, 20% 0%, 20% 45%, 80% 45%, 80% 0%, 100% 0%,
+    100% 70%, 80% 70%, 80% 100%, 20% 100%, 20% 70%, 0% 70%
+  );
+}
+
+#hc-dust {
+  z-index: 9;
+}
+
+.hc-pixel,
+.hc-impact-ray {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+.hc-impact-ray {
+  transform-origin: 0% 50%;
+}

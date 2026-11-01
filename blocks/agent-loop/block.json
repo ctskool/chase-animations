@@ -1,0 +1,55 @@
+{
+  "name": "agent-loop",
+  "title": "Agent loop",
+  "summary": "Plan, Act and Check accelerate around a huge track. Failed checks kick the mascot back and punch the attempt counter, until a green check breaks the ring open.",
+  "claudeKit": true,
+  "motionBlur": true,
+  "fonts": [
+    "500 40px 'JetBrains Mono'",
+    "700 40px 'Inter Tight'",
+    "800 40px 'Inter Tight'"
+  ],
+  "timing": {
+    "keyAt": 4.4,
+    "hold": 1.8,
+    "exit": 0.34,
+    "minKeyAt": 2.8
+  },
+  "keyMoment": "Check turns green with a tick, the ring cracks open, and the exact pass word and stat replace the attempt counter as the mascot launches through the gap",
+  "overlayHeight": 960,
+  "variables": [
+    { "id": "title", "type": "string", "label": "Header", "default": "Agent loop" },
+    { "id": "planLabel", "type": "string", "label": "Plan station; empty hides its plate", "default": "Plan" },
+    { "id": "actLabel", "type": "string", "label": "Act station; empty hides its plate", "default": "Act" },
+    { "id": "checkLabel", "type": "string", "label": "Check station; empty hides its plate", "default": "Check" },
+    { "id": "attemptLabel", "type": "string", "label": "Label above the counter", "default": "Attempt" },
+    { "id": "attempts", "type": "number", "label": "Attempts, including the successful last lap; 1 to 8", "default": 4 },
+    { "id": "failWord", "type": "string", "label": "Check plate after a failed lap", "default": "Failed" },
+    { "id": "passWord", "type": "string", "label": "Large final word", "default": "Passed" },
+    { "id": "stat", "type": "string", "label": "Final result; empty hides it", "default": "214 tests green" },
+    { "id": "line", "type": "string", "label": "Bottom line; empty hides it", "default": "It keeps going until the tests pass." },
+    { "id": "lineFocus", "type": "string", "label": "Exact part of the bottom line to accent", "default": "pass" },
+    { "id": "accent", "type": "color", "label": "Claude colour and running trail", "default": "#D77757" },
+    { "id": "ground", "type": "color", "label": "Background", "default": "#0C0C0D" },
+    { "id": "ink", "type": "color", "label": "Main text", "default": "#F4F1EC" },
+    { "id": "muted", "type": "color", "label": "Counter label and idle check mark", "default": "#999999" },
+    { "id": "plate", "type": "color", "label": "Station plates", "default": "#202022" },
+    { "id": "plateBorder", "type": "color", "label": "Station outlines", "default": "#505050" },
+    { "id": "track", "type": "color", "label": "Thick ring", "default": "#373737" },
+    { "id": "error", "type": "color", "label": "Failed check", "default": "#FF6B80" },
+    { "id": "success", "type": "color", "label": "Passed check and final word", "default": "#4EBA65" },
+    { "id": "successInk", "type": "color", "label": "Text and tick on the green plate", "default": "#06140A" },
+    { "id": "showMascot", "type": "boolean", "label": "Show the running mascot", "default": true },
+    { "id": "showLogo", "type": "boolean", "label": "Show the Claude logo", "default": true },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}
