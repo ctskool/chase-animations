@@ -1,0 +1,140 @@
+{
+  "name": "file-tree",
+  "title": "File tree",
+  "summary": "A giant root opens above a fixed running counter. Bright branches grow from the mascot's planted steps, then the exact total hits a cream plate with a coral rim.",
+  "claudeKit": true,
+  "motionBlur": true,
+  "fonts": [
+    "500 40px 'JetBrains Mono'",
+    "700 40px 'Inter Tight'",
+    "800 40px 'Inter Tight'"
+  ],
+  "timing": {
+    "keyAt": 4.2,
+    "hold": 1.9,
+    "exit": 0.34,
+    "minKeyAt": 2.6
+  },
+  "keyMoment": "the last filename arrives as the exact final count slams onto the cream and coral plate and the mascot lands seated on its rim",
+  "overlayHeight": 960,
+  "variables": [
+    {
+      "id": "headerLabel",
+      "type": "string",
+      "label": "Header",
+      "default": "Claude Code"
+    },
+    {
+      "id": "root",
+      "type": "string",
+      "label": "Root folder",
+      "default": "my-saas"
+    },
+    {
+      "id": "paths",
+      "type": "string",
+      "label": "File paths, one per line; blank lines are ignored",
+      "default": "app/page.tsx\napp/layout.tsx\napp/billing/page.tsx\napi/payments.ts\napi/webhook.ts\nlib/db.ts\nlib/auth.ts\ntests/billing.test.ts\ntests/auth.test.ts\nREADME.md"
+    },
+    {
+      "id": "filesStat",
+      "type": "string",
+      "label": "Exact final count",
+      "default": "47 files"
+    },
+    {
+      "id": "timeStat",
+      "type": "string",
+      "label": "Time beneath the final count",
+      "default": "in 4 minutes"
+    },
+    {
+      "id": "accent",
+      "type": "color",
+      "label": "Claude, folders, mascot and plate rim",
+      "default": "#D77757"
+    },
+    {
+      "id": "sourceColor",
+      "type": "color",
+      "label": "Source file dots",
+      "default": "#B1B9F9"
+    },
+    {
+      "id": "testColor",
+      "type": "color",
+      "label": "Test file dots",
+      "default": "#4EBA65"
+    },
+    {
+      "id": "docColor",
+      "type": "color",
+      "label": "Documentation file dots",
+      "default": "#FFC107"
+    },
+    {
+      "id": "otherColor",
+      "type": "color",
+      "label": "Other file dots",
+      "default": "#999999"
+    },
+    {
+      "id": "ground",
+      "type": "color",
+      "label": "Background",
+      "default": "#0C0C0D"
+    },
+    {
+      "id": "ink",
+      "type": "color",
+      "label": "Folder and file names",
+      "default": "#F4F1EC"
+    },
+    {
+      "id": "muted",
+      "type": "color",
+      "label": "Header and running timestamp",
+      "default": "#B1A69B"
+    },
+    {
+      "id": "branchColor",
+      "type": "color",
+      "label": "Tree lines",
+      "default": "#A99C90"
+    },
+    {
+      "id": "plateColor",
+      "type": "color",
+      "label": "Final count plate",
+      "default": "#F2E8DA"
+    },
+    {
+      "id": "plateInk",
+      "type": "color",
+      "label": "Text on the final plate",
+      "default": "#251E19"
+    },
+    {
+      "id": "showMascot",
+      "type": "boolean",
+      "label": "Show the mascot",
+      "default": true
+    },
+    {
+      "id": "showLogo",
+      "type": "boolean",
+      "label": "Show the Claude logo",
+      "default": true
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,304 @@
+#stage,
+#stage * {
+  box-sizing: border-box;
+}
+
+#af-ground,
+#af-glow,
+#af-grid,
+#af-pals,
+#af-sparks,
+#af-flash,
+#af-grain,
+#af-tree {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#af-ground {
+  z-index: 0;
+}
+
+#af-glow {
+  z-index: 1;
+}
+
+#af-tree {
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+#af-prompt {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  border-style: solid;
+  border-radius: 20px;
+  transform-origin: 50% 50%;
+}
+
+#af-chevron,
+#af-brand {
+  flex: none;
+}
+
+#af-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#af-prompt-text {
+  flex: 1;
+  min-width: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+
+#af-grid {
+  z-index: 6;
+}
+
+.af-tile {
+  position: absolute;
+  overflow: hidden;
+  border: 3px solid;
+  border-radius: 20px;
+  transform-origin: 50% 50%;
+}
+
+.af-rail {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 6px;
+  border-radius: 3px;
+}
+
+.af-name {
+  position: absolute;
+  z-index: 2;
+  display: inline-block;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.af-status {
+  position: absolute;
+  z-index: 2;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  line-height: 1.18;
+}
+
+.af-running-icon,
+.af-done-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 50% 50%;
+}
+
+.af-running-icon {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 3px;
+}
+
+.af-work-bar {
+  flex: 1;
+  min-width: 0;
+  border-radius: 2px 2px 0 0;
+  transform-origin: 50% 100%;
+}
+
+.af-done-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+}
+
+.af-status-word {
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  white-space: nowrap;
+}
+
+#af-result-foot,
+#af-result {
+  position: absolute;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+#af-result-foot {
+  z-index: 18;
+  border-radius: 26px;
+}
+
+#af-result {
+  z-index: 20;
+  overflow: hidden;
+  border: 4px solid;
+  border-radius: 28px;
+}
+
+#af-result-sheen {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: -20%;
+  width: 31%;
+  height: 140%;
+  transform: skewX(-18deg);
+}
+
+#af-result-edge {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 10px;
+  transform-origin: 50% 50%;
+}
+
+#af-done,
+#af-stat {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  display: inline-block;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+#af-done {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+#af-stat {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+#af-progress {
+  position: absolute;
+  z-index: 24;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+#af-progress-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0% 50%;
+}
+
+#af-pals {
+  z-index: 30;
+}
+
+.af-agent-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.af-pal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  transform-origin: 50% 100%;
+}
+
+.af-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 100%;
+}
+
+.af-work-prop {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  transform-origin: 50% 100%;
+}
+
+.af-tool-bit {
+  position: absolute;
+  transform-origin: 50% 50%;
+}
+
+.af-finish-badge {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid;
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+}
+
+#af-sparks {
+  z-index: 19;
+}
+
+.af-spark {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#af-count {
+  position: absolute;
+  z-index: 45;
+  text-align: center;
+  line-height: 1;
+  pointer-events: none;
+}
+
+#af-count-text {
+  display: inline-block;
+  vertical-align: top;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.025em;
+  word-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+  transform-origin: 50% 50%;
+}
+
+#af-flash {
+  z-index: 60;
+  opacity: 0;
+}
+
+#af-grain {
+  z-index: 70;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-size: 220px 220px;
+}

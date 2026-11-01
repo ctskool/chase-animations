@@ -141,6 +141,24 @@
   box-decoration-break: clone;
 }
 
+/*
+ * Keep top-output code fragments within their rows without changing
+ * font sizes or baselines. Include the highlight's vertical padding
+ * inside the same em-height box as its neighboring fragments.
+ */
+[data-variant="top"] .code,
+[data-variant="top"] .code > span {
+  line-height: 1;
+}
+
+[data-variant="top"] .code > span {
+  display: inline-block;
+}
+
+[data-variant="top"] .code > .word-highlight {
+  line-height: calc(1em - 4px);
+}
+
 .feast-outline {
   position: absolute;
   z-index: 3;

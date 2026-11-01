@@ -1,0 +1,199 @@
+{
+  "name": "agent-fan-out",
+  "title": "Agent fan-out",
+  "summary": "A prompt opens inside a branching burst. Colourful agents work and finish separately, then attached branches pull them into one pile. The last tick, full count and green result slab land together.",
+  "claudeKit": true,
+  "motionBlur": true,
+  "fonts": [
+    "500 40px 'JetBrains Mono'",
+    "800 40px 'Inter Tight'"
+  ],
+  "timing": {
+    "keyAt": 4.6,
+    "hold": 1.9,
+    "exit": 0.34,
+    "minKeyAt": 2.8
+  },
+  "keyMoment": "the last agent finishes as the pile and green slab land; the completed count, headline and exact stat appear together for the first time",
+  "overlayHeight": 960,
+  "variables": [
+    {
+      "id": "prompt",
+      "type": "string",
+      "label": "The prompt that starts the agents",
+      "default": "Audit the whole app and fix everything"
+    },
+    {
+      "id": "agent1Name",
+      "type": "string",
+      "label": "Agent 1 name; leave empty to remove",
+      "default": "Security"
+    },
+    {
+      "id": "agent1Color",
+      "type": "color",
+      "label": "Agent 1 colour",
+      "default": "#DC2626"
+    },
+    {
+      "id": "agent2Name",
+      "type": "string",
+      "label": "Agent 2 name; leave empty to remove",
+      "default": "Tests"
+    },
+    {
+      "id": "agent2Color",
+      "type": "color",
+      "label": "Agent 2 colour",
+      "default": "#6A9BCC"
+    },
+    {
+      "id": "agent3Name",
+      "type": "string",
+      "label": "Agent 3 name; leave empty to remove",
+      "default": "Docs"
+    },
+    {
+      "id": "agent3Color",
+      "type": "color",
+      "label": "Agent 3 colour",
+      "default": "#16A34A"
+    },
+    {
+      "id": "agent4Name",
+      "type": "string",
+      "label": "Agent 4 name; leave empty to remove",
+      "default": "Types"
+    },
+    {
+      "id": "agent4Color",
+      "type": "color",
+      "label": "Agent 4 colour",
+      "default": "#CA8A04"
+    },
+    {
+      "id": "agent5Name",
+      "type": "string",
+      "label": "Agent 5 name; leave empty to remove",
+      "default": "UI"
+    },
+    {
+      "id": "agent5Color",
+      "type": "color",
+      "label": "Agent 5 colour",
+      "default": "#827DBD"
+    },
+    {
+      "id": "agent6Name",
+      "type": "string",
+      "label": "Agent 6 name; leave empty to remove",
+      "default": "Speed"
+    },
+    {
+      "id": "agent6Color",
+      "type": "color",
+      "label": "Agent 6 colour",
+      "default": "#D77757"
+    },
+    {
+      "id": "runningWord",
+      "type": "string",
+      "label": "Status while an agent works; keep short",
+      "default": "Working"
+    },
+    {
+      "id": "finishedWord",
+      "type": "string",
+      "label": "Status when an agent finishes; keep short",
+      "default": "Done"
+    },
+    {
+      "id": "countTemplate",
+      "type": "string",
+      "label": "Counter wording; keep {done} and {total}",
+      "default": "{done} of {total}"
+    },
+    {
+      "id": "doneWord",
+      "type": "string",
+      "label": "The result headline",
+      "default": "All six finished"
+    },
+    {
+      "id": "stat",
+      "type": "string",
+      "label": "The exact final result",
+      "default": "214 files · 11m 02s"
+    },
+    {
+      "id": "accent",
+      "type": "color",
+      "label": "Claude logo, main trunk and merge point",
+      "default": "#D77757"
+    },
+    {
+      "id": "success",
+      "type": "color",
+      "label": "Completed states and result slab",
+      "default": "#4EBA65"
+    },
+    {
+      "id": "resultInk",
+      "type": "color",
+      "label": "Text on the result slab",
+      "default": "#07140B"
+    },
+    {
+      "id": "ground",
+      "type": "color",
+      "label": "Background",
+      "default": "#0C0C0D"
+    },
+    {
+      "id": "panel",
+      "type": "color",
+      "label": "Agent tile background",
+      "default": "#19191C"
+    },
+    {
+      "id": "ink",
+      "type": "color",
+      "label": "Prompt and agent names",
+      "default": "#F5F3EF"
+    },
+    {
+      "id": "muted",
+      "type": "color",
+      "label": "Working statuses",
+      "default": "#B8B8BD"
+    },
+    {
+      "id": "showMascot",
+      "type": "boolean",
+      "label": "Show the agent mascots",
+      "default": true
+    },
+    {
+      "id": "showLogo",
+      "type": "boolean",
+      "label": "Show the Claude logo",
+      "default": true
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    }
+  ]
+}

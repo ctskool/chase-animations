@@ -39,7 +39,7 @@ CA.ready(() => {
     top: {
       side: 36, top: 16, bottom: 16,
       title: 68, headerGap: 10, boardGap: 14,
-      roofPad: 6, hopReserve: 24,
+      roofPad: 66, hopReserve: 24,
       palMargin: 24, cell: 24, hop: 24,
       gap: 12, rowMin: 86,
       pad: 18, rankW: 82, rankPx: 78,
@@ -224,7 +224,7 @@ CA.ready(() => {
   const hopReserve = clawd ? Math.round(M.hopReserve * density) : 0;
 
   const titleRoom = clawd
-    ? Math.max(rowW * 0.48, palX - cell * 0.8)
+    ? Math.max(rowW * 0.48, palX - cell * 1.8)
     : rowW;
 
   title.textContent = String(V.boardTitle || "");
@@ -486,7 +486,7 @@ CA.ready(() => {
     logoHolder.style.display = "none";
   }
 
-  const stampPeak = 1.38;
+  const stampFitPeak = 1.38;
   $("bt-rank-well").style.cssText +=
     `;left:${pad}px;width:${heroRankW}px;height:${heroH - M.edge}px`;
   stamp.textContent = String(V.rankWord || "");
@@ -498,7 +498,15 @@ CA.ready(() => {
       (heroH - M.edge) * 0.64
     )
   ) + "px";
-  fit(stamp, Math.max(1, heroRankW / stampPeak - 12), minText);
+  fit(stamp, Math.max(1, heroRankW / stampFitPeak - 12), minText);
+
+  // Keep the settled stamp size; use the column's spare padding
+  // for a larger impact pose without clipping or touching the score.
+  const stampPeak = Math.max(1, Math.min(
+    1.68,
+    (heroRankW + pad * 2 - 12) / Math.max(1, stamp.offsetWidth),
+    (heroH - M.edge - 12) / Math.max(1, stamp.offsetHeight)
+  ));
 
   const heroTrackW = Math.max(1, rowW - contentX - pad);
   const finalFraction = fraction(newScore);
@@ -587,16 +595,27 @@ CA.ready(() => {
     }, end + 0.035);
   });
 
-  // Reserve actual output frames for the fall, each rank flip and the
-  // final approach. Compressing keyAt must not turn these into a swap.
-  const chainStep = Math.max(0.085, frames(2.25));
+  // Spread the shove into distinct row beats while preserving the
+  // original first contact, falling entrance and final landing times.
+  const baseChainStep = Math.max(0.085, frames(2.25));
   const flipLife = Math.max(0.18, frames(4.5));
-  const ejectLife = Math.max(0.23, frames(5));
-  const finalPush = Math.max(0.32, frames(10));
+  const baseFinalPush = Math.max(0.32, frames(10));
   const recovery = Math.max(0.30, frames(8));
   const seatLead = Math.max(0.20, frames(4));
-  const chainSpan = Math.max(0, rows.length - 1) * chainStep;
-  const plowLife = chainSpan + finalPush;
+  const chainCount = Math.max(0, rows.length - 1);
+  const plowLife = chainCount * baseChainStep + baseFinalPush;
+  const chainStep = chainCount
+    ? Math.max(
+        baseChainStep,
+        Math.min(
+          Math.max(0.085, frames(3.5)),
+          (plowLife - frames(5)) / chainCount
+        )
+      )
+    : baseChainStep;
+  const chainSpan = chainCount * chainStep;
+  const finalPush = plowLife - chainSpan;
+  const ejectLife = Math.min(Math.max(0.23, frames(5)), finalPush);
 
   const seatAt = D - seatLead;
   const impactAt = seatAt - recovery;
@@ -719,19 +738,23 @@ CA.ready(() => {
     }
   }, firstContact);
 
-  rows.slice(0, survivors).forEach((r) => {
+  rows.slice(0, survivors).forEach((r, i) => {
+    const delay = i * chainStep;
+    const shoveLife = plowLife - delay;
+
     build.fromTo(r.row, { y: 0 }, {
       y: 1000,
-      duration: plowLife,
+      duration: shoveLife,
       ease: "none",
       immediateRender: false,
       modifiers: {
         y(value) {
-          const lead = leadAt(parseFloat(value) / 1000);
+          const elapsed = delay + (parseFloat(value) / 1000) * shoveLife;
+          const lead = leadAt(elapsed / plowLife);
           return Math.max(0, lead - r.threshold) + "px";
         }
       }
-    }, firstContact);
+    }, firstContact + delay);
   });
 
   rows.forEach((r, i) => {
@@ -804,24 +827,39 @@ CA.ready(() => {
     }, at);
 
     if (last) {
-      const exitY =
-        H - boardY - r.initialTop + openingH + rowW * 0.45 + 64;
+      const exitY = H - boardY - r.initialTop + Math.max(16, gap);
+      const leadAtExit = Math.max(
+        0,
+        leadAt((chainSpan + ejectLife) / plowLife) - r.threshold
+      );
+      const extraTravel = Math.max(0, exitY - leadAtExit);
 
       build.set(r.row, {
-        transformOrigin: "28% 50%",
+        rotation: 0,
         zIndex: entries.length + 2
       }, at);
-      build.to(r.row, {
-        y: exitY,
-        rotation: 72,
+
+      // Follow the shove, then accelerate straight through the bottom.
+      // Staying ahead of the shared edge keeps the departing row clear
+      // of the surviving stack until it is entirely outside the frame.
+      build.fromTo(r.row, { y: 0 }, {
+        y: 1000,
         duration: ejectLife,
-        ease: "power2.in"
+        ease: "none",
+        immediateRender: false,
+        modifiers: {
+          y(value) {
+            const p = clamp(parseFloat(value) / 1000, 0, 1);
+            const lead = leadAt(
+              (chainSpan + p * ejectLife) / plowLife
+            );
+            return (
+              Math.max(0, lead - r.threshold) +
+              extraTravel * Math.pow(p, 3)
+            ) + "px";
+          }
+        }
       }, at);
-      build.to(r.row, {
-        x: compact ? 150 : 210,
-        duration: ejectLife,
-        ease: "power2.in"
-      }, at + chainStep);
       build.set(r.row, { autoAlpha: 0 }, at + ejectLife);
       return;
     }
@@ -1051,11 +1089,25 @@ CA.ready(() => {
       ease: "power4.out"
     }, key);
 
-    shake(
-      tl, [header, arena], key,
-      M.hitX * 0.45, compact ? 3 : 4,
-      Math.min(0.12, hold)
-    );
+    // One decisive stamp impulse, one counter-move, then rest.
+    const stampShakeLife = Math.min(0.14, hold);
+    const stampCounterLife = stampShakeLife * 0.38;
+
+    tl.set([header, arena], {
+      x: -M.hitX * 0.9,
+      y: compact ? 5 : 7
+    }, key);
+    tl.to([header, arena], {
+      x: M.hitX * 0.3,
+      y: compact ? -2 : -3,
+      duration: stampCounterLife,
+      ease: "power3.out"
+    }, key);
+    tl.to([header, arena], {
+      x: 0, y: 0,
+      duration: stampShakeLife - stampCounterLife,
+      ease: "power4.out"
+    }, key + stampCounterLife);
 
     if (clawd) {
       const hop = Math.min(M.hop * density, hopReserve);

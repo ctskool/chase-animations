@@ -84,3 +84,4 @@ Where space permits, the plate's upper edge aligns with a tile landing. The masc
 Shorter compact stages reduce tile rows and plate spacing and use 12px mascot cells. Labels retain a minimum size of 40px in `full` and 32px in compact outputs. Jump heights respect the available headroom.
 
 The diagonal sweep, exact final trigger, large pixel burst and success-word landing also work with the mascot or logo hidden.
+Claude, Claude Code and the Claude logo are Anthropic's. This pack isn't affiliated with or endorsed by Anthropic.

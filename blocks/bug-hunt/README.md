@@ -67,3 +67,4 @@ The correction slides in horizontally. Its arrival flashes the changed operator,
 `overlay` uses separate spacing inside the 960px-high card, with a scan shutter for entry and exit.
 
 Short compact stages reduce spacing, panel heights and hop distance. Text retains a minimum font size of 40px in `full` and 32px in compact outputs. Short excerpts give the clearest result.
+Claude, Claude Code and the Claude logo are Anthropic's. This pack isn't affiliated with or endorsed by Anthropic.

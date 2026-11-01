@@ -11,13 +11,25 @@
   inset: 0;
   pointer-events: none;
 }
+#ground,
+#glow {
+  z-index: 0;
+}
 #grain {
+  z-index: 1;
   mix-blend-mode: overlay;
-  opacity: 0.2;
+  opacity: 0.14;
   background-size: 220px 220px;
 }
+#scene {
+  z-index: 2;
+}
+#sparks {
+  z-index: 3;
+}
 #flash {
-  background: #fff;
+  z-index: 6;
+  background: transparent;
   opacity: 0;
 }
 #header,
@@ -25,6 +37,7 @@
 #feed,
 #status,
 #slab,
+#pal-track,
 #pal {
   position: absolute;
 }
@@ -36,51 +49,64 @@
   flex: none;
 }
 #title {
+  display: inline-block;
+  flex: none;
   font-family: "Inter Tight", sans-serif;
   font-weight: 800;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
   line-height: 1;
   white-space: nowrap;
 }
 #project {
+  display: inline-block;
+  flex: none;
   margin-left: auto;
   font-family: "JetBrains Mono", monospace;
   font-weight: 500;
-  color: #b4b4b4;
-  line-height: 1;
+  line-height: 1.08;
+  text-align: right;
   white-space: nowrap;
 }
 #box {
+  box-sizing: border-box;
   display: flex;
   align-items: flex-start;
+  transform-origin: 50% 0%;
 }
 #box-fill {
   position: absolute;
   inset: 0;
   border-style: solid;
-  border-radius: 22px;
+  border-radius: 24px;
 }
 #chevron {
   position: relative;
   flex: none;
+  display: flex;
+  align-items: center;
 }
 #prompt {
   position: relative;
+  box-sizing: border-box;
   flex: 1;
   min-width: 0;
   font-family: "JetBrains Mono", monospace;
   font-weight: 500;
-  color: #fff;
-  line-height: 1.22;
+  line-height: 1.16;
+  text-wrap: balance;
+}
+.prompt-word {
+  display: inline-block;
+  white-space: nowrap;
 }
 #caret {
   position: absolute;
   left: 0;
   top: 0;
-  background: #fff;
+  pointer-events: none;
 }
 #feed {
-  overflow: hidden;
+  overflow: visible;
 }
 #rows {
   position: absolute;
@@ -94,12 +120,16 @@
   width: 100%;
   font-family: "JetBrains Mono", monospace;
   font-weight: 500;
+  transform-origin: 0% 50%;
 }
 .call,
 .result {
   display: flex;
-  align-items: center;
-  line-height: 1.2;
+  align-items: flex-start;
+  line-height: 1.16;
+}
+.call {
+  transform-origin: 0% 50%;
 }
 .mark {
   position: relative;
@@ -113,51 +143,80 @@
 .call-text,
 .result-text {
   display: inline-block;
+  flex: none;
+  min-width: 0;
   white-space: nowrap;
 }
-.tool {
-  color: #fff;
-}
+.tool,
 .target {
-  color: #cfcfcf;
+  display: inline-block;
+  white-space: nowrap;
+}
+.target-line {
+  display: block;
+  margin-top: 4px;
+  line-height: 1.12;
+}
+.target-line .target {
+  white-space: pre;
 }
 .result {
-  color: #b4b4b4;
+  margin-top: 4px;
 }
 #status {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-family: "JetBrains Mono", monospace;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.16;
 }
 #status-top {
   display: flex;
   align-items: center;
 }
+#spin {
+  flex: none;
+}
 #word,
 #count {
+  display: inline-block;
+  align-self: flex-start;
   white-space: nowrap;
 }
-#word {
-  display: inline-block;
-}
 #count {
-  color: #fff;
+  font-variant-numeric: tabular-nums;
+  transform-origin: 0% 50%;
 }
 #slab {
+  z-index: 4;
+  box-sizing: border-box;
   overflow: hidden;
-  border-radius: 34px;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transform-origin: 50% 100%;
+  transform-origin: 50% 0%;
+}
+#slab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 16px;
+  background: currentColor;
+  opacity: 0.14;
+  pointer-events: none;
 }
 #slab-sheen {
   position: absolute;
   top: -10%;
   bottom: -10%;
   left: 0;
-  width: 26%;
-  background: rgba(255, 255, 255, 0.34);
+  width: 24%;
   transform: skewX(-18deg);
 }
 #done-line {
@@ -166,23 +225,38 @@
   align-items: center;
   justify-content: center;
 }
+#done-tick {
+  flex: none;
+}
 #done {
   display: inline-block;
+  flex: none;
   font-family: "Inter Tight", sans-serif;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
   line-height: 0.96;
   white-space: nowrap;
 }
 #done-stats {
   position: relative;
+  display: inline-block;
+  align-self: center;
   text-align: center;
   font-family: "JetBrains Mono", monospace;
   font-weight: 500;
+  font-variant-numeric: tabular-nums;
   line-height: 1.2;
   white-space: nowrap;
 }
+#pal-track {
+  z-index: 5;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
 #pal {
+  left: 0;
+  top: 0;
   transform-origin: 50% 100%;
 }
 .spark {

@@ -165,8 +165,11 @@ CA.ready(() => {
   if (!hasPal) pal.style.display = "none";
 
   const cx = W / 2;
+  const crownTop = variant === "top" && hasHeader
+    ? top + headerH + M.headerGap + M.cell
+    : top;
   const ringTop = compact
-    ? top + clawd.height - M.track / 2 + M.crownGap
+    ? crownTop + clawd.height - M.track / 2 + M.crownGap
     : top + headerH + M.crownGap + clawd.height - M.track / 2;
   const ringBottom = compact
     ? lineTop - M.footerGap - M.track / 2
@@ -320,7 +323,7 @@ CA.ready(() => {
   const mainFrom = checkAngle + M.gap;
   const mainTo = checkAngle + 360 - M.gap;
   const mainD = arc(mainFrom, mainTo);
-  const loopPoints = arcPoints(planAngle, planAngle + 360, true);
+  const loopPoints = arcPoints(planAngle, planAngle + 360);
   const loopD = pathFrom(loopPoints);
   const loopLength = pathLength(loopPoints);
 
@@ -339,32 +342,12 @@ CA.ready(() => {
   holdRunner.style.stroke = V.success;
   holdRunner.style.strokeWidth = (compact ? 22 : 28) + "px";
 
-  // Nested strokes share one moving endpoint. Their progressively longer,
-  // thinner tails form a pointed ribbon without gradients or blur bands.
-  const ribbon = [];
-  const softSpecs = [
-    { factor: 1, width: M.trail * 0.18, alpha: 0.12 },
-    { factor: 0.52, width: M.trail * 0.82, alpha: 0.13 },
-    { factor: 0.17, width: M.trail * 1.85, alpha: 0.13 },
+  // The wake follows the track's centreline at the track's full width.
+  // Its length grows each lap without tapering into an inside sliver.
+  const ribbon = [
+    { path: softTrail, factor: 1, width: M.track, alpha: 0.22 },
+    { path: coreTrail, factor: 1, width: M.track, alpha: 1 },
   ];
-  softSpecs.forEach((spec, i) => {
-    const path = i === softSpecs.length - 1
-      ? softTrail
-      : svgPath(softTrail);
-    ribbon.push({ path, ...spec });
-  });
-
-  const taperLayers = 14;
-  for (let i = 0; i < taperLayers; i++) {
-    ribbon.push({
-      path: i === taperLayers - 1 ? coreTrail : svgPath(coreTrail),
-      factor: Math.pow(1 - i / taperLayers, 1.05),
-      width: M.trail * (
-        0.035 + 0.965 * Math.pow((i + 1) / taperLayers, 0.82)
-      ),
-      alpha: 1,
-    });
-  }
 
   ribbon.forEach((layer) => {
     layer.path.setAttribute("d", loopD);
@@ -637,7 +620,9 @@ CA.ready(() => {
     y: (checkMark.y - checkFoot.y) / gateDistance,
   };
   const minFlightFootY = (
-    compact ? M.cell * 0.5 : Math.max(0, top - M.logo * 0.55)
+    variant === "top" && hasHeader
+      ? crownTop
+      : compact ? M.cell * 0.5 : Math.max(0, top - M.logo * 0.55)
   ) + clawd.height + M.cell * 0.25;
   const maxFlightFootX =
     W - M.rim - clawd.width / 2 - M.cell * 0.2;
@@ -680,7 +665,9 @@ CA.ready(() => {
       b: {
         x: landingX + radius * 0.16,
         y: Math.max(
-          clawd.height + M.cell * 0.8,
+          variant === "top" && hasHeader
+            ? minFlightFootY
+            : clawd.height + M.cell * 0.8,
           outsideFoot.y - M.cell * 1.1
         ),
       },
@@ -692,7 +679,7 @@ CA.ready(() => {
   ];
 
   const exitLoopPoints = arcPoints(
-    checkAngle - 360, checkAngle, true
+    checkAngle - 360, checkAngle
   );
   const exitLoopLength = pathLength(exitLoopPoints);
   const exitPoints = [...exitLoopPoints, checkMark, jetEnd];
@@ -1005,12 +992,9 @@ CA.ready(() => {
       const leg = index % 2 ? "right" : "left";
       const arm = index % 2 ? "left" : "right";
 
-      // A visible planted beat separates every alternating kick.
-      // All positions, poses and contact marks are timeline-driven.
+      // Every step starts with the opposite leg and holds that kick
+      // until a brief planted reset before the next step.
       clawd.pose(build, beat, {
-        arms: arm, eyes, legs: "stand",
-      });
-      clawd.pose(build, beat + slice * 0.20, {
         arms: arm, eyes, legs: leg,
       });
       clawd.pose(build, beat + slice * 0.90, {

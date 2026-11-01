@@ -90,3 +90,4 @@ All three versions use equal opening rows, visible staggered entrances, the larg
 Seven or eight tasks reduce the opening mascot size. Shorter compact stages reduce spacing and character size, keeping cells at least 12px. Full cells stay at least 14px. Settled text sizes stay at least 40px in `full` and 32px in `top` and `overlay`.
 
 For short cards, use fewer tasks or shorter labels.
+Claude, Claude Code and the Claude logo are Anthropic's. This pack isn't affiliated with or endorsed by Anthropic.

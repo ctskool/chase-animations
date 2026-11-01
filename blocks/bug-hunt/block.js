@@ -18,7 +18,7 @@ CA.ready(() => {
     full: {
       side: 40, top: 230, bottom: 300,
       logo: 68, file: 54, headerGap: 32, logoGap: 24,
-      source: 48, number: 40, numberGap: 16,
+      source: 64, number: 40, numberGap: 16,
       palCell: 18, surf: 28, palGap: 12, hop: 112,
       rail: 10, halo: 48, tip: 24,
       lensSide: 32, lensGap: 24, pad: 32,
@@ -31,7 +31,7 @@ CA.ready(() => {
     top: {
       side: 32, top: 44, bottom: 34,
       logo: 54, file: 44, headerGap: 22, logoGap: 18,
-      source: 46, number: 34, numberGap: 16,
+      source: 56, number: 34, numberGap: 16,
       palCell: 14, surf: 28, palGap: 14, hop: 76,
       rail: 8, halo: 36, tip: 22,
       lensSide: 28, lensGap: 18, pad: 24,
@@ -44,7 +44,7 @@ CA.ready(() => {
     overlay: {
       side: 36, top: 40, bottom: 36,
       logo: 56, file: 44, headerGap: 22, logoGap: 18,
-      source: 46, number: 34, numberGap: 16,
+      source: 56, number: 34, numberGap: 16,
       palCell: 15, surf: 30, palGap: 14, hop: 84,
       rail: 8, halo: 40, tip: 22,
       lensSide: 28, lensGap: 20, pad: 24,
@@ -61,7 +61,7 @@ CA.ready(() => {
     Object.assign(M, {
       top: 24, bottom: 22,
       logo: 46, file: 38, headerGap: 16,
-      source: 38, number: 32,
+      source: 50, number: 32,
       palCell: 12, surf: 24, palGap: 12, hop: 52,
       rail: 7, halo: 30, tip: 18,
       lensGap: 16, pad: 18,
@@ -76,7 +76,7 @@ CA.ready(() => {
     Object.assign(M, {
       top: 24, bottom: 20,
       logo: 40, file: 34, headerGap: 14,
-      source: 36,
+      source: 44,
       lensGap: 14, pad: 16, gap: 10,
       panelY: 10, headMin: 196,
       stamp: 144, found: 42, target: 36,
@@ -119,7 +119,7 @@ CA.ready(() => {
     .slice(-Math.max(0, foundLine - bugSlot - 1));
   const sourceLines = earlier.concat(finalLines);
   const firstLine = foundLine - bugSlot - earlier.length;
-  const visibleRows = compact && H < 640 ? 7 : 9;
+  const visibleRows = 8;
   const rowH = Math.max(viewH / visibleRows, minText * 1.65);
   const finalOffset = (bugSlot + 0.5) * rowH - viewH * 0.5;
   const travel = earlier.length * rowH;
@@ -128,11 +128,8 @@ CA.ready(() => {
     M.number * 0.6
   );
   const codeLeft = numberW + M.numberGap;
-  const surfLane = V.showMascot
-    ? M.palCell * 12 + M.palGap
-    : 0;
   const codeRoom = Math.max(
-    minText * 5, innerW - codeLeft - surfLane - 8
+    minText * 5, innerW - codeLeft - 8
   );
 
   Object.entries({
@@ -315,7 +312,6 @@ CA.ready(() => {
   const headH = lensH - M.pad * 2 - panelH * 2 - M.gap * 2;
   const bugTop = M.pad + headH + M.gap;
   const fixTop = bugTop + panelH + M.gap;
-  const discoveryH = panelH * 2 + M.gap;
 
   lens.style.cssText +=
     `;left:${M.lensSide}px;top:${lensTop}px;width:${lensW}px;height:${lensH}px;` +
@@ -375,7 +371,7 @@ CA.ready(() => {
   [bugPanel, fixPanel].forEach((panel, i) => {
     panel.style.cssText +=
       `;left:${M.pad}px;top:${i ? fixTop : bugTop}px;` +
-      `width:${lensInner}px;height:${i ? panelH : discoveryH}px;` +
+      `width:${lensInner}px;height:${panelH}px;` +
       `padding:0 ${M.panelPad}px`;
   });
   bugPanel.style.background = rgba(V.removedGround, 0.23);
@@ -498,7 +494,8 @@ CA.ready(() => {
   edge.style.width = edgeW + "px";
   edge.style.background = V.ink;
   gsap.set([lens, underplate], {
-    autoAlpha: 0, y: 0, scaleX: 0.88, scaleY: 0.028
+    autoAlpha: 0, y: 0, scaleX: 0.88,
+    scaleY: Math.min(1, sourcePx * 1.18 / lensH)
   });
   gsap.set([head, bugPanel], { autoAlpha: 0 });
   gsap.set(stamp, { scaleX: 0.74, scaleY: 0.74 });
@@ -585,17 +582,17 @@ CA.ready(() => {
   const burstEnd = D * 0.085;
   const coastEnd = D * 0.24;
   const surgeEnd = D * 0.31;
-  const fastEnd = D - 0.92;
-  const brakeEnd = D - 0.64;
+  const fastEnd = D - 0.7;
+  const brakeEnd = D - 0.56;
   const stopAt = D - 0.5;
   const lensAt = D - 0.26;
   const overshoot = travel ? rowH * 0.34 : 0;
   const phases = [
-    { at: 0, end: burstEnd, from: 0, to: travel * 0.3, ease: "power2.out" },
-    { at: burstEnd, end: coastEnd, from: travel * 0.3, to: travel * 0.52, ease: "none" },
-    { at: coastEnd, end: surgeEnd, from: travel * 0.52, to: travel * 0.73, ease: "power1.in" },
-    { at: surgeEnd, end: fastEnd, from: travel * 0.73, to: travel * 0.94, ease: "power1.out" },
-    { at: fastEnd, end: brakeEnd, from: travel * 0.94, to: travel + overshoot, ease: "power4.out" },
+    { at: 0, end: burstEnd, from: 0, to: travel * 0.16, ease: "power2.out" },
+    { at: burstEnd, end: coastEnd, from: travel * 0.16, to: travel * 0.3, ease: "none" },
+    { at: coastEnd, end: surgeEnd, from: travel * 0.3, to: travel * 0.4, ease: "power1.in" },
+    { at: surgeEnd, end: fastEnd, from: travel * 0.4, to: travel * 0.99, ease: "none" },
+    { at: fastEnd, end: brakeEnd, from: travel * 0.99, to: travel + overshoot, ease: "power2.out" },
     { at: brakeEnd, end: stopAt, from: travel + overshoot, to: travel, ease: "power3.out" }
   ];
   rows.forEach((r) => {
@@ -683,13 +680,11 @@ CA.ready(() => {
   );
   const keyScale = Math.min(compact ? 1.032 : 1.035, peakScale);
   build.set([viewport, beam], { autoAlpha: 0 }, lensAt);
-  build.set([lens, underplate], { autoAlpha: 1 }, lensAt);
+  build.set([lens, underplate, head, bugPanel], { autoAlpha: 1 }, lensAt);
   build.to([lens, underplate], {
     scaleX: peakScale, scaleY: peakScale,
     duration: 0.19, ease: "power4.out"
   }, lensAt);
-  // Reveal complete typography once the shell is essentially full size.
-  build.set([head, bugPanel], { autoAlpha: 1 }, lensAt + 0.12);
   build.to(stamp, {
     scaleX: 1, scaleY: 1, duration: 0.14, ease: "back.out(1.8)"
   }, lensAt + 0.12);
@@ -744,9 +739,6 @@ CA.ready(() => {
       scaleX: 1, duration: fixHit * 0.21, ease: "power3.out"
     }, key + strikeAt + index * Math.min(0.025, fixHit * 0.035));
   });
-  tl.to(bugPanel, {
-    height: panelH, duration: splitDuration, ease: "power4.out"
-  }, key + splitAt);
   tl.to(bugCode, {
     scaleX: 1, scaleY: 1, duration: splitDuration, ease: "power3.out"
   }, key + splitAt);
@@ -793,44 +785,44 @@ CA.ready(() => {
     const up = Math.min(0.2, available * 0.22);
     const down = Math.min(0.16, available * 0.18);
     const land = Math.min(0.14, available * 0.15);
+    const landAt = key + fixHit + up + down;
     tl.to(pal, {
       scaleX: 1.2, scaleY: 0.7, rotation: -8,
       duration: fixHit * 0.15, ease: "power3.in"
     }, key + fixHit * 0.85);
-    bodyPose(tl, key + fixHit, { arms: "up", legs: "right" });
+    bodyPose(tl, key + fixHit, { arms: "up", legs: "stand" });
     gaze(tl, key + fixHit, "joy");
     tl.set(board, { backgroundColor: V.fixColor }, key + fixHit);
     tl.to(pal, {
-      y: perchY - celebrationHop, x: perchX - M.palCell * 0.65,
-      rotation: 9, scaleX: 0.88, scaleY: 1.18,
+      y: perchY - celebrationHop, x: perchX,
+      rotation: 0, scaleX: 0.9, scaleY: 1.12,
       duration: up, ease: "power3.out"
     }, key + fixHit);
     // Counter-travel leaves the parked board beneath the airborne mascot.
     tl.to(board, {
-      y: celebrationHop, rotation: -9,
+      y: celebrationHop, rotation: 0,
       duration: up, ease: "power3.out"
     }, key + fixHit);
     tl.to(pal, {
       y: perchY, x: perchX, rotation: 0,
-      scaleX: 1.22, scaleY: 0.74,
+      scaleX: 0.94, scaleY: 1.06,
       duration: down, ease: "power3.in"
     }, key + fixHit + up);
     tl.to(board, {
       y: 0, rotation: 0,
       duration: down, ease: "power3.in"
     }, key + fixHit + up);
-    bodyPose(tl, key + fixHit + up + down, {
-      arms: "up", legs: "stand"
-    });
+    bodyPose(tl, landAt, { arms: "up", legs: "stand" });
+    tl.set(pal, { scaleX: 1.22, scaleY: 0.74 }, landAt);
     tl.to(pal, {
-      scaleX: 1, scaleY: 1, duration: land, ease: "back.out(1.5)"
-    }, key + fixHit + up + down);
+      scaleX: 1, scaleY: 1, duration: land, ease: "power3.out"
+    }, landAt);
 
     const breatheAt = fixHit + up + down + land;
     const remaining = hold - breatheAt;
     if (remaining > 0.1) {
-      tl.fromTo(pal, { y: perchY }, {
-        y: perchY - M.palCell * 0.5,
+      tl.fromTo(pal, { scaleX: 1, scaleY: 1 }, {
+        scaleX: 1.015, scaleY: 0.985,
         duration: remaining * 0.5, repeat: 1, yoyo: true,
         ease: "sine.inOut", immediateRender: false
       }, key + breatheAt);

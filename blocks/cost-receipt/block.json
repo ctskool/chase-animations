@@ -1,0 +1,59 @@
+{
+  "name": "cost-receipt",
+  "title": "Cost receipt",
+  "summary": "A thermal receipt advances in forceful yanks, pushing a huge running cost down with each item. The shopkeeper tears it free before an oversized PAID stamp strikes with the exact total.",
+  "claudeKit": true,
+  "fonts": [
+    "500 40px 'JetBrains Mono'",
+    "800 40px 'Inter Tight'"
+  ],
+  "timing": {
+    "keyAt": 4.0,
+    "hold": 1.9,
+    "exit": 0.34,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the oversized round stamp strikes with the exact total larger than the running cost, compressing the paper before a rotational recoil and final ink impression",
+  "overlayHeight": 960,
+  "variables": [
+    { "id": "shopLine", "type": "string", "label": "Receipt shop name", "default": "CLAUDE CODE" },
+    { "id": "subtitle", "type": "string", "label": "Receipt subtitle", "default": "Whole app, one session" },
+
+    { "id": "item1Label", "type": "string", "label": "Item 1; leave its label empty to remove it", "default": "Input tokens" },
+    { "id": "item1Price", "type": "string", "label": "Item 1 price", "default": "$0.84" },
+    { "id": "item2Label", "type": "string", "label": "Item 2", "default": "Output tokens" },
+    { "id": "item2Price", "type": "string", "label": "Item 2 price", "default": "$1.62" },
+    { "id": "item3Label", "type": "string", "label": "Item 3", "default": "Cache reads" },
+    { "id": "item3Price", "type": "string", "label": "Item 3 price", "default": "$0.31" },
+    { "id": "item4Label", "type": "string", "label": "Item 4", "default": "Web search" },
+    { "id": "item4Price", "type": "string", "label": "Item 4 price", "default": "$0.23" },
+
+    { "id": "subtotalLabel", "type": "string", "label": "Running subtotal label", "default": "COST SO FAR" },
+    { "id": "totalLabel", "type": "string", "label": "Total label", "default": "TOTAL" },
+    { "id": "totalValue", "type": "string", "label": "Exact final total", "default": "$3.00" },
+    { "id": "stampWord", "type": "string", "label": "Rubber stamp word", "default": "PAID" },
+    { "id": "stampAngle", "type": "number", "label": "Stamp angle in degrees", "default": -8 },
+
+    { "id": "paper", "type": "color", "label": "Thermal paper", "default": "#F3EFE6" },
+    { "id": "ink", "type": "color", "label": "Printed receipt ink", "default": "#24221F" },
+    { "id": "muted", "type": "color", "label": "Running subtotal caption", "default": "#A49D93" },
+    { "id": "stampInk", "type": "color", "label": "Rubber stamp ink", "default": "#CF5137" },
+    { "id": "accent", "type": "color", "label": "Claude logo and mascot", "default": "#D77757" },
+    { "id": "ground", "type": "color", "label": "Background", "default": "#0C0C0D" },
+    { "id": "slotColor", "type": "color", "label": "Printer housing", "default": "#29292B" },
+    { "id": "mouthColor", "type": "color", "label": "Deep printer mouth", "default": "#000000" },
+
+    { "id": "showMascot", "type": "boolean", "label": "Show the shopkeeper mascot", "default": true },
+    { "id": "showLogo", "type": "boolean", "label": "Show the Claude logo", "default": true },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

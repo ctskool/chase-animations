@@ -79,3 +79,4 @@ All three outputs use alternating planted footfalls, immediate collision recoil,
 Shorter compact stages reduce the circle's radius and spacing together. They preserve the round ring and keep mascot cells at least 12px.
 
 Text stays at least 40px in `full` and 32px in compact outputs.
+Claude, Claude Code and the Claude logo are Anthropic's. This pack isn't affiliated with or endorsed by Anthropic.

@@ -1,7 +1,7 @@
 {
   "name": "terminal-run",
   "title": "Terminal run",
-  "summary": "A Claude Code session types a prompt, stacks up tool calls while the mascot works and the counters climb, then a green result slab slams in under it.",
+  "summary": "A huge prompt commits into a Claude Code session. Tool calls accelerate with counter ticks and mascot reactions, then a green slab catches the mascot on the exact result frame.",
   "claudeKit": true,
   "fonts": [
     "500 40px 'JetBrains Mono'",
@@ -14,9 +14,10 @@
     "exit": 0.34,
     "minKeyAt": 2.6
   },
-  "keyMoment": "the mascot lands on the result slab as the done word and the exact file count and time hit, with the slab at its scale punch",
+  "keyMoment": "the done word and exact final stats cut on as the green slab compresses and the mascot lands on its top edge",
   "overlayHeight": 960,
   "variables": [
+    { "id": "headerLabel", "type": "string", "label": "Name in the header", "default": "Claude Code" },
     { "id": "project", "type": "string", "label": "Folder shown in the header", "default": "~/my-saas" },
     { "id": "prompt", "type": "string", "label": "The prompt that gets typed", "default": "Build the billing page and ship it" },
     { "id": "spinnerWord", "type": "string", "label": "Spinner word", "default": "Tinkering" },
@@ -44,10 +45,13 @@
     { "id": "filesStat", "type": "string", "label": "Final count, counts up as steps land", "default": "47 files" },
     { "id": "timeStat", "type": "string", "label": "Final time, as 4m 12s or 58s", "default": "4m 12s" },
 
-    { "id": "doneColor", "type": "color", "label": "Result slab colour", "default": "#4EBA65" },
+    { "id": "doneColor", "type": "color", "label": "Result slab and completed bullets", "default": "#4EBA65" },
     { "id": "doneInk", "type": "color", "label": "Text on the result slab", "default": "#06140A" },
     { "id": "accent", "type": "color", "label": "Claude colour", "default": "#D77757" },
     { "id": "ground", "type": "color", "label": "Terminal background", "default": "#0C0C0D" },
+    { "id": "textColor", "type": "color", "label": "Main terminal text", "default": "#FFFFFF" },
+    { "id": "mutedColor", "type": "color", "label": "Results and secondary text", "default": "#B4B4B4" },
+    { "id": "promptColor", "type": "color", "label": "Sent prompt background", "default": "#373737" },
     { "id": "showMascot", "type": "boolean", "label": "Show the mascot", "default": true },
     { "id": "showLogo", "type": "boolean", "label": "Show the Claude logo", "default": true },
     {

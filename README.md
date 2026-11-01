@@ -4,7 +4,7 @@ Finished animations for vertical video, for members of Chase AI Plus. Pick one, 
 
 Each animation is a tested [HyperFrames](https://hyperframes.heygen.com) block with text, numbers and colours you can edit, not a prompt you hope comes out right.
 
-## The 28 animations
+## The 38 animations
 
 ### Compare and prove
 
@@ -53,6 +53,23 @@ Each animation is a tested [HyperFrames](https://hyperframes.heygen.com) block w
 | [`glow-orb`](blocks/glow-orb/README.md) | A soft breathing orb above one line of type | The closing phrase lands on the breath |
 | [`retro-crt`](blocks/retro-crt/README.md) | A beam opens into a huge phosphor title with a terminal line | The status lands and the title snaps tall |
 | [`oscilloscope`](blocks/oscilloscope/README.md) | A green signal folds through figures and writes your words | The last letter lands |
+
+### Claude Code
+
+These use Claude Code's look, the Claude logo and its pixel mascot. They run on sample content until you tell Claude what to show, and you can turn the mascot or logo off.
+
+| Animation | What it does | Key moment |
+|---|---|---|
+| [`terminal-run`](blocks/terminal-run/README.md) | A session plays out from one prompt to a finished result | The mascot lands on the green result slab |
+| [`agent-fan-out`](blocks/agent-fan-out/README.md) | One prompt splits into six subagents, each with its own mascot | The last agent finishes and they pile onto the result |
+| [`agent-loop`](blocks/agent-loop/README.md) | The mascot laps Plan, Act and Check until the tests pass | Check turns green and the ring cracks open |
+| [`test-sweep`](blocks/test-sweep/README.md) | A wall of failing tests flips green in a wave | The last test lands on the exact total |
+| [`bug-hunt`](blocks/bug-hunt/README.md) | The mascot surfs a scrolling file until it finds the bug | The line locks and the lens slams up |
+| [`file-tree`](blocks/file-tree/README.md) | A codebase grows branch by branch behind the mascot | The tree pulls back and the file count lands |
+| [`diff-reveal`](blocks/diff-reveal/README.md) | The mascot eats the red lines of a real-looking diff | The last gulp and the final removed count |
+| [`hours-collapse`](blocks/hours-collapse/README.md) | A full day of hour blocks gets stomped into minutes | The new time slams in over the old one |
+| [`cost-receipt`](blocks/cost-receipt/README.md) | A till receipt prints line items for a session | The total is stamped on the receipt |
+| [`benchmark-takeover`](blocks/benchmark-takeover/README.md) | The mascot rides a huge row into a serious leaderboard | The row seats and #1 stamps |
 
 Every animation comes in three outputs:
 

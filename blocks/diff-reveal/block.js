@@ -94,8 +94,18 @@ CA.ready(() => {
   const top = compact
     ? M.top
     : Math.max(M.top, Number(safe.top) || 0) + 6;
+
+  /*
+   * Extend the stack into the unused lower frame. The added room
+   * belongs to the composition rather than shrinking the counter.
+   */
   const bottom = H - (
-    compact ? M.bottom : Math.max(M.bottom, Number(safe.bottom) || 0)
+    compact
+      ? Math.max(8, M.bottom - 12)
+      : Math.max(
+        96,
+        Math.max(M.bottom, Number(safe.bottom) || 0) - 140
+      )
   );
   const usableH = bottom - top;
   const panelY = top + M.header + M.headerGap;
@@ -366,8 +376,40 @@ CA.ready(() => {
     addedData.length + finalRedCount,
     addedData.length * finalRatio + finalRedCount * feastRatio
   );
+
+  function counterChrome(showSummary) {
+    const items = 1 + Number(hasLabel) + Number(hasPlus) +
+      Number(showSummary);
+    return M.pad * 2 + labelH + plusH +
+      (showSummary ? summaryH : 0) +
+      Math.max(0, items - 1) * M.gap;
+  }
+
+  /*
+   * Choose the counter size once, before budgeting the rows.
+   * Neither the feast nor a belly change can take its space.
+   */
+  const workChrome = counterChrome(false);
+  const finalChrome = counterChrome(hasSummary);
+  const rowRoundRoom = addedData.length + finalRedCount;
+  const panelRoom = bottom - panelY;
+  const minimumWorkRows = weightedRows * M.minRow + rowRoundRoom;
+  const minimumFinalRows =
+    addedData.length * Math.round(M.minRow * finalRatio);
+  const counterFont = Math.max(
+    1,
+    Math.min(
+      maxNumberFont,
+      (panelRoom - rail - minimumWorkRows - workChrome) / (0.94 * 1.12),
+      (panelRoom - rail - minimumFinalRows - finalChrome) / (0.94 * 1.23)
+    )
+  );
+  const reservedNumberH = Math.ceil(counterFont * 0.94 * 1.12);
+  removedCount.style.fontSize = counterFont + "px";
+
   const rowBudget =
-    usableH - M.header - M.headerGap - rail - M.minCounter;
+    usableH - M.header - M.headerGap - rail -
+    workChrome - reservedNumberH - rowRoundRoom;
   const rowH = Math.max(
     M.minRow,
     Math.min(M.row, Math.floor(rowBudget / weightedRows))
@@ -496,22 +538,10 @@ CA.ready(() => {
     const heroY = hasPal
       ? palY + clawd.height + M.railBottom
       : panelY + total + M.gap;
-    const heroH = Math.max(1, bottom - heroY);
     const showSummary = mode === "final" && hasSummary;
-    const items = 1 + Number(hasLabel) + Number(hasPlus) + Number(showSummary);
-    const fixed =
-      M.pad * 2 + labelH + plusH +
-      (showSummary ? summaryH : 0) +
-      Math.max(0, items - 1) * M.gap;
-    const numberH = Math.max(1, heroH - fixed);
-    const numberFont = Math.max(
-      1,
-      Math.min(
-        maxNumberFont,
-        numberH / (0.94 * 1.12),
-        mode === "opening" ? M.zero : Infinity
-      )
-    );
+    const fixed = counterChrome(showSummary);
+    const heroH = Math.max(fixed + reservedNumberH, bottom - heroY);
+    const numberH = Math.max(reservedNumberH, heroH - fixed);
 
     let cursor = M.pad;
     const labelTop = cursor;
@@ -531,7 +561,7 @@ CA.ready(() => {
 
     return {
       entries, diffH: total, palY, heroY, heroH,
-      numberH, numberFont, numberTop, labelTop,
+      numberH, numberTop, labelTop,
       plusTop, summaryTop,
       summaryH: showSummary ? summaryH : 0
     };
@@ -569,7 +599,6 @@ CA.ready(() => {
     put(hero, { top: next.heroY, height: next.heroH });
     put(removedLabel, { top: next.labelTop });
     put(numberWrap, { top: next.numberTop, height: next.numberH });
-    put(removedCount, { fontSize: next.numberFont });
     put(plusLine, { top: next.plusTop });
     put(summaryHolder, { top: next.summaryTop, height: next.summaryH });
     if (hasPal) put(pal, { y: next.palY });
@@ -743,10 +772,8 @@ CA.ready(() => {
   const particleLayer = $("particles");
 
   /*
-   * Draw the actual authored row, including its gutter, glyphs and
-   * word highlight. Its fragments therefore remain recognizable
-   * pieces of the diff instead of becoming anonymous confetti.
-   * No file, texture, clone of live text or external image is used.
+   * The early bites retain recognizable pieces of the authored
+   * row, including its gutter, glyphs and word highlight.
    */
   function paintRow(r, height) {
     const source = document.createElement("canvas");
@@ -827,7 +854,7 @@ CA.ready(() => {
     const foldFor = finalMeal ? 0.075 : 0.05;
     const breakAt = start + foldFor;
     const rowTop = panelY + entry.y;
-    const source = paintRow(r, entry.h);
+    const source = finalMeal ? null : paintRow(r, entry.h);
     const rnd = seeded(113 + r.index * 97 + (finalMeal ? 701 : 0));
 
     build.to(r.fold, {
@@ -839,35 +866,78 @@ CA.ready(() => {
     }, start);
 
     /*
-     * Original row and fragment canvases exchange visibility on
-     * the same timestamp. There is never a duplicate live row.
+     * The final block crumples into small square pixels. The
+     * original text disappears before anything reaches the face.
+     * Earlier bites keep their existing text fragments.
      */
     build.set([r.row, r.reading], { autoAlpha: 0 }, breakAt);
 
-    const columns = Math.max(8, Math.ceil(inner / (entry.h * 1.08)));
+    const columns = finalMeal
+      ? clamp(Math.ceil(inner / (C * 1.6)), 14, 28)
+      : Math.max(8, Math.ceil(inner / (entry.h * 1.08)));
+    const pixelRows = finalMeal
+      ? clamp(Math.ceil(entry.h / (C * 1.2)), 2, 5)
+      : 1;
     const pitch = inner / columns;
+    const pitchY = entry.h / pixelRows;
+    const pieceCount = columns * pixelRows;
 
-    for (let i = 0; i < columns; i++) {
-      const piece = make("canvas", "row-fragment", particleLayer);
+    for (let i = 0; i < pieceCount; i++) {
+      const piece = make(
+        finalMeal ? "div" : "canvas",
+        finalMeal ? "pixel" : "row-fragment",
+        particleLayer
+      );
       piece.setAttribute("aria-hidden", "true");
 
-      const localX = i * pitch;
-      const width = Math.min(pitch - 1, inner - localX);
-      const height = entry.h - 2;
-      piece.width = Math.ceil(width * 2);
-      piece.height = Math.ceil(height * 2);
-      piece.style.width = width + "px";
-      piece.style.height = height + "px";
+      const localX = (i % columns) * pitch;
+      let width;
+      let height;
+      let sx;
+      let sy;
 
-      const ctx = piece.getContext("2d");
-      ctx.drawImage(
-        source,
-        localX * 2, 2, width * 2, height * 2,
-        0, 0, piece.width, piece.height
-      );
+      if (finalMeal) {
+        const size = Math.max(
+          3,
+          Math.min(
+            C * 0.48,
+            Math.min(pitch, pitchY) * (0.34 + rnd() * 0.12)
+          )
+        );
+        width = height = size;
+        piece.style.width = size + "px";
+        piece.style.height = size + "px";
+        piece.style.background = rnd() < 0.3
+          ? V.removedWordColor
+          : V.removedBackground;
 
-      const sx = left + localX;
-      const sy = rowTop + 1;
+        const cellX = localX + pitch * (0.35 + rnd() * 0.3);
+        const cellY = Math.floor(i / columns) * pitchY +
+          pitchY * (0.35 + rnd() * 0.3);
+
+        sx = left + inner * 0.5 +
+          (cellX - inner * 0.5) * 0.985 - size / 2;
+        sy = rowTop + entry.h * 0.85 +
+          (cellY - entry.h * 0.85) * 0.82 - size / 2;
+      } else {
+        width = Math.min(pitch - 1, inner - localX);
+        height = entry.h - 2;
+        piece.width = Math.ceil(width * 2);
+        piece.height = Math.ceil(height * 2);
+        piece.style.width = width + "px";
+        piece.style.height = height + "px";
+
+        const ctx = piece.getContext("2d");
+        ctx.drawImage(
+          source,
+          localX * 2, 2, width * 2, height * 2,
+          0, 0, piece.width, piece.height
+        );
+
+        sx = left + localX;
+        sy = rowTop + 1;
+      }
+
       const origin = {
         x: sx + width / 2,
         y: sy + height / 2
@@ -877,31 +947,32 @@ CA.ready(() => {
       const earlyArrival =
         (0.025 + (1 - clamp(distance * 2, 0, 1)) * 0.055) *
         (0.8 + rnd() * 0.2);
-      const lastPiece = i === (r.index % 2 ? 0 : columns - 1);
+      const lastPiece = i === (r.index % 2 ? 0 : pieceCount - 1);
       const arrival = lastPiece ? hit : hit - earlyArrival;
       const duration = Math.max(0.04, arrival - breakAt);
       const bend = (rnd() - 0.5) * C * 0.24;
-      const turn = (origin.x < endPoint.x ? 1 : -1) *
-        (55 + rnd() * 45);
+      const turn = finalMeal
+        ? 0
+        : (origin.x < endPoint.x ? 1 : -1) * (55 + rnd() * 45);
 
       /*
-       * All pieces start travelling immediately. There is no
-       * scatter stage or suspended horizontal grid. They enter
-       * the mouth in a short stream, with the last piece at hit.
+       * All pieces travel immediately. Final pixels contract into
+       * a tight funnel and stay square instead of rotating paper
+       * rectangles over the mascot.
        *
-       * These modifiers also run for event-suppressed blur seeks.
-       * The endpoint follows the mascot during the final hoist.
+       * Modifiers also run for event-suppressed blur seeks. The
+       * endpoint follows the mascot during the final hoist.
        */
       function position(raw) {
         const p = clamp(parseFloat(raw) || 0, 0, 1);
         const u = 0.45 * p + 0.55 * p * p;
         const target = pointAt(breakAt + duration * p);
         const c1 = {
-          x: mix(origin.x, target.x, 0.29),
-          y: mix(origin.y, target.y, 0.14) + bend
+          x: mix(origin.x, target.x, finalMeal ? 0.58 : 0.29),
+          y: mix(origin.y, target.y, finalMeal ? 0.24 : 0.14) + bend
         };
         const c2 = {
-          x: target.x + (origin.x - target.x) * 0.045,
+          x: target.x + (origin.x - target.x) * (finalMeal ? 0.018 : 0.045),
           y: target.y - C * 0.55
         };
 
@@ -928,11 +999,13 @@ CA.ready(() => {
         immediateRender: false
       }, breakAt);
 
-      build.to(piece, {
-        rotation: turn,
-        duration,
-        ease: "power1.in"
-      }, breakAt);
+      if (!finalMeal) {
+        build.to(piece, {
+          rotation: turn,
+          duration,
+          ease: "power1.in"
+        }, breakAt);
+      }
       build.to(piece, {
         scaleX: 0.035, scaleY: 0.035,
         duration: duration * 0.48,
@@ -1223,7 +1296,7 @@ CA.ready(() => {
 
   /*
    * Suction hoists the mascot and raises the counter slab into its
-   * final composition before key. Fragments chase the moving mouth.
+   * final composition before key. Pixels chase the moving mouth.
    * There is no position jump when the final number arrives.
    */
   function finalPointAt(designTime) {

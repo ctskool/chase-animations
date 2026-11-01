@@ -772,12 +772,12 @@ CA.ready(() => {
       modifiers: { x: snapX }
     }, D * 0.01);
     build.to(palBody, {
-      rotation: -8,
+      rotation: -4,
       duration: prepEnd - D * 0.01,
       ease: "power2.in"
     }, D * 0.01);
     build.set(palBody, {
-      rotation: 6, scaleX: 1, scaleY: 1
+      rotation: 3, scaleX: 1, scaleY: 1
     }, prepEnd);
 
     const stops = [
@@ -813,7 +813,7 @@ CA.ready(() => {
       clawd.pose(build, stop.at, {
         eyes: "right",
         arms: left ? "right" : "left",
-        legs: left ? "left" : "right"
+        legs: "stand"
       });
       build.set(pal, { x: stop.x, y: landingY }, stop.at);
       build.set(palBody, { scaleX: 1, scaleY: 1 }, stop.at);
@@ -824,6 +824,9 @@ CA.ready(() => {
         const rise = air * 0.43;
         const hop = palCell * (stop.running ? 1.1 : 0.55);
 
+        clawd.pose(build, takeoff, {
+          legs: left ? "left" : "right"
+        });
         build.to(pal, {
           x: next.x,
           duration: air,
@@ -873,7 +876,7 @@ CA.ready(() => {
       eyes: "left", arms: "down", legs: "stand"
     });
     build.to(palBody, {
-      rotation: -8,
+      rotation: -4,
       duration: D * 0.022,
       ease: "power3.out"
     }, glanceAt);
@@ -884,10 +887,10 @@ CA.ready(() => {
       eyes: "left", arms: "left", legs: "stand"
     });
     clawd.pose(build, chaseAt, {
-      eyes: "right", arms: "right", legs: "left"
+      eyes: "right", arms: "right", legs: "stand"
     });
     build.set(palBody, {
-      rotation: 8, scaleX: 1, scaleY: 1
+      rotation: 4, scaleX: 1, scaleY: 1
     }, chaseAt);
 
     // Stop, plant, then compress deeply without widening the character.

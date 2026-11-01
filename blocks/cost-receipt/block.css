@@ -1,0 +1,414 @@
+[data-variant="overlay"] #stage {
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.5);
+}
+
+#cr-ground,
+#cr-halo,
+#cr-grain,
+#cr-scene,
+#cr-rays,
+#cr-sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#cr-ground,
+#cr-halo,
+#cr-grain {
+  z-index: 0;
+}
+
+#cr-halo {
+  transform-origin: 50% 65%;
+}
+
+#cr-grain {
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
+  background-size: 180px 180px;
+}
+
+#cr-scene {
+  z-index: 2;
+  perspective: 1800px;
+}
+
+#cr-neck,
+#cr-stub {
+  position: absolute;
+  pointer-events: none;
+}
+
+#cr-neck {
+  z-index: 1;
+}
+
+#cr-stub {
+  z-index: 4;
+}
+
+#cr-rig {
+  position: absolute;
+  z-index: 3;
+  transform-origin: 50% 48%;
+  filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.32));
+  pointer-events: none;
+}
+
+#cr-paper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+  overflow: hidden;
+  transform-origin: 50% 0%;
+  backface-visibility: hidden;
+}
+
+#cr-curl {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: 50% 0%;
+}
+
+#cr-paper-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.075;
+  mix-blend-mode: multiply;
+  background-size: 160px 160px;
+  pointer-events: none;
+}
+
+#cr-feed-edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 7px;
+  z-index: 3;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+#cr-buckle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  transform-origin: 50% 50%;
+  clip-path: polygon(0% 0%, 100% 24%, 100% 100%, 0% 76%);
+  pointer-events: none;
+}
+
+#cr-sweep {
+  position: absolute;
+  top: -8%;
+  height: 116%;
+  left: 0;
+  z-index: 3;
+  width: 18%;
+  transform: skewX(-15deg);
+  pointer-events: none;
+}
+
+#cr-header,
+#cr-header-rule,
+#cr-items,
+#cr-total-rule,
+#cr-seal {
+  position: absolute;
+  z-index: 4;
+}
+
+#cr-header {
+  text-align: center;
+}
+
+#cr-shop-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#cr-brand {
+  flex: none;
+}
+
+#cr-brand svg {
+  display: block;
+}
+
+#cr-shop,
+#cr-subtitle,
+.cr-item-label,
+.cr-item-price,
+#cr-total-value,
+#cr-total-label,
+#cr-subtotal-label,
+#cr-subtotal-value {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+#cr-shop {
+  display: inline-block;
+  letter-spacing: 0.065em;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+#cr-subtitle {
+  position: relative;
+  display: inline-block;
+  line-height: 1.18;
+  white-space: nowrap;
+  text-wrap: balance;
+}
+
+.cr-rule {
+  height: 0;
+  border-top-style: dashed;
+  transform-origin: 0% 50%;
+}
+
+.cr-item {
+  position: absolute;
+  display: flex;
+  align-items: baseline;
+}
+
+.cr-item-label,
+.cr-item-price {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  flex: none;
+  line-height: 1.06;
+  white-space: nowrap;
+}
+
+.cr-item-label {
+  text-wrap: balance;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.cr-item-price {
+  text-align: right;
+}
+
+.cr-leader {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 12px;
+  height: 0;
+  align-self: flex-start;
+  border-bottom-style: dotted;
+}
+
+.cr-item-wash {
+  position: absolute;
+  z-index: 0;
+  inset: -3px -8px 3px;
+  transform-origin: 0% 50%;
+  pointer-events: none;
+}
+
+#cr-seal {
+  z-index: 5;
+  transform-origin: 50% 50%;
+  mix-blend-mode: multiply;
+}
+
+#cr-stamp-art {
+  position: absolute;
+  pointer-events: none;
+}
+
+#cr-stamp-art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+#cr-stamp-word,
+#cr-total-value,
+#cr-total-label {
+  position: absolute;
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+#cr-stamp-word {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.035em;
+}
+
+#cr-total-value,
+#cr-subtotal-value {
+  letter-spacing: -0.065em;
+}
+
+#cr-total-label {
+  letter-spacing: 0.08em;
+}
+
+#cr-printer {
+  position: absolute;
+  z-index: 6;
+  border-radius: 10px;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.9),
+    0 8px 7px rgba(0, 0, 0, 0.94),
+    0 17px 18px rgba(0, 0, 0, 0.68);
+  pointer-events: none;
+}
+
+#cr-mouth {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 6px;
+  bottom: 7px;
+  border-radius: 4px;
+  box-shadow:
+    inset 0 8px 7px rgba(0, 0, 0, 1),
+    inset 0 -2px 0 rgba(255, 255, 255, 0.035),
+    0 2px 0 rgba(0, 0, 0, 0.95);
+}
+
+#cr-mouth::after {
+  content: "";
+  position: absolute;
+  inset: 0 6px 45%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#cr-lip {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  height: 3px;
+  bottom: 3px;
+  border-radius: 1px;
+}
+
+#cr-roller {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  height: 4px;
+  bottom: -1px;
+  transform-origin: 50% 0%;
+}
+
+#cr-subtotal {
+  position: absolute;
+  z-index: 4;
+  text-align: center;
+  pointer-events: none;
+}
+
+#cr-subtotal-label {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.15;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+#cr-subtotal-value {
+  display: inline-block;
+  line-height: 1.04;
+  white-space: nowrap;
+  transform-origin: 50% 60%;
+}
+
+#cr-pal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 8;
+  transform-origin: 50% 100%;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+#cr-pal svg,
+.cr-grips svg {
+  shape-rendering: crispEdges;
+}
+
+.cr-grips,
+.cr-eyes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cr-grips {
+  z-index: 9;
+}
+
+.cr-grips svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.cr-eyes {
+  z-index: 3;
+}
+
+.cr-grip-hand,
+.cr-grip-notch,
+.cr-eye-mask,
+.cr-wide-eye,
+.cr-eye-pupil,
+.cr-sweat {
+  position: absolute;
+}
+
+.cr-grip-hand {
+  left: 0;
+  top: 0;
+}
+
+.cr-sweat {
+  z-index: 5;
+}
+
+#cr-rays {
+  z-index: 10;
+}
+
+#cr-sparks {
+  z-index: 11;
+}
+
+.cr-ray,
+.cr-spark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+.cr-ray {
+  transform-origin: 50% 100%;
+}

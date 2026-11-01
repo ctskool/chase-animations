@@ -86,3 +86,4 @@ The mascot uses 27px cells in `full` and 24px cells in standard compact outputs.
 Hiding the mascot releases its roof space. Hiding the logo releases space beside the winner’s name.
 
 The overlay uses a 960px-high card by default and enters and exits through an edge wipe.
+Claude, Claude Code and the Claude logo are Anthropic's. This pack isn't affiliated with or endorsed by Anthropic.

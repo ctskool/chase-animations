@@ -44,7 +44,7 @@ CA.ready(() => {
       pad: 22, minPad: 12, dividerGap: 24,
       radius: 16, minRow: 112,
       cell: 20, heroScale: 1.1,
-      capW: 304, capH: 54, sliver: 5,
+      capW: 304, capH: 54, sliver: 10,
       clockD: 990, clockGap: 36,
       minuteWidth: 16, hourWidth: 22,
       ledgeGap: 20, floorGap: 12, jump: 144,
@@ -61,7 +61,7 @@ CA.ready(() => {
       pad: 18, minPad: 6, dividerGap: 20,
       radius: 13, minRow: 78,
       cell: 20, heroScale: 1.16,
-      capW: 320, capH: 54, sliver: 4,
+      capW: 320, capH: 54, sliver: 8,
       clockD: 650, clockGap: 18,
       minuteWidth: 12, hourWidth: 18,
       ledgeGap: 18, floorGap: 10, jump: 120,
@@ -78,7 +78,7 @@ CA.ready(() => {
       pad: 18, minPad: 6, dividerGap: 20,
       radius: 15, minRow: 80,
       cell: 19, heroScale: 1.12,
-      capW: 300, capH: 50, sliver: 5,
+      capW: 300, capH: 50, sliver: 10,
       clockD: 680, clockGap: 20,
       minuteWidth: 13, hourWidth: 19,
       ledgeGap: 20, floorGap: 10, jump: 126,
@@ -108,7 +108,7 @@ CA.ready(() => {
   const finalBase = initialBase;
   const gap = M.gap;
   const finalGap = Math.max(1, Math.round(M.finalGap * density));
-  const sliver = Math.max(compact ? 3 : 5, Math.round(M.sliver * density));
+  const sliver = Math.max(compact ? 6 : 10, Math.round(M.sliver * density));
   const capH = Math.max(compact ? 32 : 48, Math.round(M.capH * density));
   const flatCap = compact ? 5 : 7;
   const extraRows = Math.max(0, n - 6);
@@ -375,9 +375,11 @@ CA.ready(() => {
 
   const latestStackTop =
     initialBase - minimumRow * layoutCount - gap * (layoutCount - 1);
+  const beforeLaneRoom =
+    latestStackTop - totalTop - M.stackGap * density;
   const maximumBeforeHeight = Math.max(
     minHero * 0.96,
-    latestStackTop - totalTop - M.stackGap * density
+    Math.min(beforeLaneRoom / 1.12, beforeLaneRoom - 24)
   );
 
   let beforePx = parseFloat(before.style.fontSize);
@@ -386,9 +388,17 @@ CA.ready(() => {
     before.style.fontSize = beforePx + "px";
   }
 
+  /*
+   * The headline owns this lane during both its entrance and count pulse.
+   * Rows land below it and limit their entrance lift to the available room.
+   */
+  const headlineBottom = totalTop + Math.max(
+    before.offsetHeight * 1.12,
+    before.offsetHeight + 24
+  );
   const preferredStackTop = Math.max(
     H * M.stackTop,
-    totalTop + before.offsetHeight + M.stackGap * density
+    headlineBottom + M.stackGap * density
   );
   const stackTopTarget = Math.min(preferredStackTop, latestStackTop);
   const rowH = Math.max(
@@ -482,17 +492,28 @@ CA.ready(() => {
       task.style.fontSize = taskPx + "px";
     }
 
+    const openingClearance = Math.max(0, initialPositions[i] - headlineBottom);
+    const openingStretch = Math.min(1.1, 1 + openingClearance / rowH);
+    const openingDrop = Math.min(
+      M.openingDrop * density,
+      Math.max(0, openingClearance - rowH * (openingStretch - 1))
+    );
+    const reboundScaleY = Math.min(
+      1.065,
+      1 + Math.max(0, openingClearance - inner * 0.003) / rowH
+    );
+
     gsap.set(el, {
       x: side + (i % 2 ? M.openingOffset : -M.openingOffset),
-      y: initialPositions[i] - M.openingDrop * density,
+      y: initialPositions[i] - openingDrop,
       scaleX: 0.95,
-      scaleY: 1.1,
+      scaleY: openingStretch,
       rotation: 0,
       skewX: 0,
       autoAlpha: 0
     });
 
-    return { el, fold, content, color };
+    return { el, fold, content, color, reboundScaleY };
   });
 
   const clock = $("hc-clock");
@@ -868,7 +889,7 @@ CA.ready(() => {
 
     build.to(row.el, {
       scaleX: 0.985,
-      scaleY: 1.065,
+      scaleY: row.reboundScaleY,
       rotation: i % 2 ? -0.25 : 0.25,
       duration: rebound,
       ease: "power4.out"
@@ -1075,7 +1096,9 @@ CA.ready(() => {
     build.set(before, { autoAlpha: 1 }, firstHit);
 
     const landingY = initialStackTop - flatCap - clawd.height;
-    const apexLimit = compact ? 20 : top + 8;
+    const apexLimit = variant === "top"
+      ? 20 + cell * 3
+      : compact ? 20 : top + 8;
     const apex = Math.max(
       apexLimit,
       Math.min(homeY, landingY) - M.jump * density
@@ -1333,6 +1356,7 @@ CA.ready(() => {
         rotation: 0,
         skewX: 0,
         borderRadius: 2,
+        backgroundColor: row.color,
         "--hc-edge": "1px"
       }, snapEnd);
     }
@@ -1415,15 +1439,6 @@ CA.ready(() => {
           duration: down,
           ease: "power3.in"
         }, snapEnd + up);
-      }
-
-      if (index >= 0) {
-        build.set(rows[index].el, { backgroundColor: V.ink }, snapEnd);
-        build.to(rows[index].el, {
-          backgroundColor: rows[index].color,
-          duration: Math.min(0.08, reboundRoom * 0.8),
-          ease: "power3.out"
-        }, snapEnd);
       }
 
       build.fromTo(hub, {

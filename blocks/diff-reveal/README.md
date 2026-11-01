@@ -85,3 +85,4 @@ The counter band reaches the bottom of the available area in every output. Its f
 Shorter compact stages use tighter spacing and smaller mascot cells, down to 12px. Readable labels and code stay at least 40px in `full` and 32px in `top` and `overlay`. For compact stages below about 640px tall, use fewer representative rows.
 
 With the mascot hidden, its rail closes and the row fragments feed directly into the counter. With the logo hidden, the header uses the released width.
+Claude, Claude Code and the Claude logo are Anthropic's. This pack isn't affiliated with or endorsed by Anthropic.
