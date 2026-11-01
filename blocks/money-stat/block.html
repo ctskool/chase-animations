@@ -1,0 +1,67 @@
+<div id="ms-clip">
+  <header id="ms-header">
+    <div id="ms-company-group">
+      <svg id="ms-logo" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M3 3h26v26H3zM10 3v26M10 11h19M10 20h12" fill="none" stroke="currentColor" stroke-width="2.4"/>
+      </svg>
+      <span id="ms-company"></span>
+    </div>
+    <span id="ms-period"></span>
+  </header>
+
+  <div id="ms-kicker"></div>
+  <div id="ms-metric"></div>
+  <span id="ms-date"></span>
+
+  <div id="ms-hero">
+    <span id="ms-prefix"></span>
+    <span id="ms-digits"></span>
+    <span id="ms-suffix"></span>
+  </div>
+  <div id="ms-result-rule" aria-hidden="true"></div>
+
+  <div id="ms-delta-row">
+    <div id="ms-delta-group">
+      <div id="ms-chip">
+        <svg id="ms-triangle" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 4 22 21H2Z" fill="currentColor"/>
+        </svg>
+        <span id="ms-delta"></span>
+      </div>
+      <span id="ms-comparison"></span>
+    </div>
+  </div>
+
+  <svg id="ms-chart" aria-hidden="true">
+    <defs>
+      <linearGradient id="ms-fill-gradient" x1="0" y1="0" x2="0" y2="1">
+        <stop id="ms-fill-top" offset="0%" stop-opacity="0.12"/>
+        <stop id="ms-fill-bottom" offset="100%" stop-opacity="0"/>
+      </linearGradient>
+      <pattern id="ms-hatch" width="14" height="14" patternUnits="userSpaceOnUse">
+        <path id="ms-hatch-line" d="M-3 3 3-3M0 14 14 0M11 17 17 11" fill="none" stroke-width="1"/>
+      </pattern>
+    </defs>
+    <g id="ms-grid"></g>
+    <rect id="ms-future"/>
+    <path id="ms-area" fill="url(#ms-fill-gradient)"/>
+    <path id="ms-before" fill="none"/>
+    <path id="ms-after" fill="none"/>
+    <path id="ms-cursor" fill="none"/>
+    <path id="ms-leader" fill="none"/>
+    <circle id="ms-event-ring" fill="none"/>
+    <circle id="ms-tip"/>
+    <circle id="ms-end-ping" fill="none"/>
+    <g id="ms-ticks"></g>
+  </svg>
+
+  <div id="ms-callout">
+    <div class="ms-callout-mask"><span id="ms-event-date"></span></div>
+    <div class="ms-callout-mask"><span id="ms-event-title"></span></div>
+    <div class="ms-callout-mask"><span id="ms-event-impact"></span></div>
+  </div>
+
+  <div id="ms-price-tag"><span id="ms-price"></span></div>
+  <div id="ms-source"></div>
+  <div id="ms-driver" aria-hidden="true"></div>
+</div>

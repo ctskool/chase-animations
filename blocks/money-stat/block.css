@@ -1,0 +1,225 @@
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+}
+
+#ms-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--ms-ground);
+  color: var(--ms-ink);
+}
+#ms-clip, #ms-clip * { box-sizing: border-box; }
+
+#ms-header {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  line-height: 1.2;
+}
+#ms-company-group {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+#ms-company {
+  display: inline-block;
+  white-space: nowrap;
+}
+#ms-logo, #ms-period, #ms-kicker, #ms-result-rule {
+  display: none;
+  visibility: hidden;
+}
+
+#ms-metric {
+  position: absolute;
+  display: inline-block;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+#ms-date, #ms-comparison, #ms-event-date {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+}
+#ms-date {
+  position: absolute;
+  display: inline-block;
+  color: var(--ms-muted);
+  line-height: 1.2;
+  text-align: right;
+  white-space: nowrap;
+}
+
+#ms-hero {
+  position: absolute;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.065em;
+  white-space: nowrap;
+  transform-origin: 50% 50%;
+}
+#ms-prefix {
+  align-self: flex-start;
+  margin-top: 0.12em;
+  font-size: 0.48em;
+  letter-spacing: -0.035em;
+}
+#ms-digits {
+  display: inline-block;
+  flex: none;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+#ms-suffix {
+  font-size: 0.67em;
+  letter-spacing: -0.035em;
+}
+#ms-prefix:empty, #ms-suffix:empty { display: none; }
+
+#ms-delta-row {
+  position: absolute;
+  pointer-events: none;
+}
+#ms-delta-group {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: max-content;
+}
+#ms-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 15px;
+  background: var(--ms-accent);
+  color: var(--ms-ground);
+  border-radius: 4px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  visibility: hidden;
+  transform-origin: 0% 50%;
+}
+#ms-triangle { display: block; flex: none; }
+#ms-delta { display: inline-block; }
+#ms-comparison {
+  display: inline-block;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--ms-muted);
+  visibility: hidden;
+}
+
+#ms-chart {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+#ms-before, #ms-after {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+#ms-cursor { stroke-dasharray: 5 9; }
+#ms-after, #ms-leader, #ms-event-ring, #ms-end-ping {
+  visibility: hidden;
+}
+
+#ms-callout {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
+.ms-callout-mask {
+  overflow: visible;
+  flex: none;
+}
+.ms-callout-mask span {
+  display: inline-block;
+  visibility: hidden;
+  white-space: nowrap;
+}
+#ms-event-date {
+  color: var(--ms-accent);
+  line-height: 1.2;
+  letter-spacing: 0.025em;
+}
+#ms-event-title {
+  color: var(--ms-ink);
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+#ms-event-impact {
+  color: var(--ms-muted);
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+#ms-price-tag {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 11px;
+  border-radius: 4px;
+  background: var(--ms-accent);
+  color: var(--ms-ground);
+  visibility: hidden;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+#ms-price { display: inline-block; }
+#ms-price-tag::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: calc(50% - 8px);
+  width: 16px;
+  height: 16px;
+  background: inherit;
+  transform: rotate(45deg);
+}
+
+#ms-source {
+  position: absolute;
+  color: var(--ms-source);
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+#ms-driver {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  visibility: hidden;
+  pointer-events: none;
+}

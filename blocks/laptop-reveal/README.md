@@ -1,8 +1,8 @@
 # Laptop reveal
 
-A silver laptop springs open in a bright studio. Its product page wakes, scrolls to a second headline, and receives a cursor click. The complete product name rises into place underneath.
+A silver laptop opens in a bright studio. Its screen wakes on your product, scrolls quickly to a second message, and receives a cursor click. A large, heavy product name stamps into place underneath.
 
-**Key moment:** the complete name, short line, blue underline and button check are visible together. A click outline expands immediately afterward.
+**Key moment:** the button confirms, the name hits its largest pose, and the short line and solid blue underline finish together. The name and button spring back immediately afterward.
 
 ## Suits
 
@@ -24,29 +24,35 @@ Run `animate vars laptop-reveal` for the full list.
 | Variables | What they change |
 |---|---|
 | `product`, `productDescription` | Accessible description |
-| `headline` | Opening screen headline and portrait heading |
-| `projectTitle`, `projectDescription` | Product preview |
-| `sectionHeadline`, `sectionDescription` | Copy revealed by the scroll |
+| `headline` | Opening message |
+| `projectTitle`, `projectDescription` | Illustrated workspace preview |
+| `sectionHeadline`, `sectionDescription` | Message revealed by the scroll |
 | `button` | Persistent button |
-| `productName`, `shortLine` | Copy underneath the laptop |
-| `headlineSize`, `nameSize`, `taglineSize` | Preferred exterior text sizes |
-| `screenTitleSize`, `screenTextSize`, `screenButtonSize` | Screen typography in texture pixels |
-| `bgTop`, `bgBottom` | Studio colours |
+| `productName`, `shortLine` | Final name and supporting line |
+| `headlineSize` | Full opening headline size |
+| `nameSize`, `topNameSize`, `overlayNameSize` | Name size for each output |
+| `taglineSize`, `topTaglineSize`, `overlayTaglineSize` | Supporting-line size for each output |
+| `fullLaptopWidth`, `topLaptopWidth`, `overlayLaptopWidth` | Maximum laptop width for each output |
+| `brandImpact` | Name landing overshoot |
+| `underlineWidth`, `topUnderlineWidth`, `overlayUnderlineWidth`, `underlineThickness` | Solid underline dimensions |
+| `screenPadding` | Breathing room inside the display |
+| `screenTitleSize`, `projectTitleSize`, `screenTextSize`, `screenButtonSize` | Preferred screen typography |
+| `bgTop`, `bgBottom`, `studioLight` | Studio colours and reflections |
 | `silver`, `bezel`, `keys` | Laptop colours |
-| `pageBackground`, `pageInk`, `workspaceSurface`, `muted` | Page and secondary-text colours |
-| `buttonColor`, `buttonPressedColor`, `buttonInk` | Button, underline and light colours |
+| `pageBackground`, `pageInk`, `workspaceSurface`, `muted` | Page and supporting-text colours |
+| `buttonColor`, `buttonPressedColor`, `buttonInk` | Button and underline colours |
 | `nameInk` | Product name |
 | `initialLidAngle`, `finalLidAngle` | Lid poses |
-| `cameraOrbit`, `cameraElevation` | Camera angles |
-| `screenBlur`, `scrollPixels` | Screen wake softness and page travel |
+| Camera variables | Opening orbit and separate final viewing angles |
+| `screenBlur`, `scrollPixels` | Screen wake softness and section travel |
 | Variables ending in `Frame`, plus `keyFrame` | Build-up beats relative to the reference key frame |
 | `overlayPosition` | Top or bottom placement |
 
-Use two short headline lines, a short preview title, and brief descriptions. Keep the button close to the sample length. Long screen copy is shortened with an ellipsis.
+Use brief headlines, a short preview title and a button close to the sample length. Screen copy balances across complete words. Manual line breaks are treated as spaces so the supporting copy can finish with “next steps. Together.” Long copy is shortened at whole-word boundaries.
 
-The display wakes as a complete page. The product name and short line enter vertically rather than revealing fragments of words.
+The full opening headline disappears before any screen copy appears. The compact outputs put the opening message directly on the screen.
 
-The laptop has no logo. Its geometry, lighting and contact shadow are generated locally. Nooklane is fictional sample content.
+The laptop has rounded metal panels, a narrow rounded glass border, connected hinge barrels, shallow staggered keys and a soft floor shadow. Studio reflections are generated locally. Nooklane is fictional sample content.
 
 ## Timing
 
@@ -56,20 +62,20 @@ The laptop has no logo. Its geometry, lighting and contact shadow are generated 
 | Hold | 1s by default |
 | Transparent exit | 0.34s |
 
-The lid and camera settle around one second. The page scrolls over reference frames 40–74.
+The lid and camera land around one second. The full headline hands off to the waking screen at reference frame 14. Top and overlay start waking at frame 4. The entire display brightens through a soft blur and is sharp by frame 30.
 
-During that scroll, the portrait heading slides away and the laptop expands into the released space. The final screen headline becomes the main message.
+The page scrolls over frames 48–54. Reading groups leave before their words reach the bezel, and the incoming headline and description arrive together. The button has its own clear area throughout. Scroll duration is capped at eight reference frames.
 
-The cursor arrives at frame 104 and presses the button over frames 110–120. The name starts at frame 94 and the short line at frame 103. Each rises quickly into its reading position. The underline finishes at the key moment.
+The cursor arrives at frame 104. The laptop moves up to make room for the name, which enters from frame 106. The short line follows at frame 113.
 
-The button check appears exactly at the key moment. The button releases, a click outline expands, and the laptop gives a short forward response.
+At frame 120, the button confirms and releases as the name stamps down. The underline completes one clean draw and stays solid. The brief landing response settles, then the final lockup stays fixed while studio reflections continue moving.
 
-Reference frames use a 30 fps design. Word sync scales the build-up together. Through the hold, studio lights and thin highlights keep moving while readable text stays in place.
+Reference frames use a 30 fps design. Word sync scales the build-up together.
 
 ## Outputs
 
-`full` opens with a large portrait headline. The heading exits during the scroll, giving the laptop more space above the oversized name and short line.
+`full` starts with a large headline above the opening laptop. The headline leaves before the screen wakes. The laptop fills the width, then moves up for the oversized name and short line, inside the portrait safe area.
 
-`top` uses a lower camera angle, a large laptop and a compact name treatment underneath.
+`top` uses its own lower viewing angle, name size and spacing. The laptop occupies the available area before making room for the final lockup.
 
-`overlay` uses a 1000px studio card with its own spacing. A horizontal wipe opens the card and fully closes it on exit. Place it above or below talking-head footage.
+`overlay` uses a 1000px studio card with separate camera and type sizes. A horizontal wipe opens the card and fully closes it on exit. Place it above or below talking-head footage.

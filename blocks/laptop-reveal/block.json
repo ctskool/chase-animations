@@ -1,11 +1,11 @@
 {
   "name": "laptop-reveal",
   "title": "Laptop reveal",
-  "summary": "A silver laptop springs open, reveals a large illustrated product page, and scrolls into a click timed to the oversized product-name reveal.",
+  "summary": "A rounded aluminium laptop opens in a reflected studio, wakes on your product, scrolls decisively, and clicks into a large stamped name reveal.",
   "fonts": [
-    "700 144px 'Inter Tight'",
-    "700 184px 'Inter Tight'",
-    "500 84px Inter"
+    "700 160px 'Inter Tight'",
+    "800 240px 'Inter Tight'",
+    "500 90px Inter"
   ],
   "three": true,
   "motionBlur": true,
@@ -16,7 +16,7 @@
     "exit": 0.34,
     "minKeyAt": 2.4
   },
-  "keyMoment": "the product name and short line land as the page button releases, with a spreading click outline and blue underline",
+  "keyMoment": "The button confirms as the oversized product name stamps into place; the short line and one solid blue underline finish on the same frame.",
   "variables": [
     {
       "id": "product",
@@ -91,6 +91,12 @@
       "default": "#E4E6EA"
     },
     {
+      "id": "studioLight",
+      "type": "color",
+      "label": "Studio lights and reflections",
+      "default": "#FFFFFF"
+    },
+    {
       "id": "silver",
       "type": "color",
       "label": "Aluminium",
@@ -117,7 +123,7 @@
     {
       "id": "pageInk",
       "type": "color",
-      "label": "Page and portrait headline text",
+      "label": "Page and opening headline text",
       "default": "#0F1115"
     },
     {
@@ -135,7 +141,7 @@
     {
       "id": "buttonInk",
       "type": "color",
-      "label": "Button text and studio lights",
+      "label": "Button text and cursor outline",
       "default": "#FFFFFF"
     },
     {
@@ -159,38 +165,122 @@
     {
       "id": "headlineSize",
       "type": "number",
-      "label": "Portrait headline size",
+      "label": "Full opening headline size",
       "default": 128
     },
     {
       "id": "nameSize",
       "type": "number",
-      "label": "Portrait product-name size",
-      "default": 184
+      "label": "Full product-name size",
+      "default": 240
+    },
+    {
+      "id": "topNameSize",
+      "type": "number",
+      "label": "Top product-name size",
+      "default": 148
+    },
+    {
+      "id": "overlayNameSize",
+      "type": "number",
+      "label": "Overlay product-name size",
+      "default": 160
     },
     {
       "id": "taglineSize",
       "type": "number",
-      "label": "Portrait short-line size",
+      "label": "Full short-line size",
       "default": 56
+    },
+    {
+      "id": "topTaglineSize",
+      "type": "number",
+      "label": "Top short-line size",
+      "default": 40
+    },
+    {
+      "id": "overlayTaglineSize",
+      "type": "number",
+      "label": "Overlay short-line size",
+      "default": 44
+    },
+    {
+      "id": "fullLaptopWidth",
+      "type": "number",
+      "label": "Full laptop maximum width, percent",
+      "default": 97
+    },
+    {
+      "id": "topLaptopWidth",
+      "type": "number",
+      "label": "Top laptop maximum width, percent",
+      "default": 96
+    },
+    {
+      "id": "overlayLaptopWidth",
+      "type": "number",
+      "label": "Overlay laptop maximum width, percent",
+      "default": 96
+    },
+    {
+      "id": "brandImpact",
+      "type": "number",
+      "label": "Product-name landing overshoot",
+      "default": 0.07
+    },
+    {
+      "id": "underlineWidth",
+      "type": "number",
+      "label": "Full underline width",
+      "default": 440
+    },
+    {
+      "id": "topUnderlineWidth",
+      "type": "number",
+      "label": "Top underline width",
+      "default": 320
+    },
+    {
+      "id": "overlayUnderlineWidth",
+      "type": "number",
+      "label": "Overlay underline width",
+      "default": 360
+    },
+    {
+      "id": "underlineThickness",
+      "type": "number",
+      "label": "Underline thickness",
+      "default": 6
+    },
+    {
+      "id": "screenPadding",
+      "type": "number",
+      "label": "Screen padding in texture pixels",
+      "default": 96
     },
     {
       "id": "screenTitleSize",
       "type": "number",
       "label": "Screen headline size in texture pixels",
-      "default": 144
+      "default": 160
+    },
+    {
+      "id": "projectTitleSize",
+      "type": "number",
+      "label": "Product preview title size in texture pixels",
+      "default": 104
     },
     {
       "id": "screenTextSize",
       "type": "number",
       "label": "Screen description size in texture pixels",
-      "default": 84
+      "default": 90
     },
     {
       "id": "screenButtonSize",
       "type": "number",
       "label": "Screen button size in texture pixels",
-      "default": 84
+      "default": 92
     },
     {
       "id": "initialLidAngle",
@@ -202,19 +292,37 @@
       "id": "finalLidAngle",
       "type": "number",
       "label": "Final lid angle in degrees",
-      "default": 100
+      "default": 104
     },
     {
       "id": "cameraOrbit",
       "type": "number",
       "label": "Initial camera orbit in degrees",
-      "default": 30
+      "default": 32
+    },
+    {
+      "id": "initialCameraElevation",
+      "type": "number",
+      "label": "Initial camera elevation in degrees",
+      "default": 9
     },
     {
       "id": "cameraElevation",
       "type": "number",
-      "label": "Final camera elevation in degrees",
-      "default": 21
+      "label": "Full final camera elevation in degrees",
+      "default": 18
+    },
+    {
+      "id": "topCameraElevation",
+      "type": "number",
+      "label": "Top final camera elevation in degrees",
+      "default": 14
+    },
+    {
+      "id": "overlayCameraElevation",
+      "type": "number",
+      "label": "Overlay final camera elevation in degrees",
+      "default": 16
     },
     {
       "id": "orbitEndFrame",
@@ -225,44 +333,50 @@
     {
       "id": "wakeStartFrame",
       "type": "number",
-      "label": "Screen wake starts",
-      "default": 5
+      "label": "Full screen wake and headline handoff",
+      "default": 14
+    },
+    {
+      "id": "compactWakeStartFrame",
+      "type": "number",
+      "label": "Top and overlay screen wake starts",
+      "default": 4
     },
     {
       "id": "wakeEndFrame",
       "type": "number",
       "label": "Screen becomes sharp",
-      "default": 28
+      "default": 30
     },
     {
       "id": "screenBlur",
       "type": "number",
       "label": "Initial screen blur in texture pixels",
-      "default": 14
+      "default": 18
     },
     {
       "id": "scrollStartFrame",
       "type": "number",
       "label": "Page scroll starts",
-      "default": 40
+      "default": 48
     },
     {
       "id": "scrollEndFrame",
       "type": "number",
-      "label": "Page scroll ends",
-      "default": 74
+      "label": "Page scroll ends, maximum eight frames later",
+      "default": 54
     },
     {
       "id": "scrollPixels",
       "type": "number",
       "label": "Page travel in texture pixels, 900–1500",
-      "default": 940
+      "default": 1000
     },
     {
       "id": "cursorStartFrame",
       "type": "number",
       "label": "Cursor movement starts",
-      "default": 82
+      "default": 78
     },
     {
       "id": "cursorEndFrame",
@@ -274,25 +388,25 @@
       "id": "pressStartFrame",
       "type": "number",
       "label": "Button press starts",
-      "default": 110
+      "default": 112
     },
     {
       "id": "pressEndFrame",
       "type": "number",
-      "label": "Button release and check start",
+      "label": "Button reaches full press",
       "default": 120
     },
     {
       "id": "nameStartFrame",
       "type": "number",
       "label": "Product name starts rising",
-      "default": 94
+      "default": 106
     },
     {
       "id": "lineStartFrame",
       "type": "number",
       "label": "Short line starts rising",
-      "default": 103
+      "default": 113
     },
     {
       "id": "keyFrame",

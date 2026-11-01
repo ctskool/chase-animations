@@ -1,0 +1,328 @@
+{
+  "name": "headline-highlight",
+  "title": "Headline Highlight",
+  "summary": "A newspaper flies in on a weighted 3D tilt, a dolly moves toward the evidence, rough lime ink marks the key sentence, and a quoted post lands in front.",
+  "fonts": [
+    "400 40px Newsreader",
+    "700 40px Newsreader",
+    "800 40px Newsreader",
+    "400 40px Inter",
+    "500 40px Inter",
+    "600 40px Inter",
+    "700 40px Inter"
+  ],
+  "fontFiles": [
+    "newsreader-400.woff2",
+    "newsreader-700.woff2",
+    "newsreader-800.woff2"
+  ],
+  "motionBlur": true,
+  "timing": {
+    "keyAt": 2.8,
+    "hold": 2.2,
+    "exit": 0.3,
+    "minKeyAt": 1.6
+  },
+  "keyMoment": "the final highlighter stroke reaches its chisel end and the lime margin mark locks beside the evidence",
+  "overlayHeight": 960,
+  "variables": [
+    {
+      "id": "masthead",
+      "type": "string",
+      "label": "Publication",
+      "default": "The Alderwick Ledger"
+    },
+    {
+      "id": "headline",
+      "type": "string",
+      "label": "Headline",
+      "default": "After dark, a city finds room for a quieter kind of public square"
+    },
+    {
+      "id": "paragraph",
+      "type": "string",
+      "label": "Article paragraph",
+      "default": "Alderwick's newest public space is also one of its oldest. For six weeks, the old tram depot stayed open until midnight, offering free desks, warm light and a place to sit. The pilot drew 2,400 visits, according to a report released by Alderwick's library service. Organizers say most visitors came to read, work or simply stay awhile."
+    },
+    {
+      "id": "keySentence",
+      "type": "string",
+      "label": "Exact sentence to highlight",
+      "default": "For six weeks, the old tram depot stayed open until midnight, offering free desks, warm light and a place to sit."
+    },
+    {
+      "id": "post",
+      "type": "string",
+      "label": "Quoted post",
+      "default": "A place to sit without buying anything. That should not feel like a radical idea."
+    },
+    {
+      "id": "postName",
+      "type": "string",
+      "label": "Post display name",
+      "default": "Ellis North"
+    },
+    {
+      "id": "postHandle",
+      "type": "string",
+      "label": "Post handle",
+      "default": "@ellisnorth"
+    },
+    {
+      "id": "postInitials",
+      "type": "string",
+      "label": "Avatar initials",
+      "default": "EN"
+    },
+    {
+      "id": "postDate",
+      "type": "string",
+      "label": "Post date",
+      "default": "Oct 18"
+    },
+    {
+      "id": "verified",
+      "type": "boolean",
+      "label": "Show verified tick",
+      "default": true
+    },
+    {
+      "id": "articleDate",
+      "type": "string",
+      "label": "Article date",
+      "default": "October 18, 2026"
+    },
+    {
+      "id": "byline",
+      "type": "string",
+      "label": "Byline",
+      "default": "By Mara Vale"
+    },
+    {
+      "id": "readingTime",
+      "type": "string",
+      "label": "Reading time",
+      "default": "4 min read"
+    },
+    {
+      "id": "section",
+      "type": "string",
+      "label": "Section",
+      "default": "CITY & CULTURE"
+    },
+    {
+      "id": "navigation",
+      "type": "string",
+      "label": "Section navigation",
+      "default": "Local / Culture / Environment / Opinion"
+    },
+    {
+      "id": "strapline",
+      "type": "string",
+      "label": "Masthead strapline",
+      "default": "INDEPENDENT SINCE 1988"
+    },
+    {
+      "id": "edition",
+      "type": "string",
+      "label": "Edition",
+      "default": "VOL. 38 · NO. 214"
+    },
+    {
+      "id": "footer",
+      "type": "string",
+      "label": "Article footer",
+      "default": "PUBLIC LIFE / ALDERWICK"
+    },
+    {
+      "id": "backgroundHeadline1",
+      "type": "string",
+      "label": "Background headline 1",
+      "default": "The places a city keeps"
+    },
+    {
+      "id": "backgroundHeadline2",
+      "type": "string",
+      "label": "Background headline 2",
+      "default": "An evening on the river"
+    },
+    {
+      "id": "backgroundHeadline3",
+      "type": "string",
+      "label": "Background headline 3",
+      "default": "A new chapter for the depot"
+    },
+    {
+      "id": "backgroundHeadline4",
+      "type": "string",
+      "label": "Background headline 4",
+      "default": "Who gets room to gather?"
+    },
+    {
+      "id": "backgroundHeadline5",
+      "type": "string",
+      "label": "Background headline 5",
+      "default": "Small spaces, public lives"
+    },
+    {
+      "id": "backgroundHeadline6",
+      "type": "string",
+      "label": "Background headline 6",
+      "default": "The streets after sunset"
+    },
+    {
+      "id": "backgroundHeadline7",
+      "type": "string",
+      "label": "Background headline 7",
+      "default": "A library beyond its walls"
+    },
+    {
+      "id": "backgroundHeadline8",
+      "type": "string",
+      "label": "Background headline 8",
+      "default": "The changing city"
+    },
+    {
+      "id": "backgroundHeadline9",
+      "type": "string",
+      "label": "Background headline 9",
+      "default": "A quieter public square"
+    },
+    {
+      "id": "headlineSize",
+      "type": "number",
+      "label": "Headline size",
+      "default": 72,
+      "min": 52,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "id": "bodySize",
+      "type": "number",
+      "label": "Article body size",
+      "default": 42,
+      "min": 40,
+      "max": 60,
+      "step": 1
+    },
+    {
+      "id": "postSize",
+      "type": "number",
+      "label": "Post text size",
+      "default": 40,
+      "min": 40,
+      "max": 56,
+      "step": 1
+    },
+    {
+      "id": "pushIn",
+      "type": "number",
+      "label": "Dolly strength",
+      "default": 1.14,
+      "min": 1.04,
+      "max": 1.3,
+      "step": 0.01
+    },
+    {
+      "id": "background",
+      "type": "color",
+      "label": "Background",
+      "default": "#0C0E0D"
+    },
+    {
+      "id": "backgroundPaper",
+      "type": "color",
+      "label": "Blurred article cards",
+      "default": "#E9EAEC"
+    },
+    {
+      "id": "photoColor",
+      "type": "color",
+      "label": "Background photo blocks",
+      "default": "#7C8581"
+    },
+    {
+      "id": "paper",
+      "type": "color",
+      "label": "Article paper",
+      "default": "#FCFCFA"
+    },
+    {
+      "id": "headlineInk",
+      "type": "color",
+      "label": "Masthead and headline",
+      "default": "#16181B"
+    },
+    {
+      "id": "bodyInk",
+      "type": "color",
+      "label": "Article body",
+      "default": "#26292D"
+    },
+    {
+      "id": "muted",
+      "type": "color",
+      "label": "Dates and interface text",
+      "default": "#6A6F76"
+    },
+    {
+      "id": "rule",
+      "type": "color",
+      "label": "Paper rules",
+      "default": "#D9DBDE"
+    },
+    {
+      "id": "sectionRed",
+      "type": "color",
+      "label": "Section label",
+      "default": "#C1272D"
+    },
+    {
+      "id": "highlighter",
+      "type": "color",
+      "label": "Highlighter ink",
+      "default": "#C9F52A"
+    },
+    {
+      "id": "highlighterDeep",
+      "type": "color",
+      "label": "Highlighter second pass",
+      "default": "#B8E81A"
+    },
+    {
+      "id": "postPaper",
+      "type": "color",
+      "label": "Post card",
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "verifiedBlue",
+      "type": "color",
+      "label": "Verified tick",
+      "default": "#2F7BF5"
+    },
+    {
+      "id": "avatarColor",
+      "type": "color",
+      "label": "Avatar background",
+      "default": "#DEE4DE"
+    },
+    {
+      "id": "shadow",
+      "type": "color",
+      "label": "Shadows and vignette",
+      "default": "#000000"
+    },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

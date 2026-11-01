@@ -1,0 +1,63 @@
+{
+  "name": "money-stat",
+  "title": "Money stat",
+  "summary": "One huge counter follows a continuous chart, accelerates after its turning point and lands with one decisive final punch.",
+  "fonts": [
+    "800 40px 'Inter Tight'",
+    "400 40px Inter",
+    "500 40px Inter",
+    "600 40px Inter",
+    "500 40px 'IBM Plex Mono'"
+  ],
+  "fontFiles": ["ibm-plex-mono-500.woff2"],
+  "timing": {
+    "keyAt": 3.8,
+    "hold": 0.88,
+    "exit": 0.32,
+    "minKeyAt": 1.8
+  },
+  "keyMoment": "the exact final counter takes its only large scale punch as the growth badge and endpoint tag arrive; the orange currency prefix remains after settling",
+  "overlayHeight": 960,
+  "variables": [
+    { "id": "company", "type": "string", "label": "Company", "default": "Fieldnote Systems" },
+    { "id": "metricLabel", "type": "string", "label": "Metric", "default": "Monthly recurring revenue" },
+    { "id": "headerLine", "type": "string", "label": "Header metadata; not displayed", "default": "OPERATING PERFORMANCE / 2026" },
+    { "id": "periodLine", "type": "string", "label": "Reporting metadata; not displayed", "default": "JAN–AUG 2026 / USD" },
+
+    { "id": "month1", "type": "string", "label": "Month 1", "default": "January 2026" },
+    { "id": "value1", "type": "number", "label": "Month 1 value", "default": 84000 },
+    { "id": "month2", "type": "string", "label": "Month 2", "default": "February 2026" },
+    { "id": "value2", "type": "number", "label": "Month 2 value", "default": 88000 },
+    { "id": "month3", "type": "string", "label": "Month 3", "default": "March 2026" },
+    { "id": "value3", "type": "number", "label": "Month 3 value", "default": 93000 },
+    { "id": "month4", "type": "string", "label": "Month 4", "default": "April 2026" },
+    { "id": "value4", "type": "number", "label": "Month 4 value", "default": 97000 },
+    { "id": "month5", "type": "string", "label": "Month 5", "default": "May 2026" },
+    { "id": "value5", "type": "number", "label": "Month 5 value", "default": 116000 },
+    { "id": "month6", "type": "string", "label": "Month 6", "default": "June 2026" },
+    { "id": "value6", "type": "number", "label": "Month 6 value", "default": 138000 },
+    { "id": "month7", "type": "string", "label": "Month 7", "default": "July 2026" },
+    { "id": "value7", "type": "number", "label": "Month 7 value", "default": 153000 },
+    { "id": "month8", "type": "string", "label": "Month 8", "default": "August 2026" },
+    { "id": "value8", "type": "number", "label": "Month 8 value", "default": 168000 },
+
+    { "id": "finalNumber", "type": "string", "label": "Exact final number", "default": "$168,000" },
+    { "id": "eventTitle", "type": "string", "label": "Event", "default": "Self-serve onboarding launched" },
+    { "id": "eventMonth", "type": "string", "label": "Event month; match one of the eight months", "default": "May 2026" },
+    { "id": "eventImpact", "type": "string", "label": "One-line impact", "default": "Setup time fell from 3 days to 20 minutes." },
+    { "id": "delta", "type": "string", "label": "Delta chip", "default": "+73.2%" },
+    { "id": "deltaComparison", "type": "string", "label": "Delta comparison", "default": "VS APR 2026" },
+    { "id": "deltaDirection", "type": "enum", "label": "Delta triangle", "default": "up", "options": [{ "value": "up", "label": "Up" }, { "value": "down", "label": "Down" }] },
+    { "id": "sourceLine", "type": "string", "label": "Source or disclosure", "default": "All company details and data are fictional." },
+    { "id": "axisDivisor", "type": "number", "label": "Axis value divisor", "default": 1000, "min": 0.000001 },
+    { "id": "axisUnit", "type": "string", "label": "Axis unit", "default": "K" },
+
+    { "id": "ground", "type": "color", "label": "Background", "default": "#0A0B0D" },
+    { "id": "ink", "type": "color", "label": "Hero and headlines", "default": "#F4F5F6" },
+    { "id": "muted", "type": "color", "label": "Labels", "default": "#B3B8C0" },
+    { "id": "sourceColor", "type": "color", "label": "Source line", "default": "#9CA3AD" },
+    { "id": "beforeColor", "type": "color", "label": "Line before the event", "default": "#E9EBEE" },
+    { "id": "accent", "type": "color", "label": "Event and result", "default": "#FF5B1F" },
+    { "id": "overlayPosition", "type": "enum", "label": "Overlay position", "default": "top", "options": [{ "value": "top", "label": "Top" }, { "value": "bottom", "label": "Bottom" }] }
+  ]
+}

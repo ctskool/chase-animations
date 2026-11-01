@@ -1,0 +1,85 @@
+{
+  "name": "post-receipt",
+  "title": "Post receipt",
+  "summary": "A fictional social post settles into view, its counts race upward, two replies spring underneath and a rough red underline marks the evidence.",
+  "fonts": [
+    "400 40px Inter",
+    "500 40px Inter",
+    "600 40px Inter",
+    "700 40px Inter"
+  ],
+  "motionBlur": true,
+  "overlayHeight": 1000,
+  "timing": {
+    "keyAt": 3.9333333333,
+    "hold": 1.0666666667,
+    "exit": 0.32,
+    "minKeyAt": 2.5
+  },
+  "keyMoment": "the rough red underline finishes beneath the key line with every count exact and both quote posts settled",
+  "variables": [
+    { "id": "setupLine", "type": "string", "label": "Optional setup line", "default": "" },
+    { "id": "author", "type": "string", "label": "Original author", "default": "Mara Voss" },
+    { "id": "initials", "type": "string", "label": "Original avatar initials", "default": "MV" },
+    { "id": "handle", "type": "string", "label": "Original handle", "default": "@mara.builds" },
+    { "id": "company", "type": "string", "label": "Company", "default": "Brindlepath" },
+    { "id": "verified", "type": "boolean", "label": "Show the small verification check", "default": true },
+    {
+      "id": "postText",
+      "type": "string",
+      "label": "Original post",
+      "default": "We built Brindlepath to give teams their evenings back.\n\nLet people log off."
+    },
+    { "id": "keyLine", "type": "string", "label": "Exact text to underline", "default": "Let people log off." },
+    { "id": "timestamp", "type": "string", "label": "Timestamp", "default": "10:42 AM · October 14, 2026" },
+
+    { "id": "repliesStart", "type": "number", "label": "Starting replies", "default": 12, "min": 0, "step": 1 },
+    { "id": "repliesEnd", "type": "number", "label": "Final replies", "default": 284, "min": 0, "step": 1 },
+    { "id": "repostsStart", "type": "number", "label": "Starting reposts", "default": 37, "min": 0, "step": 1 },
+    { "id": "repostsEnd", "type": "number", "label": "Final reposts", "default": 1940, "min": 0, "step": 1 },
+    { "id": "likesStart", "type": "number", "label": "Starting likes", "default": 218, "min": 0, "step": 1 },
+    { "id": "likesEnd", "type": "number", "label": "Final likes", "default": 12800, "min": 0, "step": 1 },
+    { "id": "viewsStart", "type": "number", "label": "Starting views", "default": 3900, "min": 0, "step": 1 },
+    { "id": "viewsEnd", "type": "number", "label": "Final views", "default": 186400, "min": 0, "step": 1 },
+
+    { "id": "quote1Author", "type": "string", "label": "First quote author", "default": "Eli Mercer" },
+    { "id": "quote1Initials", "type": "string", "label": "First quote initials", "default": "EM" },
+    { "id": "quote1Handle", "type": "string", "label": "First quote handle", "default": "@eli.works" },
+    { "id": "quote1Text", "type": "string", "label": "First quote post", "default": "The best productivity feature is a real off switch." },
+    { "id": "quote1Attribution", "type": "string", "label": "First embedded attribution", "default": "Mara Voss · @mara.builds" },
+    { "id": "quote1Embedded", "type": "string", "label": "First embedded quote", "default": "Let people log off." },
+    { "id": "quote1Likes", "type": "string", "label": "Optional first quote likes", "default": "" },
+
+    { "id": "quote2Author", "type": "string", "label": "Second quote author", "default": "Nia Rowan" },
+    { "id": "quote2Initials", "type": "string", "label": "Second quote initials", "default": "NR" },
+    { "id": "quote2Handle", "type": "string", "label": "Second quote handle", "default": "@nia.rowan" },
+    { "id": "quote2Text", "type": "string", "label": "Second quote post", "default": "A company saying this out loud is a start. Make it policy." },
+    { "id": "quote2Attribution", "type": "string", "label": "Second embedded attribution", "default": "Mara Voss · @mara.builds" },
+    { "id": "quote2Embedded", "type": "string", "label": "Second embedded quote", "default": "Let people log off." },
+    { "id": "quote2Likes", "type": "string", "label": "Optional second quote likes", "default": "" },
+
+    { "id": "fieldTop", "type": "color", "label": "Field top", "default": "#F1F3F6" },
+    { "id": "fieldBottom", "type": "color", "label": "Field bottom", "default": "#E7EBF0" },
+    { "id": "depthColor", "type": "color", "label": "Faint background shape", "default": "#B6C4D4" },
+    { "id": "paper", "type": "color", "label": "Cards", "default": "#FFFFFF" },
+    { "id": "ink", "type": "color", "label": "Post text", "default": "#0F1419" },
+    { "id": "muted", "type": "color", "label": "Handles and timestamps", "default": "#6B7684" },
+    { "id": "metricInk", "type": "color", "label": "Counts and embedded attribution", "default": "#5B6674" },
+    { "id": "lineColor", "type": "color", "label": "Hairlines", "default": "#E3E7EC" },
+    { "id": "red", "type": "color", "label": "Liked heart, its count and marker", "default": "#F4385E" },
+    { "id": "blue", "type": "color", "label": "Verification badge", "default": "#2B7BF2" },
+    { "id": "avatar1", "type": "color", "label": "Original avatar", "default": "#344B70" },
+    { "id": "avatar2", "type": "color", "label": "First quote avatar", "default": "#477A7E" },
+    { "id": "avatar3", "type": "color", "label": "Second quote avatar", "default": "#65748A" },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}
