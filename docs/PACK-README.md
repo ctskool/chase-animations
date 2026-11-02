@@ -1,10 +1,20 @@
 # Chase Animations
 
-Finished animations for vertical video. Pick one, give it your words and numbers, and land its key moment on a word you say.
+Two Claude Code skills for vertical video:
 
-Each animation is a tested [HyperFrames](https://hyperframes.heygen.com) block with text, numbers and colours you can edit, not a prompt you hope comes out right.
+- **`/animate`** makes one finished animation and lands its key moment on a word you say. Pick one of the 42 below, give it your words and numbers, and it's placed into your video. Each animation is a tested [HyperFrames](https://hyperframes.heygen.com) block with text, numbers and colours you can edit, not a prompt you hope comes out right.
+- **`/explain`** makes a whole 20 to 30 second explainer from one sentence, such as "how solar panels make power". Claude writes and fact-checks the script, you approve it, you record it in your own voice, and the 3D scenes and captions are built to your recording. See [/explain](#explain) below.
 
-## The 38 animations
+## The 42 animations
+
+### Big visuals
+
+| Animation | What it does | Key moment |
+|---|---|---|
+| [`iceberg`](blocks/iceberg/README.md) | A small tip hides a colossal mass under the waterline | The base ignites and the hero line stamps |
+| [`scale-reveal`](blocks/scale-reveal/README.md) | A big number rises past real things at true scale | The stack clears the last comparison and the height punches |
+| [`cutaway`](blocks/cutaway/README.md) | A blade of light slices an object open down to its core | The core ignites and a ripple runs out ring by ring |
+| [`campaign-map`](blocks/campaign-map/README.md) | Bold arrows sweep across a real map, like a history documentary | The final arrow plants and the whole sweep is revealed |
 
 ### Compare and prove
 
@@ -79,6 +89,21 @@ Every animation comes in three outputs:
 | `top` | 1080x960 | The top half of a split-screen, with you below |
 | `overlay` | 1080x1920, transparent | Floating over you |
 
+## /explain
+
+```text
+/explain how AI picks its next word
+```
+
+1. Claude writes a script of about 50 words, fact-checked and split into scenes.
+2. You approve it, or ask for changes until it reads right.
+3. Optionally, preview it silently, timed to a natural reading pace.
+4. You record it in one take, in your own voice. There's never a robot voice.
+5. Your take is transcribed on your computer, and the scenes and captions are timed to your speech.
+6. You get a finished vertical MP4 with your narration.
+
+The scenes come from a kit of reusable cinematic 3D scene types in `explain-kit/`. Five example scripts are in `explain-kit/examples/`.
+
 ## Start here
 
 Follow [docs/INSTALL.md](docs/INSTALL.md). It takes a few minutes, most of it downloads.
@@ -89,7 +114,7 @@ Then in Claude Code:
 /animate head-to-head on the word "cheaper" in my-video.mp4, Cursor vs Claude Code
 ```
 
-Claude asks for anything it's missing, renders it, checks the frames and gives you the file. Every animation also has its own command, such as `/animate-head-to-head` or `/animate-glow-orb`.
+Claude asks for anything it's missing, renders it, checks the frames and gives you the file. Every animation also has its own command, such as `/animate-head-to-head` or `/animate-glow-orb`. For a whole explainer, type `/explain` and what you want explained.
 
 Prefer the terminal? [docs/COMMANDS.md](docs/COMMANDS.md) has everything.
 

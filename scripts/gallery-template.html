@@ -136,7 +136,9 @@ const flat = groups.flatMap(g => g.items.map(item => ({ ...item, group: g.name }
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = id => document.getElementById(id);
 
-$("lede").textContent = `${flat.filter(item => !item.example).length} animations on sample content, plus ${flat.filter(item => item.example).length} real routes. Clips play as you scroll. Click one to see it larger, with its key moment and the command that runs it.`;
+const explainers = flat.filter(item => item.slug.startsWith("explain-")).length;
+const routes = flat.filter(item => item.example).length - explainers;
+$("lede").textContent = `${flat.filter(item => !item.example).length} animations on sample content, plus ${routes} real routes and ${explainers} explainers made with /explain. Clips play as you scroll. Click one to see it larger, with its key moment and the command that runs it.`;
 
 const observer = new IntersectionObserver(entries => {
   for (const { target: video, isIntersecting } of entries) {

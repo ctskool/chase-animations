@@ -1,0 +1,117 @@
+#stage {
+  isolation: isolate;
+}
+
+[data-variant="overlay"] #stage {
+  box-shadow: 0 24px 72px rgba(10, 16, 30, 0.34);
+}
+
+#sr-gl,
+#sr-svg,
+#sr-tags,
+#sr-chips,
+#sr-flash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#sr-gl {
+  display: block;
+  z-index: 0;
+}
+
+#sr-svg {
+  z-index: 1;
+  overflow: visible;
+}
+
+#sr-chips {
+  z-index: 2;
+}
+
+#sr-tags {
+  z-index: 3;
+}
+
+#sr-counter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  transform-origin: 50% 100%;
+  visibility: hidden;
+}
+
+#sr-flash {
+  z-index: 5;
+  visibility: hidden;
+}
+
+#sr-label,
+#sr-caption {
+  position: absolute;
+  z-index: 6;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.005em;
+}
+
+#sr-caption {
+  font-weight: 600;
+  letter-spacing: 0;
+  visibility: hidden;
+}
+
+#sr-hero {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 7;
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+.sr-tag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+.sr-tag-value {
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  line-height: 1.08;
+}
+
+.sr-tag-name {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  line-height: 1.02;
+}
+
+.sr-chip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  visibility: hidden;
+}

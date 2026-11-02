@@ -1,0 +1,66 @@
+{
+  "name": "cutaway",
+  "title": "Cutaway",
+  "summary": "A whole 3D object turns in a dark studio. A blade of light crosses it, a section lifts away and five solid layers are labelled one by one down to the core. The core ignites, light ripples out through every ring and the hero line stamps in.",
+  "fonts": [
+    "700 84px 'Barlow Condensed'",
+    "600 60px 'Barlow Condensed'",
+    "400 160px 'Anton'"
+  ],
+  "three": true,
+  "overlayHeight": 1000,
+  "timing": {
+    "keyAt": 4.4,
+    "hold": 1.5,
+    "exit": 0.36,
+    "minKeyAt": 2.6
+  },
+  "keyMoment": "the camera arrives at the centre, the last layer label lands and the core ignites; a burst of light ripples out through every ring in turn, the hero line stamps in huge and the whole object punches on that same frame",
+  "variables": [
+    {
+      "id": "object",
+      "type": "enum",
+      "label": "Object",
+      "default": "planet",
+      "options": [
+        { "value": "planet", "label": "Planet (a sphere)" },
+        { "value": "capsule", "label": "Capsule (a pill or rocket body)" },
+        { "value": "gem", "label": "Gem (a faceted cut stone)" }
+      ]
+    },
+    { "id": "title", "type": "string", "label": "Title", "default": "What makes a brand" },
+    { "id": "layer1", "type": "string", "label": "Layer 1, the outer shell", "default": "Logo" },
+    { "id": "layer2", "type": "string", "label": "Layer 2", "default": "Product" },
+    { "id": "layer3", "type": "string", "label": "Layer 3", "default": "Service" },
+    { "id": "layer4", "type": "string", "label": "Layer 4", "default": "Culture" },
+    { "id": "layer5", "type": "string", "label": "Layer 5, the core", "default": "Purpose" },
+    { "id": "finalLabel", "type": "string", "label": "Hero line at the key moment", "default": "It all starts here" },
+
+    { "id": "accent", "type": "color", "label": "Blade of light and core", "default": "#FF5A1F" },
+    { "id": "layer1Color", "type": "color", "label": "Layer 1, polished shell", "default": "#2B3038" },
+    { "id": "layer2Color", "type": "color", "label": "Layer 2, brushed metal", "default": "#A7AFB8" },
+    { "id": "layer3Color", "type": "color", "label": "Layer 3, ceramic", "default": "#E9E1D2" },
+    { "id": "layer4Color", "type": "color", "label": "Layer 4, machined rings", "default": "#C07A3C" },
+    { "id": "layer5Color", "type": "color", "label": "Layer 5, centre of the core", "default": "#FFE2B8" },
+    { "id": "ink", "type": "color", "label": "Text", "default": "#F4F1EA" },
+    { "id": "muted", "type": "color", "label": "Leader lines", "default": "#C9CCD1" },
+    { "id": "bgCenter", "type": "color", "label": "Studio background, centre", "default": "#20242B" },
+    { "id": "bgEdge", "type": "color", "label": "Studio background, edges", "default": "#07080A" },
+
+    { "id": "holdTurn", "type": "number", "label": "Object turn during the hold, in degrees per second", "default": 2 },
+    { "id": "keyPunch", "type": "number", "label": "Object punch at the key moment", "default": 1.05 },
+    { "id": "glow", "type": "number", "label": "Glow strength", "default": 1 },
+    { "id": "shutterAngle", "type": "number", "label": "Motion blur shutter angle", "default": 150 },
+    { "id": "temporalSamples", "type": "number", "label": "Motion blur samples on fast moves", "default": 8 },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

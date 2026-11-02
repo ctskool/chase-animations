@@ -38,6 +38,12 @@ const ROADS = {
   path: { tier: "path", metres: 3, spanLimit: 2500 },
 };
 
+// What a continental map names. Lower numbers are kept first.
+const ATLAS_NAMES = { continent: 0, country: 1 };
+const STATE_BORDER_SPAN = 1800000;
+const MAX_MOVES = 5;
+const MAX_ATLAS_NAMES = 40;
+
 const GREEN_COVER = new Set(["grass", "wood", "wetland"]);
 const GREEN_USE = new Set(["cemetery", "pitch", "stadium"]);
 const PLACE_TIERS = { neighbourhood: 0, quarter: 0, suburb: 0, village: 0, hamlet: 1, town: 0, city: 1 };
@@ -166,18 +172,29 @@ export function shortRoad(name) {
   return words.map((word, i) => (i === 0 && words.length < 3 ? word : ROAD_WORDS[word] ?? word)).join(" ");
 }
 
-export function tileRange(box, z) {
+// With wrap, tile columns keep counting past the edges of the world so a map can run across the Pacific.
+export function tileRange(box, z, { wrap = false } = {}) {
   const n = 2 ** z;
   const clamp = (v) => Math.max(0, Math.min(n - 1, Math.floor(v * n)));
-  return { minX: clamp(box.minU), maxX: clamp(box.maxU), minY: clamp(box.minV), maxY: clamp(box.maxV) };
+  const column = wrap ? (v) => Math.floor(v * n) : clamp;
+  return { minX: column(box.minU), maxX: column(box.maxU), minY: clamp(box.minV), maxY: clamp(box.maxV) };
 }
 
-export function pickZoom(box) {
+export function pickZoom(box, options) {
   for (let z = MAX_ZOOM; z > 1; z--) {
-    const r = tileRange(box, z);
+    const r = tileRange(box, z, options);
     if ((r.maxX - r.minX + 1) * (r.maxY - r.minY + 1) <= MAX_TILES) return z;
   }
   return 1;
+}
+
+function tilesFor(box, z, options) {
+  const range = tileRange(box, z, options);
+  const list = [];
+  for (let x = range.minX; x <= range.maxX; x++) {
+    for (let y = range.minY; y <= range.maxY; y++) list.push({ z, x, y });
+  }
+  return list;
 }
 
 async function getJson(url, what) {
@@ -238,7 +255,8 @@ async function downloadTiles(tiles, template) {
   async function worker() {
     while (next < tiles.length) {
       const tile = tiles[next++];
-      const url = template.replace("{z}", tile.z).replace("{x}", tile.x).replace("{y}", tile.y);
+      const n = 2 ** tile.z;
+      const url = template.replace("{z}", tile.z).replace("{x}", ((tile.x % n) + n) % n).replace("{y}", tile.y);
       for (let attempt = 0; ; attempt++) {
         try {
           const res = await fetch(url, { headers: { "User-Agent": AGENT } });
@@ -301,12 +319,38 @@ function distanceToRoute(x, y, samples) {
   return Math.sqrt(best);
 }
 
-function readMap(tiles, frame, { half = frame.half, outer = false } = {}) {
+// One tile's layers, with its coordinates turned into the frame's units.
+function tileReader(tile, toLocal, round) {
+  const vector = new VectorTile(new PbfReader(tile.data));
+  const each = (name, visit, { covering = false } = {}) => {
+    const layer = vector.layers[name];
+    if (!layer) return;
+    for (let i = 0; i < layer.length; i++) {
+      const feature = layer.feature(i);
+      const parts = feature.loadGeometry();
+      // Tiles repeat their neighbour's edge. Whatever sits wholly in that margin belongs to the neighbour.
+      // The exception is a shape that covers the whole tile, like open ocean, whose corners are all in the margin.
+      const home = covering || parts.some((part) => part.some((p) => p.x >= 0 && p.x <= layer.extent && p.y >= 0 && p.y <= layer.extent));
+      if (home) visit(feature, parts, layer.extent);
+    }
+  };
+  const flatten = (part, extent) => {
+    const flat = [];
+    for (const p of part) {
+      const [x, y] = toLocal(tile, p.x / extent, p.y / extent);
+      flat.push(round(x), round(y));
+    }
+    return flat;
+  };
+  return { each, flatten };
+}
+
+function readMap(tiles, frame, { half = frame.half, outer = false, atlas = false, detail: fixedDetail } = {}) {
   const { toLocal, span, route } = frame;
   // Tenths of a metre for a walk, whole metres for a long drive. It keeps the map file small.
-  const detail = span < 6000 ? 10 : 1;
+  const detail = fixedDetail ?? (span < 6000 ? 10 : 1);
   const round = (v) => Math.round(v * detail) / detail;
-  const out = { water: [], green: [], streams: [], roads: {}, buildings: [], places: new Map() };
+  const out = { water: [], green: [], streams: [], roads: {}, buildings: [], places: new Map(), borders: [] };
   const samples = route.filter((_, i) => i % Math.ceil(route.length / 240) === 0);
   const minGreen = (span / 400) ** 2;
 
@@ -318,26 +362,7 @@ function readMap(tiles, frame, { half = frame.half, outer = false } = {}) {
   };
 
   for (const tile of tiles) {
-    const vector = new VectorTile(new PbfReader(tile.data));
-    const each = (name, visit) => {
-      const layer = vector.layers[name];
-      if (!layer) return;
-      for (let i = 0; i < layer.length; i++) {
-        const feature = layer.feature(i);
-        const parts = feature.loadGeometry();
-        // Tiles repeat their neighbour's edge. Whatever sits wholly in that margin belongs to the neighbour.
-        const home = parts.some((part) => part.some((p) => p.x >= 0 && p.x <= layer.extent && p.y >= 0 && p.y <= layer.extent));
-        if (home) visit(feature, parts, layer.extent);
-      }
-    };
-    const flatten = (part, extent) => {
-      const flat = [];
-      for (const p of part) {
-        const [x, y] = toLocal(tile, p.x / extent, p.y / extent);
-        flat.push(round(x), round(y));
-      }
-      return flat;
-    };
+    const { each, flatten } = tileReader(tile, toLocal, round);
     const polygons = (parts, extent) =>
       groupRings(parts)
         .map((rings) => rings.map((ring) => flatten(ring, extent)))
@@ -346,7 +371,24 @@ function readMap(tiles, frame, { half = frame.half, outer = false } = {}) {
     each("water", (feature, parts, extent) => {
       if (feature.properties.brunnel === "tunnel") return;
       out.water.push(...polygons(parts, extent));
-    });
+    }, { covering: atlas });
+    if (atlas) {
+      each("boundary", (feature, parts, extent) => {
+        const { admin_level: level, maritime } = feature.properties;
+        if (maritime || !(level === 2 || (level === 4 && span < STATE_BORDER_SPAN))) return;
+        for (const part of parts) out.borders.push({ level, line: flatten(part, extent) });
+      });
+      each("place", (feature, parts, extent) => {
+        const { class: kind, name, name_en: english, rank } = feature.properties;
+        if (ATLAS_NAMES[kind] === undefined || !(english || name)) return;
+        addPlace(out.places, english || name, ATLAS_NAMES[kind] + (rank ?? 0) / 100, centroid(flatten(parts[0], extent)), samples, kind, detail);
+      });
+      each("water_name", (feature, parts, extent) => {
+        const { class: kind, name, name_en: english } = feature.properties;
+        if (english || name) addPlace(out.places, english || name, 2, centroid(flatten(parts[0], extent)), samples, kind, detail);
+      });
+      continue;
+    }
     each("waterway", (feature, parts, extent) => {
       if (feature.properties.brunnel === "tunnel") return;
       for (const part of parts) {
@@ -412,9 +454,10 @@ function readMap(tiles, frame, { half = frame.half, outer = false } = {}) {
   return out;
 }
 
-function addPlace(places, name, tier, [x, y], samples) {
+function addPlace(places, name, tier, [x, y], samples, kind, detail = 1) {
   if (name.length > 24 || places.has(name)) return;
-  places.set(name, { name, tier, x: Math.round(x), y: Math.round(y), d: Math.round(distanceToRoute(x, y, samples)) });
+  const near = (v) => Math.round(v * detail) / detail;
+  places.set(name, { name, tier, kind, x: near(x), y: near(y), d: Math.round(distanceToRoute(x, y, samples)) });
 }
 
 // Everything needed to turn longitude and latitude, or a spot in a tile, into metres from the middle of the route.
@@ -442,11 +485,11 @@ export function makeFrame(coords) {
   const span = Math.max(30, Math.hypot(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)));
   const half = Math.max(span * 1.5, 400);
   const outerHalf = half * 3;
-  const boxOf = (size) => ({
+  const boxOf = (size, tall = size) => ({
     minU: centerU - size / metres,
     maxU: centerU + size / metres,
-    minV: centerV - size / metres,
-    maxV: centerV + size / metres,
+    minV: centerV - tall / metres,
+    maxV: centerV + tall / metres,
   });
   return {
     route,
@@ -455,6 +498,7 @@ export function makeFrame(coords) {
     outerHalf,
     box: boxOf(half),
     outerBox: boxOf(outerHalf),
+    boxOf,
     toLocal,
   };
 }
@@ -514,14 +558,6 @@ export async function makeRoute(o) {
 
   const meta = await getJson(TILES, "the map service");
   const zoom = pickZoom(frame.box);
-  const tilesFor = (box, z) => {
-    const range = tileRange(box, z);
-    const list = [];
-    for (let x = range.minX; x <= range.maxX; x++) {
-      for (let y = range.minY; y <= range.maxY; y++) list.push({ z, x, y });
-    }
-    return list;
-  };
   console.log(`Route: ${(metres / 1000).toFixed(1)} km. Downloading the map around it at zoom ${zoom}.`);
   const tiles = await downloadTiles(tilesFor(frame.box, zoom), meta.tiles[0]);
   if (!tiles.length) throw new UsageError("The map service returned nothing for this area.");
@@ -579,5 +615,175 @@ export async function makeRoute(o) {
   console.log(`Saved ${save} (${size.toFixed(1)} MB) and ${varsFile}`);
   for (const [key, value] of Object.entries(suggested)) console.log(`  ${key.padEnd(14)} ${value}`);
   for (const note of notes) console.log(note);
+  return save;
+}
+
+// "Lisbon > Rio > Manila (west)" is two moves. A heading on a place sends the arrow into it that way round the world.
+export function parseMoves(texts) {
+  const moves = [];
+  for (const text of texts) {
+    const parts = String(text).split(">").map((part) => {
+      const m = part.trim().match(/^(.*?)\s*\((east|west)\)$/i);
+      return m ? { place: m[1].trim(), heading: m[2].toLowerCase() } : { place: part.trim(), heading: null };
+    });
+    if (parts.length < 2 || parts.some((part) => !part.place)) {
+      throw new UsageError(`--move needs "<place> > <place>", got "${text}"`);
+    }
+    for (let i = 1; i < parts.length; i++) moves.push({ from: parts[i - 1].place, to: parts[i].place, heading: parts[i].heading });
+  }
+  return moves;
+}
+
+// Each arrow takes the short way round unless told otherwise, and longitudes run on past 180, so a move over the
+// Pacific stays one unbroken line. A voyage home after circling the world ends 360 degrees from where it began.
+export function unrollMoves(moves) {
+  const reached = new Map();
+  let last = null;
+  return moves.map(({ from, to, heading }) => {
+    const near = (lon, anchor) => lon + Math.round((anchor - lon) / 360) * 360;
+    const fromLon = reached.get(from.key) ?? (last === null ? from.lon : near(from.lon, last));
+    let delta = ((((to.lon - fromLon) % 360) + 540) % 360) - 180;
+    if (heading === "east" && delta < 0) delta += 360;
+    if (heading === "west" && delta > 0) delta -= 360;
+    const toLon = fromLon + delta;
+    reached.set(from.key, fromLon);
+    reached.set(to.key, toLon);
+    last = toLon;
+    return { from: { ...from, lon: fromLon }, to: { ...to, lon: toLon } };
+  });
+}
+
+// The map is taller and wider than the route, because a portrait frame sees far above and below a wide route
+// and a landscape one far either side of a tall route.
+export function atlasBox(frame) {
+  const xs = frame.route.map((p) => p[0]);
+  const ys = frame.route.map((p) => p[1]);
+  const wide = Math.max(...xs) - Math.min(...xs);
+  const tall = Math.max(...ys) - Math.min(...ys);
+  const least = Math.max(frame.span * 0.4, 60000);
+  return frame.boxOf(Math.max(wide * 0.72, tall * 1.3, least), Math.max(tall * 0.72, wide * 1.2, least));
+}
+
+const degreesOf = (tile, x, y) => {
+  const n = 2 ** tile.z;
+  return [((tile.x + x) / n) * 360 - 180, 180 * (1 - (2 * (tile.y + y)) / n)];
+};
+
+export async function makeCampaign(o) {
+  if (!o.move?.length) throw new UsageError('campaign needs at least one --move "<place> > <place>"');
+  const legs = parseMoves(o.move);
+  if (legs.length > MAX_MOVES) throw new UsageError(`campaign-map draws up to ${MAX_MOVES} moves, got ${legs.length}`);
+  if (o.stage?.length > legs.length) throw new UsageError(`There are ${legs.length} moves but ${o.stage.length} --stage values`);
+
+  const lookup = { at: 0 };
+  const found = new Map();
+  const place = async (text) => {
+    const key = text.toLowerCase();
+    if (!found.has(key)) {
+      const hit = await findPlace(text, lookup);
+      // The member's own words go on the map. Search results are often in the local language.
+      found.set(key, { key, lon: hit.lon, lat: hit.lat, name: hit.name, label: text.split(",")[0].trim(), country: hit.country });
+      console.log(`  ${text.padEnd(26)} ${hit.name}`);
+    }
+    return found.get(key);
+  };
+  console.log("Places found. Check they are the right ones:");
+  const moves = [];
+  for (const leg of legs) moves.push({ from: await place(leg.from), to: await place(leg.to), heading: leg.heading });
+  const unrolled = unrollMoves(moves);
+
+  const coords = unrolled.flatMap(({ from, to }) => [[from.lon, from.lat], [to.lon, to.lat]]);
+  const frame = makeFrame(coords);
+  const box = atlasBox(frame);
+  box.minV = Math.max(box.minV, 0.002);
+  box.maxV = Math.min(box.maxV, 0.998);
+  const middle = (box.minU + box.maxU) / 2;
+  const widest = Math.min((box.maxU - box.minU) / 2, 0.68);
+  box.minU = middle - widest;
+  box.maxU = middle + widest;
+
+  const zoom = pickZoom(box, { wrap: true });
+  const range = tileRange(box, zoom, { wrap: true });
+  const meta = await getJson(TILES, "the map service");
+  console.log(`Downloading the map at zoom ${zoom}.`);
+  const wanted = tilesFor(box, zoom, { wrap: true });
+  const tiles = await downloadTiles(wanted, meta.tiles[0]);
+  if (!tiles.length) throw new UsageError("The map service returned nothing for this area.");
+  // The service has no tile for some empty ocean. Left out, it would read as land.
+  const gaps = wanted.filter((tile) => !tiles.some((got) => got.x === tile.x && got.y === tile.y));
+
+  const lons = coords.map((c) => c[0]);
+  const spanDegrees = Math.max(Math.max(...lons) - Math.min(...lons), 1);
+  const stops = coords.map(([lon, lat]) => [lon, 180 * (1 - 2 * mercatorV(lat))]);
+  const atlasFrame = { toLocal: degreesOf, span: frame.span, route: stops, half: Infinity };
+  const map = readMap(tiles, atlasFrame, { atlas: true, detail: spanDegrees > 60 ? 100 : 1000 });
+  for (const tile of gaps) {
+    const corners = [[0, 0], [1, 0], [1, 1], [0, 1]].flatMap(([x, y]) => degreesOf(tile, x, y));
+    map.water.push([corners]);
+  }
+
+  const names = [...map.places.values()]
+    .sort((a, b) => Math.floor(a.tier) - Math.floor(b.tier) || a.d - b.d)
+    .slice(0, MAX_ATLAS_NAMES)
+    .map(({ name, kind, x, y, tier }) => ({ name, kind, x, y, rank: Math.round((tier % 1) * 100) }));
+
+  const n = 2 ** zoom;
+  const data = {
+    kind: "campaign",
+    attribution: ATTRIBUTION,
+    zoom,
+    bounds: [
+      (range.minX / n) * 360 - 180,
+      180 * (1 - (2 * (range.maxY + 1)) / n),
+      ((range.maxX + 1) / n) * 360 - 180,
+      180 * (1 - (2 * range.minY) / n),
+    ],
+    moves: unrolled.map(({ from, to }) => ({
+      from: { label: from.label, lon: from.lon, lat: from.lat },
+      to: { label: to.label, lon: to.lon, lat: to.lat },
+    })),
+    water: map.water,
+    borders: map.borders.map(({ level, line }) => ({ l: level, p: line })),
+    names,
+  };
+
+  const save = path.resolve(o.save ?? "campaign-map.json");
+  fs.writeFileSync(save, JSON.stringify(data));
+
+  const metres = unrolled.reduce((sum, { from, to }) => {
+    const direct = haversine([from.lon, from.lat], [to.lon, to.lat]);
+    return sum + (Math.abs(to.lon - from.lon) > 180 ? 2 * Math.PI * 6371008 - direct : direct);
+  }, 0);
+  const finish = unrolled[unrolled.length - 1].to;
+  const units = o.units ?? (["us", "gb"].includes(finish.country) ? "mi" : "km");
+  if (!["mi", "km"].includes(units)) throw new UsageError(`--units must be mi or km, got "${units}"`);
+  const total = Math.round(units === "mi" ? metres / 1609.344 : metres / 1000).toLocaleString("en-US");
+
+  const origin = unrolled[0].from;
+  const suggested = {
+    mapData: path.relative(process.cwd(), save).replace(/\\/g, "/"),
+    origin: origin.label,
+    originStage: "Start",
+    countLabel: "Stop",
+    countStart: "0",
+    heroValue: `${total} ${units}`,
+    heroLine: `${origin.label} to ${finish.label}`,
+    title: "",
+  };
+  for (let i = 1; i <= MAX_MOVES; i++) {
+    const move = unrolled[i - 1];
+    suggested[`place${i}`] = move ? move.to.label : "";
+    suggested[`stage${i}`] = move ? o.stage?.[i - 1] ?? `Stage ${i}` : "";
+    suggested[`count${i}`] = move ? String(i) : "";
+  }
+  const varsFile = path.resolve(o.vars ?? "animate-vars.json");
+  const existing = fs.existsSync(varsFile) ? JSON.parse(fs.readFileSync(varsFile, "utf8")) : {};
+  fs.writeFileSync(varsFile, JSON.stringify({ ...existing, ...suggested }, null, 2) + "\n");
+
+  const size = fs.statSync(save).size / 1048576;
+  console.log(`Map: ${map.water.length} water, ${map.borders.length} border lines, ${names.length} names`);
+  console.log(`Saved ${save} (${size.toFixed(1)} MB) and ${varsFile}`);
+  unrolled.forEach(({ from, to }, i) => console.log(`  ${i + 1}. ${from.label} > ${to.label}`));
+  console.log("  heroValue is the straight-line distance between the places, not the real journey. Change it if you have the real one.");
   return save;
 }

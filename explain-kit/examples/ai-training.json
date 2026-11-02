@@ -1,0 +1,34 @@
+{
+  "topic": "how AI learns from data",
+  "title": "AI training",
+  "subtitle": "how it learns from data",
+  "accent": "#5AA9FF",
+  "facts": [
+    "A model learns from many examples, each with a known right answer (or, for language models, the real next word).",
+    "For each example it makes a guess, and the guess is compared with the right answer to measure the error.",
+    "The error is used to adjust the model's internal numbers, called weights or parameters; modern models have millions to billions of them.",
+    "Repeating this over many rounds makes the guesses better. The accuracy bar is illustrative and marked as an example."
+  ],
+  "scenes": [
+    {
+      "text": "An AI [learns] from [examples], and lots of [them].",
+      "visual": { "type": "network", "mode": "forward", "inputs": ["cat", "dog", "bird", "cat", "dog"], "stream": true, "startAt": 0.2, "labels": [{ "text": "Examples", "target": "input", "on": "examples", "side": "left" }] }
+    },
+    {
+      "text": "For [each] one, it [guesses] the answer, and [checks] if it was [wrong].",
+      "visual": { "type": "network", "mode": "train", "rounds": 1, "outcome": "wrong", "inputs": ["cat"], "output": "dog", "startOn": "guesses", "labels": [{ "text": "Guess", "target": "output", "on": "guesses" }] }
+    },
+    {
+      "text": "The [error] nudges millions of [internal] numbers, called [weights].",
+      "visual": { "type": "network", "mode": "train", "rounds": 2, "outcome": "wrong", "inputs": ["cat"], "startAt": 0.1, "labels": [{ "text": "Weights", "target": "weights", "on": "weights" }] }
+    },
+    {
+      "text": "Round after [round], the guesses get [closer], until most are [right].",
+      "visual": { "type": "network", "mode": "train", "rounds": 4, "outcome": "learn", "inputs": ["cat"], "startAt": 0.1, "meter": { "label": "Accuracy", "from": 0.25, "to": 0.9 } }
+    },
+    {
+      "text": "That [loop] is called [training].",
+      "visual": { "type": "title", "object": "chip" }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "topic": "how fiber internet carries light",
+  "title": "Fiber internet",
+  "subtitle": "data as light",
+  "accent": "#FF6A3D",
+  "facts": [
+    "Fiber-optic internet sends data as rapid pulses (flashes) of light through thin glass strands.",
+    "A laser fires light into the strand's core. The core is wrapped in cladding, glass with a slightly lower refractive index, and then a protective plastic coating.",
+    "Light hitting the core-cladding boundary at a shallow angle reflects back in (total internal reflection), so it zig-zags along the strand.",
+    "Light in glass travels at about two-thirds of its speed in a vacuum: roughly 200,000 km a second. The script never says \"the speed of light\".",
+    "An ocean crossing of about 6,000 km takes roughly 0.03 seconds at that speed, faster than a blink (about 0.1 to 0.4 seconds)."
+  ],
+  "scenes": [
+    {
+      "text": "Fiber [internet] sends your data as [flashes] of [light].",
+      "visual": { "type": "fiber", "view": "overview" }
+    },
+    {
+      "text": "A [laser] fires into a glass [core], wrapped in [cladding], then a [coating].",
+      "visual": { "type": "fiber", "view": "layers", "layers": [{ "label": "Core", "on": "core" }, { "label": "Cladding", "on": "cladding" }, { "label": "Coating", "on": "coating" }] }
+    },
+    {
+      "text": "The light [bounces] off the [cladding], [zig-zagging] along the strand.",
+      "visual": { "type": "fiber", "view": "bounce", "layers": [{ "label": "Core", "on": "light" }, { "label": "Cladding", "on": "cladding" }] }
+    },
+    {
+      "text": "In [glass], it travels about [200,000] kilometers a [second].",
+      "visual": { "type": "number", "value": "200,000", "label": "km a second, in glass", "landOn": "200,000" }
+    },
+    {
+      "text": "[Fast] enough to [cross] an [ocean] in a [blink].",
+      "visual": { "type": "title" }
+    }
+  ]
+}

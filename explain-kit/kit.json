@@ -1,0 +1,144 @@
+{
+  "scenes": {
+    "hero": {
+      "summary": "One object on the dark studio floor, a slow cinematic push-in and a rim light. Optional USB-C charger with charge running along the cable, heat glow and part labels.",
+      "params": {
+        "object": "laptop | battery | phone | chip | headphones | speaker | mic | card | panel | box | cylinder | sphere | solar | bulb",
+        "options": "object options, e.g. {\"screen\": \"battery\", \"level\": 0.9} for laptop, {\"on\": 1} for bulb, {\"cols\": 6, \"rows\": 4} for solar",
+        "charger": "true to plug a glowing USB-C cable into it",
+        "heat": "0 to 1, the object glows hot over the scene (battery)",
+        "angle": "starting camera angle in degrees (default -32)",
+        "turn": "degrees the camera travels round (default 16)",
+        "elevation": "camera height in degrees (default 20)",
+        "push": "how far the camera pushes in (default 0.22)",
+        "labels": "[{\"text\": \"PORT\", \"part\": \"port\", \"on\": \"word\", \"side\": \"left\"}]"
+      }
+    },
+    "stack": {
+      "summary": "A cross-section of labelled layers that separate a little, with leader lines. A finger or stylus can touch the top and send a glow down to one layer. A layer can grow or hold trapped particles. Rain sends particles down into a layer, and release frees particles that run out along it.",
+      "params": {
+        "layers": "2 to 5, top first: [{\"label\": \"GLASS\", \"look\": \"glass|metal|grid|crust|solid|porous|film|layers|dots\", \"color\": \"#hex\", \"on\": \"word\", \"glow\": true, \"grow\": true, \"particles\": true}]",
+        "prop": "finger | stylus | none",
+        "touchOn": "the word when the prop touches",
+        "rain": "{\"color\": \"#ffd76a\", \"layer\": 1, \"on\": \"word\", \"label\": \"Photons\", \"release\": {\"color\": \"#6fd0ff\", \"label\": \"Electrons\", \"on\": \"word\"}}",
+        "angle": "camera angle in degrees (default -34)"
+      }
+    },
+    "flow": {
+      "summary": "Glowing particles travel between two or three labelled parts: electrons, ions, data, heat, water.",
+      "params": {
+        "nodes": "2 or 3, left to right: [{\"label\": \"PANEL\", \"object\": \"electrode|solar|bulb|mic|chip|speaker|box|cylinder|sphere\", \"color\": \"#hex\", \"dy\": -130}]",
+        "particle": "{\"label\": \"CURRENT\", \"color\": \"#hex\", \"count\": 46}",
+        "direction": "forth | back | both (both turns round on reverseOn or halfway)",
+        "reverseOn": "the word where the flow turns round",
+        "separator": "true for a thin membrane between two parts",
+        "path": "arc | straight"
+      }
+    },
+    "tokens": {
+      "summary": "A line of text as glowing chips. split: a sentence breaks into tokens, each in its own colour. append: new tokens drop onto the end of the line one after another, with a caret.",
+      "params": {
+        "sentence": "the text, split on spaces; \"|\" inside a word splits word pieces, e.g. \"un|believ|able\"",
+        "tokens": "or the tokens as a list, instead of sentence",
+        "mode": "split | append",
+        "splitOn": "the word the sentence splits on",
+        "next": "append: the tokens that drop on, e.g. [\"blue\", \"?\"]",
+        "stampOn, stamp2On": "append: the words each new token lands on",
+        "labels": "[{\"text\": \"Tokens\", \"side\": \"right\", \"on\": \"word\"}]"
+      }
+    },
+    "network": {
+      "summary": "A layered model of glowing nodes and connections. forward: signals sweep left to right, carrying input chips in and an output chip out. train: each round makes a guess that flashes red or green, then the error sweeps back and the weights shift.",
+      "params": {
+        "mode": "forward | train",
+        "layers": "nodes per layer, e.g. [4, 6, 6, 6, 3]",
+        "inputs": "chips that feed in, e.g. [\"Why\", \"is\", \"the\", \"sky\"]",
+        "stream": "true to cycle the input chips in, like examples pouring in",
+        "output": "a chip that comes out the far side",
+        "rounds": "train: how many guesses (default 3)",
+        "outcome": "train: learn (red until the last round, then green) | wrong | right",
+        "meter": "{\"label\": \"Accuracy\", \"from\": 0.3, \"to\": 0.9}: a bar always marked as an example",
+        "startOn": "the word the first sweep starts on",
+        "labels": "[{\"text\": \"Layers\", \"layer\": 2}, {\"text\": \"Weights\", \"target\": \"weights\"}, {\"text\": \"Guess\", \"target\": \"output\"}]"
+      }
+    },
+    "rank": {
+      "summary": "A short ranked list as glowing 3D bars, top choice first, each with its word and value; the top bar lights up on its word.",
+      "params": {
+        "items": "2 to 5: [{\"label\": \"blue\", \"value\": 62}, {\"label\": \"so\", \"value\": 11}]",
+        "unit": "after each value (default %)",
+        "example": "true when the values are illustrative: the list is tagged \"example\"",
+        "growOn": "the word the bars grow on",
+        "pickOn": "the word the top bar lights up on",
+        "title": "an optional label over the list"
+      }
+    },
+    "scan": {
+      "summary": "A face measured in 3D: infrared dots spray across it, the depth map lifts from flat into relief, a stored map slides in and matches, and a padlock opens.",
+      "params": {
+        "show": "any of [\"dots\", \"depth\", \"match\", \"unlock\"]",
+        "dotsOn, depthOn, matchOn, unlockOn": "the words each stage starts on",
+        "unlockText": "the chip under the padlock (default \"Unlocked\"; \"\" for none)",
+        "dotColor": "#hex for the dots",
+        "labels": "[{\"text\": \"Dots\", \"target\": \"nose|cheek|brow|chin|edge\", \"side\": \"right\"}]"
+      }
+    },
+    "fiber": {
+      "summary": "Light travelling down glass strands. overview: glowing strands carrying pulses. layers: one strand stripped back in steps, labelled. bounce: the strand cut open lengthways, a pulse zig-zagging down the core.",
+      "params": {
+        "view": "overview | layers | bounce",
+        "layers": "labels, inside out: [{\"label\": \"Core\", \"on\": \"word\"}, {\"label\": \"Cladding\"}, {\"label\": \"Coating\"}]",
+        "color": "#hex for the light",
+        "coating": "#hex for the outer coating"
+      }
+    },
+    "burst": {
+      "summary": "An object heats up and shatters into glowing shards with sparks and a shockwave. For failure, wear and destruction beats.",
+      "params": {
+        "object": "battery | phone | card | chip | panel | box",
+        "beatOn": "the word it shatters on (default: about 55% through the scene)",
+        "heat": "true to glow hot before it breaks (default true)",
+        "labels": "optional, as hero"
+      }
+    },
+    "compare": {
+      "summary": "Two states side by side, such as before and after: two upright gauges that fill to their values, with a label and a value under each.",
+      "params": {
+        "left": "{\"label\": \"BEFORE\", \"value\": \"100%\", \"fill\": 1}",
+        "right": "{\"label\": \"AFTER\", \"value\": \"80%\", \"fill\": 0.8, \"worn\": true}",
+        "fillOn": "the word when the right side drops to its value"
+      }
+    },
+    "wave": {
+      "summary": "Glowing waves: a signal, its mirror image, and their sum. For sound, radio, light, vibration and cancelling.",
+      "params": {
+        "waves": "[{\"label\": \"SIGNAL\", \"color\": \"#hex\"}, {\"label\": \"MIRROR\", \"invert\": true}]",
+        "mode": "cancel | add | single",
+        "sumOn": "the word when the waves meet",
+        "result": "label for the sum"
+      }
+    },
+    "number": {
+      "summary": "One stat that lands: big chrome 3D digits slam in at their true value on the word (they never count up, so no wrong number is on screen), a glowing arc gauge, and a line under it.",
+      "params": {
+        "value": "the stat as written, e.g. \"20%\", \"200,000\", \"3x\"",
+        "label": "the line under it, short",
+        "landOn": "the word the number lands on",
+        "gauge": "true to show the arc gauge for a percentage (default true for %)"
+      }
+    },
+    "title": {
+      "summary": "The end card: the topic in bold and a smaller italic line, over a dim turning object. Added automatically after the last scene when the script has none.",
+      "params": {
+        "object": "optional object under the title, as hero",
+        "options": "object options"
+      }
+    },
+    "custom": {
+      "summary": "Escape hatch: your own scene module, copied from explain-kit/scenes/custom-template.js.",
+      "params": {
+        "module": "path to the .js file, relative to the script folder"
+      }
+    }
+  }
+}

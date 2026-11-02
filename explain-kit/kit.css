@@ -1,0 +1,140 @@
+#ex-root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #000; }
+#ex-gl { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; display: block; }
+#ex-overlays, #ex-captions { position: absolute; inset: 0; pointer-events: none; }
+.ex-scene-layer { position: absolute; inset: 0; }
+
+/* Captions */
+.ex-line {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  text-align: center;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -0.012em;
+  color: #fff;
+  text-shadow: 0 3px 2px rgba(0, 0, 0, 0.35), 0 6px 30px rgba(0, 0, 0, 0.75);
+}
+.ex-word { display: inline-block; transform-origin: 50% 85%; }
+.ex-box {
+  position: absolute;
+  border: 3px solid;
+  box-sizing: border-box;
+  transform-origin: 50% 50%;
+  box-shadow: 0 0 22px rgba(0, 0, 0, 0.35);
+}
+.ex-handle {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  background: #fff;
+  border: 3px solid;
+  box-sizing: border-box;
+}
+.ex-tl { left: -10px; top: -10px; }
+.ex-tr { right: -10px; top: -10px; }
+.ex-bl { left: -10px; bottom: -10px; }
+.ex-br { right: -10px; bottom: -10px; }
+
+/* Leader-line labels */
+.ex-label {
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height: 1;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+}
+.ex-label span { display: inline-block; }
+
+/* End card and stat lines */
+.ex-title {
+  position: absolute;
+  left: 70px;
+  right: 70px;
+  text-align: center;
+  color: #fff;
+}
+.ex-title-main {
+  display: block;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-shadow: 0 6px 40px rgba(0, 0, 0, 0.7);
+}
+.ex-title-sub {
+  display: block;
+  margin-top: 22px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+  opacity: 0.86;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
+}
+.ex-rule { position: absolute; height: 4px; border-radius: 2px; }
+.ex-stat-line {
+  position: absolute;
+  left: 70px;
+  right: 70px;
+  text-align: center;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.8);
+}
+
+/* Ranked bars: the word over the bar's left end, the value over its right end */
+.ex-rank-label {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  min-width: 260px;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  font-size: 50px;
+  color: #f2f0ec;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.8);
+}
+.ex-rank-label span { font-family: "Barlow Condensed", sans-serif; font-weight: 600; font-size: 46px; opacity: 0.85; }
+.ex-example-tag, .ex-meter em {
+  position: absolute;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 34px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Training meter, always marked as an example */
+.ex-meter { position: absolute; left: 130px; right: 130px; top: 1520px; }
+.ex-meter-top { position: relative; display: flex; align-items: center; height: 54px; font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 44px;
+  letter-spacing: 0.07em; text-transform: uppercase; color: #f4f1ea; }
+.ex-meter em { position: static; margin-left: 18px; font-size: 28px; padding: 2px 12px; }
+.ex-meter-track { margin-top: 14px; height: 18px; border-radius: 9px; background: rgba(255, 255, 255, 0.1); overflow: hidden; }
+.ex-meter-track i { display: block; height: 100%; border-radius: 9px; box-shadow: 0 0 24px currentColor; }
+
+/* Status chip, such as an unlock */
+.ex-status-chip {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 30px;
+  border-radius: 40px;
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  font-size: 46px;
+  white-space: nowrap;
+}

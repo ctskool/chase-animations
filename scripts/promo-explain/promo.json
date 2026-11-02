@@ -1,0 +1,37 @@
+{
+  "cta": "Comment ANIMATE\nto get these skills",
+  "ctaSub": "(or click the Chase AI Plus link in my bio)",
+  "demos": [
+    {
+      "folder": "renders/wip/explain/next-word",
+      "command": "/explain how AI picks its next word",
+      "title": "next word explainer",
+      "line": "1 command",
+      "startPhrase": "The likeliest words rise",
+      "seconds": 3.2
+    },
+    {
+      "folder": "renders/wip/explain/face-unlock",
+      "command": "/explain how face unlock works",
+      "title": "face unlock explainer",
+      "line": "Made with /explain",
+      "startPhrase": "a map stored safely",
+      "seconds": 3.0
+    },
+    {
+      "folder": "renders/wip/explain/fiber-internet",
+      "command": "/explain how fiber internet carries light",
+      "title": "fiber internet explainer",
+      "line": "1 command",
+      "startPhrase": "The light bounces",
+      "seconds": 2.6
+    }
+  ],
+  "carousel": [
+    { "folder": "renders/wip/explain/next-word", "startPhrase": "It picks one", "seconds": 3 },
+    { "folder": "renders/wip/explain/ai-training", "startPhrase": "it guesses the answer", "seconds": 3 },
+    { "folder": "renders/wip/explain/face-unlock", "startPhrase": "A projector sprays", "seconds": 3 },
+    { "folder": "renders/wip/explain/solar-panel", "startPhrase": "Light particles", "seconds": 3 },
+    { "folder": "renders/wip/explain/fiber-internet", "startPhrase": "Fiber internet sends", "seconds": 3 }
+  ]
+}

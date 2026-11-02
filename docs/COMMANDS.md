@@ -45,6 +45,18 @@ node shared/animate.mjs render route-map --output all --vars animate-vars.json
 
 Add `--mode walk` or `--mode bike`, force stops with `--via "<place>"`, or pass your exact route with `--track run.gpx`. Use `--minutes <n>` when you know the real time. [The block's README](../blocks/route-map/README.md) has the details.
 
+`campaign-map` works the same way for sweeping arrows between real places. No routing, just bold arcs across a real map:
+
+```bash
+node shared/animate.mjs campaign --move "Lisbon > Madrid > Paris > Berlin"
+```
+
+```bash
+node shared/animate.mjs render campaign-map --output all --vars animate-vars.json
+```
+
+[The block's README](../blocks/campaign-map/README.md) has the details, including `--stage` for dates and `(east)` or `(west)` to choose the way round the world.
+
 ## Render a clip for your editor
 
 ```bash
@@ -103,3 +115,37 @@ node shared/animate.mjs check head-to-head --vars my-vars.json
 ```
 
 This runs HyperFrames' lint, layout and contrast checks on all three outputs.
+
+## Make an explainer
+
+`/explain` runs these for you. To run them yourself:
+
+```bash
+node shared/animate.mjs explain new "how solar panels make power"
+```
+
+This makes `explain/<slug>/script.json`. Write the script in it. The five examples in `explain-kit/examples/` show the format, and [the skill](../skills/explain/SKILL.md) explains every scene type.
+
+```bash
+node shared/animate.mjs explain check explain/solar-panels-make-power
+```
+
+This checks the script and writes `script.md`, just the words to record.
+
+```bash
+node shared/animate.mjs explain render explain/solar-panels-make-power --preview
+```
+
+This is an optional silent preview, timed to a natural reading pace.
+
+```bash
+node shared/animate.mjs explain build explain/solar-panels-make-power --audio my-take.m4a
+```
+
+This lines your recording up with the script and assembles the video. It tells you if the recording doesn't match the script.
+
+```bash
+node shared/animate.mjs explain render explain/solar-panels-make-power
+```
+
+This renders the finished video and a contact sheet to check by eye.

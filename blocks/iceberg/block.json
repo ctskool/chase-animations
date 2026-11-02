@@ -1,0 +1,48 @@
+{
+  "name": "iceberg",
+  "title": "Iceberg",
+  "summary": "A small bright ice tip sits on a calm dawn sea. The camera sinks through the waterline into a colossal faceted mass, labelling each stratum on the way down. At the very bottom the base ignites from within, a pulse climbs the whole berg and the hero line stamps in.",
+  "fonts": [
+    "400 100px Anton",
+    "600 44px 'Barlow Condensed'"
+  ],
+  "three": true,
+  "overlayHeight": 1000,
+  "timing": {
+    "keyAt": 4.4,
+    "hold": 1.5,
+    "exit": 0.36,
+    "minKeyAt": 2.4
+  },
+  "keyMoment": "the camera slams to a stop with the whole mass in frame, the base ignites in the glow colour, a shockwave leaves it and starts climbing the berg, and the hero line stamps in huge on that same frame",
+  "variables": [
+    { "id": "tipLabel", "type": "string", "label": "Label on the tip", "default": "What people see" },
+    { "id": "layer1", "type": "string", "label": "First layer, just under the surface", "default": "Early mornings" },
+    { "id": "layer2", "type": "string", "label": "Second layer", "default": "Failed attempts" },
+    { "id": "layer3", "type": "string", "label": "Third layer", "default": "Years of practice" },
+    { "id": "layer4", "type": "string", "label": "Fourth layer, the heaviest", "default": "Everything you gave up" },
+    { "id": "finalLabel", "type": "string", "label": "Hero line at the very bottom", "default": "The real work" },
+    { "id": "finalSub", "type": "string", "label": "Small line under the hero (optional)", "default": "" },
+    { "id": "skyTop", "type": "color", "label": "Sky, high up", "default": "#BFE0F2" },
+    { "id": "skyLow", "type": "color", "label": "Sky at the horizon", "default": "#FFE9D6" },
+    { "id": "surfaceWater", "type": "color", "label": "Surface water", "default": "#27C4E3" },
+    { "id": "midWater", "type": "color", "label": "Mid water", "default": "#0F6FBF" },
+    { "id": "deepWater", "type": "color", "label": "Deep water", "default": "#0A1F5C" },
+    { "id": "ice", "type": "color", "label": "Ice near the surface", "default": "#E9FBFF" },
+    { "id": "iceDeep", "type": "color", "label": "Ice at the bottom", "default": "#1E6BC6" },
+    { "id": "glow", "type": "color", "label": "Glow at the base", "default": "#FF8A1F" },
+    { "id": "text", "type": "color", "label": "Light text", "default": "#FFFFFF" },
+    { "id": "textDark", "type": "color", "label": "Dark text", "default": "#07183F" },
+    { "id": "iceSeed", "type": "number", "label": "Iceberg shape (any whole number)", "default": 7 },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "name": "campaign-map",
+  "title": "Campaign map",
+  "summary": "Big tapered arrows surge across a printed map one at a time, each planting on a numbered place with a date. The camera chases every arrow, then pulls back to reveal the whole sweep as the last arrow lands.",
+  "fonts": [
+    "700 46px 'Libre Caslon Text'",
+    "400 44px 'Libre Caslon Text'",
+    "italic 400 44px Newsreader",
+    "600 40px 'Barlow Condensed'",
+    "700 40px 'Barlow Condensed'"
+  ],
+  "fontFiles": [
+    "libre-caslon-text-700.woff2",
+    "libre-caslon-text-400.woff2",
+    "newsreader-400-italic.woff2"
+  ],
+  "three": true,
+  "overlayHeight": 1000,
+  "timing": {
+    "keyAt": 4.6,
+    "hold": 1.5,
+    "exit": 0.36,
+    "minKeyAt": 2.8
+  },
+  "keyMoment": "the final arrow plants on its destination with the biggest hit; every earlier arrow flashes, a ring wave and colour wash roll across the map and the hero line and total stamp in on that same frame, as the camera lands on the full sweep",
+  "variables": [
+    { "id": "mapData", "type": "data", "label": "Real map file from animate campaign", "default": "" },
+    {
+      "id": "mapStyle",
+      "type": "enum",
+      "label": "Map style",
+      "default": "parchment",
+      "options": [
+        { "value": "parchment", "label": "Parchment" },
+        { "value": "ink", "label": "Deep ink" }
+      ]
+    },
+    {
+      "id": "routeShape",
+      "type": "enum",
+      "label": "How the arrows connect",
+      "default": "chain",
+      "options": [
+        { "value": "chain", "label": "Each arrow leaves the last place" },
+        { "value": "hub", "label": "Every arrow leaves the first place" }
+      ]
+    },
+    { "id": "title", "type": "string", "label": "Title (optional)", "default": "First voyage around the world" },
+    { "id": "origin", "type": "string", "label": "Starting place", "default": "Sanlúcar" },
+    { "id": "originStage", "type": "string", "label": "Starting date or stage", "default": "Sep 1519" },
+    { "id": "originLat", "type": "number", "label": "Starting latitude", "default": 36.78 },
+    { "id": "originLon", "type": "number", "label": "Starting longitude", "default": -6.35 },
+
+    { "id": "stage1", "type": "string", "label": "Move 1 date or stage", "default": "Dec 1519" },
+    { "id": "place1", "type": "string", "label": "Move 1 place. Leave empty to skip", "default": "Rio de Janeiro" },
+    { "id": "lat1", "type": "number", "label": "Move 1 latitude", "default": -22.91 },
+    { "id": "lon1", "type": "number", "label": "Move 1 longitude", "default": -43.17 },
+    { "id": "bend1", "type": "string", "label": "Move 1 curve, -0.4 to 0.4. Empty picks one", "default": "0.13" },
+    { "id": "count1", "type": "string", "label": "Count after move 1", "default": "5" },
+
+    { "id": "stage2", "type": "string", "label": "Move 2 date or stage", "default": "Oct 1520" },
+    { "id": "place2", "type": "string", "label": "Move 2 place. Leave empty to skip", "default": "Strait of Magellan" },
+    { "id": "lat2", "type": "number", "label": "Move 2 latitude", "default": -52.6 },
+    { "id": "lon2", "type": "number", "label": "Move 2 longitude", "default": -69.5 },
+    { "id": "bend2", "type": "string", "label": "Move 2 curve, -0.4 to 0.4. Empty picks one", "default": "0.14" },
+    { "id": "count2", "type": "string", "label": "Count after move 2", "default": "4" },
+
+    { "id": "stage3", "type": "string", "label": "Move 3 date or stage", "default": "Nov 1521" },
+    { "id": "place3", "type": "string", "label": "Move 3 place. Leave empty to skip", "default": "Tidore" },
+    { "id": "lat3", "type": "number", "label": "Move 3 latitude", "default": 0.68 },
+    { "id": "lon3", "type": "number", "label": "Move 3 longitude", "default": 127.4 },
+    { "id": "bend3", "type": "string", "label": "Move 3 curve, -0.4 to 0.4. Empty picks one", "default": "0.2" },
+    { "id": "count3", "type": "string", "label": "Count after move 3", "default": "2" },
+
+    { "id": "stage4", "type": "string", "label": "Move 4 date or stage", "default": "May 1522" },
+    { "id": "place4", "type": "string", "label": "Move 4 place. Leave empty to skip", "default": "Cape of Good Hope" },
+    { "id": "lat4", "type": "number", "label": "Move 4 latitude", "default": -34.36 },
+    { "id": "lon4", "type": "number", "label": "Move 4 longitude", "default": 18.47 },
+    { "id": "bend4", "type": "string", "label": "Move 4 curve, -0.4 to 0.4. Empty picks one", "default": "0.12" },
+    { "id": "count4", "type": "string", "label": "Count after move 4", "default": "1" },
+
+    { "id": "stage5", "type": "string", "label": "Move 5 date or stage", "default": "Sep 1522" },
+    { "id": "place5", "type": "string", "label": "Move 5 place. Leave empty to skip", "default": "Sanlúcar" },
+    { "id": "lat5", "type": "number", "label": "Move 5 latitude", "default": 36.78 },
+    { "id": "lon5", "type": "number", "label": "Move 5 longitude", "default": -6.35 },
+    { "id": "bend5", "type": "string", "label": "Move 5 curve, -0.4 to 0.4. Empty picks one", "default": "0.14" },
+    { "id": "count5", "type": "string", "label": "Count after move 5", "default": "1" },
+
+    { "id": "countLabel", "type": "string", "label": "Count label", "default": "Ships left" },
+    { "id": "countStart", "type": "string", "label": "Count at the start", "default": "5" },
+    { "id": "heroValue", "type": "string", "label": "Total", "default": "3 years" },
+    { "id": "heroLine", "type": "string", "label": "Hero line", "default": "5 ships left. 1 came home." },
+
+    { "id": "tilt", "type": "number", "label": "Map tilt in degrees. 0 is flat", "default": 24 },
+    {
+      "id": "territory",
+      "type": "enum",
+      "label": "Tint the land the arrows reach",
+      "default": "off",
+      "options": [
+        { "value": "off", "label": "Off, for journeys" },
+        { "value": "on", "label": "On, for spread and takeover stories" }
+      ]
+    },
+
+    { "id": "land", "type": "color", "label": "Land", "default": "#EADBB8" },
+    { "id": "landEdge", "type": "color", "label": "Land near the coast", "default": "#D2B37C" },
+    { "id": "sea", "type": "color", "label": "Sea near the coast", "default": "#8DB5B0" },
+    { "id": "seaDeep", "type": "color", "label": "Deep sea", "default": "#5D8E90" },
+    { "id": "coast", "type": "color", "label": "Coast, borders and map names", "default": "#2E2A22" },
+    { "id": "grid", "type": "color", "label": "Latitude and longitude lines", "default": "#27464A" },
+    { "id": "arrow", "type": "color", "label": "Arrows", "default": "#D2241C" },
+    { "id": "arrowTail", "type": "color", "label": "Arrow tails", "default": "#8E1512" },
+    { "id": "keyline", "type": "color", "label": "Arrow outline", "default": "#FBF1DC" },
+    { "id": "flash", "type": "color", "label": "Key moment flash", "default": "#FFC83D" },
+    { "id": "plate", "type": "color", "label": "Plates", "default": "#F8EFDA" },
+    { "id": "plateText", "type": "color", "label": "Plate text", "default": "#241C14" },
+    { "id": "stageText", "type": "color", "label": "Dates on plates", "default": "#A81A15" },
+    { "id": "heroText", "type": "color", "label": "Hero text", "default": "#FFF6E2" },
+    { "id": "table", "type": "color", "label": "Behind the map sheet", "default": "#2A2019" },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

@@ -27,7 +27,8 @@ function makeMedia(item) {
   const source = sourceOf(item);
   if (!fs.existsSync(source)) throw new Error(`No render for ${item.slug}: ${source}`);
   const length = seconds(source);
-  const key = JSON.parse(fs.readFileSync(path.join(ROOT, "blocks", blockOf(item), "block.json"), "utf8")).timing.keyAt;
+  // An explainer has no single key moment, so its catalogue entry says where its card should centre.
+  const key = item.cardAt ?? JSON.parse(fs.readFileSync(path.join(ROOT, "blocks", blockOf(item), "block.json"), "utf8")).timing.keyAt;
 
   ffmpeg("-i", source, "-vf", "scale=540:-2", "-c:v", "libx264", "-crf", "25", "-preset", "medium", "-pix_fmt", "yuv420p",
     "-movflags", "+faststart", "-an", path.join(GALLERY, "clips", `${item.slug}.mp4`));
@@ -54,7 +55,7 @@ function writePage() {
 const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 function card(item) {
-  const link = `blocks/${blockOf(item)}/README.md`;
+  const link = item.link ?? `blocks/${blockOf(item)}/README.md`;
   const label = item.example ? `<b>${escape(item.name)}</b>` : `<b><a href="${link}"><code>${item.slug}</code></a></b>`;
   return [
     `<td width="25%" align="center" valign="top">`,
@@ -64,22 +65,26 @@ function card(item) {
   ].join("\n");
 }
 
+// Groups go between the README marker named by their `section`, "animations" unless they say otherwise.
 function writeCards() {
-  const lines = [];
-  for (const group of groups) {
-    lines.push(`### ${group.name}`, "");
-    if (group.note) lines.push(group.note, "");
-    lines.push("<table>");
-    for (let i = 0; i < group.items.length; i += PER_ROW) {
-      lines.push("<tr>", ...group.items.slice(i, i + PER_ROW).map(card), "</tr>");
-    }
-    lines.push("</table>", "");
-  }
   const file = path.join(ROOT, "README.md");
-  const readme = fs.readFileSync(file, "utf8");
-  const block = /(<!-- animations:start -->\n)[\s\S]*?(<!-- animations:end -->)/;
-  if (!block.test(readme)) throw new Error("README.md has lost its animations markers");
-  fs.writeFileSync(file, readme.replace(block, `$1\n${lines.join("\n")}\n$2`));
+  let readme = fs.readFileSync(file, "utf8");
+  for (const section of new Set(groups.map((group) => group.section ?? "animations"))) {
+    const lines = [];
+    for (const group of groups.filter((g) => (g.section ?? "animations") === section)) {
+      if (section === "animations") lines.push(`### ${group.name}`, "");
+      if (group.note && section === "animations") lines.push(group.note, "");
+      lines.push("<table>");
+      for (let i = 0; i < group.items.length; i += PER_ROW) {
+        lines.push("<tr>", ...group.items.slice(i, i + PER_ROW).map(card), "</tr>");
+      }
+      lines.push("</table>", "");
+    }
+    const block = new RegExp(`(<!-- ${section}:start -->\\n)[\\s\\S]*?(<!-- ${section}:end -->)`);
+    if (!block.test(readme)) throw new Error(`README.md has lost its ${section} markers`);
+    readme = readme.replace(block, `$1\n${lines.join("\n")}\n$2`);
+  }
+  fs.writeFileSync(file, readme);
 }
 
 if (!pageOnly) {

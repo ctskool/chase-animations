@@ -1,0 +1,35 @@
+{
+  "topic": "how face unlock works",
+  "title": "Face unlock",
+  "subtitle": "how your phone knows you",
+  "accent": "#3FE0C5",
+  "facts": [
+    "Some phones, such as iPhones with Face ID, unlock with a 3D depth scan rather than a flat photo. Other phones' face unlock only uses the normal camera, hence \"some phones\".",
+    "Apple: the dot projector projects more than 30,000 invisible infrared dots onto your face.",
+    "Apple: an infrared camera reads the dot pattern to build a depth map of your face.",
+    "Apple: the face data is encrypted and stays on the device, protected by the Secure Enclave; it is compared with the stored data to unlock.",
+    "Apple states the chance a random person could unlock it is about 1 in 1,000,000 (with one appearance enrolled). The script attributes this figure to Apple."
+  ],
+  "scenes": [
+    {
+      "text": "Some [phones] unlock by [measuring] your face in [3D].",
+      "visual": { "type": "hero", "object": "phone", "angle": -24, "turn": 18, "elevation": 26 }
+    },
+    {
+      "text": "A [projector] sprays over [30,000] invisible [infrared] dots.",
+      "visual": { "type": "scan", "show": ["dots"], "dotsOn": "sprays", "labels": [{ "text": "Infrared dots", "target": "cheek", "on": "infrared" }] }
+    },
+    {
+      "text": "An infrared [camera] reads how they [land], building a [depth] map.",
+      "visual": { "type": "scan", "show": ["dots", "depth"], "dotsAt": -3, "depthOn": "depth", "labels": [{ "text": "Depth map", "target": "nose", "on": "depth" }] }
+    },
+    {
+      "text": "It [compares] it to a map [stored] safely on the [phone], then [unlocks].",
+      "visual": { "type": "scan", "show": ["match", "unlock"], "matchOn": "compares", "unlockOn": "unlocks", "labels": [{ "text": "Stored map", "target": "edge", "on": "stored" }] }
+    },
+    {
+      "text": "By [Apple's] count, a random [stranger] has [about] a [one-in-a-million] chance.",
+      "visual": { "type": "title", "object": "phone" }
+    }
+  ]
+}

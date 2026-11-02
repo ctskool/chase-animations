@@ -1,0 +1,81 @@
+#stage {
+  isolation: isolate;
+  background: #07080a;
+}
+#cw-gl,
+#cw-leaders {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#cw-gl {
+  z-index: 1;
+}
+#cw-leaders {
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+#cw-rows {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.cw-row {
+  position: absolute;
+  overflow: hidden;
+}
+.cw-row-inner {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.cw-swatch {
+  flex: 0 0 auto;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+.cw-name {
+  display: inline-block;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.012em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
+}
+#cw-title {
+  position: absolute;
+  z-index: 4;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: 0.012em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+#cw-hero {
+  position: absolute;
+  z-index: 5;
+  visibility: hidden;
+  pointer-events: none;
+  transform-origin: 0% 100%;
+}
+.cw-hero-line {
+  display: block;
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+[data-variant="overlay"] #stage {
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+}

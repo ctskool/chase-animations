@@ -48,17 +48,17 @@ npm install
 npm run setup
 ```
 
-This adds `/animate` and its shortcuts to `~/.claude/skills` and downloads the browser that renders your video.
+This adds `/animate`, its shortcuts and `/explain` to `~/.claude/skills`, and downloads the browser that renders your video.
 
 ## 5. Add word sync
 
-Word sync needs a speech model. It's about 640 MB and runs on your computer, so your video never leaves your machine.
+Word sync and `/explain` need a speech model. It's about 640 MB and runs on your computer, so your video never leaves your machine.
 
 ```bash
 npm run setup -- --speech
 ```
 
-Skip this if you only want clips for your own editor. You can run it later.
+Skip this if you only want `/animate` clips for your own editor. You can run it later.
 
 ## 6. Prove it works
 

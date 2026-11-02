@@ -1,0 +1,56 @@
+{
+  "topic": "how solar panels make power",
+  "title": "Solar panels",
+  "subtitle": "how sunlight becomes power",
+  "accent": "#FFB23F",
+  "facts": [
+    "Solar panels are photovoltaic: they turn light directly into electricity, with no moving parts.",
+    "Each silicon cell has two differently doped layers (n-type and p-type) that meet at a p-n junction.",
+    "Light arrives as photons; an absorbed photon can free an electron from its atom in the silicon.",
+    "The junction's built-in electric field pushes the freed electrons one way, so they flow out through the cell's contacts into the circuit as current.",
+    "Typical home panels convert about 20% of the sunlight that hits them into electricity (commonly around 18 to 23%)."
+  ],
+  "scenes": [
+    {
+      "text": "A solar [panel] turns [sunlight] straight into [electricity].",
+      "visual": { "type": "hero", "object": "solar", "angle": -30, "turn": 18, "elevation": 22 }
+    },
+    {
+      "text": "Each [cell] is two layers of [silicon] that [meet] at a [junction].",
+      "visual": {
+        "type": "stack",
+        "layers": [
+          { "label": "N-type silicon", "look": "dots", "color": "#2c4c8c", "on": "silicon" },
+          { "label": "Junction", "look": "film", "color": "#ffcf6a", "glow": true, "on": "junction" },
+          { "label": "P-type silicon", "look": "layers", "color": "#26324a", "on": "meet" }
+        ]
+      }
+    },
+    {
+      "text": "[Light] particles, called [photons], knock [electrons] loose.",
+      "visual": {
+        "type": "stack",
+        "layers": [
+          { "label": "N-type silicon", "look": "dots", "color": "#2c4c8c", "at": 0 },
+          { "label": "Junction", "look": "film", "color": "#ffcf6a", "glow": true, "at": 0 },
+          { "label": "P-type silicon", "look": "layers", "color": "#26324a", "at": 0 }
+        ],
+        "rain": { "layer": 1, "color": "#ffd76a", "on": "light", "label": "Photons", "labelOn": "photons", "release": { "color": "#6fd0ff", "label": "Electrons", "on": "electrons" } }
+      }
+    },
+    {
+      "text": "The junction's [field] pushes them one [way], out into the [wires] as [current].",
+      "visual": {
+        "type": "flow",
+        "nodes": [{ "label": "Panel", "object": "solar", "on": "field" }, { "label": "Power", "object": "bulb", "on": "wires" }],
+        "particle": { "label": "Current", "color": "#6fd0ff", "on": "current" },
+        "path": "arc",
+        "direction": "forth"
+      }
+    },
+    {
+      "text": "Typical [panels] turn about [20%] of that [sunlight] into [power].",
+      "visual": { "type": "number", "value": "20%", "label": "of sunlight becomes electricity", "landOn": "20%" }
+    }
+  ]
+}

@@ -3,13 +3,13 @@
 </p>
 
 <p align="center">
-  <b>38 finished animations for vertical video.</b><br>
-  Tell Claude Code what to show, and the key moment lands on the word you say.
+  <b>42 finished animations and a one-sentence explainer maker, for vertical video.</b><br>
+  Two Claude Code skills. Tell Claude what to show, and it lands on the word you say.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/animations-38-6b6ff5?style=flat-square" alt="38 animations">
-  <img src="https://img.shields.io/badge/outputs-full%20%C2%B7%20split%20%C2%B7%20overlay-24272d?style=flat-square" alt="Three outputs: full, split and overlay">
+  <img src="https://img.shields.io/badge/animations-42-6b6ff5?style=flat-square" alt="42 animations">
+  <img src="https://img.shields.io/badge/skills-%2Fanimate%20%C2%B7%20%2Fexplain-24272d?style=flat-square" alt="Two skills: /animate and /explain">
   <img src="https://img.shields.io/badge/runs%20in-Claude%20Code-d77757?style=flat-square" alt="Runs in Claude Code">
   <img src="https://img.shields.io/badge/built%20with-HyperFrames-24272d?style=flat-square" alt="Built with HyperFrames">
 </p>
@@ -17,26 +17,41 @@
 <p align="center">
   <a href="https://ctskool.github.io/chase-animations/"><b>Watch the gallery</b></a>
   &nbsp;·&nbsp;
-  <a href="#the-animations">All animations</a>
+  <a href="#animate-one-animation-on-your-word">/animate</a>
+  &nbsp;·&nbsp;
+  <a href="#explain-a-whole-explainer-from-one-sentence">/explain</a>
   &nbsp;·&nbsp;
   <a href="#start-here">Start here</a>
   &nbsp;·&nbsp;
   <a href="docs/COMMANDS.md">Commands</a>
 </p>
 
-## Say it, and it lands
+## Two skills
+
+| | `/animate` | `/explain` |
+|---|---|---|
+| **You give it** | An animation, your words and numbers, and optionally your video and a word in it | One sentence: "how X works" |
+| **You get** | One animation, landed on that word in your video, or a clip for your editor | A finished 20 to 30 second explainer: script, your voice, 3D scenes and captions |
+| **Use it for** | A visual beat inside a video you've already filmed | A whole short, start to finish |
+| **Your part** | Nothing beyond the request | Approve the script, then record it in one take |
+
+Both are installed together, both run on your own computer, and both are checked frame by frame before you get the file.
+
+## /animate: one animation, on your word
 
 ```text
 /animate head-to-head on the word "cheaper" in my-video.mp4, Cursor vs Claude Code
 ```
 
-Claude asks for anything it's missing, renders the animation, checks the frames and gives you the file, with your audio untouched.
+1. **Pick an animation.** Name one, or describe what you need and Claude suggests some. Each one also has its own shortcut, such as `/animate-iceberg` or `/animate-route-map`.
+2. **Give it your content.** Claude asks for anything missing: your words, numbers and colours. It never invents a statistic.
+3. **It lands on your word.** The pack transcribes your video on your own computer and times the animation's key moment to the word you pick, then places it into your video with your audio untouched. No video? You get a clip for your editor.
+4. **It checks the result.** Claude looks at the key frames before handing it over.
 
-- **It lands on your word.** The pack transcribes your video on your own computer and times the key moment to the word you pick.
 - **It isn't a prompt you hope comes out right.** Each animation is a tested [HyperFrames](https://hyperframes.heygen.com) block with text, numbers and colours you can edit.
-- **It works with real data.** Route map draws real trips on real streets from two place names or a GPX file, with no API key.
+- **It works with real data.** Route map draws real trips on real streets from two place names or a GPX file, and Campaign map sweeps arrows across real places, with no API key.
 
-## One animation, three outputs
+### One animation, three outputs
 
 <table>
 <tr>
@@ -45,6 +60,63 @@ Claude asks for anything it's missing, renders the animation, checks the frames 
 <td width="33%" align="center" valign="top"><img src="media/output-overlay.webp" width="100%" alt="The overlay output floats as a card over the video"><br><b><code>overlay</code></b><br><sub>1080x1920 and transparent, floating over you</sub></td>
 </tr>
 </table>
+
+## /explain: a whole explainer from one sentence
+
+<table>
+<tr>
+<td width="34%" valign="top"><img src="media/explain-demo.webp" width="100%" alt="Typing /explain how AI picks its next word on a phone, and the finished explainer playing in the chat"></td>
+<td valign="top">
+
+```text
+/explain how AI picks its next word
+```
+
+1. **Claude writes the script.** About 50 words, fact-checked, split into scenes, with the facts it relies on listed so you can check them.
+2. **You approve it.** Ask for changes until it reads right. Nothing gets built until you say it's good.
+3. **Preview it, if you like.** A silent version timed to a natural reading pace, so you see the video before you record.
+4. **You record it.** One take on your phone or mic, in your own voice. A slip or a restart is fine. There's never a robot voice.
+5. **It builds to your voice.** Your take is transcribed on your computer, and every scene and caption is timed to your actual speech. Captions land a few words at a time, with the key word boxed.
+6. **You get the video.** A finished vertical MP4 with your narration, checked frame by frame.
+
+</td>
+</tr>
+</table>
+
+The scenes come from a kit of reusable cinematic 3D scene types, so every explainer looks consistent and builds quickly: a hero object, a labelled layer stack, things flowing between parts, a model network, a face scan, a fiber strand, ranked bars, a big number and more. When nothing fits, Claude writes a custom scene from a template.
+
+These five were made with `/explain`, shown as silent previews:
+
+<!-- explain:start -->
+
+<table>
+<tr>
+<td width="25%" align="center" valign="top">
+<a href="skills/explain/SKILL.md"><img src="media/cards/explain-next-word.webp" width="100%" alt="How AI picks its next word: Your sentence becomes tokens and the likeliest next word wins"></a>
+<br><b>How AI picks its next word</b><br><sub>Your sentence becomes tokens and the likeliest next word wins</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/explain/SKILL.md"><img src="media/cards/explain-ai-training.webp" width="100%" alt="How AI learns from data: Guesses flash red, the error flows back and accuracy climbs"></a>
+<br><b>How AI learns from data</b><br><sub>Guesses flash red, the error flows back and accuracy climbs</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/explain/SKILL.md"><img src="media/cards/explain-face-unlock.webp" width="100%" alt="How face unlock works: Infrared dots map a face in 3D and a padlock opens"></a>
+<br><b>How face unlock works</b><br><sub>Infrared dots map a face in 3D and a padlock opens</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/explain/SKILL.md"><img src="media/cards/explain-solar-panel.webp" width="100%" alt="How solar panels make power: Photons knock electrons loose and current lights a bulb"></a>
+<br><b>How solar panels make power</b><br><sub>Photons knock electrons loose and current lights a bulb</sub>
+</td>
+</tr>
+<tr>
+<td width="25%" align="center" valign="top">
+<a href="skills/explain/SKILL.md"><img src="media/cards/explain-fiber-internet.webp" width="100%" alt="How fiber internet carries light: A light pulse zig-zags down glass at 200,000 km a second"></a>
+<br><b>How fiber internet carries light</b><br><sub>A light pulse zig-zags down glass at 200,000 km a second</sub>
+</td>
+</tr>
+</table>
+
+<!-- explain:end -->
 
 ## The animations
 
@@ -69,6 +141,31 @@ Route map on real streets, water and 3D buildings. Name two places or give it a 
 <td width="25%" align="center" valign="top">
 <a href="blocks/route-map/README.md"><img src="media/cards/route-real-sf.webp" width="100%" alt="Palace of Fine Arts to the Wharf: A 2.2 mile bike ride along the San Francisco bay"></a>
 <br><b>Palace of Fine Arts to the Wharf</b><br><sub>A 2.2 mile bike ride along the San Francisco bay</sub>
+</td>
+</tr>
+</table>
+
+### Big visuals
+
+Spectacle that works for any topic. Each one turns an idea into something physical you can look at.
+
+<table>
+<tr>
+<td width="25%" align="center" valign="top">
+<a href="blocks/iceberg/README.md"><img src="media/cards/iceberg.webp" width="100%" alt="Iceberg: A small tip hides a colossal mass under the waterline"></a>
+<br><b><a href="blocks/iceberg/README.md"><code>iceberg</code></a></b><br><sub>A small tip hides a colossal mass under the waterline</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="blocks/scale-reveal/README.md"><img src="media/cards/scale-reveal.webp" width="100%" alt="Scale reveal: A big number rises past real things at true scale"></a>
+<br><b><a href="blocks/scale-reveal/README.md"><code>scale-reveal</code></a></b><br><sub>A big number rises past real things at true scale</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="blocks/cutaway/README.md"><img src="media/cards/cutaway.webp" width="100%" alt="Cutaway: A blade of light slices an object open down to its core"></a>
+<br><b><a href="blocks/cutaway/README.md"><code>cutaway</code></a></b><br><sub>A blade of light slices an object open down to its core</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="blocks/campaign-map/README.md"><img src="media/cards/campaign-map.webp" width="100%" alt="Campaign map: Bold arrows sweep across a real map, like a history documentary"></a>
+<br><b><a href="blocks/campaign-map/README.md"><code>campaign-map</code></a></b><br><sub>Bold arrows sweep across a real map, like a history documentary</sub>
 </td>
 </tr>
 </table>
@@ -298,7 +395,7 @@ npm install
 npm run setup
 ```
 
-Restart Claude Code and type `/animate`. To land animations on a spoken word, also add the speech model, about 640 MB, which runs on your computer:
+Restart Claude Code and type `/animate` or `/explain`. To land animations on a spoken word, and for `/explain`, also add the speech model, about 640 MB, which runs on your computer:
 
 ```bash
 npm run setup -- --speech
@@ -312,18 +409,27 @@ npm run setup -- --speech
 flowchart LR
   animate["/animate or a shortcut"] --> block["A tested block with your content"]
   block --> render["HyperFrames render"]
-  render --> outputs["full, top, overlay"]
+  explain["/explain"] --> script["A script you approve"]
+  script --> voice["Your recording"]
+  voice --> scenes["Scenes from the kit, timed to your words"]
+  scenes --> render
+  render --> video["Your video"]
 ```
 
-`/animate` does the work, and each animation has a typed shortcut that sends you straight to it. Fixes to rendering, word sync or the frame check live in one place, and each animation stays in its own folder.
+Both skills share one engine: the same HyperFrames rendering, the same on-device transcription and the same frame check.
+
+- **`/animate`** works from a library of finished animations, called blocks. Each block is one tested animation with variables for your content. Each block also has a typed shortcut, such as `/animate-cutaway`, that runs the main skill for that block, so a fix lives in one place.
+- **`/explain`** works from a kit of scene types rather than finished blocks, because a whole explainer needs many short scenes that change with every topic. Claude picks scenes from the kit, fills them in for your topic, and times each one to your recording.
 
 | Folder | What's in it |
 |---|---|
-| [`blocks/`](blocks) | The 38 animations, each with its own README on what it suits and how to feed it |
-| [`skills/`](skills) | `/animate` and its shortcuts |
-| [`shared/`](shared) | Rendering, word sync, real routes and the `animate` command |
+| [`blocks/`](blocks) | The 42 animations, each with its own README on what it suits and how to feed it |
+| [`explain-kit/`](explain-kit) | The `/explain` scene kit, captions and five example scripts |
+| [`skills/`](skills) | `/animate`, its 42 shortcuts, and `/explain` |
+| [`shared/`](shared) | Rendering, word sync, real maps, the explainer builder and the `animate` command |
 | [`gallery/`](gallery) | The gallery page, its clips and the catalogue behind it |
 | [`docs/`](docs) | Install guide, commands and credits |
+| [`scripts/`](scripts) | Builders for the gallery, banner and promo video. Not needed to use the pack |
 
 ## What works where
 

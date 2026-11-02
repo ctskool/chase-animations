@@ -37,6 +37,98 @@
       ]
     },
     {
+      "name": "Big visuals",
+      "note": "Spectacle that works for any topic. Each one turns an idea into something physical you can look at.",
+      "items": [
+        {
+          "slug": "iceberg",
+          "name": "Iceberg",
+          "does": "A small tip hides a colossal mass under the waterline",
+          "key": "The base ignites and the hero line stamps"
+        },
+        {
+          "slug": "scale-reveal",
+          "name": "Scale reveal",
+          "does": "A big number rises past real things at true scale",
+          "key": "The stack clears the last comparison and the height punches"
+        },
+        {
+          "slug": "cutaway",
+          "name": "Cutaway",
+          "does": "A blade of light slices an object open down to its core",
+          "key": "The core ignites and a ripple runs out ring by ring"
+        },
+        {
+          "slug": "campaign-map",
+          "name": "Campaign map",
+          "does": "Bold arrows sweep across a real map, like a history documentary",
+          "key": "The final arrow plants and the whole sweep is revealed"
+        }
+      ]
+    },
+    {
+      "name": "Made with /explain",
+      "section": "explain",
+      "note": "Whole explainers, each from one sentence. Shown here as silent previews; yours are narrated in your own voice.",
+      "items": [
+        {
+          "slug": "explain-next-word",
+          "name": "How AI picks its next word",
+          "does": "Your sentence becomes tokens and the likeliest next word wins",
+          "key": "Every caption and scene lands on the narrator's words",
+          "source": "renders/final/explain/next-word.mp4",
+          "cardAt": 12.2,
+          "link": "skills/explain/SKILL.md",
+          "example": true,
+          "cmd": "/explain how AI picks its next word"
+        },
+        {
+          "slug": "explain-ai-training",
+          "name": "How AI learns from data",
+          "does": "Guesses flash red, the error flows back and accuracy climbs",
+          "key": "Every caption and scene lands on the narrator's words",
+          "source": "renders/final/explain/ai-training.mp4",
+          "cardAt": 7.4,
+          "link": "skills/explain/SKILL.md",
+          "example": true,
+          "cmd": "/explain how AI learns from data"
+        },
+        {
+          "slug": "explain-face-unlock",
+          "name": "How face unlock works",
+          "does": "Infrared dots map a face in 3D and a padlock opens",
+          "key": "Every caption and scene lands on the narrator's words",
+          "source": "renders/final/explain/face-unlock.mp4",
+          "cardAt": 14.6,
+          "link": "skills/explain/SKILL.md",
+          "example": true,
+          "cmd": "/explain how face unlock works"
+        },
+        {
+          "slug": "explain-solar-panel",
+          "name": "How solar panels make power",
+          "does": "Photons knock electrons loose and current lights a bulb",
+          "key": "Every caption and scene lands on the narrator's words",
+          "source": "renders/final/explain/solar-panel.mp4",
+          "cardAt": 9.4,
+          "link": "skills/explain/SKILL.md",
+          "example": true,
+          "cmd": "/explain how solar panels make power"
+        },
+        {
+          "slug": "explain-fiber-internet",
+          "name": "How fiber internet carries light",
+          "does": "A light pulse zig-zags down glass at 200,000 km a second",
+          "key": "Every caption and scene lands on the narrator's words",
+          "source": "renders/final/explain/fiber-internet.mp4",
+          "cardAt": 10.4,
+          "link": "skills/explain/SKILL.md",
+          "example": true,
+          "cmd": "/explain how fiber internet carries light"
+        }
+      ]
+    },
+    {
       "name": "Compare and prove",
       "items": [
         {

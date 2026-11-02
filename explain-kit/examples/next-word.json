@@ -1,0 +1,35 @@
+{
+  "topic": "how AI picks its next word",
+  "title": "Next word",
+  "subtitle": "how AI picks it",
+  "accent": "#A07CFF",
+  "facts": [
+    "Language models such as ChatGPT and Claude split text into tokens: whole words or pieces of words.",
+    "The model runs the tokens through many layers and produces a score for every token in its vocabulary as the possible next one.",
+    "Those scores become probabilities. The model picks one, often the most likely, with some randomness (sampling), then adds it and repeats, one token at a time.",
+    "The bar values in the rank scene are illustrative and tagged as an example, not measured from a real model."
+  ],
+  "scenes": [
+    {
+      "text": "When you [type] to an [AI] like [ChatGPT] or [Claude], your words become [tokens].",
+      "visual": { "type": "tokens", "sentence": "Why is the sky", "mode": "split", "splitOn": "words", "labels": [{ "text": "Tokens", "on": "tokens", "side": "right" }] }
+    },
+    {
+      "text": "The [model] passes them through its [layers] and [scores] every possible next [token].",
+      "visual": { "type": "network", "mode": "forward", "inputs": ["Why", "is", "the", "sky"], "startOn": "passes", "labels": [{ "text": "Layers", "layer": 2, "on": "layers" }] }
+    },
+    {
+      "text": "The [likeliest] words rise to the [top].",
+      "visual": {
+        "type": "rank",
+        "items": [{ "label": "blue", "value": 62 }, { "label": "so", "value": 11 }, { "label": "gray", "value": 7 }, { "label": "red", "value": 4 }],
+        "example": true,
+        "pickOn": "top"
+      }
+    },
+    {
+      "text": "It [picks] one, often the [top] choice with a little [randomness], then [repeats], word by [word].",
+      "visual": { "type": "tokens", "sentence": "Why is the sky", "mode": "append", "next": ["blue", "?"], "stampOn": "picks", "stamp2On": "repeats" }
+    }
+  ]
+}

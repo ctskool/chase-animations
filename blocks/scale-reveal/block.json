@@ -1,0 +1,58 @@
+{
+  "name": "scale-reveal",
+  "title": "Scale reveal",
+  "summary": "A big number made physical. A stack rises beside a person while the camera pulls back through real-world comparisons at their true heights, then the stack slams to a stop and the true height punches in huge.",
+  "fonts": [
+    "400 100px Anton",
+    "600 58px 'Barlow Condensed'",
+    "700 58px 'Barlow Condensed'"
+  ],
+  "three": true,
+  "overlayHeight": 1000,
+  "timing": {
+    "keyAt": 4.4,
+    "hold": 1.5,
+    "exit": 0.36,
+    "minKeyAt": 2.8
+  },
+  "keyMoment": "The stack stops dead above the last comparison. A ring of light that climbed it bursts outward from the top, the stack flashes accent, loose sheets blow off the top, the frame kicks and the true height punches in huge.",
+  "variables": [
+    { "id": "heroLabel", "type": "string", "label": "What the stack is", "default": "$1 billion in $100 bills" },
+    { "id": "heroValue", "type": "string", "label": "True height shown at the key moment", "default": "1.09 km" },
+    { "id": "heightMetres", "type": "number", "label": "True height in metres", "default": 1090, "min": 20, "max": 1000000, "step": 1 },
+    { "id": "caption", "type": "string", "label": "Optional line under the height", "default": "10 million bills, stacked flat" },
+    {
+      "id": "units",
+      "type": "enum",
+      "label": "Units on the comparisons",
+      "default": "metric",
+      "options": [
+        { "value": "metric", "label": "Metres and km" },
+        { "value": "imperial", "label": "Feet and miles" }
+      ]
+    },
+    { "id": "stackMark", "type": "string", "label": "Short mark printed on the paper bands", "default": "$100" },
+    { "id": "stack", "type": "color", "label": "Stack", "default": "#2FA36B" },
+    { "id": "stackPaper", "type": "color", "label": "Paper bands and sheet edges", "default": "#F3EBD3" },
+    { "id": "skyTop", "type": "color", "label": "Upper sky", "default": "#245C9E" },
+    { "id": "skyHorizon", "type": "color", "label": "Warm horizon", "default": "#FFB469" },
+    { "id": "space", "type": "color", "label": "Space", "default": "#060B1C" },
+    { "id": "ground", "type": "color", "label": "Ground", "default": "#7CA450" },
+    { "id": "groundAlt", "type": "color", "label": "Fields and second ground colour", "default": "#C9A95A" },
+    { "id": "building", "type": "color", "label": "Buildings", "default": "#D9CFC0" },
+    { "id": "person", "type": "color", "label": "Person's top", "default": "#E8533F" },
+    { "id": "text", "type": "color", "label": "Big text", "default": "#FFF8E8" },
+    { "id": "accent", "type": "color", "label": "Accent at the key moment", "default": "#FFC93C" },
+    { "id": "ink", "type": "color", "label": "Dark text and shadows", "default": "#12213A" },
+    {
+      "id": "overlayPosition",
+      "type": "enum",
+      "label": "Overlay position",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    }
+  ]
+}

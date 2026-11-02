@@ -13,9 +13,9 @@ const COLUMNS = 6;
 
 // Left to right, then row by row. The strongest looks sit nearest the title.
 const WALL = [
-  "globe-arcs", "risograph", "terminal-run", "notification-stack", "blue-editorial", "isometric-flow",
-  "money-stat", "route-real-london", "retro-crt", "agent-fan-out", "laptop-reveal", "swiss-grid",
-  "head-to-head", "ranking-bars", "oscilloscope", "test-sweep", "magazine-layout", "frosted-glass",
+  "globe-arcs", "iceberg", "terminal-run", "notification-stack", "blue-editorial", "isometric-flow",
+  "money-stat", "route-real-london", "cutaway", "campaign-map", "laptop-reveal", "swiss-grid",
+  "head-to-head", "ranking-bars", "scale-reveal", "risograph", "retro-crt", "frosted-glass",
 ];
 
 const { groups } = JSON.parse(fs.readFileSync(path.join(PACK, "gallery", "catalog.json"), "utf8"));
@@ -89,9 +89,17 @@ function outputs() {
     "-filter_complex", `[0][1]overlay=shortest=1,${encode[0]}`, ...webp, path.join(OUT, "output-overlay.webp"));
 }
 
+// The first demo from the /explain promo: typing the command through to the explainer playing.
+function explainDemo() {
+  ffmpeg("-ss", "0.3", "-t", "6.4", "-i", path.join(PACK, "renders", "final", "explain", "explain-promo.mp4"),
+    "-vf", "fps=14,scale=360:-2:flags=lanczos", "-c:v", "libwebp_anim", "-quality", "66", "-compression_level", "6",
+    "-loop", "0", "-an", path.join(OUT, "explain-demo.webp"));
+}
+
 fs.mkdirSync(OUT, { recursive: true });
 outputs();
+explainDemo();
 banner();
-for (const name of ["banner.webp", "output-full.webp", "output-top.webp", "output-overlay.webp"]) {
+for (const name of ["banner.webp", "output-full.webp", "output-top.webp", "output-overlay.webp", "explain-demo.webp"]) {
   console.log(`${name} ${(fs.statSync(path.join(OUT, name)).size / 1048576).toFixed(2)} MB`);
 }

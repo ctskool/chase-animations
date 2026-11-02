@@ -16,7 +16,8 @@ import {
   resolveVars,
 } from "./build.mjs";
 import { contactSheet, placeOnVideo, probe } from "./compose.mjs";
-import { makeRoute } from "./route.mjs";
+import { explain } from "./explain.mjs";
+import { makeCampaign, makeRoute } from "./route.mjs";
 import { findWord, fitToWord, loadWords, printMatches, refineStart } from "./sync.mjs";
 
 const HELP = `Chase Animations
@@ -29,9 +30,16 @@ const HELP = `Chase Animations
   animate words <video> [--find word]  transcribe a video and list or find words
   animate route --from "<place>" --to "<place>"
                                        fetch a real route and map for route-map
+  animate campaign --move "<place> > <place>"
+                                       fetch real places and a map for campaign-map
   animate preview <name> [options]     open it in HyperFrames Studio
   animate check <name> [options]       run HyperFrames' checks on every output
   animate sheet <video> [--times a,b]  contact sheet for checking frames by eye
+  animate explain new "<topic>"        start a narrated explainer: explain/<topic>/script.json
+  animate explain check <folder>       check the script and write script.md, the words to record
+  animate explain build <folder> --audio <file>
+                                       time the scenes and captions to your recording
+  animate explain render <folder>      render it, with a contact sheet
 
 Options
   --output full|top|overlay|all        9:16 full frame, top half of a split-screen, or transparent overlay
@@ -64,6 +72,22 @@ route options
   --units mi|km                        distance units (default: by country)
   --save <file>                        where the map goes (default: route-map.json)
   --vars <file>                        where the trip details go (default: animate-vars.json)
+
+campaign options
+  --move "<place> > <place>"           one arrow, or a chain with more ">". Repeat as needed, up to five arrows
+                                       add (east) or (west) after a place to go that way round the world
+  --stage "<text>"                     the date or stage of each move, in order (repeat as needed)
+  --units mi|km                        distance units (default: by country)
+  --save <file>                        where the map goes (default: campaign-map.json)
+  --vars <file>                        where the move details go (default: animate-vars.json)
+
+explain options
+  --audio <file>                       your narration, any audio or video file (build remembers it)
+  --out <folder>                       new: where the explainer folder goes (default: ./explain)
+  --force                              build even when the recording doesn't match the script
+  --preview                            build or render silent, timed to a reading pace, before you record
+  --draft                              render: faster, lower quality
+  animate explain preview <folder>     open it in HyperFrames Studio
 `;
 
 const OPTIONS = {
@@ -97,6 +121,11 @@ const OPTIONS = {
   minutes: { type: "string" },
   units: { type: "string" },
   save: { type: "string" },
+  move: { type: "string", multiple: true },
+  stage: { type: "string", multiple: true },
+  audio: { type: "string" },
+  force: { type: "boolean" },
+  preview: { type: "boolean" },
   help: { type: "boolean", short: "h" },
 };
 
@@ -267,6 +296,8 @@ async function main() {
     check: () => check(need(), o),
     sheet: () => sheet(need(), o),
     route: () => makeRoute(o),
+    campaign: () => makeCampaign(o),
+    explain: () => explain(p.slice(1), o),
   };
   if (!commands[cmd]) throw new UsageError(`Unknown command "${cmd}". Run with no arguments for help.`);
   await commands[cmd]();

@@ -1,0 +1,190 @@
+@font-face {
+  font-family: "Libre Caslon Text";
+  src: url("assets/fonts/libre-caslon-text-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Libre Caslon Text";
+  src: url("assets/fonts/libre-caslon-text-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("assets/fonts/newsreader-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+}
+
+#stage {
+  isolation: isolate;
+}
+
+[data-variant="overlay"] #stage {
+  box-shadow: 0 24px 72px rgba(18, 14, 10, 0.34);
+}
+
+#cm-gl,
+#cm-svg,
+#cm-markers,
+#cm-plates {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#cm-gl {
+  display: block;
+  z-index: 0;
+}
+
+#cm-svg {
+  z-index: 1;
+  overflow: visible;
+}
+
+#cm-markers {
+  z-index: 2;
+}
+
+#cm-plates {
+  z-index: 3;
+}
+
+.cm-marker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 50%;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  transform-origin: 50% 50%;
+  visibility: hidden;
+}
+
+.cm-plate {
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transform-origin: 50% 50%;
+  visibility: hidden;
+}
+
+.cm-stage {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.02;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cm-place {
+  font-family: "Libre Caslon Text", serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  white-space: nowrap;
+}
+
+#cm-bar {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 18px;
+  visibility: hidden;
+}
+
+#cm-title,
+#cm-count {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+#cm-title {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-family: "Libre Caslon Text", serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+#cm-count {
+  flex: 0 0 auto;
+  margin-left: auto;
+  gap: 0.3em;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  transform-origin: 100% 50%;
+}
+
+#cm-count-label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+#cm-count-value {
+  font-variant-numeric: tabular-nums lining-nums;
+  display: inline-block;
+  transform-origin: 50% 60%;
+}
+
+#cm-hero {
+  position: absolute;
+  z-index: 5;
+  box-sizing: border-box;
+  display: flex;
+  transform-origin: 50% 50%;
+  visibility: hidden;
+}
+
+#cm-hero-value,
+#cm-hero-line {
+  white-space: nowrap;
+}
+
+#cm-hero-value {
+  font-family: "Libre Caslon Text", serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+#cm-hero-line {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.08;
+}
+
+#cm-credit {
+  position: absolute;
+  z-index: 6;
+  font: 600 22px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  border-radius: 3px;
+  white-space: nowrap;
+  visibility: hidden;
+}

@@ -1,0 +1,103 @@
+/* Promo: /explain running in a chat app on a phone. The screen is laid out in phone points
+   (390 x 844) and scaled up, so type sizes match a real phone. */
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #070708; font-family: "Inter", sans-serif; color: #fff; }
+#bg { position: absolute; inset: 0; background:
+  radial-gradient(62% 44% at 50% 47%, rgba(215, 119, 87, 0.34), rgba(215, 119, 87, 0) 72%),
+  radial-gradient(120% 80% at 50% 40%, #17171a 0%, #08080a 62%, #030304 100%); }
+#glow { position: absolute; left: 50%; top: 50%; width: 1100px; height: 1100px; margin: -550px 0 0 -550px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(235, 159, 127, 0.22), rgba(235, 159, 127, 0)); }
+#grain { position: absolute; inset: 0; opacity: 0.06; mix-blend-mode: overlay; }
+
+#stage { position: absolute; inset: 0; }
+#phone { position: absolute; border-radius: 186px; background: linear-gradient(145deg, #3a3a3e, #121214 38%, #0b0b0c 62%, #2c2c30);
+  box-shadow: 0 60px 140px rgba(0, 0, 0, 0.75), 0 20px 50px rgba(0, 0, 0, 0.55), inset 0 0 0 2px rgba(255, 255, 255, 0.08); }
+#phone::before { content: ""; position: absolute; inset: 8px; border-radius: 178px; background: #000; }
+.side-btn { position: absolute; width: 6px; border-radius: 3px; background: linear-gradient(90deg, #2a2a2e, #4a4a50); }
+#screen-wrap { position: absolute; overflow: hidden; background: #1a1918; }
+#screen { position: absolute; left: 0; top: 0; width: 390px; height: 844px; transform-origin: 0 0; overflow: hidden; background: #1a1918; }
+
+/* status bar */
+.status { position: absolute; left: 0; right: 0; top: 0; height: 52px; background: #1a1918; z-index: 3; }
+.status .time { position: absolute; left: 44px; top: 17px; font-weight: 600; font-size: 17px; letter-spacing: -0.2px; }
+.status .icons { position: absolute; right: 30px; top: 19px; display: flex; gap: 6px; align-items: center; }
+.camera { position: absolute; z-index: 4; left: 50%; top: 13px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: #050505; box-shadow: inset 0 0 0 2px #151518; }
+
+/* header */
+.header { position: absolute; left: 0; right: 0; top: 52px; height: 48px; background: #1a1918; z-index: 3; }
+.menu-ico { position: absolute; left: 18px; top: 13px; width: 20px; }
+.menu-ico i { display: block; height: 2px; border-radius: 1px; background: #c9c7c2; margin-bottom: 5px; }
+.toggle { position: absolute; left: 50%; top: 4px; transform: translateX(-50%); display: flex; padding: 3px; border-radius: 12px; background: #2a2927; }
+.toggle span { display: block; padding: 6px 16px; font-size: 14px; font-weight: 600; color: #a09d97; border-radius: 9px; }
+.toggle span.on { background: #45433f; color: #fff; }
+.counter { position: absolute; right: 16px; top: 9px; padding: 4px 10px; border-radius: 10px; background: #2a2927; font-size: 14px; font-weight: 600; color: #e9e6e0; font-variant-numeric: tabular-nums; }
+.counter span { display: none; }
+.hairline { position: absolute; left: 0; right: 0; top: 100px; height: 1px; background: rgba(255, 255, 255, 0.06); z-index: 3; }
+
+/* empty chat */
+.welcome { position: absolute; left: 0; right: 0; top: 214px; text-align: center; }
+.welcome .mascot-slot { display: flex; justify-content: center; margin-bottom: 18px; }
+.welcome h2 { font-size: 23px; font-weight: 500; color: #ece9e3; letter-spacing: -0.3px; }
+.welcome p { margin-top: 8px; font-size: 14px; color: #8f8c86; }
+
+/* conversation */
+.convo { position: absolute; left: 0; right: 0; top: 104px; bottom: 0; }
+.bubble { position: absolute; right: 16px; top: 8px; max-width: 286px; padding: 10px 14px; border-radius: 20px 20px 6px 20px; background: #34322f;
+  font-size: 15.5px; line-height: 21px; color: #f2efe9; }
+.cmd { color: #D77757; font-weight: 600; }
+.statusline { position: absolute; left: 20px; right: 20px; top: 74px; height: 22px; display: flex; align-items: center; gap: 8px; font-size: 14.5px; }
+.statusline .busy { display: flex; align-items: center; gap: 8px; }
+.shimmer { background: linear-gradient(90deg, #8a8781 0%, #8a8781 35%, #f3d6c9 50%, #8a8781 65%, #8a8781 100%); background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 500; }
+.statusline .done { display: flex; align-items: center; gap: 7px; color: #a3a09a; font-family: "JetBrains Mono", monospace; font-size: 12.5px; }
+.card { position: absolute; left: 39px; top: 106px; width: 312px; height: 555px; border-radius: 18px; overflow: hidden; background: #22211f;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45); transform-origin: 50% 50%; }
+.card .ph { position: absolute; inset: 0; background: linear-gradient(110deg, #22211f 30%, #2f2d2a 45%, #3a3733 50%, #2f2d2a 55%, #22211f 70%); background-size: 260% 100%; }
+.card .ph-lines { position: absolute; left: 22px; right: 22px; top: 40px; }
+.card .ph-lines i { display: block; height: 10px; border-radius: 5px; background: rgba(255, 255, 255, 0.06); margin-bottom: 12px; }
+.card video { position: absolute; left: 0; top: 0; width: 312px; height: 555px; object-fit: cover; }
+.card .flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+.caption { position: absolute; left: 39px; width: 312px; top: 669px; }
+.caption .t { display: inline; font-size: 16.5px; font-weight: 600; color: #f4f1eb; letter-spacing: -0.2px; }
+.caption .w { font-size: 14.5px; font-style: italic; color: #a7a39c; margin-top: 2px; }
+.caption .pill { display: inline-block; margin-left: 8px; vertical-align: 1px; padding: 4px 10px; border-radius: 9px; background: rgba(215, 119, 87, 0.16); color: #EB9F7F; font-size: 12.5px; font-weight: 600; }
+
+/* bottom dock: slash menu, message box, keyboard */
+.dock { position: absolute; left: 0; right: 0; bottom: 0; z-index: 4; }
+.slashmenu { position: absolute; left: 12px; right: 12px; bottom: 362px; padding: 10px; border-radius: 16px; background: #292826; border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); display: flex; gap: 12px; align-items: center; transform-origin: 50% 100%; }
+.slashmenu .ico { width: 38px; height: 38px; border-radius: 10px; background: rgba(215, 119, 87, 0.16); display: flex; align-items: center; justify-content: center; }
+.slashmenu .name { font-size: 16px; font-weight: 600; color: #D77757; }
+.slashmenu .desc { font-size: 13.5px; color: #a7a39c; margin-top: 2px; }
+.slashmenu .kbd { margin-left: auto; font-size: 12px; color: #77746e; padding-right: 4px; }
+.inputbox { position: absolute; left: 12px; right: 12px; bottom: 300px; min-height: 52px; padding: 14px 54px 14px 16px; border-radius: 24px; background: #2a2927;
+  border: 1px solid rgba(255, 255, 255, 0.08); font-size: 16px; line-height: 22px; color: #f2efe9; }
+.inputbox .placeholder { color: #7e7b75; }
+.typed span { display: none; }
+.caret { display: inline-block; width: 2px; height: 20px; margin-left: 1px; vertical-align: -4px; background: #D77757; border-radius: 1px; }
+.sendbtn { position: absolute; right: 8px; bottom: 8px; width: 36px; height: 36px; border-radius: 50%; background: #45433f; display: flex; align-items: center; justify-content: center; }
+.sendbtn .on { position: absolute; inset: 0; border-radius: 50%; background: #D77757; opacity: 0; }
+.sendbtn svg { position: relative; }
+.keyboard { position: absolute; left: 0; right: 0; bottom: 0; height: 291px; background: #2b2a2e; padding-top: 8px; }
+.krow { position: absolute; left: 0; right: 0; height: 43px; }
+.key { position: absolute; height: 43px; border-radius: 5.5px; background: #6b6a6f; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+  display: flex; align-items: center; justify-content: center; font-size: 22.5px; font-weight: 400; color: #fff; }
+.key.fn { background: #47464b; font-size: 15.5px; }
+.key.down { background: #8c8b90; }
+.pop { position: absolute; width: 54px; height: 104px; display: none; }
+.pop .cap { position: absolute; left: 0; top: 0; width: 54px; height: 58px; border-radius: 10px 10px 8px 8px; background: #8c8b90; display: flex; align-items: center; justify-content: center; font-size: 34px; color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45); }
+.pop .stem { position: absolute; left: 10px; top: 50px; width: 34px; height: 54px; border-radius: 0 0 6px 6px; background: #8c8b90; }
+.homebar { position: absolute; left: 50%; bottom: 8px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: #e8e6e1; }
+.kb-icons { position: absolute; left: 26px; right: 26px; bottom: 26px; display: flex; justify-content: space-between; }
+
+/* end card */
+#end { position: absolute; inset: 0; opacity: 0; }
+#cta { position: absolute; left: 60px; right: 60px; top: 380px; text-align: center; }
+#cta .tag { display: inline-flex; align-items: center; gap: 14px; padding: 12px 24px; border-radius: 40px; background: rgba(215, 119, 87, 0.14); border: 1px solid rgba(215, 119, 87, 0.35);
+  font-family: "JetBrains Mono", monospace; font-size: 34px; color: #EB9F7F; }
+#cta h1 { white-space: pre-line; margin-top: 34px; font-family: "Inter Tight", sans-serif; font-weight: 800; font-size: 112px; line-height: 1.02; letter-spacing: -2.5px; color: #fff; }
+#cta .sub { margin-top: 22px; font-family: "JetBrains Mono", monospace; font-size: 34px; color: #c9c5be; }
+#row { position: absolute; left: 0; top: 790px; height: 760px; width: 3000px; }
+.tile { position: absolute; top: 0; width: 405px; height: 720px; border-radius: 34px; overflow: hidden; background: #111;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
+.tile video { position: absolute; left: 0; top: 0; width: 405px; height: 720px; object-fit: cover; }
