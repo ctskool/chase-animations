@@ -46,7 +46,7 @@ The first command finds both places, works out the route, downloads the map arou
 - The route can start with a short loop when the start sits on a one-way street. That's the real drive. Move `--from` to a nearby street to avoid it.
 - The map turns so the route fills the frame. Set `mapOrientation` to `north` to keep north at the top.
 - Place labels are real names beside their real locations. A name that can't sit near its place isn't shown.
-- 3D buildings appear on routes up to about 15 km. Longer routes show water, green space and main roads. The very tallest towers are shortened so they don't block the route.
+- City routes show 3D buildings, tested up to 5 km. A 30 km drive and longer shows water, green space and main roads instead. The very tallest towers are shortened so they don't block the route.
 - The credit line above the card is required by the map's licence. Keep it.
 - The place names you type are sent to OpenStreetMap's search and the routing service. Both are free shared services, so don't run this in a loop.
 
