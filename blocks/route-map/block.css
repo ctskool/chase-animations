@@ -245,3 +245,9 @@
   display: block;
   flex: 0 0 auto;
 }
+
+#map-credit {
+  position: absolute;
+  font: 500 22px Inter, sans-serif;
+  white-space: nowrap;
+}

@@ -15,6 +15,9 @@ CA.ready(() => {
   const K = T.design;
   const stageEl = $("stage");
   const EPS = 0.000001;
+  const realMap = V.mapData && typeof V.mapData === "object"
+    ? V.mapData
+    : null;
 
   const clamp = (v, lo = 0, hi = 1) =>
     Math.min(hi, Math.max(lo, v));
@@ -101,13 +104,76 @@ CA.ready(() => {
     24,
     cardY - M.mapGap - top - M.pinH - 28,
   );
-  const stretchZ = compact
+  const stretchZ = realMap
+    ? 1
+    : compact
     ? shallow
       ? clamp(availableMapHeight / 400, 0.08, 0.65)
       : clamp((H - M.cardH - top - bottom - 140) / 430, 0.28, 1)
     : 1;
 
   const P = (x, z, y = 0) => new THREE.Vector3(x, y, z * stretchZ);
+
+  // Turns the map's metres into the block's world, sized and turned so the
+  // route fills the same shape of frame the fictional route does.
+  const realFrame = realMap ? (() => {
+    const flat = realMap.route;
+    const count = flat.length / 2;
+    let meanX = 0;
+    let meanY = 0;
+    for (let i = 0; i < flat.length; i += 2) {
+      meanX += flat[i] / count;
+      meanY += flat[i + 1] / count;
+    }
+
+    let xx = 0;
+    let yy = 0;
+    let xy = 0;
+    for (let i = 0; i < flat.length; i += 2) {
+      const dx = flat[i] - meanX;
+      const dy = flat[i + 1] - meanY;
+      xx += dx * dx;
+      yy += dy * dy;
+      xy += dx * dy;
+    }
+
+    let axis = Math.atan2(2 * xy, xx - yy) / 2;
+    const travelX = flat[flat.length - 2] - flat[0];
+    const travelY = flat[flat.length - 1] - flat[1];
+    if (Math.cos(axis) * travelX + Math.sin(axis) * travelY < 0) {
+      axis += Math.PI;
+    }
+
+    const wanted = compact ? Math.atan2(12, 20) : Math.atan2(24, 16);
+    const turn = V.mapOrientation === "north" ? 0 : wanted - axis;
+    const cos = Math.cos(turn);
+    const sin = Math.sin(turn);
+    const spin = (x, y) => [x * cos - y * sin, x * sin + y * cos];
+
+    let left = Infinity;
+    let right = -Infinity;
+    let low = Infinity;
+    let high = -Infinity;
+    for (let i = 0; i < flat.length; i += 2) {
+      const [x, y] = spin(flat[i], flat[i + 1]);
+      left = Math.min(left, x);
+      right = Math.max(right, x);
+      low = Math.min(low, y);
+      high = Math.max(high, y);
+    }
+
+    const scale = 24 / Math.max(right - left, high - low, 1);
+    const middleX = (left + right) / 2;
+    const middleY = (low + high) / 2;
+
+    return {
+      scale,
+      point(x, y) {
+        const [rx, ry] = spin(x, y);
+        return [(rx - middleX) * scale, -(ry - middleY) * scale];
+      },
+    };
+  })() : null;
 
   let finalMinutes = Number(V.finalMinutes);
   if (!Number.isFinite(finalMinutes)) finalMinutes = 8;
@@ -222,79 +288,15 @@ CA.ready(() => {
     return mesh;
   }
 
-  plane(180, 180, materials.land, 0, 0, -0.08);
+  plane(
+    realMap ? 900 : 180, realMap ? 900 : 180,
+    materials.land, 0, 0, -0.08,
+  );
 
-  for (let i = -12; i <= 12; i++) {
-    const coordinate = -2 + i * 4;
-    plane(1.08, 140, materials.streets, coordinate, 0, 0.002);
-    plane(140, 1.08, materials.streets, 0, coordinate, 0.003);
-  }
-
-  plane(140, 1.36, materials.mainRoad, 0, 6, 0.012);
+  const currents = [];
 
   const riverCenter = (x) =>
     -0.8 + x * 0.08 + Math.sin(x * 0.22) * 0.18;
-
-  function riverGeometry(halfWidth, y) {
-    const positions = [];
-    const indices = [];
-    const count = 160;
-
-    for (let i = 0; i <= count; i++) {
-      const x = -80 + i;
-      const z = riverCenter(x);
-      positions.push(
-        x, y, (z - halfWidth) * stretchZ,
-        x, y, (z + halfWidth) * stretchZ,
-      );
-      if (i < count) {
-        const a = i * 2;
-        indices.push(a, a + 1, a + 2, a + 1, a + 3, a + 2);
-      }
-    }
-
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute(
-      "position",
-      new THREE.Float32BufferAttribute(positions, 3),
-    );
-    geometry.setIndex(indices);
-    geometry.computeVertexNormals();
-    return geometry;
-  }
-
-  const banks = new THREE.Mesh(riverGeometry(1.13, 0.018), materials.bank);
-  banks.receiveShadow = true;
-  scene.add(banks);
-
-  const river = new THREE.Mesh(riverGeometry(0.91, 0.028), materials.water);
-  river.receiveShadow = true;
-  scene.add(river);
-
-  for (let i = -8; i <= 8; i++) {
-    const x = -2 + i * 4;
-    const z = riverCenter(x);
-    box(1.22, 0.08, 3.3, materials.streets, x, z, 0.065);
-    box(0.07, 0.12, 3.3, materials.bridgeEdge, x - 0.61, z, 0.12);
-    box(0.07, 0.12, 3.3, materials.bridgeEdge, x + 0.61, z, 0.12);
-  }
-
-  const currentMaterial = new THREE.MeshBasicMaterial({
-    color: mixed(V.water, V.surface, 0.32),
-    depthWrite: false,
-  });
-  const currents = [];
-
-  for (let i = 0; i < 19; i++) {
-    const mesh = plane(
-      0.72, 0.027, currentMaterial, -38 + i * 4, 0, 0.041,
-    );
-    currents.push({
-      mesh,
-      base: -38 + i * 4,
-      lane: i % 2 ? -0.35 : 0.35,
-    });
-  }
 
   const parkSpecs = compact
     ? [
@@ -308,113 +310,190 @@ CA.ready(() => {
         { x: 8, z: 4, square: false },
       ];
 
-  const contactTexture = (() => {
-    const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = 96;
-    const context = canvas.getContext("2d");
-    const gradient = context.createRadialGradient(48, 48, 12, 48, 48, 48);
-    gradient.addColorStop(0, rgba(V.ink, 0.18));
-    gradient.addColorStop(0.58, rgba(V.ink, 0.075));
-    gradient.addColorStop(1, rgba(V.ink, 0));
-    context.fillStyle = gradient;
-    context.fillRect(0, 0, 96, 96);
+  function buildCity() {
+    for (let i = -12; i <= 12; i++) {
+      const coordinate = -2 + i * 4;
+      plane(1.08, 140, materials.streets, coordinate, 0, 0.002);
+      plane(140, 1.08, materials.streets, 0, coordinate, 0.003);
+    }
 
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    return texture;
-  })();
+    plane(140, 1.36, materials.mainRoad, 0, 6, 0.012);
 
-  const contactMaterial = new THREE.MeshBasicMaterial({
-    map: contactTexture,
-    transparent: true,
-    depthWrite: false,
-    color: V.surface,
-  });
+    function riverGeometry(halfWidth, y) {
+      const positions = [];
+      const indices = [];
+      const count = 160;
 
-  const random = seeded(117);
-
-  for (let x = -36; x <= 36; x += 4) {
-    for (let z = -40; z <= 32; z += 4) {
-      if (Math.abs(z - riverCenter(x)) < 2.8) continue;
-      if (parkSpecs.some((p) =>
-        Math.abs(p.x - x) < 1.9 && Math.abs(p.z - z) < 1.9
-      )) continue;
-      if (random() > 0.91) continue;
-
-      const floors = 1 + Math.floor(random() * 3);
-      const h = 0.32 + floors * 0.31;
-      const w = 2.25 + random() * 0.48;
-      const d = 2.2 + random() * 0.52;
-      const bx = x + (random() - 0.5) * 0.18;
-      const bz = z + (random() - 0.5) * 0.18;
-
-      plane(w * 1.38, d * 1.38, contactMaterial, bx, bz, 0.007);
-      box(
-        w, h, d,
-        floors === 3 ? materials.tall : materials.building,
-        bx, bz,
-      );
-      box(
-        w * 0.94, 0.045, d * 0.94,
-        materials.roof, bx, bz, h + 0.012,
-      );
-
-      if (random() > 0.65) {
-        box(
-          w * 0.34, 0.11, d * 0.3, materials.tall,
-          bx - w * 0.15, bz + d * 0.12, h + 0.09,
+      for (let i = 0; i <= count; i++) {
+        const x = -80 + i;
+        const z = riverCenter(x);
+        positions.push(
+          x, y, (z - halfWidth) * stretchZ,
+          x, y, (z + halfWidth) * stretchZ,
         );
+        if (i < count) {
+          const a = i * 2;
+          indices.push(a, a + 1, a + 2, a + 1, a + 3, a + 2);
+        }
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(positions, 3),
+      );
+      geometry.setIndex(indices);
+      geometry.computeVertexNormals();
+      return geometry;
+    }
+
+    const banks = new THREE.Mesh(riverGeometry(1.13, 0.018), materials.bank);
+    banks.receiveShadow = true;
+    scene.add(banks);
+
+    const river = new THREE.Mesh(riverGeometry(0.91, 0.028), materials.water);
+    river.receiveShadow = true;
+    scene.add(river);
+
+    for (let i = -8; i <= 8; i++) {
+      const x = -2 + i * 4;
+      const z = riverCenter(x);
+      box(1.22, 0.08, 3.3, materials.streets, x, z, 0.065);
+      box(0.07, 0.12, 3.3, materials.bridgeEdge, x - 0.61, z, 0.12);
+      box(0.07, 0.12, 3.3, materials.bridgeEdge, x + 0.61, z, 0.12);
+    }
+
+    const currentMaterial = new THREE.MeshBasicMaterial({
+      color: mixed(V.water, V.surface, 0.32),
+      depthWrite: false,
+    });
+
+    for (let i = 0; i < 19; i++) {
+      const mesh = plane(
+        0.72, 0.027, currentMaterial, -38 + i * 4, 0, 0.041,
+      );
+      currents.push({
+        mesh,
+        base: -38 + i * 4,
+        lane: i % 2 ? -0.35 : 0.35,
+      });
+    }
+
+    const contactTexture = (() => {
+      const canvas = document.createElement("canvas");
+      canvas.width = canvas.height = 96;
+      const context = canvas.getContext("2d");
+      const gradient = context.createRadialGradient(48, 48, 12, 48, 48, 48);
+      gradient.addColorStop(0, rgba(V.ink, 0.18));
+      gradient.addColorStop(0.58, rgba(V.ink, 0.075));
+      gradient.addColorStop(1, rgba(V.ink, 0));
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, 96, 96);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    })();
+
+    const contactMaterial = new THREE.MeshBasicMaterial({
+      map: contactTexture,
+      transparent: true,
+      depthWrite: false,
+      color: V.surface,
+    });
+
+    const random = seeded(117);
+
+    for (let x = -36; x <= 36; x += 4) {
+      for (let z = -40; z <= 32; z += 4) {
+        if (Math.abs(z - riverCenter(x)) < 2.8) continue;
+        if (parkSpecs.some((p) =>
+          Math.abs(p.x - x) < 1.9 && Math.abs(p.z - z) < 1.9
+        )) continue;
+        if (random() > 0.91) continue;
+
+        const floors = 1 + Math.floor(random() * 3);
+        const h = 0.32 + floors * 0.31;
+        const w = 2.25 + random() * 0.48;
+        const d = 2.2 + random() * 0.52;
+        const bx = x + (random() - 0.5) * 0.18;
+        const bz = z + (random() - 0.5) * 0.18;
+
+        plane(w * 1.38, d * 1.38, contactMaterial, bx, bz, 0.007);
+        box(
+          w, h, d,
+          floors === 3 ? materials.tall : materials.building,
+          bx, bz,
+        );
+        box(
+          w * 0.94, 0.045, d * 0.94,
+          materials.roof, bx, bz, h + 0.012,
+        );
+
+        if (random() > 0.65) {
+          box(
+            w * 0.34, 0.11, d * 0.3, materials.tall,
+            bx - w * 0.15, bz + d * 0.12, h + 0.09,
+          );
+        }
       }
     }
-  }
 
-  function tree(x, z, size) {
-    const trunk = new THREE.Mesh(trunkGeo, materials.trunk);
-    trunk.position.copy(P(x, z, 0.18 * size));
-    trunk.scale.setScalar(size);
-    trunk.castShadow = true;
-    scene.add(trunk);
+    function tree(x, z, size) {
+      const trunk = new THREE.Mesh(trunkGeo, materials.trunk);
+      trunk.position.copy(P(x, z, 0.18 * size));
+      trunk.scale.setScalar(size);
+      trunk.castShadow = true;
+      scene.add(trunk);
 
-    const crown = new THREE.Mesh(treeGeo, materials.tree);
-    crown.position.copy(P(x, z, 0.57 * size));
-    crown.scale.set(size, size * 1.08, size);
-    crown.castShadow = true;
-    crown.receiveShadow = true;
-    scene.add(crown);
-  }
+      const crown = new THREE.Mesh(treeGeo, materials.tree);
+      crown.position.copy(P(x, z, 0.57 * size));
+      crown.scale.set(size, size * 1.08, size);
+      crown.castShadow = true;
+      crown.receiveShadow = true;
+      scene.add(crown);
+    }
 
-  parkSpecs.forEach((park) => {
-    const ground = box(
-      3.02, 0.045, 3.02,
-      park.square ? materials.square : materials.park,
-      park.x, park.z, 0.015,
-    );
-    ground.castShadow = false;
+    parkSpecs.forEach((park) => {
+      const ground = box(
+        3.02, 0.045, 3.02,
+        park.square ? materials.square : materials.park,
+        park.x, park.z, 0.015,
+      );
+      ground.castShadow = false;
+
+      [
+        [-1.02, -1.02], [1.02, -1.02],
+        [-1.02, 1.02], [1.02, 1.02],
+      ].forEach(([dx, dz], index) => {
+        tree(
+          park.x + dx,
+          park.z + dz,
+          park.square ? 0.74 : 0.9 + index * 0.035,
+        );
+      });
+    });
 
     [
-      [-1.02, -1.02], [1.02, -1.02],
-      [-1.02, 1.02], [1.02, 1.02],
-    ].forEach(([dx, dz], index) => {
-      tree(
-        park.x + dx,
-        park.z + dz,
-        park.square ? 0.74 : 0.9 + index * 0.035,
+      [-16, 12], [16, 12], [-16, -16], [16, -16],
+    ].forEach(([x, z]) => {
+      const patch = box(
+        2.85, 0.035, 2.85, materials.park, x, z, 0.01,
       );
+      patch.castShadow = false;
+      tree(x - 0.8, z - 0.7, 0.85);
+      tree(x + 0.85, z + 0.65, 0.95);
     });
-  });
+  }
 
-  [
-    [-16, 12], [16, 12], [-16, -16], [16, -16],
-  ].forEach(([x, z]) => {
-    const patch = box(
-      2.85, 0.035, 2.85, materials.park, x, z, 0.01,
-    );
-    patch.castShadow = false;
-    tree(x - 0.8, z - 0.7, 0.85);
-    tree(x + 0.85, z + 0.65, 0.95);
-  });
+  if (!realMap) buildCity();
 
-  const coordinates = compact
+  const coordinates = realMap
+    ? realMap.turns.map((i) => realFrame.point(
+        realMap.route[i * 2],
+        realMap.route[i * 2 + 1],
+      ))
+    : compact
     ? [
         [-10, 6], [-10, 2], [-2, 2], [-2, -2],
         [6, -2], [6, -6], [10, -6],
@@ -428,33 +507,46 @@ CA.ready(() => {
   const route = new THREE.CurvePath();
   let from = stops[0];
 
-  for (let i = 1; i < stops.length; i++) {
-    const corner = stops[i];
-    const next = stops[i + 1];
-
-    if (!next) {
-      route.add(new THREE.LineCurve3(from, corner));
-      break;
+  if (realMap) {
+    for (let i = 2; i < realMap.route.length; i += 2) {
+      const [x, z] = realFrame.point(
+        realMap.route[i],
+        realMap.route[i + 1],
+      );
+      const point = P(x, z, 0.13);
+      if (point.distanceToSquared(from) < EPS) continue;
+      route.add(new THREE.LineCurve3(from, point));
+      from = point;
     }
+  } else {
+    for (let i = 1; i < stops.length; i++) {
+      const corner = stops[i];
+      const next = stops[i + 1];
 
-    const bend = Math.min(
-      0.8,
-      from.distanceTo(corner) * 0.3,
-      corner.distanceTo(next) * 0.3,
-    );
-    const before = corner.clone().add(
-      from.clone().sub(corner).normalize().multiplyScalar(bend),
-    );
-    const after = corner.clone().add(
-      next.clone().sub(corner).normalize().multiplyScalar(bend),
-    );
+      if (!next) {
+        route.add(new THREE.LineCurve3(from, corner));
+        break;
+      }
 
-    route.add(new THREE.LineCurve3(from, before));
-    route.add(new THREE.QuadraticBezierCurve3(before, corner, after));
-    from = after;
+      const bend = Math.min(
+        0.8,
+        from.distanceTo(corner) * 0.3,
+        corner.distanceTo(next) * 0.3,
+      );
+      const before = corner.clone().add(
+        from.clone().sub(corner).normalize().multiplyScalar(bend),
+      );
+      const after = corner.clone().add(
+        next.clone().sub(corner).normalize().multiplyScalar(bend),
+      );
+
+      route.add(new THREE.LineCurve3(from, before));
+      route.add(new THREE.QuadraticBezierCurve3(before, corner, after));
+      from = after;
+    }
   }
 
-  const SAMPLE_COUNT = 180;
+  const SAMPLE_COUNT = realMap ? 720 : 180;
   const worldRoute = Array.from(
     { length: SAMPLE_COUNT + 1 },
     (_, i) => route.getPointAt(i / SAMPLE_COUNT),
@@ -462,9 +554,20 @@ CA.ready(() => {
   const sourcePoint = stops[0];
   const destinationPoint = stops[stops.length - 1];
 
-  const legLengths = stops.slice(1).map(
-    (point, i) => point.distanceTo(stops[i]),
-  );
+  // On a real route each leg is the road between two turns, not a straight line.
+  const roadLength = (a, b) => {
+    let length = 0;
+    for (let i = a + 1; i <= b; i++) {
+      length += Math.hypot(
+        realMap.route[i * 2] - realMap.route[i * 2 - 2],
+        realMap.route[i * 2 + 1] - realMap.route[i * 2 - 1],
+      );
+    }
+    return length;
+  };
+  const legLengths = stops.slice(1).map((point, i) => realMap
+    ? roadLength(realMap.turns[i], realMap.turns[i + 1])
+    : point.distanceTo(stops[i]));
   const totalLength = legLengths.reduce((sum, length) => sum + length, 0);
   const weights = legLengths.map((length) => Math.pow(length, 0.65));
   const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
@@ -528,12 +631,19 @@ CA.ready(() => {
     });
   }
 
-  B.cardAt = countEvents[0].at;
+  // A real route can have a long first street, and the card can't wait for it.
+  B.cardAt = realMap
+    ? Math.min(countEvents[0].at, K * 0.4)
+    : countEvents[0].at;
 
-  const camera = new THREE.PerspectiveCamera(M.fov, W / H, 0.1, 240);
+  const camera = new THREE.PerspectiveCamera(
+    M.fov, W / H, realMap ? 1 : 0.1, realMap ? 420 : 240,
+  );
   const azimuth = THREE.MathUtils.degToRad(shallow ? 0 : 10);
   const finalElevation = THREE.MathUtils.degToRad(58);
-  const finalTarget = sourcePoint.clone().add(destinationPoint).multiplyScalar(0.5);
+  const finalTarget = realMap
+    ? new THREE.Vector3()
+    : sourcePoint.clone().add(destinationPoint).multiplyScalar(0.5);
   finalTarget.y = 0;
 
   const direction = (elevation) => new THREE.Vector3(
@@ -620,6 +730,236 @@ CA.ready(() => {
     finalTarget, finalDistance, finalElevation, M.fov,
     finalOffset.x, finalOffset.y,
   );
+
+  // Real streets, water and buildings from `animate route`. Their sizes depend on how large the finished shot
+  // shows the map, so this runs once the camera is settled.
+  function buildRealMap() {
+    const origin = project(finalTarget);
+    const nudged = project(finalTarget.clone().add(new THREE.Vector3(1, 0, 0)));
+    const pixel = 1 / Math.max(1, Math.abs(nudged.x - origin.x));
+    const metre = realFrame.scale;
+
+    // A big route sits further from the camera, so the haze moves back with it.
+    scene.fog.near = finalDistance * 1.5;
+    scene.fog.far = finalDistance * 3.4;
+
+    const toWorld = (flat) => {
+      const points = [];
+      for (let i = 0; i < flat.length; i += 2) {
+        const [x, z] = realFrame.point(flat[i], flat[i + 1]);
+        const last = points[points.length - 1];
+        if (!last || last.x !== x || last.y !== z) {
+          points.push(new THREE.Vector2(x, z));
+        }
+      }
+      return points;
+    };
+
+    const surface = () => ({ positions: [], indices: [] });
+
+    function corner(target, x, z, y) {
+      target.positions.push(x, y, z);
+      return target.positions.length / 3 - 1;
+    }
+
+    // Everything on the ground faces up, whichever way its source shape was wound.
+    function triangle(target, a, b, c) {
+      const p = target.positions;
+      const up =
+        (p[b * 3 + 2] - p[a * 3 + 2]) * (p[c * 3] - p[a * 3]) -
+        (p[b * 3] - p[a * 3]) * (p[c * 3 + 2] - p[a * 3 + 2]);
+      if (up >= 0) target.indices.push(a, b, c);
+      else target.indices.push(a, c, b);
+    }
+
+    function addMesh(target, material) {
+      if (!target.indices.length) return;
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(target.positions, 3),
+      );
+      const normals = new Float32Array(target.positions.length);
+      for (let i = 1; i < normals.length; i += 3) normals[i] = 1;
+      geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
+      geometry.setIndex(target.indices);
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.receiveShadow = true;
+      mesh.frustumCulled = false;
+      scene.add(mesh);
+    }
+
+    function addDisc(target, point, radius, y) {
+      const center = corner(target, point.x, point.y, y);
+      const ring = [];
+      for (let i = 0; i < 10; i++) {
+        const angle = (i / 10) * Math.PI * 2;
+        ring.push(corner(
+          target,
+          point.x + Math.cos(angle) * radius,
+          point.y + Math.sin(angle) * radius,
+          y,
+        ));
+      }
+      ring.forEach((vertex, i) => {
+        triangle(target, center, vertex, ring[(i + 1) % ring.length]);
+      });
+    }
+
+    function addRibbon(target, points, half, y) {
+      if (points.length < 2) return;
+      let left = -1;
+      let right = -1;
+
+      points.forEach((point, i) => {
+        const before = i > 0
+          ? point.clone().sub(points[i - 1]).normalize()
+          : null;
+        const after = i < points.length - 1
+          ? points[i + 1].clone().sub(point).normalize()
+          : null;
+        const a = before || after;
+        const b = after || before;
+        const bisector = new THREE.Vector2(a.x + b.x, a.y + b.y);
+        if (bisector.lengthSq() < EPS) bisector.copy(a);
+        bisector.normalize();
+        const miter = Math.min(2, 1 / Math.max(0.5, bisector.dot(a)));
+        const nx = -bisector.y * half * miter;
+        const nz = bisector.x * half * miter;
+        const nextLeft = corner(target, point.x + nx, point.y + nz, y);
+        const nextRight = corner(target, point.x - nx, point.y - nz, y);
+
+        if (i > 0) {
+          triangle(target, left, right, nextLeft);
+          triangle(target, right, nextRight, nextLeft);
+        }
+        left = nextLeft;
+        right = nextRight;
+
+        if (i === 0 || i === points.length - 1 || a.dot(b) < 0.55) {
+          addDisc(target, point, half, y);
+        }
+      });
+    }
+
+    function addArea(target, rings, y) {
+      const [contour, ...holes] = rings.map(toWorld);
+      if (!contour || contour.length < 3) return;
+      const usable = holes.filter((hole) => hole.length >= 3);
+      const start = target.positions.length / 3;
+      [contour, ...usable].flat().forEach((point) => {
+        corner(target, point.x, point.y, y);
+      });
+      THREE.ShapeUtils.triangulateShape(contour, usable).forEach(([a, b, c]) => {
+        triangle(target, start + a, start + b, start + c);
+      });
+    }
+
+    const green = surface();
+    realMap.green.forEach((rings) => addArea(green, rings, 0.004));
+    addMesh(green, materials.park);
+
+    const water = surface();
+    realMap.water.forEach((rings) => addArea(water, rings, 0.008));
+    realMap.streams.forEach((flat) => {
+      addRibbon(
+        water, toWorld(flat), Math.max(5 * metre, pixel * 1.6), 0.008,
+      );
+    });
+    addMesh(water, materials.water);
+
+    const roadStyles = [
+      ["path", 3, 1.4, 0.012, materials.streets],
+      ["service", 6, 2.2, 0.014, materials.streets],
+      ["minor", 9, 3.2, 0.016, materials.streets],
+      ["tertiary", 12, 4, 0.018, materials.streets],
+      ["secondary", 14, 5, 0.02, materials.streets],
+      ["primary", 17, 6, 0.022, materials.mainRoad],
+      ["motorway", 24, 7.5, 0.024, materials.mainRoad],
+    ];
+
+    roadStyles.forEach(([tier, metres, pixels, y, material]) => {
+      const roads = surface();
+      const half = Math.max(metres * metre * 1.3, pixels * pixel) / 2;
+      (realMap.roads[tier] || []).forEach((flat) => {
+        addRibbon(roads, toWorld(flat), half, y);
+      });
+      addMesh(roads, material);
+    });
+
+    const shells = [
+      { max: 50, material: materials.building, positions: [], normals: [] },
+      { max: Infinity, material: materials.tall, positions: [], normals: [] },
+    ];
+    const roofs = surface();
+
+    function wall(shell, a, b, low, high, nx, nz) {
+      const quad = [
+        [a, low], [b, low], [b, high],
+        [a, low], [b, high], [a, high],
+      ];
+      const facing = (b.x - a.x) * nz - (b.y - a.y) * nx;
+      const order = facing >= 0 ? quad : quad.slice().reverse();
+      order.forEach(([point, y]) => {
+        shell.positions.push(point.x, y, point.y);
+        shell.normals.push(nx, 0, nz);
+      });
+    }
+
+    realMap.buildings.forEach(({ h, b, p }) => {
+      const high = clamp(h * metre * 1.5, 0.1, 3.4);
+      const low = Math.min(high - 0.02, b * metre * 1.5);
+      const shell = shells.find((item) => h < item.max);
+      const [contour, ...holes] = p.map(toWorld);
+      if (!contour || contour.length < 3) return;
+      const usable = holes.filter((hole) => hole.length >= 3);
+
+      [contour, ...usable].forEach((ring, index) => {
+        const area = THREE.ShapeUtils.area(ring);
+        const outward = (area > 0) === (index === 0) ? 1 : -1;
+        ring.forEach((point, i) => {
+          const next = ring[(i + 1) % ring.length];
+          const edge = next.clone().sub(point);
+          if (edge.lengthSq() < EPS) return;
+          edge.normalize();
+          wall(
+            shell, point, next, low, high,
+            edge.y * outward, -edge.x * outward,
+          );
+        });
+      });
+
+      const start = roofs.positions.length / 3;
+      [contour, ...usable].flat().forEach((point) => {
+        corner(roofs, point.x, point.y, high);
+      });
+      THREE.ShapeUtils.triangulateShape(contour, usable).forEach(([a, b2, c]) => {
+        triangle(roofs, start + a, start + b2, start + c);
+      });
+    });
+
+    shells.forEach(({ positions, normals, material }) => {
+      if (!positions.length) return;
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(positions, 3),
+      );
+      geometry.setAttribute(
+        "normal",
+        new THREE.Float32BufferAttribute(normals, 3),
+      );
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.frustumCulled = false;
+      scene.add(mesh);
+    });
+
+    addMesh(roofs, materials.roof);
+  }
+
+  if (realMap) buildRealMap();
 
   const routeSvg = $("route-svg");
   routeSvg.setAttribute("viewBox", `0 0 ${W} ${H}`);
@@ -766,9 +1106,48 @@ CA.ready(() => {
     Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x)) *
     Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
 
-  const labels = parkSpecs.map((park, i) => {
+  const creditEl = $("map-credit");
+
+  if (realMap) {
+    creditEl.textContent = realMap.attribution;
+    creditEl.style.cssText = `
+      right:${side}px;top:${cardY - 36}px;
+      color:${V.muted};
+      text-shadow:0 0 6px ${V.surface}, 0 0 2px ${V.surface}`;
+    fit(creditEl, W - side * 2, 18);
+    reserved.push({
+      x: W - side - creditEl.offsetWidth - 8,
+      y: cardY - 44,
+      w: creditEl.offsetWidth + 16,
+      h: creditEl.offsetHeight + 16,
+    });
+  }
+
+  // The pin already names the destination, so a map label doesn't repeat it.
+  const sameName = (a, b) => {
+    const one = String(a).toLowerCase();
+    const two = String(b).toLowerCase();
+    return one.includes(two) || two.includes(one);
+  };
+
+  const labelSpots = realMap
+    ? realMap.places
+        .filter((place) => !sameName(place.name, V.destination))
+        .map((place) => {
+          const [x, z] = realFrame.point(place.x, place.y);
+          return { x, z, text: place.name };
+        })
+    : parkSpecs.map((park, i) => ({
+        x: park.x, z: park.z, text: V[`place${i + 1}`],
+      }));
+
+  let labelsShown = 0;
+
+  const labels = labelSpots.map((park) => {
+    if (realMap && labelsShown >= 3) return { active: false };
+
     const el = make(
-      "div", "map-label", $("place-labels"), V[`place${i + 1}`],
+      "div", "map-label", $("place-labels"), park.text,
     );
     el.style.fontSize = M.place + "px";
     el.style.color = V.muted;
@@ -844,13 +1223,15 @@ CA.ready(() => {
       const score = hits * 100000 + overlaps * 30 + travel;
 
       if (!best || score < best.score) {
-        best = { ...rect, score, hits, overlaps };
+        best = { ...rect, score, hits, overlaps, travel };
       }
     });
 
+    // A real name stays beside the real place, or it isn't shown.
     const active = Boolean(
       best && best.hits === 0 && best.overlaps < 1 &&
-      w <= W - side * 2 && h < cardY - top - 48,
+      w <= W - side * 2 && h < cardY - top - 48 &&
+      (!realMap || best.travel < M.place * 3),
     );
 
     if (active) {
@@ -862,12 +1243,15 @@ CA.ready(() => {
       });
     }
 
+    const at = K * 0.36 + labelsShown * 0.14;
+    if (active) labelsShown++;
+
     return {
       el,
       active,
       x: best ? best.x : side,
       y: best ? best.y : top,
-      at: K * 0.36 + i * 0.14,
+      at,
     };
   });
 
@@ -1144,6 +1528,7 @@ CA.ready(() => {
     });
 
     labels.forEach((label) => {
+      if (!label.el) return;
       const visible = label.active && t >= label.at;
       label.el.style.visibility = visible ? "visible" : "hidden";
       if (!visible) return;
@@ -1224,6 +1609,7 @@ CA.ready(() => {
 
     copyEl.style.visibility = cardVisible ? "visible" : "hidden";
     goEl.style.visibility = cardVisible ? "visible" : "hidden";
+    creditEl.style.visibility = cardVisible ? "visible" : "hidden";
     fastestEl.style.visibility =
       cardVisible && arrived ? "visible" : "hidden";
 

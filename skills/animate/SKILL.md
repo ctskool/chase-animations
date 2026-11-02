@@ -34,6 +34,8 @@ Run `animate vars <name>` for every editable field and its default.
 - Keep labels short: one line each.
 - Write the values to `animate-vars.json` in the current folder. Only include what changes from the defaults. Variables are flat, for example `{"nameA": "Cursor", "nameB": "Claude Code", "row1Label": "Price"}`.
 
+For `route-map` with a real trip, run `animate route` first. The block's README has the options. It writes the real details to `animate-vars.json` for you.
+
 For `screen-zoom`, three choices of screen, best first:
 
 1. **Recreate their app as HTML.** Write the screen to `screen.html`, put `data-target` on the button, and pass `"screenHtml": "screen.html"`. Text stays sharp at any zoom. No real logos or other people's files.

@@ -31,6 +31,20 @@ Put your changes in a JSON file. Leave out anything you're happy with.
 
 Pass it with `--vars my-vars.json`, or change one thing at a time with `--set nameA=Cursor`.
 
+## Use a real route
+
+`route-map` can draw a real trip on real streets. No API key needed.
+
+```bash
+node shared/animate.mjs route --from "Willis Tower, Chicago" --to "Navy Pier, Chicago"
+```
+
+```bash
+node shared/animate.mjs render route-map --output all --vars animate-vars.json
+```
+
+Add `--mode walk` or `--mode bike`, force stops with `--via "<place>"`, or pass your exact route with `--track run.gpx`. Use `--minutes <n>` when you know the real time. [The block's README](../blocks/route-map/README.md) has the details.
+
 ## Render a clip for your editor
 
 ```bash

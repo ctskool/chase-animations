@@ -113,9 +113,13 @@ const even = (n) => Math.round(Number(n) / 2) * 2;
 function copyMedia(block, vars, projectDir, baseDir) {
   const out = { ...vars };
   for (const def of block.variables) {
-    if (!["image", "html"].includes(def.type) || !vars[def.id]) continue;
+    if (!["image", "html", "data"].includes(def.type) || !vars[def.id]) continue;
     const src = path.resolve(baseDir, vars[def.id]);
     if (!fs.existsSync(src)) throw new UsageError(`${def.id}: can't find ${src}`);
+    if (def.type === "data") {
+      out[def.id] = JSON.parse(fs.readFileSync(src, "utf8"));
+      continue;
+    }
     if (def.type === "html") {
       out[def.id] = fs.readFileSync(src, "utf8");
       continue;
@@ -130,7 +134,7 @@ function copyMedia(block, vars, projectDir, baseDir) {
 
 function compositionVariables(block, vars) {
   return block.variables
-    .filter((v) => v.type !== "html")
+    .filter((v) => v.type !== "html" && v.type !== "data")
     .map(({ id, type, label, options, min, max, step }) => ({
       id,
       type,

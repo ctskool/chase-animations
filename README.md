@@ -38,7 +38,7 @@ Each animation is a tested [HyperFrames](https://hyperframes.heygen.com) block w
 | [`isometric-flow`](blocks/isometric-flow/README.md) | A 3D diorama of a three-step process | The van arrives and the last step checks off |
 | [`timeline-3d`](blocks/timeline-3d/README.md) | A moving rail passes oversized milestone cards | The playhead stops at the final milestone |
 | [`globe-arcs`](blocks/globe-arcs/README.md) | Routes cross a dotted globe while a figure counts up | The last route touches down |
-| [`route-map`](blocks/route-map/README.md) | A route draws through a pale 3D city with live trip stats | The pin lands and the final time punches |
+| [`route-map`](blocks/route-map/README.md) | A route draws through a pale 3D city, fictional or real, with live trip stats | The pin lands and the final time punches |
 | [`pencil-blueprint`](blocks/pencil-blueprint/README.md) | A graphite sketch becomes a white-on-blue technical drawing | Both measurements stamp |
 
 ### Styled titles

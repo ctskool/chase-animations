@@ -16,6 +16,7 @@ import {
   resolveVars,
 } from "./build.mjs";
 import { contactSheet, placeOnVideo, probe } from "./compose.mjs";
+import { makeRoute } from "./route.mjs";
 import { findWord, fitToWord, loadWords, printMatches, refineStart } from "./sync.mjs";
 
 const HELP = `Chase Animations
@@ -26,6 +27,8 @@ const HELP = `Chase Animations
   animate place <name> --video <file> --word "<word>" [options]
                                        land the key moment on a spoken word, in your video
   animate words <video> [--find word]  transcribe a video and list or find words
+  animate route --from "<place>" --to "<place>"
+                                       fetch a real route and map for route-map
   animate preview <name> [options]     open it in HyperFrames Studio
   animate check <name> [options]       run HyperFrames' checks on every output
   animate sheet <video> [--times a,b]  contact sheet for checking frames by eye
@@ -51,6 +54,16 @@ place options
   --model <name>                       whisper model: tiny.en, base.en, small.en (default), medium.en, large-v3
   --language <code>                    language, e.g. es
   --transcript <file>                  use an existing transcript instead (.json, .srt, .vtt)
+
+route options
+  --from, --to "<place or lat,lon>"    where the trip starts and ends
+  --via "<place>"                      a stop or road to pass through (repeat as needed)
+  --mode drive|bike|walk               how the route is worked out (default drive)
+  --track <file>                       your own route as GPX or GeoJSON, instead of --from and --to
+  --minutes <n>                        the real trip time, instead of the estimate
+  --units mi|km                        distance units (default: by country)
+  --save <file>                        where the map goes (default: route-map.json)
+  --vars <file>                        where the trip details go (default: animate-vars.json)
 `;
 
 const OPTIONS = {
@@ -76,6 +89,14 @@ const OPTIONS = {
   language: { type: "string" },
   transcript: { type: "string" },
   times: { type: "string" },
+  from: { type: "string" },
+  to: { type: "string" },
+  via: { type: "string", multiple: true },
+  mode: { type: "string" },
+  track: { type: "string" },
+  minutes: { type: "string" },
+  units: { type: "string" },
+  save: { type: "string" },
   help: { type: "boolean", short: "h" },
 };
 
@@ -225,7 +246,7 @@ function sheet(video, o) {
   console.log(file);
 }
 
-function main() {
+async function main() {
   const { values: o, positionals: p } = parseArgs({ options: OPTIONS, allowPositionals: true });
   const [cmd, target] = p;
   if (!cmd || o.help) return console.log(HELP);
@@ -245,13 +266,14 @@ function main() {
     preview: () => preview(need(), o),
     check: () => check(need(), o),
     sheet: () => sheet(need(), o),
+    route: () => makeRoute(o),
   };
   if (!commands[cmd]) throw new UsageError(`Unknown command "${cmd}". Run with no arguments for help.`);
-  commands[cmd]();
+  await commands[cmd]();
 }
 
 try {
-  main();
+  await main();
 } catch (err) {
   console.error(err instanceof UsageError ? err.message : err.stack);
   process.exitCode = 1;

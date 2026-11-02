@@ -17,6 +17,17 @@
   },
   "keyMoment": "the last street completes, the red pin lands and the exact final time punches forward together; a green route flash, destination rings and recommendation answer on that same frame",
   "variables": [
+    { "id": "mapData", "type": "data", "label": "Real map file from animate route", "default": "" },
+    {
+      "id": "mapOrientation",
+      "type": "enum",
+      "label": "Real map direction",
+      "default": "fit",
+      "options": [
+        { "value": "fit", "label": "Turn to fit the frame" },
+        { "value": "north", "label": "North up" }
+      ]
+    },
     { "id": "destination", "type": "string", "label": "Destination", "default": "Linden House" },
     { "id": "finalMinutes", "type": "number", "label": "Final minutes", "default": 8 },
     { "id": "tripTime", "type": "string", "label": "Displayed trip time", "default": "8 min" },
