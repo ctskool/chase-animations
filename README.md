@@ -310,13 +310,9 @@ npm run setup -- --speech
 
 ```mermaid
 flowchart LR
-  you["You, in Claude Code"] --> animate["/animate"]
-  shortcut["/animate-route-map and 37 more shortcuts"] --> animate
-  animate --> block["A tested block with your words, numbers and colours"]
+  animate["/animate or a shortcut"] --> block["A tested block with your content"]
   block --> render["HyperFrames render"]
-  render --> full["full"]
-  render --> top["top"]
-  render --> overlay["overlay"]
+  render --> outputs["full, top, overlay"]
 ```
 
 `/animate` does the work, and each animation has a typed shortcut that sends you straight to it. Fixes to rendering, word sync or the frame check live in one place, and each animation stays in its own folder.
@@ -331,7 +327,7 @@ flowchart LR
 
 ## What works where
 
-| | |
+| System | Status |
 |---|---|
 | Windows 11 | Tested |
 | Mac | **Untested.** It may work, but nobody has run it yet. [Open an issue](https://github.com/ctskool/chase-animations/issues) and say how it goes |
