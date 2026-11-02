@@ -26,7 +26,13 @@ About 1.5 GB of free space covers the render browser and the speech model.
 
 ## 2. Put the pack somewhere permanent
 
-Unzip it into a folder you'll keep, like `Documents/chase-animations`. The slash commands point at this folder, so if you move it, run step 4 again.
+Clone it into a folder you'll keep, like `Documents`:
+
+```bash
+git clone https://github.com/ctskool/chase-animations.git
+```
+
+No Git? Use **Code > Download ZIP** on GitHub and unzip it somewhere permanent. The slash commands point at this folder, so if you move it, run step 4 again.
 
 ## 3. Install what it depends on
 
@@ -70,7 +76,7 @@ Restart Claude Code, then type `/animate`.
 
 ## Updating
 
-Unzip the new version over the old one, then run `npm install` and `npm run setup`.
+Run `git pull` in the pack's folder, or unzip the new version over the old one. Then run `npm install` and `npm run setup`.
 
 ## When something goes wrong
 
@@ -82,4 +88,4 @@ Unzip the new version over the old one, then run `npm install` and `npm run setu
 | `/animate` isn't there | Restart Claude Code. If it's still missing, run `npm run setup` again |
 | Render is very slow | Add `--draft` while you're making changes |
 | Render fails on a machine with 8 GB of memory or less | Close Chrome and other heavy apps, and render one output at a time |
-| Anything else | Run `npx hyperframes doctor` and post the result in the Skool community |
+| Anything else | Run `npx hyperframes doctor` and post the result in [an issue](https://github.com/ctskool/chase-animations/issues) |

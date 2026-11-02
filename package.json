@@ -2,7 +2,7 @@
   "name": "chase-animations",
   "version": "0.1.0",
   "private": true,
-  "description": "Animation pack for Chase AI Plus members: tested HyperFrames blocks you can land on a spoken word.",
+  "description": "Finished animations for vertical video: tested HyperFrames blocks you can land on a spoken word.",
   "type": "module",
   "engines": {
     "node": ">=22"

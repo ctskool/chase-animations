@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chase Animations</title>
+<meta name="description" content="Every animation in the Chase Animations pack, playing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* A contact sheet on a light table: a mid-tone wall so dark and light clips both stand out, with the clips doing all the talking. */
+:root {
+  --wall: #d9dcd6; --sheet: #e8eae5; --ink: #15171a; --muted: #565c60; --line: #b9bdb6;
+  --accent: #2b2fe6; --on-accent: #ffffff;
+  --display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --wall: #24262a; --sheet: #2e3035; --ink: #eef0f2; --muted: #a7acb2; --line: #44474d;
+    --accent: #a4a7ff; --on-accent: #14152e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --wall: #24262a; --sheet: #2e3035; --ink: #eef0f2; --muted: #a7acb2; --line: #44474d;
+  --accent: #a4a7ff; --on-accent: #14152e; color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--wall); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 56px;
+}
+.wrap { max-width: 1480px; margin-inline: auto; display: grid; gap: 28px; }
+header { display: grid; gap: 8px; }
+h1 {
+  margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(38px, 6vw, 72px);
+  line-height: .98; letter-spacing: -.02em; text-wrap: balance;
+}
+.lede { margin: 0; max-width: 62ch; color: var(--muted); font-size: 16px; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter {
+  font: 500 14px var(--body); color: var(--ink); background: transparent; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 4px; padding: 7px 11px;
+}
+.filter span { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-left: 4px; }
+.filter[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.filter[aria-pressed="true"] span { color: inherit; }
+section { display: grid; gap: 12px; }
+h2 {
+  margin: 0; font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -.01em;
+  padding-top: 10px; border-top: 1px solid var(--line);
+}
+.grid { display: grid; gap: 22px 14px; grid-template-columns: repeat(auto-fill, minmax(min(156px, 100%), 1fr)); }
+@media (min-width: 900px) { .grid { grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); } }
+.card {
+  all: unset; box-sizing: border-box; display: grid; gap: 6px; align-content: start; cursor: pointer; min-width: 0;
+}
+.frame {
+  display: block; width: 100%; max-width: 100%; aspect-ratio: 9 / 16; overflow: hidden; border-radius: 3px;
+  background: #101114;
+}
+.frame video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.name { font-family: var(--display); font-weight: 700; font-size: 16px; line-height: 1.15; }
+.does { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.card:hover .name { color: var(--accent); }
+.card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.filter:focus-visible, .tool:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+dialog {
+  border: 0; padding: 0; margin: auto; background: var(--sheet); color: var(--ink); border-radius: 6px;
+  width: min(880px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto;
+}
+dialog::backdrop { background: rgba(10, 11, 13, .78); }
+.view { display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr); }
+.view .stage { background: #101114; display: grid; place-items: center; }
+.view video { display: block; height: min(calc(100dvh - 24px), 820px); aspect-ratio: 9 / 16; max-width: 100%; }
+.about { padding: 22px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.eyebrow { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.about h3 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 32px; line-height: 1.02; letter-spacing: -.015em; text-wrap: balance; }
+.about p { margin: 0; }
+.label { font-family: var(--mono); font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
+a { color: var(--accent); }
+code { font-family: var(--mono); font-size: 13.5px; overflow-wrap: anywhere; }
+.command { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line); padding-top: 12px; }
+.tools { margin-top: auto; display: flex; gap: 6px; flex-wrap: wrap; padding-top: 8px; }
+.tool {
+  font: 500 14px var(--body); color: var(--ink); background: transparent; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 4px; padding: 7px 11px;
+}
+.tool:hover { border-color: var(--ink); }
+@media (max-width: 640px) {
+  .view { grid-template-columns: minmax(0, 1fr); }
+  .view video { height: auto; width: min(100%, calc((100dvh - 250px) * 9 / 16)); }
+  .about { padding: 16px; gap: 10px; }
+  .about h3 { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Chase Animations</h1>
+    <p class="lede" id="lede"></p>
+    <p class="lede"><a href="https://github.com/ctskool/chase-animations">Get them on GitHub</a></p>
+  </header>
+  <div class="filters" id="filters" role="group" aria-label="Filter by group"></div>
+  <main id="sections" style="display:grid;gap:30px"></main>
+</div>
+
+<dialog id="viewer" aria-labelledby="v-name">
+  <div class="view">
+    <div class="stage"><video id="v-video" muted loop playsinline controls></video></div>
+    <div class="about">
+      <span class="eyebrow" id="v-pos"></span>
+      <h3 id="v-name"></h3>
+      <p id="v-does"></p>
+      <p><span class="label">Key moment</span><span id="v-key"></span></p>
+      <div class="command"><code id="v-cmd"></code><button class="tool" id="v-copy" type="button">Copy</button></div>
+      <div class="tools">
+        <button class="tool" id="v-prev" type="button">Previous</button>
+        <button class="tool" id="v-next" type="button">Next</button>
+        <button class="tool" id="v-close" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const groups = /*DATA*/null;
+const flat = groups.flatMap(g => g.items.map(item => ({ ...item, group: g.name })));
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = id => document.getElementById(id);
+
+$("lede").textContent = `${flat.filter(item => !item.example).length} animations on sample content, plus ${flat.filter(item => item.example).length} real routes. Clips play as you scroll. Click one to see it larger, with its key moment and the command that runs it.`;
+
+const observer = new IntersectionObserver(entries => {
+  for (const { target: video, isIntersecting } of entries) {
+    if (isIntersecting && !reduce && !$("viewer").open) {
+      if (!video.src) video.src = video.dataset.src;
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }
+}, { threshold: 0.3 });
+
+function card(item) {
+  const button = document.createElement("button");
+  button.className = "card";
+  button.type = "button";
+  button.setAttribute("aria-label", `${item.name}: open`);
+  const frame = document.createElement("span");
+  frame.className = "frame";
+  const video = document.createElement("video");
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.preload = "none";
+  video.poster = `posters/${item.slug}.jpg`;
+  video.dataset.src = `clips/${item.slug}.mp4`;
+  video.setAttribute("aria-hidden", "true");
+  frame.append(video);
+  const name = document.createElement("span");
+  name.className = "name";
+  name.textContent = item.name;
+  const does = document.createElement("span");
+  does.className = "does";
+  does.textContent = item.does;
+  button.append(frame, name, does);
+  button.addEventListener("click", () => open(flat.findIndex(entry => entry.slug === item.slug)));
+  observer.observe(video);
+  return button;
+}
+
+const sections = groups.map(group => {
+  const section = document.createElement("section");
+  const heading = document.createElement("h2");
+  heading.textContent = group.name;
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  grid.append(...group.items.map(card));
+  section.append(heading, grid);
+  $("sections").append(section);
+  return section;
+});
+
+function filterButton(label, count, index) {
+  const button = document.createElement("button");
+  button.className = "filter";
+  button.type = "button";
+  button.setAttribute("aria-pressed", index === -1);
+  button.textContent = label;
+  const number = document.createElement("span");
+  number.textContent = count;
+  button.append(number);
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".filter").forEach(b => b.setAttribute("aria-pressed", b === button));
+    sections.forEach((section, i) => { section.hidden = index !== -1 && i !== index; });
+  });
+  $("filters").append(button);
+}
+filterButton("All", flat.length, -1);
+groups.forEach((group, i) => filterButton(group.name, group.items.length, i));
+
+let current = 0;
+function show(index) {
+  current = (index + flat.length) % flat.length;
+  const item = flat[current];
+  $("v-pos").textContent = `${current + 1} of ${flat.length} · ${item.group} · ${item.secs} s`;
+  $("v-name").textContent = item.name;
+  $("v-does").textContent = item.does;
+  $("v-key").textContent = item.key;
+  $("v-cmd").textContent = item.cmd || `/animate ${item.slug}`;
+  $("v-copy").textContent = "Copy";
+  const video = $("v-video");
+  video.src = `clips/${item.slug}.mp4`;
+  video.poster = `posters/${item.slug}.jpg`;
+  video.play().catch(() => {});
+}
+function open(index) {
+  document.querySelectorAll(".frame video").forEach(video => video.pause());
+  $("viewer").showModal();
+  show(index);
+}
+$("v-prev").addEventListener("click", () => show(current - 1));
+$("v-next").addEventListener("click", () => show(current + 1));
+$("v-close").addEventListener("click", () => $("viewer").close());
+$("viewer").addEventListener("click", event => { if (event.target === $("viewer")) $("viewer").close(); });
+$("viewer").addEventListener("keydown", event => {
+  if (event.key === "ArrowRight") show(current + 1);
+  if (event.key === "ArrowLeft") show(current - 1);
+});
+$("viewer").addEventListener("close", () => {
+  $("v-video").pause();
+  $("v-video").removeAttribute("src");
+  if (reduce) return;
+  document.querySelectorAll(".frame video").forEach(video => {
+    const box = video.getBoundingClientRect();
+    if (video.src && box.bottom > 0 && box.top < innerHeight) video.play().catch(() => {});
+  });
+});
+$("v-copy").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText($("v-cmd").textContent);
+    $("v-copy").textContent = "Copied";
+  } catch {
+    getSelection().selectAllChildren($("v-cmd"));
+    $("v-copy").textContent = "Press Ctrl+C";
+  }
+});
+</script>
+</body>
+</html>

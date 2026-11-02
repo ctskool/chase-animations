@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1600, height=640" />
+<title>Chase Animations banner</title>
+<script src="vendor/gsap.min.js"></script>
+<style>
+@font-face { font-family: "Bricolage"; font-weight: 800; src: url("fonts/bricolage-grotesque-800.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("fonts/inter-500.woff2") format("woff2"); }
+@font-face { font-family: "Plex Mono"; font-weight: 500; src: url("fonts/ibm-plex-mono-500.woff2") format("woff2"); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1600px; height: 640px; overflow: hidden; background: #08090c; }
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #08090c; }
+#wall {
+  position: absolute; left: 612px; top: -214px; width: 1320px;
+  display: grid; grid-template-columns: repeat(6, 204px); gap: 16px;
+  transform: perspective(1700px) rotateX(34deg) rotateZ(-17deg);
+  transform-origin: 50% 40%;
+}
+.phone { position: relative; width: 204px; height: 363px; overflow: hidden; border-radius: 16px; background: #15171c; }
+.phone video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+#shade {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, #08090c 36%, rgba(8, 9, 12, .86) 47%, rgba(8, 9, 12, 0) 68%),
+    linear-gradient(0deg, rgba(8, 9, 12, .7), rgba(8, 9, 12, 0) 26%);
+}
+#copy { position: absolute; left: 76px; top: 112px; width: 640px; color: #f4f5f7; }
+h1 { font: 800 118px/.92 "Bricolage", sans-serif; letter-spacing: -.035em; }
+#line { margin-top: 28px; font: 500 30px/1.25 "Inter", sans-serif; color: #b8bdc6; }
+#mark {
+  position: relative; display: inline-block; color: #fff;
+}
+#swipe {
+  position: absolute; left: -4px; right: -4px; bottom: -9px; height: 6px; border-radius: 2px;
+  background: #6b6ff5; transform-origin: 0 50%;
+}
+#command {
+  margin-top: 30px; height: 44px; display: flex; align-items: center;
+  font: 500 25px/1 "Plex Mono", monospace; color: #e7e8ec; white-space: pre;
+}
+#command .prompt { color: #8b8ff8; }
+#caret { display: inline-block; width: 13px; height: 29px; margin-left: 3px; background: #8b8ff8; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="banner" data-start="0" data-duration="/*SECONDS*/" data-fps="24" data-width="1600" data-height="640">
+  <div id="wall">/*PHONES*/</div>
+  <div id="shade"></div>
+  <div id="copy">
+    <h1>Chase Animations</h1>
+    <p id="line">Motion graphics that land on <span id="mark">the word you say<span id="swipe"></span></span></p>
+    <div id="command"><span class="prompt">&gt; </span><span id="typed"></span><span id="caret"></span></div>
+  </div>
+</div>
+<script>
+  const SECONDS = /*SECONDS*/;
+  const COMMAND = '/animate route-map on "arrived"';
+  const typed = document.getElementById("typed");
+  const letters = [...COMMAND].map((letter) => {
+    const span = document.createElement("span");
+    span.textContent = letter;
+    typed.appendChild(span);
+    return span;
+  });
+
+  const tl = gsap.timeline({ paused: true });
+  gsap.set(letters, { visibility: "hidden" });
+  letters.forEach((letter, i) => tl.set(letter, { visibility: "visible" }, 0.35 + i * 0.042));
+  for (let t = 0; t < SECONDS; t += 1) {
+    tl.set("#caret", { opacity: 1 }, t);
+    tl.set("#caret", { opacity: 0 }, t + 0.5);
+  }
+  tl.fromTo("#swipe", { scaleX: 0 }, { scaleX: 1, duration: 0.32, ease: "power3.out" }, 2.35);
+  tl.to("#swipe", { scaleX: 1, duration: SECONDS - 2.67 }, 2.67);
+  window.__timelines["banner"] = tl;
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chase Animations</title>
+<meta name="description" content="Every animation in the Chase Animations pack, playing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* A contact sheet on a light table: a mid-tone wall so dark and light clips both stand out, with the clips doing all the talking. */
+:root {
+  --wall: #d9dcd6; --sheet: #e8eae5; --ink: #15171a; --muted: #565c60; --line: #b9bdb6;
+  --accent: #2b2fe6; --on-accent: #ffffff;
+  --display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --wall: #24262a; --sheet: #2e3035; --ink: #eef0f2; --muted: #a7acb2; --line: #44474d;
+    --accent: #a4a7ff; --on-accent: #14152e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --wall: #24262a; --sheet: #2e3035; --ink: #eef0f2; --muted: #a7acb2; --line: #44474d;
+  --accent: #a4a7ff; --on-accent: #14152e; color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--wall); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 56px;
+}
+.wrap { max-width: 1480px; margin-inline: auto; display: grid; gap: 28px; }
+header { display: grid; gap: 8px; }
+h1 {
+  margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(38px, 6vw, 72px);
+  line-height: .98; letter-spacing: -.02em; text-wrap: balance;
+}
+.lede { margin: 0; max-width: 62ch; color: var(--muted); font-size: 16px; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter {
+  font: 500 14px var(--body); color: var(--ink); background: transparent; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 4px; padding: 7px 11px;
+}
+.filter span { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-left: 4px; }
+.filter[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.filter[aria-pressed="true"] span { color: inherit; }
+section { display: grid; gap: 12px; }
+h2 {
+  margin: 0; font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -.01em;
+  padding-top: 10px; border-top: 1px solid var(--line);
+}
+.grid { display: grid; gap: 22px 14px; grid-template-columns: repeat(auto-fill, minmax(min(156px, 100%), 1fr)); }
+@media (min-width: 900px) { .grid { grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); } }
+.card {
+  all: unset; box-sizing: border-box; display: grid; gap: 6px; align-content: start; cursor: pointer; min-width: 0;
+}
+.frame {
+  display: block; width: 100%; max-width: 100%; aspect-ratio: 9 / 16; overflow: hidden; border-radius: 3px;
+  background: #101114;
+}
+.frame video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.name { font-family: var(--display); font-weight: 700; font-size: 16px; line-height: 1.15; }
+.does { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.card:hover .name { color: var(--accent); }
+.card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.filter:focus-visible, .tool:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+dialog {
+  border: 0; padding: 0; margin: auto; background: var(--sheet); color: var(--ink); border-radius: 6px;
+  width: min(880px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto;
+}
+dialog::backdrop { background: rgba(10, 11, 13, .78); }
+.view { display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr); }
+.view .stage { background: #101114; display: grid; place-items: center; }
+.view video { display: block; height: min(calc(100dvh - 24px), 820px); aspect-ratio: 9 / 16; max-width: 100%; }
+.about { padding: 22px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.eyebrow { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.about h3 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 32px; line-height: 1.02; letter-spacing: -.015em; text-wrap: balance; }
+.about p { margin: 0; }
+.label { font-family: var(--mono); font-size: 12px; color: var(--muted); display: block; margin-bottom: 2px; }
+a { color: var(--accent); }
+code { font-family: var(--mono); font-size: 13.5px; overflow-wrap: anywhere; }
+.command { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line); padding-top: 12px; }
+.tools { margin-top: auto; display: flex; gap: 6px; flex-wrap: wrap; padding-top: 8px; }
+.tool {
+  font: 500 14px var(--body); color: var(--ink); background: transparent; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 4px; padding: 7px 11px;
+}
+.tool:hover { border-color: var(--ink); }
+@media (max-width: 640px) {
+  .view { grid-template-columns: minmax(0, 1fr); }
+  .view video { height: auto; width: min(100%, calc((100dvh - 250px) * 9 / 16)); }
+  .about { padding: 16px; gap: 10px; }
+  .about h3 { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Chase Animations</h1>
+    <p class="lede" id="lede"></p>
+    <p class="lede"><a href="https://github.com/ctskool/chase-animations">Get them on GitHub</a></p>
+  </header>
+  <div class="filters" id="filters" role="group" aria-label="Filter by group"></div>
+  <main id="sections" style="display:grid;gap:30px"></main>
+</div>
+
+<dialog id="viewer" aria-labelledby="v-name">
+  <div class="view">
+    <div class="stage"><video id="v-video" muted loop playsinline controls></video></div>
+    <div class="about">
+      <span class="eyebrow" id="v-pos"></span>
+      <h3 id="v-name"></h3>
+      <p id="v-does"></p>
+      <p><span class="label">Key moment</span><span id="v-key"></span></p>
+      <div class="command"><code id="v-cmd"></code><button class="tool" id="v-copy" type="button">Copy</button></div>
+      <div class="tools">
+        <button class="tool" id="v-prev" type="button">Previous</button>
+        <button class="tool" id="v-next" type="button">Next</button>
+        <button class="tool" id="v-close" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const groups = [{"name":"Real routes","items":[{"slug":"route-real-london","name":"Tower Bridge to St Paul's","does":"A 1.4 mile walk through real London","key":"The last street completes, the pin lands and the real trip time punches","example":true,"cmd":"/animate-route-map Tower Bridge to St Paul's Cathedral, walking","secs":4.7},{"slug":"route-real-chicago","name":"Millennium Park to Navy Pier","does":"A 1.8 mile drive along the Chicago lakefront","key":"The last street completes, the pin lands and the real trip time punches","example":true,"cmd":"/animate-route-map Millennium Park to Navy Pier, Chicago","secs":4.7},{"slug":"route-real-sf","name":"Palace of Fine Arts to the Wharf","does":"A 2.2 mile bike ride along the San Francisco bay","key":"The last street completes, the pin lands and the real trip time punches","example":true,"cmd":"/animate-route-map Palace of Fine Arts to Fisherman's Wharf, by bike","secs":4.7}]},{"name":"Compare and prove","items":[{"slug":"head-to-head","name":"Head to head","does":"Two options compared row by row, ending on one payoff stat","key":"The final bar and winner tick land","secs":4.5},{"slug":"before-after","name":"Before and after","does":"A handle wipes a website from its old design to its new one","key":"The last product card lands","secs":4.2},{"slug":"ranking-bars","name":"Ranking bars","does":"Bars race through changing years with one hero to follow","key":"The final year and result land","secs":5},{"slug":"money-stat","name":"Money stat","does":"One huge counter climbs a chart past its turning point","key":"The exact final number punches","secs":4.7},{"slug":"notification-stack","name":"Notification stack","does":"Orders flood a lock screen while the total counts up","key":"The final order lands and the total slams","secs":5},{"slug":"post-receipt","name":"Post receipt","does":"A social post with racing counts and quote replies","key":"The red underline finishes","secs":5},{"slug":"headline-highlight","name":"Headline highlight","does":"A newspaper flies in and a highlighter marks the evidence","key":"The highlighter stroke ends","secs":5},{"slug":"evidence-desk","name":"Evidence desk","does":"Papers on a desk with a figure circled in red","key":"The circle closes on the figure","secs":5},{"slug":"day-card","name":"Day card","does":"A huge day counter stamps through a calendar","key":"The final number is circled","secs":5}]},{"name":"Products and apps","items":[{"slug":"screen-zoom","name":"Screen zoom","does":"The cursor leads the camera to one button, and it clicks","key":"The button turns to Published","secs":3.1},{"slug":"app-launch","name":"App launch","does":"A studio phone receives a transaction and completes it","key":"The transfer reaches its exact amount","secs":5},{"slug":"laptop-reveal","name":"Laptop reveal","does":"A laptop opens, wakes on your product and scrolls it","key":"The product name stamps into place","secs":5},{"slug":"apple-one-take","name":"Apple one-take","does":"A dot morphs through a button, a planner and a phone in one take","key":"The red full stop lands","secs":5},{"slug":"frosted-glass","name":"Frosted glass","does":"A glass search bar docks above results and picks one","key":"The highlight seats on the chosen row","secs":4.7},{"slug":"exploded-teardown","name":"Exploded teardown","does":"A product opens into labelled layers","key":"All five layers lock beside their labels","secs":5.3}]},{"name":"Explain a process or place","items":[{"slug":"isometric-flow","name":"Isometric flow","does":"A 3D diorama of a three-step process","key":"The van arrives and the last step checks off","secs":4.1},{"slug":"timeline-3d","name":"3D timeline","does":"A moving rail passes oversized milestone cards","key":"The playhead stops at the final milestone","secs":5},{"slug":"globe-arcs","name":"Globe arcs","does":"Routes cross a dotted globe while a figure counts up","key":"The last route touches down","secs":5},{"slug":"route-map","name":"Route map","does":"A route draws through a pale 3D city, fictional or real, with live trip stats","key":"The pin lands and the final time punches","secs":4.7},{"slug":"pencil-blueprint","name":"Pencil to blueprint","does":"A graphite sketch becomes a white-on-blue technical drawing","key":"Both measurements stamp","secs":4.7}]},{"name":"Styled titles","items":[{"slug":"blue-editorial","name":"Blue editorial","does":"An ultramarine cover with frame-filling italic words","key":"The last word peaks and the underline strikes","secs":4.3},{"slug":"swiss-grid","name":"Swiss grid","does":"A black circle and red field in a strict Swiss grid","key":"The third phrase settles","secs":5},{"slug":"magazine-layout","name":"Magazine layout","does":"A painted image, a serif headline and a real text column","key":"The handwritten underline finishes","secs":3.9},{"slug":"risograph","name":"Risograph","does":"A two-ink poster prints in stepped passes","key":"The ink plates snap into register","secs":4.7},{"slug":"ink-wash","name":"Ink wash","does":"Mountains, a red sun and a small boat on rice paper","key":"The boat reaches open water","secs":5},{"slug":"glow-orb","name":"Glow orb","does":"A soft breathing orb above one line of type","key":"The closing phrase lands on the breath","secs":3.7},{"slug":"retro-crt","name":"Retro CRT","does":"A beam opens into a huge phosphor title with a terminal line","key":"The status lands and the title snaps tall","secs":5},{"slug":"oscilloscope","name":"Oscilloscope","does":"A green signal folds through figures and writes your words","key":"The last letter lands","secs":5}]},{"name":"Claude Code","items":[{"slug":"terminal-run","name":"Terminal run","does":"A session plays out from one prompt to a finished result","key":"The mascot lands on the green result slab","secs":6.5},{"slug":"agent-fan-out","name":"Agent fan out","does":"One prompt splits into six subagents, each with its own mascot","key":"The last agent finishes and they pile onto the result","secs":6.5},{"slug":"agent-loop","name":"Agent loop","does":"The mascot laps Plan, Act and Check until the tests pass","key":"Check turns green and the ring cracks open","secs":6.2},{"slug":"test-sweep","name":"Test sweep","does":"A wall of failing tests flips green in a wave","key":"The last test lands on the exact total","secs":5.8},{"slug":"bug-hunt","name":"Bug hunt","does":"The mascot surfs a scrolling file until it finds the bug","key":"The line locks and the lens slams up","secs":5.8},{"slug":"file-tree","name":"File tree","does":"A codebase grows branch by branch behind the mascot","key":"The tree pulls back and the file count lands","secs":6.1},{"slug":"diff-reveal","name":"Diff reveal","does":"The mascot eats the red lines of a real-looking diff","key":"The last gulp and the final removed count","secs":6.1},{"slug":"hours-collapse","name":"Hours collapse","does":"A full day of hour blocks gets stomped into minutes","key":"The new time slams in over the old one","secs":5.8},{"slug":"cost-receipt","name":"Cost receipt","does":"A till receipt prints line items for a session","key":"The total is stamped on the receipt","secs":5.9},{"slug":"benchmark-takeover","name":"Benchmark takeover","does":"The mascot rides a huge row into a serious leaderboard","key":"The row seats and #1 stamps","secs":5.6}]}];
+const flat = groups.flatMap(g => g.items.map(item => ({ ...item, group: g.name })));
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = id => document.getElementById(id);
+
+$("lede").textContent = `${flat.filter(item => !item.example).length} animations on sample content, plus ${flat.filter(item => item.example).length} real routes. Clips play as you scroll. Click one to see it larger, with its key moment and the command that runs it.`;
+
+const observer = new IntersectionObserver(entries => {
+  for (const { target: video, isIntersecting } of entries) {
+    if (isIntersecting && !reduce && !$("viewer").open) {
+      if (!video.src) video.src = video.dataset.src;
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }
+}, { threshold: 0.3 });
+
+function card(item) {
+  const button = document.createElement("button");
+  button.className = "card";
+  button.type = "button";
+  button.setAttribute("aria-label", `${item.name}: open`);
+  const frame = document.createElement("span");
+  frame.className = "frame";
+  const video = document.createElement("video");
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.preload = "none";
+  video.poster = `posters/${item.slug}.jpg`;
+  video.dataset.src = `clips/${item.slug}.mp4`;
+  video.setAttribute("aria-hidden", "true");
+  frame.append(video);
+  const name = document.createElement("span");
+  name.className = "name";
+  name.textContent = item.name;
+  const does = document.createElement("span");
+  does.className = "does";
+  does.textContent = item.does;
+  button.append(frame, name, does);
+  button.addEventListener("click", () => open(flat.findIndex(entry => entry.slug === item.slug)));
+  observer.observe(video);
+  return button;
+}
+
+const sections = groups.map(group => {
+  const section = document.createElement("section");
+  const heading = document.createElement("h2");
+  heading.textContent = group.name;
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  grid.append(...group.items.map(card));
+  section.append(heading, grid);
+  $("sections").append(section);
+  return section;
+});
+
+function filterButton(label, count, index) {
+  const button = document.createElement("button");
+  button.className = "filter";
+  button.type = "button";
+  button.setAttribute("aria-pressed", index === -1);
+  button.textContent = label;
+  const number = document.createElement("span");
+  number.textContent = count;
+  button.append(number);
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".filter").forEach(b => b.setAttribute("aria-pressed", b === button));
+    sections.forEach((section, i) => { section.hidden = index !== -1 && i !== index; });
+  });
+  $("filters").append(button);
+}
+filterButton("All", flat.length, -1);
+groups.forEach((group, i) => filterButton(group.name, group.items.length, i));
+
+let current = 0;
+function show(index) {
+  current = (index + flat.length) % flat.length;
+  const item = flat[current];
+  $("v-pos").textContent = `${current + 1} of ${flat.length} · ${item.group} · ${item.secs} s`;
+  $("v-name").textContent = item.name;
+  $("v-does").textContent = item.does;
+  $("v-key").textContent = item.key;
+  $("v-cmd").textContent = item.cmd || `/animate ${item.slug}`;
+  $("v-copy").textContent = "Copy";
+  const video = $("v-video");
+  video.src = `clips/${item.slug}.mp4`;
+  video.poster = `posters/${item.slug}.jpg`;
+  video.play().catch(() => {});
+}
+function open(index) {
+  document.querySelectorAll(".frame video").forEach(video => video.pause());
+  $("viewer").showModal();
+  show(index);
+}
+$("v-prev").addEventListener("click", () => show(current - 1));
+$("v-next").addEventListener("click", () => show(current + 1));
+$("v-close").addEventListener("click", () => $("viewer").close());
+$("viewer").addEventListener("click", event => { if (event.target === $("viewer")) $("viewer").close(); });
+$("viewer").addEventListener("keydown", event => {
+  if (event.key === "ArrowRight") show(current + 1);
+  if (event.key === "ArrowLeft") show(current - 1);
+});
+$("viewer").addEventListener("close", () => {
+  $("v-video").pause();
+  $("v-video").removeAttribute("src");
+  if (reduce) return;
+  document.querySelectorAll(".frame video").forEach(video => {
+    const box = video.getBoundingClientRect();
+    if (video.src && box.bottom > 0 && box.top < innerHeight) video.play().catch(() => {});
+  });
+});
+$("v-copy").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText($("v-cmd").textContent);
+    $("v-copy").textContent = "Copied";
+  } catch {
+    getSelection().selectAllChildren($("v-cmd"));
+    $("v-copy").textContent = "Press Ctrl+C";
+  }
+});
+</script>
+</body>
+</html>

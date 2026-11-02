@@ -11,7 +11,20 @@ const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8"))
 const NAME = `chase-animations-v${pkg.version}`;
 
 // Paths inside the repo that are for building the pack, not using it.
-const LEAVE_OUT = [/^scripts\//, /^\.gitignore$/, /^\.gitattributes$/, /^CLAUDE\.md$/, /^docs\/internal\//];
+const LEAVE_OUT = [
+  /^scripts\//,
+  /^\.github\//,
+  /^\.gitignore$/,
+  /^\.gitattributes$/,
+  /^CLAUDE\.md$/,
+  /^docs\/internal\//,
+  /^docs\/PACK-README\.md$/,
+  /^gallery\//,
+  /^media\//,
+];
+// The repo's README shows off the banner and cards, which the zip leaves out, so the zip gets a plain one.
+const ZIP_COPY = { "README.md": "docs/PACK-README.md" };
+const sourceOf = (file) => path.join(ROOT, ZIP_COPY[file] ?? file);
 const BANNED_FILES = /\.(mp4|mov|webm|mkv|m4a|wav|mp3|pcm|env|pem|key)$/i;
 const TEXT = /\.(md|json|js|mjs|css|html|txt|yml|yaml)$/i;
 
@@ -34,7 +47,7 @@ function scan(files) {
   for (const file of files) {
     if (BANNED_FILES.test(file)) problems.push(`${file}: media or secret file`);
     if (!TEXT.test(file) || trusted(file)) continue;
-    const text = fs.readFileSync(path.join(ROOT, file), "utf8");
+    const text = fs.readFileSync(sourceOf(file), "utf8");
     for (const [pattern, what] of PRIVATE) {
       if (pattern.test(text)) problems.push(`${file}: contains ${what}`);
     }
@@ -49,7 +62,7 @@ function writeZip(out, prefix, files) {
   let offset = 0;
   const stamp = { time: 0, date: (46 << 9) | (1 << 5) | 1 }; // fixed date, so the same files make the same zip
   for (const file of files) {
-    const data = fs.readFileSync(path.join(ROOT, file));
+    const data = fs.readFileSync(sourceOf(file));
     const packed = zlib.deflateRawSync(data, { level: 9 });
     const name = Buffer.from(`${prefix}/${file}`);
     const crc = zlib.crc32(data);

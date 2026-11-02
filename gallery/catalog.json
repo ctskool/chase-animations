@@ -1,0 +1,294 @@
+{
+  "groups": [
+    {
+      "name": "Real routes",
+      "note": "Route map on real streets, water and 3D buildings. Name two places or give it a GPX file.",
+      "items": [
+        {
+          "slug": "route-real-london",
+          "block": "route-map",
+          "source": "renders/final/real-routes/route-map-london-full.mp4",
+          "name": "Tower Bridge to St Paul's",
+          "does": "A 1.4 mile walk through real London",
+          "key": "The last street completes, the pin lands and the real trip time punches",
+          "example": true,
+          "cmd": "/animate-route-map Tower Bridge to St Paul's Cathedral, walking"
+        },
+        {
+          "slug": "route-real-chicago",
+          "block": "route-map",
+          "source": "renders/final/real-routes/route-map-chicago-full.mp4",
+          "name": "Millennium Park to Navy Pier",
+          "does": "A 1.8 mile drive along the Chicago lakefront",
+          "key": "The last street completes, the pin lands and the real trip time punches",
+          "example": true,
+          "cmd": "/animate-route-map Millennium Park to Navy Pier, Chicago"
+        },
+        {
+          "slug": "route-real-sf",
+          "block": "route-map",
+          "source": "renders/final/real-routes/route-map-sf-full.mp4",
+          "name": "Palace of Fine Arts to the Wharf",
+          "does": "A 2.2 mile bike ride along the San Francisco bay",
+          "key": "The last street completes, the pin lands and the real trip time punches",
+          "example": true,
+          "cmd": "/animate-route-map Palace of Fine Arts to Fisherman's Wharf, by bike"
+        }
+      ]
+    },
+    {
+      "name": "Compare and prove",
+      "items": [
+        {
+          "slug": "head-to-head",
+          "name": "Head to head",
+          "does": "Two options compared row by row, ending on one payoff stat",
+          "key": "The final bar and winner tick land"
+        },
+        {
+          "slug": "before-after",
+          "name": "Before and after",
+          "does": "A handle wipes a website from its old design to its new one",
+          "key": "The last product card lands"
+        },
+        {
+          "slug": "ranking-bars",
+          "name": "Ranking bars",
+          "does": "Bars race through changing years with one hero to follow",
+          "key": "The final year and result land"
+        },
+        {
+          "slug": "money-stat",
+          "name": "Money stat",
+          "does": "One huge counter climbs a chart past its turning point",
+          "key": "The exact final number punches"
+        },
+        {
+          "slug": "notification-stack",
+          "name": "Notification stack",
+          "does": "Orders flood a lock screen while the total counts up",
+          "key": "The final order lands and the total slams"
+        },
+        {
+          "slug": "post-receipt",
+          "name": "Post receipt",
+          "does": "A social post with racing counts and quote replies",
+          "key": "The red underline finishes"
+        },
+        {
+          "slug": "headline-highlight",
+          "name": "Headline highlight",
+          "does": "A newspaper flies in and a highlighter marks the evidence",
+          "key": "The highlighter stroke ends"
+        },
+        {
+          "slug": "evidence-desk",
+          "name": "Evidence desk",
+          "does": "Papers on a desk with a figure circled in red",
+          "key": "The circle closes on the figure"
+        },
+        {
+          "slug": "day-card",
+          "name": "Day card",
+          "does": "A huge day counter stamps through a calendar",
+          "key": "The final number is circled"
+        }
+      ]
+    },
+    {
+      "name": "Products and apps",
+      "items": [
+        {
+          "slug": "screen-zoom",
+          "name": "Screen zoom",
+          "does": "The cursor leads the camera to one button, and it clicks",
+          "key": "The button turns to Published"
+        },
+        {
+          "slug": "app-launch",
+          "name": "App launch",
+          "does": "A studio phone receives a transaction and completes it",
+          "key": "The transfer reaches its exact amount"
+        },
+        {
+          "slug": "laptop-reveal",
+          "name": "Laptop reveal",
+          "does": "A laptop opens, wakes on your product and scrolls it",
+          "key": "The product name stamps into place"
+        },
+        {
+          "slug": "apple-one-take",
+          "name": "Apple one-take",
+          "does": "A dot morphs through a button, a planner and a phone in one take",
+          "key": "The red full stop lands"
+        },
+        {
+          "slug": "frosted-glass",
+          "name": "Frosted glass",
+          "does": "A glass search bar docks above results and picks one",
+          "key": "The highlight seats on the chosen row"
+        },
+        {
+          "slug": "exploded-teardown",
+          "name": "Exploded teardown",
+          "does": "A product opens into labelled layers",
+          "key": "All five layers lock beside their labels"
+        }
+      ]
+    },
+    {
+      "name": "Explain a process or place",
+      "items": [
+        {
+          "slug": "isometric-flow",
+          "name": "Isometric flow",
+          "does": "A 3D diorama of a three-step process",
+          "key": "The van arrives and the last step checks off"
+        },
+        {
+          "slug": "timeline-3d",
+          "name": "3D timeline",
+          "does": "A moving rail passes oversized milestone cards",
+          "key": "The playhead stops at the final milestone"
+        },
+        {
+          "slug": "globe-arcs",
+          "name": "Globe arcs",
+          "does": "Routes cross a dotted globe while a figure counts up",
+          "key": "The last route touches down"
+        },
+        {
+          "slug": "route-map",
+          "name": "Route map",
+          "does": "A route draws through a pale 3D city, fictional or real, with live trip stats",
+          "key": "The pin lands and the final time punches"
+        },
+        {
+          "slug": "pencil-blueprint",
+          "name": "Pencil to blueprint",
+          "does": "A graphite sketch becomes a white-on-blue technical drawing",
+          "key": "Both measurements stamp"
+        }
+      ]
+    },
+    {
+      "name": "Styled titles",
+      "items": [
+        {
+          "slug": "blue-editorial",
+          "name": "Blue editorial",
+          "does": "An ultramarine cover with frame-filling italic words",
+          "key": "The last word peaks and the underline strikes"
+        },
+        {
+          "slug": "swiss-grid",
+          "name": "Swiss grid",
+          "does": "A black circle and red field in a strict Swiss grid",
+          "key": "The third phrase settles"
+        },
+        {
+          "slug": "magazine-layout",
+          "name": "Magazine layout",
+          "does": "A painted image, a serif headline and a real text column",
+          "key": "The handwritten underline finishes"
+        },
+        {
+          "slug": "risograph",
+          "name": "Risograph",
+          "does": "A two-ink poster prints in stepped passes",
+          "key": "The ink plates snap into register"
+        },
+        {
+          "slug": "ink-wash",
+          "name": "Ink wash",
+          "does": "Mountains, a red sun and a small boat on rice paper",
+          "key": "The boat reaches open water"
+        },
+        {
+          "slug": "glow-orb",
+          "name": "Glow orb",
+          "does": "A soft breathing orb above one line of type",
+          "key": "The closing phrase lands on the breath"
+        },
+        {
+          "slug": "retro-crt",
+          "name": "Retro CRT",
+          "does": "A beam opens into a huge phosphor title with a terminal line",
+          "key": "The status lands and the title snaps tall"
+        },
+        {
+          "slug": "oscilloscope",
+          "name": "Oscilloscope",
+          "does": "A green signal folds through figures and writes your words",
+          "key": "The last letter lands"
+        }
+      ]
+    },
+    {
+      "name": "Claude Code",
+      "items": [
+        {
+          "slug": "terminal-run",
+          "name": "Terminal run",
+          "does": "A session plays out from one prompt to a finished result",
+          "key": "The mascot lands on the green result slab"
+        },
+        {
+          "slug": "agent-fan-out",
+          "name": "Agent fan out",
+          "does": "One prompt splits into six subagents, each with its own mascot",
+          "key": "The last agent finishes and they pile onto the result"
+        },
+        {
+          "slug": "agent-loop",
+          "name": "Agent loop",
+          "does": "The mascot laps Plan, Act and Check until the tests pass",
+          "key": "Check turns green and the ring cracks open"
+        },
+        {
+          "slug": "test-sweep",
+          "name": "Test sweep",
+          "does": "A wall of failing tests flips green in a wave",
+          "key": "The last test lands on the exact total"
+        },
+        {
+          "slug": "bug-hunt",
+          "name": "Bug hunt",
+          "does": "The mascot surfs a scrolling file until it finds the bug",
+          "key": "The line locks and the lens slams up"
+        },
+        {
+          "slug": "file-tree",
+          "name": "File tree",
+          "does": "A codebase grows branch by branch behind the mascot",
+          "key": "The tree pulls back and the file count lands"
+        },
+        {
+          "slug": "diff-reveal",
+          "name": "Diff reveal",
+          "does": "The mascot eats the red lines of a real-looking diff",
+          "key": "The last gulp and the final removed count"
+        },
+        {
+          "slug": "hours-collapse",
+          "name": "Hours collapse",
+          "does": "A full day of hour blocks gets stomped into minutes",
+          "key": "The new time slams in over the old one"
+        },
+        {
+          "slug": "cost-receipt",
+          "name": "Cost receipt",
+          "does": "A till receipt prints line items for a session",
+          "key": "The total is stamped on the receipt"
+        },
+        {
+          "slug": "benchmark-takeover",
+          "name": "Benchmark takeover",
+          "does": "The mascot rides a huge row into a serious leaderboard",
+          "key": "The row seats and #1 stamps"
+        }
+      ],
+      "note": "These use Claude Code's look, the Claude logo and its pixel mascot. They run on sample content until you tell Claude what to show, and you can turn the mascot or logo off."
+    }
+  ]
+}

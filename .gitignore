@@ -11,6 +11,7 @@ dist/
 *.wav
 *.mp3
 *.mkv
+!gallery/clips/*.mp4
 
 # Local test notes and secrets
 .env
