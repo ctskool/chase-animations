@@ -1,0 +1,12 @@
+{
+  "name": "snap",
+  "title": "Snap",
+  "summary": "A hard punch-in on your face on one word, held to the end of the stretch. A camera move, no graphics.",
+  "layers": [],
+  "camera": { "kind": "snap", "zoom": 1.35 },
+  "timing": { "keyAt": 0.3 },
+  "keyMoment": "the frame punches in on your face on the word",
+  "variables": [
+    { "id": "zoom", "type": "number", "label": "How far it punches in (1.2 subtle, 1.5 hard)", "default": 1.35 }
+  ]
+}

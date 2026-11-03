@@ -218,19 +218,40 @@ export function renderEffect(prepDir, name, { from, to, key, varsFile, set = [],
   }
 
   const file = path.resolve(out ?? path.join(P.dir, `${name}-${start.toFixed(2)}.mp4`));
-  stack(P, { start, duration, layers, card, file, draft, cut });
+  stack(P, { start, duration, layers, card, file, draft, cut, camera: fx.camera && cameraMove(fx.camera, vars, head, keyAt, duration) });
   console.log(`  ${file}`);
   return { file, start, duration };
 }
 
+// A camera move on the whole stacked frame, aimed at the middle of the face. snap: a hard punch-in on the key word that
+// holds to the end of the stretch. push: a slow eased push across the stretch while the room behind goes soft.
+function cameraMove(spec, vars, head, keyAt, duration) {
+  const mid = (k) => head.frames.map((f) => f[k]).sort((a, b) => a - b)[Math.floor(head.frames.length / 2)];
+  const cx = mid("cx") / W;
+  const cy = ((mid("top") + mid("chin")) / 2) / H;
+  const zoom = Number(vars.zoom ?? spec.zoom);
+  if (spec.kind === "snap") {
+    const k = keyAt.toFixed(3);
+    return { cx, cy, z: `if(lt(t,${k}),1,1+${(zoom - 1).toFixed(3)}*min((t-${k})/0.08,1))`, soften: 0 };
+  }
+  const p = `min(t/${duration.toFixed(3)},1)`;
+  return { cx, cy, z: `1+${(zoom - 1).toFixed(3)}*(${p})*(${p})*(3-2*(${p}))`, soften: Number(vars.soften ?? spec.soften ?? 0), duration };
+}
+
 // The shot, the back layer, the speaker, the front layer. In a split the shot and the speaker move down into the card,
 // the back layer covers everything but the card, and only the head above the card's edge comes from the cut-out.
-function stack(P, { start, duration, layers, card, file, draft, cut }) {
+function stack(P, { start, duration, layers, card, file, draft, cut, camera }) {
   const trim = (at) => `trim=start=${at.toFixed(4)}:duration=${duration.toFixed(4)},setpts=PTS-STARTPTS`;
   const inputs = ["-i", P.plate, ...decoder(cut.file), "-i", cut.file];
   const chain = [`[0:v]${trim(start)},format=yuva444p[plate]`, `[1:v]${trim(start - cut.offset)},format=yuva444p[cut]`];
   let base = "[plate]";
   let cutout = "[cut]";
+  if (camera?.soften) {
+    // The room softens as the push goes in; the speaker, drawn on top from the cut-out, stays sharp.
+    chain.push(`[plate]split[pa][pb]`, `[pb]gblur=sigma=${camera.soften}[pbl]`);
+    chain.push(`[pa][pbl]blend=all_expr='A+(B-A)*min(T/${camera.duration.toFixed(3)},1)'[plates]`);
+    base = "[plates]";
+  }
   if (card) {
     chain.push(`[plate]pad=${W}:${H + card.shift}:0:${card.shift}:black,crop=${W}:${H}:0:0[plate2]`);
     // Over a flat page the cut-out's soft hair edge shows the room as a grey halo, so the alpha is tightened.
@@ -255,6 +276,11 @@ function stack(P, { start, duration, layers, card, file, draft, cut }) {
     chain.push(`[${n}:v]setpts=PTS-STARTPTS,format=yuva444p[front]`);
     n += 1;
     over("[front]", "b3");
+  }
+  if (camera) {
+    chain.push(`${base}scale=w='trunc(${W}*(${camera.z})/2)*2':h='trunc(${H}*(${camera.z})/2)*2':eval=frame:flags=bicubic,` +
+      `crop=${W}:${H}:x='(in_w-${W})*${camera.cx.toFixed(4)}':y='(in_h-${H})*${camera.cy.toFixed(4)}'[cam]`);
+    base = "[cam]";
   }
   chain.push(`${base}format=yuv420p[v]`);
   chain.push(`[0:a]atrim=start=${start.toFixed(4)}:duration=${duration.toFixed(4)},asetpts=PTS-STARTPTS[a]`);

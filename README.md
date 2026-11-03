@@ -141,7 +141,7 @@ These five were made with `/explain`, shown as silent previews:
 </tr>
 </table>
 
-Every effect uses your real words and numbers. These seven were made on one 85 second video, which is in [`examples/vfx/`](examples/vfx) with a 15 second sample clip to try it on:
+Every effect uses your real words and numbers. These nine were made on one 85 second video, which is in [`examples/vfx/`](examples/vfx) with a 15 second sample clip to try it on:
 
 <!-- vfx:start -->
 
@@ -156,6 +156,16 @@ Every effect uses your real words and numbers. These seven were made on one 85 s
 <br><b>Orbit</b><br><sub>Your cards circle your head, sliding behind it on the far side</sub>
 </td>
 <td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-snap.webp" width="100%" alt="Snap: A hard punch-in on your face on one word"></a>
+<br><b>Snap</b><br><sub>A hard punch-in on your face on one word</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-push.webp" width="100%" alt="Push: A slow push-in while the room behind you goes soft and you stay sharp"></a>
+<br><b>Push</b><br><sub>A slow push-in while the room behind you goes soft and you stay sharp</sub>
+</td>
+</tr>
+<tr>
+<td width="25%" align="center" valign="top">
 <a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-tier-list.webp" width="100%" alt="Tier list: A tier board above you; each thing you name slams into its row"></a>
 <br><b>Tier list</b><br><sub>A tier board above you; each thing you name slams into its row</sub>
 </td>
@@ -163,8 +173,6 @@ Every effect uses your real words and numbers. These seven were made on one 85 s
 <a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-chart-split.webp" width="100%" alt="Chart split: A bar chart above you; the bars you compare shoot out at their real value"></a>
 <br><b>Chart split</b><br><sub>A bar chart above you; the bars you compare shoot out at their real value</sub>
 </td>
-</tr>
-<tr>
 <td width="25%" align="center" valign="top">
 <a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-checklist.webp" width="100%" alt="Checklist: A Claude Code task card ticks each item green as you say it"></a>
 <br><b>Checklist</b><br><sub>A Claude Code task card ticks each item green as you say it</sub>
@@ -173,6 +181,8 @@ Every effect uses your real words and numbers. These seven were made on one 85 s
 <a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-spotlight.webp" width="100%" alt="Spotlight: The room drops to black and a glowing word buzzes on behind your head"></a>
 <br><b>Spotlight</b><br><sub>The room drops to black and a glowing word buzzes on behind your head</sub>
 </td>
+</tr>
+<tr>
 <td width="25%" align="center" valign="top">
 <a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-browser-stack.webp" width="100%" alt="Browser stack: Browser windows pile up behind you, then each one gets a green Passed"></a>
 <br><b>Browser stack</b><br><sub>Browser windows pile up behind you, then each one gets a green Passed</sub>

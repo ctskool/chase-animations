@@ -56,6 +56,8 @@ Run `vfx list`. Match their words to an effect, or show the list and ask.
 | `browser-stack` | Browser windows pile up behind, then each gets "Passed" | Testing, "a bunch of" |
 | `tier-list` | Split: a tier board above, the named item slams into its row | "Number three is…" |
 | `chart-split` | Split: a bar chart above, the highlighted bars slam in | Comparing numbers |
+| `snap` | A hard punch-in on the face, held to the end of the stretch | One word to hit hard |
+| `push` | A slow push-in while the room goes soft and they stay sharp | A sincere or important line |
 
 Choose `--from` and `--to` (2 to 6 seconds) from the word times, and `--at` on the word it should land on. Effects that tick or drop per item (checklist, browser-stack) find their own cue words inside the window, so the window just has to contain them.
 

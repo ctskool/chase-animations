@@ -1,0 +1,13 @@
+{
+  "name": "push",
+  "title": "Push",
+  "summary": "A slow, eased push-in on your face across the stretch while the room behind you goes soft and you stay sharp.",
+  "layers": [],
+  "camera": { "kind": "push", "zoom": 1.18, "soften": 7 },
+  "timing": { "keyAt": 0.5 },
+  "keyMoment": "the push settles in close as the room finishes softening",
+  "variables": [
+    { "id": "zoom", "type": "number", "label": "How far it pushes in by the end (1.1 subtle, 1.3 close)", "default": 1.18 },
+    { "id": "soften", "type": "number", "label": "How soft the room gets (0 off, 10 very soft)", "default": 7 }
+  ]
+}

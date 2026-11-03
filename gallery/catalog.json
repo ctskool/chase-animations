@@ -155,6 +155,28 @@
           "cmd": "/vfx orbit"
         },
         {
+          "slug": "vfx-snap",
+          "name": "Snap",
+          "does": "A hard punch-in on your face on one word",
+          "key": "The frame punches in on \"test\"",
+          "source": "renders/final/vfx/snap.mp4",
+          "cardAt": 1.2,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx snap on \"test\""
+        },
+        {
+          "slug": "vfx-push",
+          "name": "Push",
+          "does": "A slow push-in while the room behind you goes soft and you stay sharp",
+          "key": "The push settles in close as the room finishes softening",
+          "source": "renders/final/vfx/push.mp4",
+          "cardAt": 4.0,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx push"
+        },
+        {
           "slug": "vfx-tier-list",
           "name": "Tier list",
           "does": "A tier board above you; each thing you name slams into its row",
