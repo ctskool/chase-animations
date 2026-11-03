@@ -1,0 +1,14 @@
+.or-layer { position: absolute; inset: 0; }
+.or-card { position: absolute; left: 0; top: 0; width: 276px; height: 360px; border-radius: 28px; padding: 23px 23px 21px;
+  display: flex; flex-direction: column; color: #fff; overflow: hidden; opacity: 0; will-change: transform, opacity, filter;
+  background:
+    radial-gradient(120% 80% at 18% 0%, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(165deg, var(--c-hi), var(--c) 55%, var(--c-lo));
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.16), 0 18px 40px rgba(20, 8, 2, 0.38), 0 4px 10px rgba(20, 8, 2, 0.25); }
+.or-num { font: 800 38px/1 "Inter Tight", sans-serif; letter-spacing: -0.01em; opacity: 0.62; }
+.or-name { margin-top: auto; font: 400 64px/0.98 "Anton", sans-serif; text-transform: uppercase; letter-spacing: 0.005em; }
+.or-name div { white-space: nowrap; }
+.or-by { margin-top: 9px; font: 600 40px/1.05 "Barlow Condensed", sans-serif; opacity: 0.82; white-space: nowrap; }
+.or-stars { margin-top: 14px; align-self: flex-start; display: flex; align-items: center; gap: 8px; padding: 7px 16px 7px 13px;
+  border-radius: 999px; background: rgba(0, 0, 0, 0.24); font: 800 40px/1 "Inter Tight", sans-serif; letter-spacing: -0.01em; }
+.or-stars svg { width: 34px; height: 34px; fill: #FFD66B; flex: none; }

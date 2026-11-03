@@ -1,0 +1,23 @@
+{
+  "name": "browser-stack",
+  "title": "Browser Stack",
+  "summary": "Ghostly headless browser windows pile up behind your head one after another, then each sign-up form gets a green Passed stamp in a fast ripple and a pill above your head counts them off.",
+  "fonts": ["500 34px Inter", "700 36px Inter", "800 46px 'Inter Tight'", "700 58px 'Barlow Condensed'"],
+  "layers": ["back"],
+  "timing": { "keyAt": 3.25 },
+  "keyMoment": "the last window lands in the pile on \"Chrome\"; on \"test\" the Passed stamps ripple across the stack",
+  "variables": [
+    { "id": "url", "type": "string", "label": "Address bar text", "default": "localhost:3000/signup" },
+    { "id": "count", "type": "number", "label": "How many browser windows, 4 to 8", "default": 8 },
+    { "id": "field1", "type": "string", "label": "First form field", "default": "Email" },
+    { "id": "field2", "type": "string", "label": "Second form field", "default": "Password" },
+    { "id": "button", "type": "string", "label": "Form button", "default": "Sign up" },
+    { "id": "stamp", "type": "string", "label": "Stamp text", "default": "Passed" },
+    { "id": "tally", "type": "string", "label": "Word after the count in the pill", "default": "passed" },
+    { "id": "green", "type": "color", "label": "Pass colour", "default": "#22C55E" },
+    { "id": "ghost", "type": "number", "label": "Window opacity, 0 to 1 (they are headless, so a little see-through)", "default": 0.8 },
+    { "id": "spinWord", "type": "string", "label": "Word that starts the pile", "default": "spin" },
+    { "id": "landWord", "type": "string", "label": "Word the last window lands on", "default": "Chrome" },
+    { "id": "testWord", "type": "string", "label": "Word that starts the Passed ripple", "default": "test" }
+  ]
+}

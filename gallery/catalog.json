@@ -129,6 +129,89 @@
       ]
     },
     {
+      "name": "Made with /vfx",
+      "section": "vfx",
+      "items": [
+        {
+          "slug": "vfx-glass-widgets",
+          "name": "Glass widgets",
+          "does": "Frosted cards drop in around your head; the upper ones fall behind it",
+          "key": "The last card settles and the whole set hangs around your head",
+          "source": "renders/final/vfx/glass-widgets.mp4",
+          "cardAt": 2.0,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx glass-widgets"
+        },
+        {
+          "slug": "vfx-orbit",
+          "name": "Orbit",
+          "does": "Your cards circle your head, sliding behind it on the far side",
+          "key": "The ring slows on the word, cards passing behind your head",
+          "source": "renders/final/vfx/orbit.mp4",
+          "cardAt": 3.35,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx orbit"
+        },
+        {
+          "slug": "vfx-tier-list",
+          "name": "Tier list",
+          "does": "A tier board above you; each thing you name slams into its row",
+          "key": "The named tile lands in its row on the word",
+          "source": "renders/final/vfx/tier-list.mp4",
+          "cardAt": 1.6,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx tier-list"
+        },
+        {
+          "slug": "vfx-chart-split",
+          "name": "Chart split",
+          "does": "A bar chart above you; the bars you compare shoot out at their real value",
+          "key": "The highlighted bars slam in on the word",
+          "source": "renders/final/vfx/chart-split.mp4",
+          "cardAt": 0.9,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx chart-split"
+        },
+        {
+          "slug": "vfx-checklist",
+          "name": "Checklist",
+          "does": "A Claude Code task card ticks each item green as you say it",
+          "key": "The last item ticks and the card pulses",
+          "source": "renders/final/vfx/checklist.mp4",
+          "cardAt": 4.3,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx checklist"
+        },
+        {
+          "slug": "vfx-spotlight",
+          "name": "Spotlight",
+          "does": "The room drops to black and a glowing word buzzes on behind your head",
+          "key": "The lights cut on the word",
+          "source": "renders/final/vfx/spotlight.mp4",
+          "cardAt": 1.8,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx spotlight on \"slop\""
+        },
+        {
+          "slug": "vfx-browser-stack",
+          "name": "Browser stack",
+          "does": "Browser windows pile up behind you, then each one gets a green Passed",
+          "key": "The last window passes: 8/8",
+          "source": "renders/final/vfx/browser-stack.mp4",
+          "cardAt": 5.0,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx browser-stack"
+        }
+      ]
+    },
+    {
       "name": "Compare and prove",
       "items": [
         {

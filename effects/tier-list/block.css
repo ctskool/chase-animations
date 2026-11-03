@@ -1,0 +1,14 @@
+#back { position: absolute; inset: 0; --page: #F2EFE9; --ink: #16161A; --muted: #6F6A62; --accent: #E4553B; --track: #E5E0D7; }
+#tl-hole { position: absolute; box-shadow: 0 10px 28px rgba(22, 22, 26, 0.10), 0 0 0 3000px var(--page); }
+#tl-head { position: absolute; left: 40px; right: 40px; top: 156px; height: 80px; display: flex; align-items: flex-end; justify-content: space-between; }
+#tl-title { font: 800 64px/1 "Inter Tight", sans-serif; color: var(--ink); letter-spacing: -0.02em; }
+#tl-num { font: 800 64px/1 "Inter Tight", sans-serif; color: var(--accent); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+#tl-num small { font: 700 34px/1 "Inter", sans-serif; color: var(--muted); letter-spacing: 0; margin-left: 8px; }
+.tl-row { position: absolute; left: 36px; width: 1008px; height: 148px; }
+.tl-label { position: absolute; left: 0; top: 0; width: 148px; height: 148px; border-radius: 24px; display: grid; place-items: center;
+  font: 800 96px/1 "Inter Tight", sans-serif; color: var(--ink); }
+.tl-track { position: absolute; left: 160px; top: 0; right: 0; height: 148px; border-radius: 24px; background: var(--track); }
+.tl-tile { position: absolute; height: 120px; border-radius: 18px; background: #fff; padding: 0 26px; display: flex; flex-direction: column;
+  justify-content: center; gap: 6px; box-shadow: 0 1px 0 rgba(22, 22, 26, 0.06), 0 6px 14px rgba(22, 22, 26, 0.08); transform-origin: 50% 100%; }
+.tl-name { font: 800 46px/1.05 "Inter Tight", sans-serif; color: var(--ink); letter-spacing: -0.015em; white-space: nowrap; }
+.tl-by { font: 500 34px/1.1 "Inter", sans-serif; color: var(--muted); white-space: nowrap; }

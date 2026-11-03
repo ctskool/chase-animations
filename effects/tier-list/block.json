@@ -1,0 +1,32 @@
+{
+  "name": "tier-list",
+  "title": "Tier List",
+  "summary": "Split layout: a clean S/A/B/C tier board fills the top, you sit in the card below with your head breaking its edge, and on your word the skill you name slams into its row.",
+  "fonts": ["800 40px 'Inter Tight'", "500 34px 'Inter'", "700 34px 'Inter'"],
+  "layers": ["back"],
+  "layout": "split",
+  "timing": { "keyAt": 0.8 },
+  "keyMoment": "the named skill tile lands in its row on the skill's name, with a small overshoot and a jolt through the row",
+  "variables": [
+    { "id": "title", "type": "string", "label": "Board title", "default": "Design skills" },
+    { "id": "placed", "type": "string", "label": "Skills already on the board when the window starts (names or numbers 1-5, comma separated)", "default": "" },
+    { "id": "drop", "type": "string", "label": "The skill that drops in this window (name or number 1-5; empty for none)", "default": "1" },
+    { "id": "s1Name", "type": "string", "label": "Skill 1 name", "default": "Impeccable" },
+    { "id": "s1By", "type": "string", "label": "Skill 1 author", "default": "Paul Bakaus" },
+    { "id": "s1Tier", "type": "enum", "label": "Skill 1 tier", "default": "S", "options": [{ "value": "S", "label": "S" }, { "value": "A", "label": "A" }, { "value": "B", "label": "B" }, { "value": "C", "label": "C" }] },
+    { "id": "s2Name", "type": "string", "label": "Skill 2 name", "default": "Taste Skill" },
+    { "id": "s2By", "type": "string", "label": "Skill 2 author", "default": "Leonxlnx" },
+    { "id": "s2Tier", "type": "enum", "label": "Skill 2 tier", "default": "S", "options": [{ "value": "S", "label": "S" }, { "value": "A", "label": "A" }, { "value": "B", "label": "B" }, { "value": "C", "label": "C" }] },
+    { "id": "s3Name", "type": "string", "label": "Skill 3 name", "default": "Unslop" },
+    { "id": "s3By", "type": "string", "label": "Skill 3 author", "default": "Damir Sokolovsky" },
+    { "id": "s3Tier", "type": "enum", "label": "Skill 3 tier", "default": "A", "options": [{ "value": "S", "label": "S" }, { "value": "A", "label": "A" }, { "value": "B", "label": "B" }, { "value": "C", "label": "C" }] },
+    { "id": "s4Name", "type": "string", "label": "Skill 4 name", "default": "Design Extract" },
+    { "id": "s4By", "type": "string", "label": "Skill 4 author", "default": "Manavarya09" },
+    { "id": "s4Tier", "type": "enum", "label": "Skill 4 tier", "default": "A", "options": [{ "value": "S", "label": "S" }, { "value": "A", "label": "A" }, { "value": "B", "label": "B" }, { "value": "C", "label": "C" }] },
+    { "id": "s5Name", "type": "string", "label": "Skill 5 name", "default": "Playwright" },
+    { "id": "s5By", "type": "string", "label": "Skill 5 author", "default": "Microsoft" },
+    { "id": "s5Tier", "type": "enum", "label": "Skill 5 tier", "default": "B", "options": [{ "value": "S", "label": "S" }, { "value": "A", "label": "A" }, { "value": "B", "label": "B" }, { "value": "C", "label": "C" }] },
+    { "id": "page", "type": "color", "label": "Page colour", "default": "#F2EFE9" },
+    { "id": "accent", "type": "color", "label": "Accent (S row and the number)", "default": "#E4553B" }
+  ]
+}

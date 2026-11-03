@@ -3,13 +3,13 @@
 </p>
 
 <p align="center">
-  <b>42 finished animations and a one-sentence explainer maker, for vertical video.</b><br>
-  Two Claude Code skills. Tell Claude what to show, and it lands on the word you say.
+  <b>42 finished animations, a one-sentence explainer maker and effects for your own shot, for vertical video.</b><br>
+  Three Claude Code skills. Tell Claude what to show, and it lands on the word you say.
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/animations-42-6b6ff5?style=flat-square" alt="42 animations">
-  <img src="https://img.shields.io/badge/skills-%2Fanimate%20%C2%B7%20%2Fexplain-24272d?style=flat-square" alt="Two skills: /animate and /explain">
+  <img src="https://img.shields.io/badge/skills-%2Fanimate%20%C2%B7%20%2Fexplain%20%C2%B7%20%2Fvfx-24272d?style=flat-square" alt="Three skills: /animate, /explain and /vfx">
   <img src="https://img.shields.io/badge/runs%20in-Claude%20Code-d77757?style=flat-square" alt="Runs in Claude Code">
   <img src="https://img.shields.io/badge/built%20with-HyperFrames-24272d?style=flat-square" alt="Built with HyperFrames">
 </p>
@@ -21,21 +21,23 @@
   &nbsp;·&nbsp;
   <a href="#explain-a-whole-explainer-from-one-sentence">/explain</a>
   &nbsp;·&nbsp;
+  <a href="#vfx-effects-on-your-own-shot">/vfx</a>
+  &nbsp;·&nbsp;
   <a href="#start-here">Start here</a>
   &nbsp;·&nbsp;
   <a href="docs/COMMANDS.md">Commands</a>
 </p>
 
-## Two skills
+## Three skills
 
-| | `/animate` | `/explain` |
-|---|---|---|
-| **You give it** | An animation, your words and numbers, and optionally your video and a word in it | One sentence: "how X works" |
-| **You get** | One animation, landed on that word in your video, or a clip for your editor | A finished 20 to 30 second explainer: script, your voice, 3D scenes and captions |
-| **Use it for** | A visual beat inside a video you've already filmed | A whole short, start to finish |
-| **Your part** | Nothing beyond the request | Approve the script, then record it in one take |
+| | `/animate` | `/explain` | `/vfx` |
+|---|---|---|---|
+| **You give it** | An animation, your words and numbers, and optionally your video and a word in it | One sentence: "how X works" | Your talking-head clip, an effect and the word it lands on |
+| **You get** | One animation, landed on that word in your video, or a clip for your editor | A finished 20 to 30 second explainer: script, your voice, 3D scenes and captions | Your own shot with the effect in it: cards behind your head, the lights dropping, a tier list above you |
+| **Use it for** | A visual beat inside a video you've already filmed | A whole short, start to finish | A moment, a stretch, or a recurring move across a video you've filmed |
+| **Your part** | Nothing beyond the request | Approve the script, then record it in one take | Film with some room around your head |
 
-Both are installed together, both run on your own computer, and both are checked frame by frame before you get the file.
+All three are installed together, run on your own computer, and are checked frame by frame before you get the file.
 
 ## /animate: one animation, on your word
 
@@ -117,6 +119,70 @@ These five were made with `/explain`, shown as silent previews:
 </table>
 
 <!-- explain:end -->
+
+## /vfx: effects on your own shot
+
+<table>
+<tr>
+<td width="34%" valign="top"><img src="media/vfx-demo.webp" width="100%" alt="Typing /vfx glass-widgets on a phone, and the finished clip playing in the chat with frosted cards falling behind the speaker's head"></td>
+<td valign="top">
+
+```text
+/vfx orbit on "five skills" in my-video.mp4
+```
+
+1. **Pick an effect and a moment.** Name the word, a stretch of seconds, or a rule for the whole video, like "every time I name a skill, drop it into the tier list".
+2. **Claude finds the word.** Your video is transcribed on your computer, so the effect lands on what you actually said.
+3. **You're cut out of your own shot.** Only for the few seconds the effect covers. That's what lets things sit behind your head and lets the room go dark while you stay lit.
+4. **It's built around you.** A layer behind you, your cut-out, a layer in front, all following your head with a little weight.
+5. **It checks the result.** Claude looks at the key frames, so nothing covers your face.
+
+</td>
+</tr>
+</table>
+
+Every effect uses your real words and numbers. These seven were made on one 85 second video, which is in [`examples/vfx/`](examples/vfx) with a 15 second sample clip to try it on:
+
+<!-- vfx:start -->
+
+<table>
+<tr>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-glass-widgets.webp" width="100%" alt="Glass widgets: Frosted cards drop in around your head; the upper ones fall behind it"></a>
+<br><b>Glass widgets</b><br><sub>Frosted cards drop in around your head; the upper ones fall behind it</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-orbit.webp" width="100%" alt="Orbit: Your cards circle your head, sliding behind it on the far side"></a>
+<br><b>Orbit</b><br><sub>Your cards circle your head, sliding behind it on the far side</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-tier-list.webp" width="100%" alt="Tier list: A tier board above you; each thing you name slams into its row"></a>
+<br><b>Tier list</b><br><sub>A tier board above you; each thing you name slams into its row</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-chart-split.webp" width="100%" alt="Chart split: A bar chart above you; the bars you compare shoot out at their real value"></a>
+<br><b>Chart split</b><br><sub>A bar chart above you; the bars you compare shoot out at their real value</sub>
+</td>
+</tr>
+<tr>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-checklist.webp" width="100%" alt="Checklist: A Claude Code task card ticks each item green as you say it"></a>
+<br><b>Checklist</b><br><sub>A Claude Code task card ticks each item green as you say it</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-spotlight.webp" width="100%" alt="Spotlight: The room drops to black and a glowing word buzzes on behind your head"></a>
+<br><b>Spotlight</b><br><sub>The room drops to black and a glowing word buzzes on behind your head</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-browser-stack.webp" width="100%" alt="Browser stack: Browser windows pile up behind you, then each one gets a green Passed"></a>
+<br><b>Browser stack</b><br><sub>Browser windows pile up behind you, then each one gets a green Passed</sub>
+</td>
+</tr>
+</table>
+
+<!-- vfx:end -->
+
+**The cut-out is picked for your computer.** `npm run setup -- --vfx` checks your machine and asks before downloading anything. With an NVIDIA card it installs [Robust Video Matting](https://github.com/PeterL1n/RobustVideoMatting) from its own GitHub (best edges, fast, about 2.5 GB; RVM is GPL-3.0, so it lives on your machine, not in this pack). On a Mac or any other computer it uses HyperFrames' own remover (Apache-2.0, about 170 MB, slower).
 
 ## The animations
 
@@ -395,10 +461,16 @@ npm install
 npm run setup
 ```
 
-Restart Claude Code and type `/animate` or `/explain`. To land animations on a spoken word, and for `/explain`, also add the speech model, about 640 MB, which runs on your computer:
+Restart Claude Code and type `/animate`, `/explain` or `/vfx`. To land animations on a spoken word, and for `/explain` and `/vfx`, also add the speech model, about 640 MB, which runs on your computer:
 
 ```bash
 npm run setup -- --speech
+```
+
+For `/vfx`, also add the cut-out model picked for your computer. It tells you what it will download first:
+
+```bash
+npm run setup -- --vfx
 ```
 
 [docs/INSTALL.md](docs/INSTALL.md) has the full guide and fixes for common problems. Prefer the terminal? [docs/COMMANDS.md](docs/COMMANDS.md) has every command.
@@ -413,20 +485,26 @@ flowchart LR
   script --> voice["Your recording"]
   voice --> scenes["Scenes from the kit, timed to your words"]
   scenes --> render
+  vfx["/vfx"] --> cut["You, cut out of your own shot"]
+  cut --> layers["Layers behind and in front of you"]
+  layers --> render
   render --> video["Your video"]
 ```
 
-Both skills share one engine: the same HyperFrames rendering, the same on-device transcription and the same frame check.
+All three skills share one engine: the same HyperFrames rendering, the same on-device transcription and the same frame check.
 
 - **`/animate`** works from a library of finished animations, called blocks. Each block is one tested animation with variables for your content. Each block also has a typed shortcut, such as `/animate-cutaway`, that runs the main skill for that block, so a fix lives in one place.
 - **`/explain`** works from a kit of scene types rather than finished blocks, because a whole explainer needs many short scenes that change with every topic. Claude picks scenes from the kit, fills them in for your topic, and times each one to your recording.
+- **`/vfx`** works from effects, built like blocks but drawn in two layers, one behind you and one in front. Your cut-out goes between them, and a head track taken from the cut-out lets each layer follow you.
 
 | Folder | What's in it |
 |---|---|
 | [`blocks/`](blocks) | The 42 animations, each with its own README on what it suits and how to feed it |
 | [`explain-kit/`](explain-kit) | The `/explain` scene kit, captions and five example scripts |
-| [`skills/`](skills) | `/animate`, its 42 shortcuts, and `/explain` |
-| [`shared/`](shared) | Rendering, word sync, real maps, the explainer builder and the `animate` command |
+| [`effects/`](effects) | The `/vfx` effects |
+| [`examples/vfx/`](examples/vfx) | Reference footage: a 15 second sample to try `/vfx` on, and the finished 85 second video |
+| [`skills/`](skills) | `/animate`, its 42 shortcuts, `/explain` and `/vfx` |
+| [`shared/`](shared) | Rendering, word sync, real maps, the explainer builder, the effects engine and the `animate` command |
 | [`gallery/`](gallery) | The gallery page, its clips and the catalogue behind it |
 | [`docs/`](docs) | Install guide, commands and credits |
 | [`scripts/`](scripts) | Builders for the gallery, banner and promo video. Not needed to use the pack |
@@ -435,7 +513,7 @@ Both skills share one engine: the same HyperFrames rendering, the same on-device
 
 | System | Status |
 |---|---|
-| Windows 11 | Tested |
+| Windows 11 | Tested, including `/vfx` with RVM and with HyperFrames' remover |
 | Mac | **Untested.** It may work, but nobody has run it yet. [Open an issue](https://github.com/ctskool/chase-animations/issues) and say how it goes |
 | Linux | Untested |
 

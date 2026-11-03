@@ -1,0 +1,82 @@
+{
+  "skill": "/vfx",
+  "skillDesc": "Effects on your own video",
+  "welcome": "What should we edit?",
+  "cta": "Comment ANIMATE\nto get these skills",
+  "ctaSub": "(or click the Chase AI Plus link in my bio)",
+  "video": "../shorts/work/1102-stage/stage-edit.mp4",
+  "thumbAt": 30,
+  "demos": [
+    {
+      "command": "/vfx glass-widgets",
+      "title": "glass widgets",
+      "line": "1 command",
+      "from": 0.5,
+      "seconds": 2.9
+    },
+    {
+      "command": "/vfx orbit",
+      "title": "orbit",
+      "line": "behind your head",
+      "from": 82.75,
+      "seconds": 2.6
+    },
+    {
+      "command": "/vfx tier-list",
+      "title": "tier list",
+      "line": "1 command",
+      "from": 57.2,
+      "seconds": 2.3
+    },
+    {
+      "command": "/vfx chart-split",
+      "title": "chart split",
+      "line": "real numbers",
+      "from": 17.45,
+      "seconds": 2.6
+    },
+    {
+      "command": "/vfx checklist",
+      "title": "checklist",
+      "line": "ticks as you talk",
+      "from": 50.3,
+      "seconds": 2.6
+    },
+    {
+      "command": "/vfx spotlight on \"slop\"",
+      "title": "spotlight",
+      "line": "on your word",
+      "from": 8.15,
+      "seconds": 2.5
+    },
+    {
+      "command": "/vfx browser-stack",
+      "title": "browser stack",
+      "line": "1 command",
+      "from": 78.6,
+      "seconds": 2.8
+    }
+  ],
+  "carousel": [
+    {
+      "from": 2.2,
+      "seconds": 3
+    },
+    {
+      "from": 8.7,
+      "seconds": 3
+    },
+    {
+      "from": 18.0,
+      "seconds": 3
+    },
+    {
+      "from": 79.6,
+      "seconds": 3
+    },
+    {
+      "from": 82.6,
+      "seconds": 3
+    }
+  ]
+}

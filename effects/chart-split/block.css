@@ -1,0 +1,14 @@
+#back { position: absolute; inset: 0; --page: #F2EFE9; --ink: #16161A; --muted: #6F6A62; --accent: #E4553B; --track: #E5E0D7; --bar: #B9B2A6; }
+#cs-hole { position: absolute; box-shadow: 0 10px 28px rgba(22, 22, 26, 0.10), 0 0 0 3000px var(--page); }
+#cs-head { position: absolute; left: 40px; right: 40px; top: 156px; height: 80px; display: flex; align-items: flex-end; justify-content: space-between; }
+#cs-title { font: 800 64px/1 "Inter Tight", sans-serif; color: var(--ink); letter-spacing: -0.02em; }
+#cs-note { font: 500 34px/1 "Inter", sans-serif; color: var(--muted); padding-bottom: 6px; }
+.cs-row { position: absolute; left: 40px; width: 1000px; height: 104px; }
+.cs-label { position: absolute; left: 0; top: 0; height: 48px; display: flex; align-items: baseline; gap: 14px; white-space: nowrap; }
+.cs-name { font: 800 44px/1 "Inter Tight", sans-serif; color: var(--ink); letter-spacing: -0.015em; }
+.cs-by { font: 500 34px/1 "Inter", sans-serif; color: var(--muted); }
+.cs-bar { position: absolute; left: 0; top: 58px; height: 46px; border-radius: 12px; background: var(--bar); transform-origin: 0 50%; }
+.cs-row.hi .cs-bar { background: var(--accent); }
+.cs-value { position: absolute; top: 58px; height: 46px; display: flex; align-items: center; font: 800 46px/1 "Inter Tight", sans-serif;
+  color: var(--ink); letter-spacing: -0.01em; transform-origin: 0 50%; white-space: nowrap; }
+.cs-row.hi .cs-value { color: var(--accent); }

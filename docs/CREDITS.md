@@ -14,6 +14,9 @@
 | Three.js | MIT | Installed by `npm install` |
 | @mapbox/vector-tile, pbf | BSD 3-Clause | Installed by `npm install` |
 | Parakeet TDT speech model | Downloaded by HyperFrames when you run `npm run setup -- --speech` | Stored in your HyperFrames cache |
+| [Robust Video Matting](https://github.com/PeterL1n/RobustVideoMatting) (Peter Lin), the `/vfx` cut-out on NVIDIA cards | GPL-3.0 | Downloaded from its own GitHub by `npm run setup -- --vfx`, never bundled. `shared/vfx-matte/rvm.py` only runs it |
+| u2net human segmentation, HyperFrames' remover, the `/vfx` cut-out everywhere else | Apache 2.0 | Downloaded by HyperFrames on first use, stored in your HyperFrames cache |
+| `/vfx` reference footage in `examples/vfx/` | Chase's own, shared for trying the pack | `examples/vfx/` |
 
 ## Claude brand
 

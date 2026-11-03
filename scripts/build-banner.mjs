@@ -96,10 +96,17 @@ function explainDemo() {
     "-loop", "0", "-an", path.join(OUT, "explain-demo.webp"));
 }
 
+function vfxDemo() {
+  ffmpeg("-ss", "0.3", "-t", "10.2", "-i", path.join(PACK, "renders", "final", "vfx", "vfx-promo.mp4"),
+    "-vf", "fps=12,scale=360:-2:flags=lanczos", "-c:v", "libwebp_anim", "-quality", "64", "-compression_level", "6",
+    "-loop", "0", "-an", path.join(OUT, "vfx-demo.webp"));
+}
+
 fs.mkdirSync(OUT, { recursive: true });
 outputs();
 explainDemo();
+vfxDemo();
 banner();
-for (const name of ["banner.webp", "output-full.webp", "output-top.webp", "output-overlay.webp", "explain-demo.webp"]) {
+for (const name of ["banner.webp", "output-full.webp", "output-top.webp", "output-overlay.webp", "explain-demo.webp", "vfx-demo.webp"]) {
   console.log(`${name} ${(fs.statSync(path.join(OUT, name)).size / 1048576).toFixed(2)} MB`);
 }

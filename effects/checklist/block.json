@@ -1,0 +1,29 @@
+{
+  "name": "checklist",
+  "title": "Checklist",
+  "summary": "A Claude Code task card rises in front of your chest and ticks each item green on the exact word you say it.",
+  "claudeKit": true,
+  "fonts": [
+    "700 56px 'Inter Tight'",
+    "400 34px 'Inter'",
+    "500 46px 'JetBrains Mono'"
+  ],
+  "layers": ["front"],
+  "timing": { "keyAt": 2.2 },
+  "keyMoment": "the first item ticks green with a pop on the same frame you say it; the last tick settles the whole card with a pulse",
+  "variables": [
+    { "id": "title", "type": "string", "label": "Card title", "default": "Design Extract" },
+    { "id": "sub", "type": "string", "label": "Line under the title", "default": "pulling the design from any site" },
+    { "id": "item1", "type": "string", "label": "Item 1 (ticks when you say this word)", "default": "Colors" },
+    { "id": "item2", "type": "string", "label": "Item 2 (leave empty to remove)", "default": "Fonts" },
+    { "id": "item3", "type": "string", "label": "Item 3 (leave empty to remove)", "default": "Spacing" },
+    { "id": "item4", "type": "string", "label": "Item 4 (leave empty to remove)", "default": "Everything" },
+    { "id": "item5", "type": "string", "label": "Item 5 (leave empty to remove)", "default": "" },
+    { "id": "accent", "type": "color", "label": "Claude colour", "default": "#D77757" },
+    { "id": "doneColor", "type": "color", "label": "Tick colour", "default": "#4EBA65" },
+    { "id": "ground", "type": "color", "label": "Card colour", "default": "#141210" },
+    { "id": "top", "type": "number", "label": "Card top edge in px (kept below the chin regardless)", "default": 1092 },
+    { "id": "width", "type": "number", "label": "Card width in px", "default": 700 },
+    { "id": "drift", "type": "number", "label": "How much the card follows the head, 0 to 1", "default": 0.3 }
+  ]
+}

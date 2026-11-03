@@ -97,8 +97,26 @@
   if (s.radius) stageEl.style.borderRadius = s.radius + "px";
   document.documentElement.dataset.variant = meta.variant;
 
+  // /vfx effects only: where the speaker's head is at t seconds into the effect, eased between samples.
+  const track = meta.head || null;
+  function head(t) {
+    if (!track) return null;
+    const f = Math.min(Math.max(t * track.fps, 0), track.frames.length - 1);
+    const i = Math.floor(f);
+    const a = track.frames[i];
+    const b = track.frames[Math.min(i + 1, track.frames.length - 1)];
+    const k = f - i;
+    const out = {};
+    for (const key of Object.keys(a)) out[key] = a[key] + (b[key] - a[key]) * k;
+    return out;
+  }
+
   window.CA = {
     vars,
+    head,
+    words: meta.words || [],
+    layer: meta.layer || null,
+    card: meta.card || null,
     variant: meta.variant,
     frame: meta.frame,
     stage: s,

@@ -18,6 +18,7 @@ import {
 import { contactSheet, placeOnVideo, probe } from "./compose.mjs";
 import { explain } from "./explain.mjs";
 import { makeCampaign, makeRoute } from "./route.mjs";
+import { vfxCommand } from "./vfx.mjs";
 import { findWord, fitToWord, loadWords, printMatches, refineStart } from "./sync.mjs";
 
 const HELP = `Chase Animations
@@ -40,6 +41,12 @@ const HELP = `Chase Animations
   animate explain build <folder> --audio <file>
                                        time the scenes and captions to your recording
   animate explain render <folder>      render it, with a contact sheet
+  animate vfx list                     the effects that go on your own shot
+  animate vfx vars <effect>            an effect's editable variables, with defaults
+  animate vfx prep <video>             once per video: a working copy and the words (<video>.vfx/)
+  animate vfx render <effect> --prep <folder> --from <s> --to <s> [--at <s>] [--vars <file>]
+                                       put one effect on that stretch of your video
+  animate vfx plan <plan.json>         several effects at once, laid back over the whole video
 
 Options
   --output full|top|overlay|all        9:16 full frame, top half of a split-screen, or transparent overlay
@@ -126,6 +133,7 @@ const OPTIONS = {
   audio: { type: "string" },
   force: { type: "boolean" },
   preview: { type: "boolean" },
+  prep: { type: "string" },
   help: { type: "boolean", short: "h" },
 };
 
@@ -298,6 +306,7 @@ async function main() {
     route: () => makeRoute(o),
     campaign: () => makeCampaign(o),
     explain: () => explain(p.slice(1), o),
+    vfx: () => vfxCommand(p.slice(1), o),
   };
   if (!commands[cmd]) throw new UsageError(`Unknown command "${cmd}". Run with no arguments for help.`);
   await commands[cmd]();

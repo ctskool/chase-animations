@@ -1,0 +1,15 @@
+{
+  "name": "spotlight",
+  "title": "Spotlight",
+  "summary": "On your word the room drops to near black and you stay lit, while a glowing word flickers on in the dark behind your head.",
+  "fonts": ["700 300px 'Barlow Condensed'"],
+  "layers": ["back"],
+  "timing": { "keyAt": 0.5 },
+  "keyMoment": "the lights cut and the word buzzes on behind your head on the same frame",
+  "variables": [
+    { "id": "word", "type": "string", "label": "The glowing word behind you", "default": "AI SLOP" },
+    { "id": "glow", "type": "color", "label": "Glow colour", "default": "#FF5A3C" },
+    { "id": "dark", "type": "number", "label": "How dark the room goes, 0 to 1", "default": 0.84 },
+    { "id": "lift", "type": "number", "label": "Word height: 0 at the top of your head, 1 at your chin", "default": -0.12 }
+  ]
+}

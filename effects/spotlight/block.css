@@ -1,0 +1,8 @@
+#sp-dark { position: absolute; inset: 0; background: #050507; opacity: 0; }
+#sp-pool { position: absolute; width: 1400px; height: 1400px; left: 0; top: 0; border-radius: 50%; opacity: 0;
+  background: radial-gradient(closest-side, rgba(255, 236, 214, 0.16), rgba(255, 236, 214, 0) 70%); }
+#sp-word { position: absolute; left: 0; top: 0; width: 1080px; display: grid; place-items: center; opacity: 0; }
+#sp-word span { grid-area: 1 / 1; font: 700 300px "Barlow Condensed", sans-serif; letter-spacing: 0.02em; line-height: 0.9;
+  text-transform: uppercase; white-space: nowrap; }
+#sp-core { color: #fff6ee; -webkit-text-stroke: 6px var(--sp-glow); paint-order: stroke fill; }
+#sp-glow { color: var(--sp-glow); filter: blur(26px); opacity: 0.95; }

@@ -1,0 +1,30 @@
+{
+  "name": "glass-widgets",
+  "title": "Glass Widgets",
+  "summary": "Frosted glass cards drop in one after another around your head: the upper ones fall behind you, a lower one sits in front at the side.",
+  "fonts": [
+    "800 50px 'Inter Tight'",
+    "700 40px 'Inter Tight'",
+    "500 34px 'Inter'",
+    "600 36px 'Inter'",
+    "400 170px 'Anton'"
+  ],
+  "layers": ["back", "front"],
+  "timing": { "keyAt": 2.0 },
+  "keyMoment": "the last pill lands on the key word while the cards around your head are already settled and drifting with you",
+  "variables": [
+    { "id": "card1", "type": "string", "label": "Upper left card (behind you): name | author | stars", "default": "Taste Skill | Leonxlnx | 109K" },
+    { "id": "card2", "type": "string", "label": "Upper right card (behind you): name | author | stars", "default": "Impeccable | pbakaus | 100K" },
+    { "id": "card3", "type": "string", "label": "Middle left card (behind you): name | author | stars", "default": "Unslop | heydamir | 6.3K" },
+    { "id": "card4", "type": "string", "label": "Middle right card (behind you): name | author | stars", "default": "Design Extract | Manavarya09 | 4.5K" },
+    { "id": "card5", "type": "string", "label": "Lower card in front of you, left side: name | author | stars", "default": "Playwright CLI | Microsoft | 15K" },
+    { "id": "stat", "type": "string", "label": "Big number on the stat card above your head", "default": "5" },
+    { "id": "statLabel", "type": "string", "label": "Word after the big number", "default": "skills" },
+    { "id": "pill", "type": "string", "label": "Small pill that lands on the key word", "default": "for Claude Code" },
+    { "id": "dot", "type": "color", "label": "Dot colour on the pill", "default": "#D97757" },
+    { "id": "inkDark", "type": "color", "label": "Text colour on cards over light parts of the room", "default": "#1C1714" },
+    { "id": "inkLight", "type": "color", "label": "Text colour on cards over dark parts of the room", "default": "#FFFFFF" },
+    { "id": "fill", "type": "number", "label": "Glass whiteness, 0 to 1", "default": 0.2 },
+    { "id": "follow", "type": "number", "label": "How much the cards follow your head, 0 to 1", "default": 0.3 }
+  ]
+}

@@ -147,15 +147,16 @@ function compositionVariables(block, vars) {
 
 const attr = (s) => s.replace(/&/g, "&amp;").replace(/'/g, "&#39;");
 
-export function buildProject({ block, variant, vars, timing, workDir, baseDir = process.cwd(), fps = 30, alpha, height }) {
+// extra: more facts for CA (the /vfx effects pass the speaker's head track, the words and which layer to draw).
+export function buildProject({ block, variant, vars, timing, workDir, baseDir = process.cwd(), fps = 30, alpha, height, extra = {} }) {
   const sources = ["block.js", "block.css", "block.html", "block.json"].map((f) => fs.readFileSync(path.join(block.dir, f), "utf8"));
   sources.push(fs.readFileSync(path.join(PACK, "shared", "runtime.js"), "utf8"));
   if (block.claudeKit) sources.push(fs.readFileSync(path.join(PACK, "shared", "claude-kit.js"), "utf8"));
   const hash = createHash("sha1")
-    .update(JSON.stringify({ variant, vars, timing, fps, alpha, height, sources }))
+    .update(JSON.stringify({ variant, vars, timing, fps, alpha, height, extra, sources }))
     .digest("hex")
     .slice(0, 10);
-  const dir = path.join(workDir, `${block.name}-${variant}-${hash}`);
+  const dir = path.join(workDir, `${block.name}-${extra.layer ?? variant}-${hash}`);
   fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(path.join(dir, "vendor"), { recursive: true });
 
@@ -209,6 +210,7 @@ export function buildProject({ block, variant, vars, timing, workDir, baseDir = 
     time: timing,
     fonts: block.fonts,
     vars: finalVars,
+    ...extra,
   };
 
   const html = `<!doctype html>

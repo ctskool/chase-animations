@@ -149,3 +149,30 @@ node shared/animate.mjs explain render explain/solar-panels-make-power
 ```
 
 This renders the finished video and a contact sheet to check by eye.
+
+## Put an effect on your own video
+
+`/vfx` runs these for you. To run them yourself:
+
+```bash
+node shared/animate.mjs vfx list
+```
+
+```bash
+node shared/animate.mjs vfx prep my-video.mp4
+```
+
+This makes `my-video.vfx/`: a 1080x1920 working copy and the words with their times (`words.json`).
+
+```bash
+node shared/animate.mjs vfx render orbit --prep my-video.vfx --from 81.4 --to 85.5 --at 84.8
+```
+
+`--from` and `--to` are the stretch, `--at` the word it lands on. The first render of a stretch cuts you out of it, then it's cached. `vfx vars <effect>` lists what you can change; pass them with `--vars`.
+
+Several effects at once, from a plan like [`examples/vfx/plan.json`](../examples/vfx/plan.json):
+
+```bash
+node shared/animate.mjs vfx plan plan.json
+```
+

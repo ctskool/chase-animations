@@ -60,7 +60,24 @@ npm run setup -- --speech
 
 Skip this if you only want `/animate` clips for your own editor. You can run it later.
 
-## 6. Prove it works
+## 6. Add effects for your own video (/vfx)
+
+`/vfx` cuts you out of your own shot, so it needs a cut-out model once:
+
+```bash
+npm run setup -- --vfx
+```
+
+It checks your computer and says what it will install before it downloads:
+
+- **NVIDIA card (Windows or Linux):** Robust Video Matting, about 2.5 GB, including PyTorch. Needs Python 3.10 or newer. Best edges and fast. RVM is GPL-3.0, so setup downloads it from its own GitHub onto your computer; it isn't part of this pack.
+- **Mac, or no NVIDIA card:** HyperFrames' own remover, about 170 MB. Slower, about a minute per effect on a laptop, but it runs anywhere.
+
+To see what your computer has without installing anything: `npm run setup -- --vfx --check`. To skip the big download on an NVIDIA machine: `npm run setup -- --vfx --engine hyperframes`.
+
+Film for it: portrait, with your head centred and some room above and beside it. Turning the camera on its side gives about 1.8x more view than cropping a landscape shot. [`examples/vfx/`](../examples/vfx) has a sample clip to try first.
+
+## 7. Prove it works
 
 ```bash
 npm test

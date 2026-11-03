@@ -12,11 +12,16 @@ dist/
 *.mp3
 *.mkv
 !gallery/clips/*.mp4
+# The /vfx reference footage (Chase's own, shared on purpose)
+!examples/vfx/*.mp4
 
 # Local test notes and secrets
 .env
 .env.*
 *.local.json
 .hyperframes/
+# /vfx cut-out install (RVM is downloaded here by setup, never committed)
+.vfx/
+*.vfx/
 .DS_Store
 Thumbs.db
