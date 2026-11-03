@@ -1,0 +1,20 @@
+{
+  "name": "strike",
+  "title": "Strike",
+  "summary": "A giant word lands behind your head on the word you say, a red marker line strikes it out on a second cue, then the replacement word drops in and knocks it away.",
+  "fonts": ["400 330px 'Anton'"],
+  "layers": ["back"],
+  "timing": { "keyAt": 0.82 },
+  "keyMoment": "the red line rips through the word on the strike cue; the replacement lands on its own word with a thud",
+  "variables": [
+    { "id": "word", "type": "string", "label": "The word that appears first (shown in capitals, lands when you say it)", "default": "boring" },
+    { "id": "strikeOn", "type": "string", "label": "The spoken word that strikes it out", "default": "turning" },
+    { "id": "replacement", "type": "string", "label": "The word that replaces it", "default": "fresh" },
+    { "id": "replaceOn", "type": "string", "label": "The spoken word that drops the replacement in", "default": "fresh" },
+    { "id": "color", "type": "color", "label": "Type colour", "default": "#F4ECDF" },
+    { "id": "red", "type": "color", "label": "Strike line colour", "default": "#E2392D" },
+    { "id": "size", "type": "number", "label": "Largest type size in px (shrinks to fit the width)", "default": 330 },
+    { "id": "show", "type": "number", "label": "How much of the word shows above your head, 0.5 to 1 (keep the strike line clear of your head)", "default": 0.78 },
+    { "id": "drift", "type": "number", "label": "How much the type follows your head, 0 to 1", "default": 0.35 }
+  ]
+}

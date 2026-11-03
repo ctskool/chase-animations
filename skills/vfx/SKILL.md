@@ -58,10 +58,17 @@ Run `vfx list`. Match their words to an effect, or show the list and ask.
 | `chart-split` | Split: a bar chart above, the highlighted bars slam in | Comparing numbers |
 | `snap` | A hard punch-in on the face, held to the end of the stretch | One word to hit hard |
 | `push` | A slow push-in while the room goes soft and they stay sharp | A sincere or important line |
+| `backdrop` | Any `/animate` animation becomes the room behind them (`animation`, `animationVars`) | A line the animation illustrates |
+| `echo` | Keywords land huge behind the head as they're said (`phrases`, separated by a vertical bar) | Two or three key phrases |
+| `strike` | A giant word behind them is crossed out, then replaced | "not X, but Y" |
+| `pinned-comment` | The comment they're answering pins beside the head and types out | Answering a viewer; use the real comment |
+| `pings` | Notifications stack around them, each on a cue word | A list of problems or wins |
+| `freeze-mark` | The frame freezes, the room goes black and white, marker circles them with a caption | A self-aware aside |
+| `b-roll-split` | Split: a screenshot in a browser window above (`image`, `url`) | Showing a site, an app or a result |
 
-Choose `--from` and `--to` (2 to 6 seconds) from the word times, and `--at` on the word it should land on. Effects that tick or drop per item (checklist, browser-stack) find their own cue words inside the window, so the window just has to contain them.
+Choose `--from` and `--to` (2 to 6 seconds) from the word times, and `--at` on the word it should land on. Effects that tick or drop per item (checklist, browser-stack, echo, strike, pings) find their own cue words inside the window, so the window just has to contain them.
 
-A split effect (tier-list, chart-split) can start exactly on a jump cut: it hides the cut.
+A split effect (tier-list, chart-split, b-roll-split) can start exactly on a jump cut: it hides the cut. For backdrop, `animate vars <animation>` lists what the animation takes; the stretch must give it at least its minimum build-up before the key word.
 
 ## 4. Get the content
 

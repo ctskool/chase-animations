@@ -1,0 +1,14 @@
+{
+  "name": "backdrop",
+  "title": "Backdrop",
+  "summary": "Any animation from the pack becomes the room behind you: you stay in front, cut out of your own shot, while it plays behind your head.",
+  "layers": ["back"],
+  "backdrop": true,
+  "timing": { "keyAt": 2.4 },
+  "keyMoment": "the animation's own key moment, landed on your word, behind your head",
+  "variables": [
+    { "id": "animation", "type": "string", "label": "Which animation plays behind you (any name from animate list)", "default": "ink-wash" },
+    { "id": "animationVars", "type": "string", "label": "Its content, as JSON, using the names from animate vars <animation>", "default": "" },
+    { "id": "dim", "type": "number", "label": "Darken it so you stand out, 0 to 0.6", "default": 0 }
+  ]
+}

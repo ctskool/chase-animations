@@ -1,0 +1,9 @@
+#back { position: absolute; inset: 0; }
+.st-word { position: absolute; left: 0; top: 0; width: 1080px; display: flex; justify-content: center;
+  opacity: 0; transform-origin: 50% 50%; will-change: transform, opacity; }
+.st-text { position: relative; display: block; font-family: "Anton", sans-serif; font-weight: 400; font-size: 330px;
+  line-height: 0.88; letter-spacing: 0.01em; text-transform: uppercase; white-space: nowrap; color: var(--st-ink);
+  text-shadow: 0 14px 34px rgba(28, 16, 6, 0.42), 0 3px 8px rgba(28, 16, 6, 0.28); }
+.st-svg { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(28, 16, 6, 0.35)); }
+#st-line { fill: none; stroke: var(--st-red); stroke-linecap: round; stroke-linejoin: round; }

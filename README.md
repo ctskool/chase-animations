@@ -141,7 +141,7 @@ These five were made with `/explain`, shown as silent previews:
 </tr>
 </table>
 
-Every effect uses your real words and numbers. These nine were made on one 85 second video, which is in [`examples/vfx/`](examples/vfx) with a 15 second sample clip to try it on:
+Every effect uses your real words and numbers. These sixteen were made on one 85 second video, which is in [`examples/vfx/`](examples/vfx) with a 15 second sample clip to try it on:
 
 <!-- vfx:start -->
 
@@ -186,6 +186,36 @@ Every effect uses your real words and numbers. These nine were made on one 85 se
 <td width="25%" align="center" valign="top">
 <a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-browser-stack.webp" width="100%" alt="Browser stack: Browser windows pile up behind you, then each one gets a green Passed"></a>
 <br><b>Browser stack</b><br><sub>Browser windows pile up behind you, then each one gets a green Passed</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-backdrop.webp" width="100%" alt="Backdrop: Any animation from the pack becomes the room behind you"></a>
+<br><b>Backdrop</b><br><sub>Any animation from the pack becomes the room behind you</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-echo.webp" width="100%" alt="Echo: Your keywords land huge behind your head the moment you say them"></a>
+<br><b>Echo</b><br><sub>Your keywords land huge behind your head the moment you say them</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-strike.webp" width="100%" alt="Strike: A giant word behind you gets crossed out, then the right word drops in"></a>
+<br><b>Strike</b><br><sub>A giant word behind you gets crossed out, then the right word drops in</sub>
+</td>
+</tr>
+<tr>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-pinned-comment.webp" width="100%" alt="Pinned comment: The comment you're answering pins beside your head and types itself out"></a>
+<br><b>Pinned comment</b><br><sub>The comment you're answering pins beside your head and types itself out</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-pings.webp" width="100%" alt="Pings: Notifications stack around you as you list the problems"></a>
+<br><b>Pings</b><br><sub>Notifications stack around you as you list the problems</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-freeze-mark.webp" width="100%" alt="Freeze and mark: The frame freezes, the room goes black and white, and marker circles you"></a>
+<br><b>Freeze and mark</b><br><sub>The frame freezes, the room goes black and white, and marker circles you</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<a href="skills/vfx/SKILL.md"><img src="media/cards/vfx-b-roll-split.webp" width="100%" alt="B-roll split: A website or screenshot above you; you in the card below"></a>
+<br><b>B-roll split</b><br><sub>A website or screenshot above you; you in the card below</sub>
 </td>
 </tr>
 </table>

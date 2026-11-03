@@ -1,0 +1,24 @@
+{
+  "name": "pinned-comment",
+  "title": "Pinned Comment",
+  "summary": "The comment you are answering pins up beside your head like a 'Replying to' sticker and types itself out as it lands.",
+  "fonts": [
+    "700 44px 'Inter'",
+    "600 44px 'Inter'",
+    "500 34px 'Inter'",
+    "700 30px 'Inter Tight'"
+  ],
+  "layers": ["front"],
+  "timing": { "keyAt": 0.3 },
+  "keyMoment": "the sticker snaps onto the upper left on the key frame and the comment starts typing the same instant",
+  "variables": [
+    { "id": "handle", "type": "string", "label": "Who wrote the comment", "default": "@designnerd" },
+    { "id": "text", "type": "string", "label": "The comment", "default": "isn't Taste just Impeccable with extra steps?" },
+    { "id": "avatar", "type": "color", "label": "Avatar colour", "default": "#8A5CF6" },
+    { "id": "width", "type": "number", "label": "Card width in px", "default": 640 },
+    { "id": "left", "type": "number", "label": "Card left edge in px", "default": 44 },
+    { "id": "tilt", "type": "number", "label": "Sticker tilt in degrees", "default": -2 },
+    { "id": "typeSpeed", "type": "number", "label": "Characters typed per second", "default": 42 },
+    { "id": "drift", "type": "number", "label": "How much the card follows the head, 0 to 1", "default": 0.3 }
+  ]
+}

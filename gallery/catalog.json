@@ -230,6 +230,83 @@
           "link": "skills/vfx/SKILL.md",
           "example": true,
           "cmd": "/vfx browser-stack"
+        },
+        {
+          "slug": "vfx-backdrop",
+          "name": "Backdrop",
+          "does": "Any animation from the pack becomes the room behind you",
+          "key": "Its key moment lands behind your head on your word",
+          "source": "renders/final/vfx/backdrop.mp4",
+          "cardAt": 3.3,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx backdrop ink-wash on \"creative\""
+        },
+        {
+          "slug": "vfx-echo",
+          "name": "Echo",
+          "does": "Your keywords land huge behind your head the moment you say them",
+          "key": "Each keyword slams in on its word",
+          "source": "renders/final/vfx/echo.mp4",
+          "cardAt": 1.3,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx echo \"in-app browser\", \"real time\""
+        },
+        {
+          "slug": "vfx-strike",
+          "name": "Strike",
+          "does": "A giant word behind you gets crossed out, then the right word drops in",
+          "key": "FRESH slams in over the struck BORING",
+          "source": "renders/final/vfx/strike.mp4",
+          "cardAt": 5.0,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx strike boring, then fresh"
+        },
+        {
+          "slug": "vfx-pinned-comment",
+          "name": "Pinned comment",
+          "does": "The comment you're answering pins beside your head and types itself out",
+          "key": "The comment lands as you start answering",
+          "source": "renders/final/vfx/pinned-comment.mp4",
+          "cardAt": 1.5,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx pinned-comment"
+        },
+        {
+          "slug": "vfx-pings",
+          "name": "Pings",
+          "does": "Notifications stack around you as you list the problems",
+          "key": "The green one lands on \"edge cases\"",
+          "source": "renders/final/vfx/pings.mp4",
+          "cardAt": 3.9,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx pings"
+        },
+        {
+          "slug": "vfx-freeze-mark",
+          "name": "Freeze and mark",
+          "does": "The frame freezes, the room goes black and white, and marker circles you",
+          "key": "The circle and caption draw on over the frozen frame",
+          "source": "renders/final/vfx/freeze-mark.mp4",
+          "cardAt": 3.8,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx freeze-mark on \"laboriously\""
+        },
+        {
+          "slug": "vfx-b-roll-split",
+          "name": "B-roll split",
+          "does": "A website or screenshot above you; you in the card below",
+          "key": "The page loads on \"website\"",
+          "source": "renders/final/vfx/b-roll-split.mp4",
+          "cardAt": 2.2,
+          "link": "skills/vfx/SKILL.md",
+          "example": true,
+          "cmd": "/vfx b-roll-split"
         }
       ]
     },

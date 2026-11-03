@@ -1,0 +1,15 @@
+{
+  "name": "freeze-mark",
+  "title": "Freeze Mark",
+  "summary": "On your word the frame freezes, the room drops to black and white while you keep your colour, and marker scribbles draw themselves on: a loose circle round your face, a handwritten caption and an arrow pointing at you.",
+  "fonts": ["400 64px 'Permanent Marker'"],
+  "layers": ["front"],
+  "freeze": true,
+  "timing": { "keyAt": 1.2 },
+  "keyMoment": "the picture freezes and goes black and white on the word, and the marker circle starts drawing round your face on the same frame",
+  "variables": [
+    { "id": "caption", "type": "string", "label": "The handwritten caption that points at you", "default": "me, testing it by hand" },
+    { "id": "colour", "type": "color", "label": "Marker colour", "default": "#FF2E1F" },
+    { "id": "mono", "type": "boolean", "label": "Turn the room black and white on the freeze (you keep your colour)", "default": true }
+  ]
+}

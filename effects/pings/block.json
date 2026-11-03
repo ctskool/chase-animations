@@ -1,0 +1,30 @@
+{
+  "name": "pings",
+  "title": "Pings",
+  "summary": "Phone notifications stack in around your shoulders one after another, each landing on a spoken word and nudging the earlier ones down; the last one lands green.",
+  "fonts": [
+    "600 40px 'Inter'",
+    "700 40px 'Inter'",
+    "400 34px 'Inter'",
+    "500 30px 'JetBrains Mono'"
+  ],
+  "layers": ["front"],
+  "timing": { "keyAt": 1.0 },
+  "keyMoment": "the first banner springs in on the first cue word; the green one lands last on its own word",
+  "variables": [
+    { "id": "app", "type": "string", "label": "App name on every banner", "default": "localhost:3000" },
+    { "id": "msg1", "type": "string", "label": "Banner 1", "default": "Signup accepted an empty email" },
+    { "id": "cue1", "type": "string", "label": "Word that brings banner 1", "default": "form" },
+    { "id": "msg2", "type": "string", "label": "Banner 2 (leave empty to remove)", "default": "Password '1' was allowed" },
+    { "id": "cue2", "type": "string", "label": "Word that brings banner 2", "default": "test" },
+    { "id": "msg3", "type": "string", "label": "Banner 3 (leave empty to remove)", "default": "Double-tap sent the form twice" },
+    { "id": "cue3", "type": "string", "label": "Word that brings banner 3", "default": "all" },
+    { "id": "final", "type": "string", "label": "Last banner, shown in green (leave empty to remove)", "default": "3 edge cases found" },
+    { "id": "cueFinal", "type": "string", "label": "Word that brings the green banner", "default": "edge" },
+    { "id": "green", "type": "color", "label": "Green banner colour", "default": "#2DB84F" },
+    { "id": "top", "type": "number", "label": "Stack top edge in px (kept below the chin regardless)", "default": 1078 },
+    { "id": "width", "type": "number", "label": "Banner width in px", "default": 840 },
+    { "id": "left", "type": "number", "label": "Banner left edge in px", "default": 96 },
+    { "id": "drift", "type": "number", "label": "How much the stack follows the head, 0 to 1", "default": 0.25 }
+  ]
+}

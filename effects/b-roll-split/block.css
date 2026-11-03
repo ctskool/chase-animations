@@ -1,0 +1,28 @@
+#back { position: absolute; inset: 0; --page: #F2EFE9; --ink: #16161A; --muted: #6F6A62; --accent: #E4553B; }
+#br-hole { position: absolute; box-shadow: 0 10px 28px rgba(22, 22, 26, 0.10), 0 0 0 3000px var(--page); }
+#br-label { position: absolute; left: 44px; display: flex; align-items: center; gap: 18px;
+  font: 800 44px/1 "Inter Tight", sans-serif; color: var(--ink); letter-spacing: -0.015em; white-space: nowrap; }
+#br-label i { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); flex: none; }
+#br-win { position: absolute; border-radius: 30px; overflow: hidden; background: #fff;
+  box-shadow: 0 1px 0 rgba(22, 22, 26, 0.06), 0 18px 44px rgba(22, 22, 26, 0.14), 0 0 0 1.5px rgba(22, 22, 26, 0.07); }
+#br-bar { position: absolute; left: 0; top: 0; right: 0; height: 96px; background: #F7F6F3; border-bottom: 1.5px solid #E6E2DB;
+  display: flex; align-items: center; padding: 0 26px; gap: 26px; }
+#br-dots { display: flex; gap: 12px; flex: none; }
+#br-dots i { width: 20px; height: 20px; border-radius: 50%; }
+#br-dots i:nth-child(1) { background: #FF5F57; }
+#br-dots i:nth-child(2) { background: #FEBC2E; }
+#br-dots i:nth-child(3) { background: #28C840; }
+#br-addr { flex: 1; height: 62px; border-radius: 31px; background: #ECEAE5; display: flex; align-items: center; padding: 0 26px; gap: 14px; min-width: 0; }
+#br-lock { flex: none; fill: none; stroke: #77726A; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+#br-url { font: 500 36px/1 "Inter", sans-serif; color: var(--ink); white-space: nowrap; letter-spacing: -0.005em; }
+#br-caret { width: 3px; height: 40px; background: var(--ink); flex: none; margin-left: -10px; }
+#br-view { position: absolute; left: 0; right: 0; bottom: 0; overflow: hidden; background: #fff; }
+#br-img { position: absolute; left: 0; top: 0; max-width: none; transform-origin: 50% 0; opacity: 0; will-change: transform, opacity; }
+#br-progress { position: absolute; left: 0; top: 0; height: 6px; width: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); }
+#br-skel { position: absolute; inset: 0; padding: 56px 60px; }
+#br-skel i { display: block; height: 34px; border-radius: 17px; background: #EFEDE8; margin-bottom: 26px; }
+#br-skel i:nth-child(1) { width: 58%; height: 70px; border-radius: 20px; margin-bottom: 40px; }
+#br-skel i:nth-child(2) { width: 86%; }
+#br-skel i:nth-child(3) { width: 72%; }
+#br-skel i:nth-child(4) { width: 100%; height: 210px; border-radius: 24px; margin-top: 40px; }
+#br-skel i:nth-child(5) { width: 44%; }

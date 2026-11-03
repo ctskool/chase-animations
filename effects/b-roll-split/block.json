@@ -1,0 +1,17 @@
+{
+  "name": "b-roll-split",
+  "title": "B-roll Split",
+  "summary": "Split layout: a clean browser window fills the top, you sit in the card below with your head breaking its edge. The address types itself in, the page loads on your word, then drifts slowly like a Ken Burns move.",
+  "fonts": ["800 44px 'Inter Tight'", "500 36px 'Inter'"],
+  "layers": ["back"],
+  "layout": "split",
+  "timing": { "keyAt": 1.2 },
+  "keyMoment": "the page loads into the browser window on the word: the progress bar sweeps and the picture lands with a small settle",
+  "variables": [
+    { "id": "image", "type": "image", "label": "The B-roll picture shown in the browser (a file path; empty uses the built-in designed page)", "default": "" },
+    { "id": "url", "type": "string", "label": "Address shown in the browser bar", "default": "anywebsite.com" },
+    { "id": "caption", "type": "string", "label": "Small label above the window (empty to hide)", "default": "Design Extract" },
+    { "id": "page", "type": "color", "label": "Page colour", "default": "#F2EFE9" },
+    { "id": "accent", "type": "color", "label": "Accent (label dot and loading bar)", "default": "#E4553B" }
+  ]
+}

@@ -1,0 +1,14 @@
+#front { position: absolute; inset: 0; }
+#pc-card { position: absolute; left: 0; top: 0; box-sizing: border-box; padding: 26px 30px 30px; border-radius: 34px;
+  background: #ffffff; opacity: 0; transform-origin: 85% 100%; will-change: transform, opacity;
+  box-shadow: 0 24px 60px rgba(20, 10, 0, 0.32), 0 3px 10px rgba(20, 10, 0, 0.18); }
+#pc-head { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+#pc-avatar { flex: none; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; }
+#pc-initial { font: 700 30px "Inter Tight", sans-serif; color: #fff; line-height: 1; }
+#pc-reply { font: 500 34px "Inter", sans-serif; color: #8e8e93; white-space: nowrap; letter-spacing: -0.01em; }
+#pc-reply b { font-weight: 700; color: #3a3a3c; }
+#pc-text { position: relative; font: 600 44px "Inter", sans-serif; line-height: 1.18; color: #111; letter-spacing: -0.015em; }
+#pc-text span { color: transparent; }
+#pc-text span.on { color: #111; }
+#pc-caret { position: absolute; left: 0; top: 0; width: 4px; border-radius: 2px; background: #0a84ff; opacity: 0; }

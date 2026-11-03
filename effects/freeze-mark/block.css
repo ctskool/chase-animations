@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "Permanent Marker";
+  src: url("assets/fonts/permanent-marker-400.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
+#front { position: absolute; inset: 0; --fm-ink: #FF2E1F; }
+#fm-flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+#fm-svg { position: absolute; left: 0; top: 0; overflow: visible; filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35)); }
+#fm-svg path { fill: none; stroke: var(--fm-ink); stroke-linecap: round; stroke-linejoin: round; }
+#fm-circle { stroke-width: 13; }
+#fm-shaft, #fm-barb1, #fm-barb2 { stroke-width: 12; }
+#fm-cap { position: absolute; left: 0; top: 0; transform-origin: 0 0; filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35)); }
+.fm-line { position: absolute; left: 0; white-space: nowrap; font: 400 64px/1.1 "Permanent Marker", cursive; color: var(--fm-ink); }
+.fm-measure { position: absolute; left: 0; top: 0; visibility: hidden; font: 400 64px/1.1 "Permanent Marker", cursive; white-space: nowrap; }

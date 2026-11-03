@@ -5,7 +5,7 @@ Chase's own footage, shared so you can try `/vfx` before filming anything yourse
 | File | What it is |
 |---|---|
 | `sample.mp4` | 15 seconds of the untouched shot: the hook, "skill number one is Impeccable" and "defeating AI slop" |
-| `vfx-edit.mp4` | The finished 85 second video with all seven effects on it |
+| `vfx-edit.mp4` | The finished 85 second video with all sixteen effects on it |
 | `plan.json` | Three effects on `sample.mp4`: glass widgets on the hook, the first tier-list drop, and spotlight on "AI slop" |
 
 Try it from the pack's folder, after `npm run setup -- --vfx` and `npm run setup -- --speech`:

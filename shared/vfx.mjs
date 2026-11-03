@@ -5,7 +5,7 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { PACK, UsageError, buildProject, hyperframes, renderProject, resolveVars } from "./build.mjs";
+import { PACK, UsageError, buildProject, hyperframes, loadBlock, renderProject, resolveVars } from "./build.mjs";
 import { probe } from "./compose.mjs";
 import { loadWords } from "./sync.mjs";
 
@@ -193,6 +193,11 @@ export function renderEffect(prepDir, name, { from, to, key, varsFile, set = [],
 
   const cut = cutFor(P, start, end);
   const head = cut.head;
+  // A freeze holds the picture from the key word to the end of the stretch, so the head holds too.
+  if (fx.freeze) {
+    const k = Math.min(Math.round(keyAt * head.fps), head.frames.length - 1);
+    head.frames = head.frames.map((f, i) => (i > k ? head.frames[k] : f));
+  }
   const words = P.words.filter((w) => w.t >= start - 0.05 && w.t < end).map((w) => ({ w: w.w, t: +(w.t - start).toFixed(3), e: +(w.e - start).toFixed(3) }));
   const timing = { key: keyAt, hold: duration - keyAt, exit: 0, duration, design: fx.timing?.keyAt ?? keyAt, scale: 1 };
 
@@ -207,10 +212,9 @@ export function renderEffect(prepDir, name, { from, to, key, varsFile, set = [],
   const work = path.join(P.dir, ".effects");
   const layers = {};
   for (const layer of fx.layers) {
-    const project = buildProject({
-      block: fx, variant: "full", vars, timing, workDir: work, fps: FPS, alpha: true,
-      extra: { layer, head, words, card },
-    });
+    const project = fx.backdrop && layer === "back"
+      ? backdropProject(vars, keyAt, duration, work)
+      : buildProject({ block: fx, variant: "full", vars, timing, workDir: work, fps: FPS, alpha: true, extra: { layer, head, words, card } });
     const file = path.join(work, `${name}-${start.toFixed(2)}-${layer}.mov`);
     console.log(`Rendering ${name} ${layer} (${duration.toFixed(2)}s from ${start.toFixed(2)}s)`);
     renderProject(project, file, { format: "mov", fps: FPS, quality: draft ? "draft" : "looks" });
@@ -218,9 +222,28 @@ export function renderEffect(prepDir, name, { from, to, key, varsFile, set = [],
   }
 
   const file = path.resolve(out ?? path.join(P.dir, `${name}-${start.toFixed(2)}.mp4`));
-  stack(P, { start, duration, layers, card, file, draft, cut, camera: fx.camera && cameraMove(fx.camera, vars, head, keyAt, duration) });
+  stack(P, {
+    start, duration, layers, card, file, draft, cut,
+    camera: fx.camera && cameraMove(fx.camera, vars, head, keyAt, duration),
+    freeze: fx.freeze ? { at: keyAt, mono: vars.mono !== false } : null,
+    dim: fx.backdrop ? Number(vars.dim ?? 0) : 0,
+    tight: Boolean(fx.backdrop),
+  });
   console.log(`  ${file}`);
   return { file, start, duration };
+}
+
+// backdrop: one of the pack's /animate blocks becomes the room behind the speaker, its key moment on the key word.
+// vars.animation names the block; vars.animationVars (an object) feeds it, as `animate vars <block>` lists.
+function backdropProject(vars, keyAt, duration, work) {
+  const block = loadBlock(String(vars.animation));
+  const given = typeof vars.animationVars === "string" && vars.animationVars ? JSON.parse(vars.animationVars) : vars.animationVars ?? {};
+  const values = { ...resolveVars(block, undefined, []), ...given };
+  if (keyAt < block.timing.minKeyAt) {
+    throw new UsageError(`${block.name} needs ${block.timing.minKeyAt}s before its key moment; start the stretch earlier or land later.`);
+  }
+  const timing = { key: keyAt, hold: duration - keyAt, exit: 0, duration, design: block.timing.keyAt, scale: keyAt / block.timing.keyAt };
+  return buildProject({ block, variant: "full", vars: values, timing, workDir: work, fps: FPS, alpha: false });
 }
 
 // A camera move on the whole stacked frame, aimed at the middle of the face. snap: a hard punch-in on the key word that
@@ -240,12 +263,20 @@ function cameraMove(spec, vars, head, keyAt, duration) {
 
 // The shot, the back layer, the speaker, the front layer. In a split the shot and the speaker move down into the card,
 // the back layer covers everything but the card, and only the head above the card's edge comes from the cut-out.
-function stack(P, { start, duration, layers, card, file, draft, cut, camera }) {
-  const trim = (at) => `trim=start=${at.toFixed(4)}:duration=${duration.toFixed(4)},setpts=PTS-STARTPTS`;
+function stack(P, { start, duration, layers, card, file, draft, cut, camera, freeze, dim, tight }) {
+  // A freeze plays up to the key word, then holds that frame for the rest of the stretch (the voice carries on).
+  const trim = (at) => (freeze
+    ? `trim=start=${at.toFixed(4)}:duration=${freeze.at.toFixed(4)},setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop_duration=${(duration - freeze.at + 0.1).toFixed(4)},trim=duration=${duration.toFixed(4)}`
+    : `trim=start=${at.toFixed(4)}:duration=${duration.toFixed(4)},setpts=PTS-STARTPTS`);
   const inputs = ["-i", P.plate, ...decoder(cut.file), "-i", cut.file];
   const chain = [`[0:v]${trim(start)},format=yuva444p[plate]`, `[1:v]${trim(start - cut.offset)},format=yuva444p[cut]`];
   let base = "[plate]";
   let cutout = "[cut]";
+  if (freeze?.mono) {
+    // The room drops to black and white on the freeze; the speaker, from the cut-out, keeps their colour.
+    chain.push(`${base}hue=s=0:enable='gte(t,${freeze.at.toFixed(3)})'[platem]`);
+    base = "[platem]";
+  }
   if (camera?.soften) {
     // The room softens as the push goes in; the speaker, drawn on top from the cut-out, stays sharp.
     chain.push(`[plate]split[pa][pb]`, `[pb]gblur=sigma=${camera.soften}[pbl]`);
@@ -259,6 +290,11 @@ function stack(P, { start, duration, layers, card, file, draft, cut, camera }) {
     base = "[plate2]";
     cutout = "[cut2]";
   }
+  if (tight && !card) {
+    // Over a new room the soft hair edge would carry the old room's colour as a fringe.
+    chain.push(`[cut]lut=a='clip((val-70)*1.45,0,255)'[cutt]`);
+    cutout = "[cutt]";
+  }
   let n = 2;
   const over = (top, label) => {
     chain.push(`${base}${top}overlay=0:0:format=auto[${label}]`);
@@ -266,7 +302,8 @@ function stack(P, { start, duration, layers, card, file, draft, cut, camera }) {
   };
   if (layers.back) {
     inputs.push("-i", layers.back);
-    chain.push(`[${n}:v]setpts=PTS-STARTPTS,format=yuva444p[back]`);
+    const darken = dim ? `,colorchannelmixer=rr=${1 - dim}:gg=${1 - dim}:bb=${1 - dim}` : "";
+    chain.push(`[${n}:v]setpts=PTS-STARTPTS${darken},format=yuva444p[back]`);
     n += 1;
     over("[back]", "b1");
   }

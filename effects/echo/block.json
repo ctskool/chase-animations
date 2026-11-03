@@ -1,0 +1,16 @@
+{
+  "name": "echo",
+  "title": "Echo",
+  "summary": "Each keyword you say lands huge behind your head the instant you say it, in big warm off-white type; the next one slams in and replaces it.",
+  "fonts": ["400 300px 'Anton'"],
+  "layers": ["back"],
+  "timing": { "keyAt": 1.15 },
+  "keyMoment": "the first keyword slams in behind your head on the frame you start saying it, scaling down from a little too big and settling with weight",
+  "variables": [
+    { "id": "phrases", "type": "string", "label": "Keywords to land, in the order you say them, separated by |", "default": "in-app browser|real time" },
+    { "id": "color", "type": "color", "label": "Type colour", "default": "#F4ECDF" },
+    { "id": "size", "type": "number", "label": "Largest type size in px (shrinks to fit the width)", "default": 330 },
+    { "id": "show", "type": "number", "label": "How much of the last line shows above your head, 0.2 to 1 (the rest hides behind it)", "default": 0.45 },
+    { "id": "drift", "type": "number", "label": "How much the type follows your head, 0 to 1", "default": 0.35 }
+  ]
+}
