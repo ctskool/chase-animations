@@ -39,6 +39,11 @@ for (const tool of ["ffmpeg", "ffprobe"]) {
     fail(`${tool} isn't installed. See docs/INSTALL.md.`);
   }
 }
+// Homebrew's plain ffmpeg has no drawtext, which every contact sheet uses; ffmpeg-full has it.
+const filters = spawnSync("ffmpeg", ["-hide_banner", "-filters"], { encoding: "utf8" }).stdout ?? "";
+if (!/\bdrawtext\b/.test(filters)) {
+  fail("Your FFmpeg has no drawtext filter, which the contact sheets need. On a Mac: brew install ffmpeg-full, then brew unlink ffmpeg and brew link --force ffmpeg-full. See docs/INSTALL.md.");
+}
 console.log("Node, FFmpeg: ok");
 
 const target = path.resolve(o["skills-dir"] ?? path.join(os.homedir(), ".claude", "skills"));

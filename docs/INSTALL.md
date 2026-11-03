@@ -1,6 +1,6 @@
 # Install
 
-Windows 11 is tested. Mac and Linux are untested, so expect to troubleshoot there.
+Windows 11 and an Apple Silicon Mac are tested. Linux is untested, so expect to troubleshoot there.
 
 ## 1. What you need first
 
@@ -14,11 +14,14 @@ Windows 11 is tested. Mac and Linux are untested, so expect to troubleshoot ther
   winget install Gyan.FFmpeg
   ```
 
-  Mac (untested):
+  Mac:
 
   ```bash
-  brew install ffmpeg
+  brew install ffmpeg-full
+  brew link --force ffmpeg-full
   ```
+
+  Use `ffmpeg-full`, not `ffmpeg`: Homebrew's plain `ffmpeg` has no `drawtext` filter, and the contact sheets need it. If you already have plain `ffmpeg`, run `brew unlink ffmpeg` before the `brew link` line.
 
   Close and reopen your terminal afterwards.
 
@@ -100,6 +103,7 @@ Run `git pull` in the pack's folder, or unzip the new version over the old one. 
 | What you see | What to do |
 |---|---|
 | `ffmpeg isn't installed` | Install it (step 1), then open a new terminal |
+| `Your FFmpeg has no drawtext filter` | On a Mac, swap Homebrew's `ffmpeg` for `ffmpeg-full` (step 1) |
 | `Dependencies aren't installed yet` | Run `npm install` in the pack's folder |
 | `Couldn't transcribe` | Run `npm run setup -- --speech`, or pass `--at <seconds>` instead of a word |
 | `/animate` isn't there | Restart Claude Code. If it's still missing, run `npm run setup` again |

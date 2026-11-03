@@ -554,7 +554,7 @@ All three skills share one engine: the same HyperFrames rendering, the same on-d
 | System | Status |
 |---|---|
 | Windows 11 | Tested, including `/vfx` with RVM and with HyperFrames' remover |
-| Mac | **Untested.** It may work, but nobody has run it yet. [Open an issue](https://github.com/ctskool/chase-animations/issues) and say how it goes |
+| Mac | Tested on an Apple Silicon MacBook Air: setup, `/animate`, `/explain` and `/vfx` with HyperFrames' remover. Install `ffmpeg-full` from Homebrew, not `ffmpeg` |
 | Linux | Untested |
 
 ## Credits
