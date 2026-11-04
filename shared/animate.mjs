@@ -44,7 +44,7 @@ const HELP = `Chase Animations
   animate vfx list                     the effects that go on your own shot
   animate vfx vars <effect>            an effect's editable variables, with defaults
   animate vfx prep <video>             once per video: a working copy and the words (<video>.vfx/)
-  animate vfx render <effect> --prep <folder> --from <s> --to <s> [--at <s>] [--vars <file>]
+  animate vfx render <effect> --prep <folder> --from <s> --to <s> [--at <s>] [--vars <file>] [--4k]
                                        put one effect on that stretch of your video
   animate vfx plan <plan.json>         several effects at once, laid back over the whole video
 
@@ -59,6 +59,7 @@ Options
   --height <px>                        height of the top-half output (default 960)
   --alpha                              render full or top with a transparent exit, as .mov
   --draft                              faster, lower-quality render
+  --4k                                 vfx: 2160x3840, the shot from a 4K copy (prep makes it once)
 
 place options
   --word "<word or phrase>"            the spoken word to land on
@@ -108,6 +109,7 @@ const OPTIONS = {
   height: { type: "string" },
   alpha: { type: "boolean" },
   draft: { type: "boolean" },
+  "4k": { type: "boolean" },
   format: { type: "string" },
   video: { type: "string" },
   word: { type: "string" },

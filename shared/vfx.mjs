@@ -1,7 +1,8 @@
 // /vfx: effects on the speaker's own shot. prep makes a 1080x1920 working copy and the words, once per video. Each
 // effect cuts the speaker out of its own few seconds (cached), tracks the head from that cut-out, draws up to two
 // transparent layers in HyperFrames, one behind the speaker and one in front, and FFmpeg stacks them: the shot, the
-// back layer, the cut-out, the front layer.
+// back layer, the cut-out, the front layer. --4k stacks at 2160x3840: the shot and the speaker's pixels come from a 4K
+// working copy, the matte and head track stay the 1080 ones (scaled 2x), and HyperFrames draws the layers at 2x density.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -66,7 +67,7 @@ function cutOut(src, out) {
   }
 }
 
-export function prep(video, { out } = {}) {
+export function prep(video, { out, k4 } = {}) {
   const src = path.resolve(video);
   if (!fs.existsSync(src)) throw new UsageError(`Can't find ${src}`);
   const info = probe(src);
@@ -74,6 +75,7 @@ export function prep(video, { out } = {}) {
   const dir = path.resolve(out ?? path.join(path.dirname(src), `${path.basename(src, path.extname(src))}.vfx`));
   fs.mkdirSync(dir, { recursive: true });
   const plate = path.join(dir, "plate.mp4");
+  fs.writeFileSync(path.join(dir, "source.json"), JSON.stringify({ file: src, width: info.width, height: info.height }));
 
   if (!fs.existsSync(plate)) {
     console.log("Making the working copy");
@@ -84,6 +86,7 @@ export function prep(video, { out } = {}) {
       "-c:a", "aac", "-b:a", "256k", plate,
     ]);
   }
+  if (k4) plate4k(dir);
   const wordsFile = path.join(dir, "words.json");
   if (!fs.existsSync(wordsFile)) {
     const words = loadWords(plate, { workDir: path.join(dir, ".words") });
@@ -142,6 +145,25 @@ export function trackHead(cut) {
 // FFmpeg's built-in VP9 decoder drops alpha; libvpx keeps it.
 const decoder = (file) => (file.endsWith(".webm") ? ["-c:v", "libvpx-vp9"] : []);
 
+// The 4K working copy, made once from the original video that prep recorded. A source under 2160 wide is refused rather
+// than scaled up: a 4K file of upscaled pixels is no sharper.
+export function plate4k(dir) {
+  const out = path.join(dir, "plate4k.mp4");
+  if (fs.existsSync(out)) return out;
+  const srcFile = path.join(dir, "source.json");
+  if (!fs.existsSync(srcFile)) throw new UsageError(`${dir} was prepared before 4K. Run prep again: animate vfx prep <video> --4k`);
+  const src = JSON.parse(fs.readFileSync(srcFile, "utf8"));
+  if (src.width < W * 2) throw new UsageError(`4K needs a source at least ${W * 2} wide; ${path.basename(src.file)} is ${src.width}x${src.height}. Render without --4k.`);
+  console.log("Making the 4K working copy");
+  run("ffmpeg", [
+    "-v", "error", "-y", "-i", src.file,
+    "-vf", `scale=${W * 2}:${H * 2}:flags=lanczos,fps=${FPS},format=yuv420p`,
+    "-c:v", "libx264", "-crf", "14", "-preset", "medium", "-g", String(FPS),
+    "-c:a", "aac", "-b:a", "256k", out,
+  ]);
+  return out;
+}
+
 function loadPrep(dir) {
   for (const f of ["plate.mp4", "words.json"]) {
     if (!fs.existsSync(path.join(dir, f))) throw new UsageError(`${dir} isn't prepared. Run: animate vfx prep <video>`);
@@ -151,6 +173,7 @@ function loadPrep(dir) {
   return {
     dir,
     plate: path.join(dir, "plate.mp4"),
+    plate4k: path.join(dir, "plate4k.mp4"),
     whole: whole ? { file: path.join(dir, "cut.webm"), head: JSON.parse(fs.readFileSync(path.join(dir, "head.json"), "utf8")) } : null,
     words: JSON.parse(fs.readFileSync(path.join(dir, "words.json"), "utf8")),
   };
@@ -181,8 +204,10 @@ function cutFor(P, start, end) {
 }
 
 // One effect on one stretch, from..to seconds of the prepared video. key is the word or time the effect lands on.
-export function renderEffect(prepDir, name, { from, to, key, varsFile, set = [], values, out, draft } = {}) {
+export function renderEffect(prepDir, name, { from, to, key, varsFile, set = [], values, out, draft, k4 } = {}) {
   const P = loadPrep(path.resolve(prepDir));
+  const S = k4 ? 2 : 1;
+  if (k4) plate4k(P.dir);
   const fx = loadEffect(name);
   const vars = values ? { ...resolveVars(fx, undefined, []), ...values } : resolveVars(fx, varsFile, set);
   const start = Number(from);
@@ -215,15 +240,15 @@ export function renderEffect(prepDir, name, { from, to, key, varsFile, set = [],
     const project = fx.backdrop && layer === "back"
       ? backdropProject(vars, keyAt, duration, work)
       : buildProject({ block: fx, variant: "full", vars, timing, workDir: work, fps: FPS, alpha: true, extra: { layer, head, words, card } });
-    const file = path.join(work, `${name}-${start.toFixed(2)}-${layer}.mov`);
+    const file = path.join(work, `${name}-${start.toFixed(2)}-${layer}${k4 ? "-4k" : ""}.mov`);
     console.log(`Rendering ${name} ${layer} (${duration.toFixed(2)}s from ${start.toFixed(2)}s)`);
-    renderProject(project, file, { format: "mov", fps: FPS, quality: draft ? "draft" : "looks" });
+    renderProject(project, file, { format: "mov", fps: FPS, quality: draft ? "draft" : "looks", resolution: k4 ? "portrait-4k" : undefined });
     layers[layer] = file;
   }
 
-  const file = path.resolve(out ?? path.join(P.dir, `${name}-${start.toFixed(2)}.mp4`));
+  const file = path.resolve(out ?? path.join(P.dir, `${name}-${start.toFixed(2)}${k4 ? "-4k" : ""}.mp4`));
   stack(P, {
-    start, duration, layers, card, file, draft, cut,
+    start, duration, layers, card, file, draft, cut, S,
     camera: fx.camera && cameraMove(fx.camera, vars, head, keyAt, duration),
     freeze: fx.freeze ? { at: keyAt, mono: vars.mono !== false } : null,
     dim: fx.backdrop ? Number(vars.dim ?? 0) : 0,
@@ -263,13 +288,18 @@ function cameraMove(spec, vars, head, keyAt, duration) {
 
 // The shot, the back layer, the speaker, the front layer. In a split the shot and the speaker move down into the card,
 // the back layer covers everything but the card, and only the head above the card's edge comes from the cut-out.
-function stack(P, { start, duration, layers, card, file, draft, cut, camera, freeze, dim, tight }) {
+function stack(P, { start, duration, layers, card, file, draft, cut, camera, freeze, dim, tight, S = 1 }) {
+  const w = W * S;
+  const h = H * S;
   // A freeze plays up to the key word, then holds that frame for the rest of the stretch (the voice carries on).
   const trim = (at) => (freeze
     ? `trim=start=${at.toFixed(4)}:duration=${freeze.at.toFixed(4)},setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop_duration=${(duration - freeze.at + 0.1).toFixed(4)},trim=duration=${duration.toFixed(4)}`
     : `trim=start=${at.toFixed(4)}:duration=${duration.toFixed(4)},setpts=PTS-STARTPTS`);
-  const inputs = ["-i", P.plate, ...decoder(cut.file), "-i", cut.file];
-  const chain = [`[0:v]${trim(start)},format=yuva444p[plate]`, `[1:v]${trim(start - cut.offset)},format=yuva444p[cut]`];
+  const inputs = ["-i", S > 1 ? P.plate4k : P.plate, ...decoder(cut.file), "-i", cut.file];
+  const chain = S > 1
+    // The speaker's pixels from the 4K shot, through the 1080 matte scaled up: the same cut-out, at full sharpness.
+    ? [`[0:v]${trim(start)},format=yuva444p,split[plate][pc]`, `[1:v]${trim(start - cut.offset)},alphaextract,scale=${w}:${h}:flags=bicubic[ca]`, `[pc][ca]alphamerge[cut]`]
+    : [`[0:v]${trim(start)},format=yuva444p[plate]`, `[1:v]${trim(start - cut.offset)},format=yuva444p[cut]`];
   let base = "[plate]";
   let cutout = "[cut]";
   if (freeze?.mono) {
@@ -279,14 +309,14 @@ function stack(P, { start, duration, layers, card, file, draft, cut, camera, fre
   }
   if (camera?.soften) {
     // The room softens as the push goes in; the speaker, drawn on top from the cut-out, stays sharp.
-    chain.push(`[plate]split[pa][pb]`, `[pb]gblur=sigma=${camera.soften}[pbl]`);
+    chain.push(`[plate]split[pa][pb]`, `[pb]gblur=sigma=${camera.soften * S}[pbl]`);
     chain.push(`[pa][pbl]blend=all_expr='A+(B-A)*min(T/${camera.duration.toFixed(3)},1)'[plates]`);
     base = "[plates]";
   }
   if (card) {
-    chain.push(`[plate]pad=${W}:${H + card.shift}:0:${card.shift}:black,crop=${W}:${H}:0:0[plate2]`);
+    chain.push(`[plate]pad=${w}:${h + card.shift * S}:0:${card.shift * S}:black,crop=${w}:${h}:0:0[plate2]`);
     // Over a flat page the cut-out's soft hair edge shows the room as a grey halo, so the alpha is tightened.
-    chain.push(`[cut]pad=${W}:${H + card.shift}:0:${card.shift}:black@0,crop=${W}:${H}:0:0,crop=${W}:${card.y + 4}:0:0,lut=a='clip((val-70)*1.45,0,255)'[cut2]`);
+    chain.push(`[cut]pad=${w}:${h + card.shift * S}:0:${card.shift * S}:black@0,crop=${w}:${h}:0:0,crop=${w}:${(card.y + 4) * S}:0:0,lut=a='clip((val-70)*1.45,0,255)'[cut2]`);
     base = "[plate2]";
     cutout = "[cut2]";
   }
@@ -315,8 +345,8 @@ function stack(P, { start, duration, layers, card, file, draft, cut, camera, fre
     over("[front]", "b3");
   }
   if (camera) {
-    chain.push(`${base}scale=w='trunc(${W}*(${camera.z})/2)*2':h='trunc(${H}*(${camera.z})/2)*2':eval=frame:flags=bicubic,` +
-      `crop=${W}:${H}:x='(in_w-${W})*${camera.cx.toFixed(4)}':y='(in_h-${H})*${camera.cy.toFixed(4)}'[cam]`);
+    chain.push(`${base}scale=w='trunc(${w}*(${camera.z})/2)*2':h='trunc(${h}*(${camera.z})/2)*2':eval=frame:flags=bicubic,` +
+      `crop=${w}:${h}:x='(in_w-${w})*${camera.cx.toFixed(4)}':y='(in_h-${h})*${camera.cy.toFixed(4)}'[cam]`);
     base = "[cam]";
   }
   chain.push(`${base}format=yuv420p[v]`);
@@ -346,29 +376,29 @@ export function vfxCommand(args, o) {
     }
     return;
   }
-  if (sub === "prep") return prep(need("a video"), { out: o.out });
+  if (sub === "prep") return prep(need("a video"), { out: o.out, k4: o["4k"] });
   if (sub === "render") {
     if (!o.prep) throw new UsageError("vfx render needs --prep <folder> (from: animate vfx prep <video>)");
     return renderEffect(o.prep, need("an effect name"), {
-      from: o.from, to: o.to, key: o.at, varsFile: o.vars, set: o.set, draft: o.draft,
+      from: o.from, to: o.to, key: o.at, varsFile: o.vars, set: o.set, draft: o.draft, k4: o["4k"],
       out: o.save,
     });
   }
-  if (sub === "plan") return renderPlan(need("a plan file"), { draft: o.draft });
+  if (sub === "plan") return renderPlan(need("a plan file"), { draft: o.draft, k4: o["4k"] });
   throw new UsageError("vfx commands: list, vars <effect>, prep <video>, render <effect> --prep <folder> --from <s> --to <s>, plan <plan.json>");
 }
 
 // A whole edit: every effect in plan.effects rendered on its stretch, then laid back over the working copy.
-export function renderPlan(planFile, { draft } = {}) {
+export function renderPlan(planFile, { draft, k4 } = {}) {
   const planPath = path.resolve(planFile);
   const plan = JSON.parse(fs.readFileSync(planPath, "utf8"));
   const prepDir = path.resolve(path.dirname(planPath), plan.prep);
   const P = loadPrep(prepDir);
   const made = plan.effects.map((e) =>
-    renderEffect(prepDir, e.fx, { from: e.from, to: e.to, key: e.key, values: e.vars ?? {}, draft }),
+    renderEffect(prepDir, e.fx, { from: e.from, to: e.to, key: e.key, values: e.vars ?? {}, draft, k4 }),
   );
   const file = path.resolve(path.dirname(planPath), plan.out ?? "vfx-edit.mp4");
-  const inputs = ["-i", P.plate];
+  const inputs = ["-i", k4 ? P.plate4k : P.plate];
   const chain = [];
   let base = "[0:v]";
   made.forEach((m, i) => {

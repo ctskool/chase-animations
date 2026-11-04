@@ -82,6 +82,8 @@ vfx render <effect> --prep "<video>.vfx" --from <s> --to <s> --at <s> --vars vfx
 
 The first render of a stretch cuts the speaker out of it (cached after that). Drop `--draft` for the final. The result is `<video>.vfx/<effect>-<from>.mp4` with their audio untouched.
 
+**4K.** Add `--4k` for a 2160x3840 result, `<effect>-<from>-4k.mp4`: the same layout, cut-out and head track, with their pixels from a 4K copy of the video and the layers drawn at twice the density. The first `--4k` render makes that copy once (several minutes for a long video). It needs a source at least 2160 wide, and refuses a smaller one rather than upscaling it. A folder prepared before `--4k` existed: run `vfx prep "<video>" --4k` again; it keeps what is there.
+
 Several effects across one video: write a plan and render it in one go.
 
 ```json

@@ -267,9 +267,10 @@ export function hyperframes(args, { cwd, capture = false } = {}) {
   return res;
 }
 
-export function renderProject(dir, out, { format, quality = "looks", fps = 30, quiet = true } = {}) {
+export function renderProject(dir, out, { format, quality = "looks", fps = 30, quiet = true, resolution } = {}) {
   fs.mkdirSync(path.dirname(out), { recursive: true });
   const args = ["render", ".", "--output", out, "--quality", quality, "--fps", String(fps)];
+  if (resolution) args.push("--resolution", resolution);  // the same composition at a higher device pixel ratio
   if (format && format !== "mp4") args.push("--format", format);
   if (quiet) args.push("--quiet");
   const res = hyperframes(args, { cwd: dir, capture: quiet });
